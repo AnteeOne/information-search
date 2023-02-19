@@ -1,0 +1,1276 @@
+<!doctype html>
+<html lang="ru" data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0"> 
+  <meta name="referrer" content="unsafe-url"> 
+  <title>Ожидают приглашения / Песочница / Хабр</title> 
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSxf6TF0.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveQhf6TF0.woff2) format('woff2');
+      unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSBf6TF0.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveRhf6.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* non-breaking hyphen */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmEU9vBh0_IsHAlmrO6g&skey=ee881451c540fdec&v=v29) format('woff2');
+      unicode-range: U+02011;
+    }
+  </style> 
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/chunk-vendors.66f44d11.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/chunk-vendors.a5368ccd.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/app.080de328.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/app.34e7f643.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/sandbox.bb5e93c4.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/sandbox.c402c0c3.js" as="script"> 
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/chunk-vendors.66f44d11.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/app.080de328.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/sandbox.bb5e93c4.css"> 
+  <script>window.i18nFetch = new Promise((res, rej) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', '/js/i18n/ru-compiled.55f14b6ad3f6b5d3418716684e371add.json');
+          xhr.responseType = 'json';
+          xhr.onload = function(e) {
+            if (this.status === 200) {
+              res({ru: xhr.response});
+            } else {
+              rej(e);
+            }
+          };
+          xhr.send();
+        });</script> 
+  <script src="//www.googletagservices.com/tag/js/gpt.js" async></script> 
+  <style>.grecaptcha-badge{visibility: hidden;}</style> 
+  <meta name="habr-version" content="2.112.0"> 
+  <meta data-vue-meta="ssr" itemprop="image" content="/img/habr_ru.png" data-vmid="image:itemprop">
+  <meta data-vue-meta="ssr" property="og:image" content="/img/habr_ru.png" data-vmid="og:image">
+  <meta data-vue-meta="ssr" property="og:image:width" content="1200" data-vmid="og:image:width">
+  <meta data-vue-meta="ssr" property="og:image:height" content="630" data-vmid="og:image:height">
+  <meta data-vue-meta="ssr" property="aiturec:image" content="/img/habr_ru.png" data-vmid="aiturec:image">
+  <meta data-vue-meta="ssr" name="twitter:image" content="/img/habr_ru.png" data-vmid="twitter:image">
+  <meta data-vue-meta="ssr" property="vk:image" content="/img/habr_ru.png?format=vk" data-vmid="vk:image">
+  <meta data-vue-meta="ssr" property="fb:app_id" content="444736788986613">
+  <meta data-vue-meta="ssr" property="fb:pages" content="472597926099084">
+  <meta data-vue-meta="ssr" name="twitter:card" content="summary_large_image">
+  <meta data-vue-meta="ssr" name="twitter:site" content="@habr_com">
+  <meta data-vue-meta="ssr" property="og:locale" content="ru_RU" data-vmid="og:locale">
+  <meta data-vue-meta="ssr" property="og:type" content="website" data-vmid="og:type">
+  <meta data-vue-meta="ssr" property="og:site_name" content="Хабр" data-vmid="og:site_name">
+  <meta data-vue-meta="ssr" property="og:url" content="https://habr.com/ru/sandbox/" data-vmid="og:url">
+  <meta data-vue-meta="ssr" property="og:title" content="Ожидают приглашения / Песочница / Хабр" data-vmid="og:title"> 
+  <link data-vue-meta="ssr" rel="image_src" href="/img/habr_ru.png" data-vmid="image:href">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/sandbox/" rel="canonical" data-vmid="canonical"> 
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303b44"> 
+  <meta name="msapplication-TileColor" content="#629FBC"> 
+  <meta name="apple-mobile-web-app-capable" content="yes"> 
+  <meta name="mobile-web-app-capable" content="yes"> 
+  <link rel="shortcut icon" type="image/png" sizes="16x16" href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png"> 
+  <link rel="shortcut icon" type="image/png" sizes="32x32" href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-152.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-180.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-256.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1136x640.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2436x1125.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1792x828.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_828x1792.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1334x750.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2208x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1125x2436.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2208.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2732x2048.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2688x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2224x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_750x1334.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x2732.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2388x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2224.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_640x1136.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2388.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x1536.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1536x2048.png"> 
+  <link rel="mask-icon" color="#77a2b6" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.svg"> 
+  <link crossorigin="use-credentials" href="/manifest.webmanifest" rel="manifest"> 
+  <script async src="https://unpkg.com/pwacompat" crossorigin="anonymous"></script> 
+  <script>window.yaContextCb = window.yaContextCb || []</script> 
+  <script src="https://yandex.ru/ads/system/context.js" async></script> 
+ </head> 
+ <body> 
+  <div id="app" data-server-rendered="true" data-async-called="true">
+   <div class="tm-layout__wrapper">
+    <!----> 
+    <div></div> <!----> 
+    <header class="tm-header">
+     <div class="tm-page-width">
+      <div class="tm-header__container">
+       <!----> <span class="tm-header__logo-wrap"><a href="/ru/" class="tm-header__logo tm-header__logo_ru">
+         <svg height="16" width="16" class="tm-svg-img tm-header__icon">
+          <title>Хабр</title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use>
+         </svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span> 
+       <div class="tm-dropdown tm-header__projects">
+        <div class="tm-dropdown__head">
+         <button class="tm-header__dropdown-toggle">
+          <svg height="16" width="16" class="tm-svg-img tm-header__icon tm-header__icon_dropdown">
+           <title>Открыть список</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#arrow-down"></use>
+          </svg></button>
+        </div> <!---->
+       </div> <a href="/ru/sandbox/start/" class="tm-header__become-author-btn"> Как стать автором </a> 
+       <div class="tm-feature tm-header__feature tm-feature tm-feature_variant-inline">
+        <!---->
+       </div> <!----> <!---->
+      </div>
+     </div>
+    </header> 
+    <div class="tm-layout">
+     <div class="tm-page-progress-bar"></div> 
+     <div data-menu-sticky="true" class="tm-base-layout__header tm-base-layout__header_is-sticky">
+      <div class="tm-page-width">
+       <div class="tm-base-layout__header-wrapper">
+        <div class="tm-main-menu">
+         <div class="tm-main-menu__section">
+          <nav class="tm-main-menu__section-content">
+           <!----> <a href="/ru/all/" class="tm-main-menu__item"> Все потоки </a> <a href="/ru/flows/develop/" class="tm-main-menu__item"> Разработка </a><a href="/ru/flows/admin/" class="tm-main-menu__item"> Администрирование </a><a href="/ru/flows/design/" class="tm-main-menu__item"> Дизайн </a><a href="/ru/flows/management/" class="tm-main-menu__item"> Менеджмент </a><a href="/ru/flows/marketing/" class="tm-main-menu__item"> Маркетинг </a><a href="/ru/flows/popsci/" class="tm-main-menu__item"> Научпоп </a>
+          </nav>
+         </div>
+        </div> 
+        <div class="tm-header-user-menu tm-base-layout__user-menu">
+         <a href="/ru/search/" class="tm-header-user-menu__item tm-header-user-menu__search">
+          <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark">
+           <title>Поиск</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#search"></use>
+          </svg></a> <!----> <!----> <!----> 
+         <div class="tm-header-user-menu__item tm-header-user-menu__user_desktop">
+          <div class="tm-dropdown">
+           <div class="tm-dropdown__head">
+            <svg height="24" width="24" data-test-id="menu-toggle-guest" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_dark">
+             <title>Профиль</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#header-user"></use>
+            </svg> <!---->
+           </div> <!---->
+          </div> <!---->
+         </div> <!---->
+        </div>
+       </div>
+      </div>
+     </div> <!----> 
+     <div class="tm-page-width"></div> 
+     <main class="tm-layout__container">
+      <div class="tm-page">
+       <div class="tm-page-width">
+        <!----> 
+        <div class="tm-page__wrapper">
+         <div class="tm-page__main tm-page__main_has-sidebar">
+          <div class="pull-down">
+           <!----> 
+           <div class="pull-down__header" style="height:0px;">
+            <div class="pull-down__content" style="bottom:10px;">
+             <svg height="24" width="24" class="tm-svg-img pull-down__arrow">
+              <title>Обновить</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#pull-arrow"></use>
+             </svg>
+            </div>
+           </div> 
+           <div class="tm-page__top">
+            <div class="tm-section-name">
+             <h1 class="tm-section-name__text"> Как стать автором </h1> 
+            </div> 
+            <div class="tm-tabs tm-tabs_page-header tm-tabs">
+             <div class="tm-tabs__scroll-area">
+              <span class="tm-tabs__tab-item"><a href="/ru/sandbox/start/" class="tm-tabs__tab-link tm-tabs__tab-link"> Самое важное <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/sandbox/invited/" class="tm-tabs__tab-link tm-tabs__tab-link"> Новые авторы <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/sandbox/" aria-current="page" data-test-id="tab-link-active" class="tm-tabs__tab-link router-link-exact-active  tm-tabs__tab-link tm-tabs__tab-link_active"> Ожидают приглашения <!----> <!----></a></span>
+             </div> <!---->
+            </div> <!---->
+           </div> 
+           <div data-async-called="true" class="tm-sub-page">
+            <div class="tm-sub-page__main">
+             <div>
+              <div class="tm-sandbox-articles-list">
+               <article id="185596" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-17T18:45:31.000Z" title="2023-02-17, 21:45">17 фев в 21:45</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/185596/" data-article-link="" class="tm-article-snippet__title-link"><span>Работа памяти в Python</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <div class="tm-article-complexity tm-article-complexity_complexity-low">
+                   <span class="tm-svg-icon__wrapper tm-article-complexity__icon">
+                    <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                     <title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#complexity-low"></use>
+                    </svg></span> <span class="tm-article-complexity__label"> Простой </span>
+                  </div> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/python/" class="tm-article-snippet__hubs-item-link"><span>Python</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/e6e/149/e97/e6e149e97eecf0bf309d59fd9741e5b8.jpg" class="tm-article-snippet__lead-image" style="object-position:0% 0%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>Python - интерпретируемый язык программирования, поэтому перед выполнением код транслируется в машиночитаемые инструкции - байт-код. Байт-код интерпретируется виртуальной машиной, определяемой реализацией языка, например, стандартной - CPython.</p>
+                     <p>Python не взаимодействует с памятью - только с её виртуальным представлением. В процессе выполнения программы операционная система создаёт процесс и выделяет под него ресурсы. В отличие от С/С++ мы не можем управлять памятью из кучи напрямую, а делаем это посредством memory manager, который и обращается к памяти через Python/C API.</p>
+                     <p></p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/185596/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="184786" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-14T21:05:10.000Z" title="2023-02-15, 00:05">15 фев в 00:05</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/184786/" data-article-link="" class="tm-article-snippet__title-link"><span>Что нужно знать для переезда на Бали?</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <!----> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/remote/" class="tm-article-snippet__hubs-item-link"><span>Удалённая работа</span> <!----></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/4c2/2ba/bfe/4c22babfe27c954a9bb5b908e88e1295.jpeg" class="tm-article-snippet__lead-image" style="object-position:0% 0%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>В этой статьи я расскажу историю, как я переехал на Бали в 2022 году, какие были нюансы и сложности, и поделюсь полезными ресурсами, которые мне в свое время очень помогли.</p>
+                     <p>Впервые на острове я оказался еще 3 года назад в качестве туриста, познакомился с классными людьми, которые давно тут живут и решил, что обязательно приеду сюда на несколько месяцев провести зиму.</p>
+                     <p>На Бали кайфовый климат, всегда тепло, довольно лайтовый сезон дождей, не как в Тае, красиво, развито, есть все необходимое для длительного комфортного проживания: быстрый интернет, коворкинги, модные кафе на любой вкус и цвет, жилье на любой бюджет, а главное - огромное русскоговорящее комьюнити.</p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/184786/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="185330" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-14T02:35:01.000Z" title="2023-02-14, 05:35">14 фев в 05:35</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/185330/" data-article-link="" class="tm-article-snippet__title-link"><span>Освоение ремесла. Руководство по становлению квалифицированным программистом</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <div class="tm-article-complexity tm-article-complexity_complexity-low">
+                   <span class="tm-svg-icon__wrapper tm-article-complexity__icon">
+                    <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                     <title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#complexity-low"></use>
+                    </svg></span> <span class="tm-article-complexity__label"> Простой </span>
+                  </div> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/programming/" class="tm-article-snippet__hubs-item-link"><span>Программирование</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/remote/" class="tm-article-snippet__hubs-item-link"><span>Удалённая работа</span> <!----></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/study/" class="tm-article-snippet__hubs-item-link"><span>Учебный процесс в IT</span> <!----></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/275/5cb/0e8/2755cb0e8ae86c1e1466ebb366eab914.jpeg" class="tm-article-snippet__lead-image" style="object-position:0% 0%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>Программирование - это процесс разработки и кодирования компьютерного программного обеспечения, приложений и систем. Он включает в себя сочетание технических навыков, логического мышления и творческого подхода к решению проблем. Искусство компьютерного программирования значительно развилось с момента его возникновения, постоянно разрабатываются новые языки, инструменты и методологии. Однако в своей основе программирование остается неизменным - это процесс создания решений сложных проблем с помощью кода.</p>
+                     <p>В этом руководстве мы рассмотрим основные понятия и методы, необходимые для того, чтобы стать квалифицированным программистом. Мы рассмотрим такие темы, как алгоритмы и структуры данных, объектно-ориентированное программирование, отладка, разработка проектов и многое другое. К концу этого руководства у вас будет твердое понимание того, что требуется для создания высококачественного программного обеспечения, и вы будете на пути к тому, чтобы стать квалифицированным программистом.</p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/185330/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="185224" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-13T20:00:36.000Z" title="2023-02-13, 23:00">13 фев в 23:00</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/185224/" data-article-link="" class="tm-article-snippet__title-link"><span>Почему вы должны писать на TypeScript в 2023 году?</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <div class="tm-article-complexity tm-article-complexity_complexity-low">
+                   <span class="tm-svg-icon__wrapper tm-article-complexity__icon">
+                    <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                     <title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#complexity-low"></use>
+                    </svg></span> <span class="tm-article-complexity__label"> Простой </span>
+                  </div> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/javascript/" class="tm-article-snippet__hubs-item-link"><span>JavaScript</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/nodejs/" class="tm-article-snippet__hubs-item-link"><span>Node.JS</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/reactjs/" class="tm-article-snippet__hubs-item-link"><span>ReactJS</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/typescript/" class="tm-article-snippet__hubs-item-link"><span>TypeScript</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/webdev/" class="tm-article-snippet__hubs-item-link"><span>Разработка веб-сайтов</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/185/1a6/53d/1851a653d5b5e43ad5ce70108809a4cf.jpg" class="tm-article-snippet__lead-image" style="object-position:58% 4%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p><strong>TypeScript</strong>&nbsp;— то&nbsp;же самое, что и&nbsp;<strong>JavaScript</strong>, но&nbsp;переменные не&nbsp;могут менять типы. </p>
+                     <p>Цель создания <strong>TypeScript </strong>—&nbsp;сделать <strong>JavaScript </strong>лучше. <strong>TypeScript </strong>добавляет в&nbsp;<strong>JavaScript </strong>типы, позволяя явно задавать их&nbsp;для всех структур данных. Это увеличивает читаемость кода и&nbsp;уменьшает количество ошибок в&nbsp;финальной сборке приложения. </p>
+                     <p></p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/185224/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="185266" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-12T18:16:50.000Z" title="2023-02-12, 21:16">12 фев в 21:16</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/185266/" data-article-link="" class="tm-article-snippet__title-link"><span>Clean ABAP — Как сделать код чистым, прочитав рекомендации к единому стилю? Часть 1</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <div class="tm-article-complexity tm-article-complexity_complexity-medium">
+                   <span class="tm-svg-icon__wrapper tm-article-complexity__icon">
+                    <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                     <title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#complexity-medium"></use>
+                    </svg></span> <span class="tm-article-complexity__label"> Средний </span>
+                  </div> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/erp/" class="tm-article-snippet__hubs-item-link"><span>ERP-системы</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/programming/" class="tm-article-snippet__hubs-item-link"><span>Программирование</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/482/7c8/2ef/4827c82ef8b13a03e25cec84574907c9.jpg" class="tm-article-snippet__lead-image" style="object-position:0% 0%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>К сожалению привлечь внимание АБАПера можно лишь рассказав шутку про 1С. Но мы постараемся обойтись без шуток. У нас есть замечательная возможность обсудить стиль чистого кода, к которому надо стремиться. Надо ли? </p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/185266/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="184232" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-10T18:24:12.000Z" title="2023-02-10, 21:24">10 фев в 21:24</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/184232/" data-article-link="" class="tm-article-snippet__title-link"><span>Вывернул DNS наизнанку</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <!----> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/dns/" class="tm-article-snippet__hubs-item-link"><span>DNS</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/domains/" class="tm-article-snippet__hubs-item-link"><span>Администрирование доменных имен</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/network_technologies/" class="tm-article-snippet__hubs-item-link"><span>Сетевые технологии</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/c21/e0a/5c7/c21e0a5c75c08200440895448d7d7b60.png" class="tm-article-snippet__lead-image" style="object-position:0% 0%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>Статья о том, <s>как написать dns сервер на python</s> превратить служебную dns зону .arpa в свой собственный домен при помощи сервиса, предоставляющего бесплатные IPv6 адреса.</p>
+                     <p></p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/184232/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="184840" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-09T07:54:58.000Z" title="2023-02-09, 10:54">9 фев в 10:54</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/184840/" data-article-link="" class="tm-article-snippet__title-link"><span>Оптимизация запроса и запрос оптимизации</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <div class="tm-article-complexity tm-article-complexity_complexity-low">
+                   <span class="tm-svg-icon__wrapper tm-article-complexity__icon">
+                    <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                     <title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#complexity-low"></use>
+                    </svg></span> <span class="tm-article-complexity__label"> Простой </span>
+                  </div> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/data_engineering/" class="tm-article-snippet__hubs-item-link"><span>Data Engineering</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/Hadoop/" class="tm-article-snippet__hubs-item-link"><span>Hadoop</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/sql/" class="tm-article-snippet__hubs-item-link"><span>SQL</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/db_admins/" class="tm-article-snippet__hubs-item-link"><span>Администрирование баз данных</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/45c/f6a/a82/45cf6aa82897b4b2f97cd2a536141711.png" class="tm-article-snippet__lead-image" style="object-position:0% 0%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>Как не грабить память, не пытать диск, не мучать кластер. Или делать все это всего одним запросом на Impala к Hadoop.</p>
+                     <p>Среди задач аналитиков данных, в рамках которых необходимо иметь дело с большими объемами однотипных данных, выделяются задачи построения витрин данных, автоматизации процессов сбора и обработки данных. Многие аналитики используют различные реляционные базы данных, в таблицах которых хранятся огромные объемы информации, агрегация и доступ к которым может занимать долгое время, поэтому правильное составление и оптимизация запросов к этим таблицам становится критически необходимым фактором для работы аналитиков, инженеров данных и data scientist.</p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/184840/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="185218" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-08T22:41:20.000Z" title="2023-02-09, 01:41">9 фев в 01:41</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/185218/" data-article-link="" class="tm-article-snippet__title-link"><span>Мультиархитектурность</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <!----> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/programming/" class="tm-article-snippet__hubs-item-link"><span>Программирование</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/ef7/8ff/036/ef78ff036c98f9999d84285de191f094.png" class="tm-article-snippet__lead-image" style="object-position:0% 0%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>Привет, читатель! Возникла у меня идея порассуждать на занимательную, на мой скромный взгляд, тему. Возникла она у меня потому что, наверное, просто накипело. Эта тема, как ты уже понял из названия, мультиархитектурность (забавный термин который я сам же и придумал, хотя не уверен, быть может он существовал и до меня).</p>
+                     <p>И еще небольшой дисклеймер – скажу сразу, что в данной статье я не предлагаю никаких решений рассматриваемой проблемы, так как пока просто не знаю таких решений, которые бы помогли обойти ее без потерь.</p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/185218/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="185132" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-08T21:40:51.000Z" title="2023-02-09, 00:40">9 фев в 00:40</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/185132/" data-article-link="" class="tm-article-snippet__title-link"><span>Очередное доказательство</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <!----> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/maths/" class="tm-article-snippet__hubs-item-link"><span>Математика</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/1a2/bc4/c92/1a2bc4c9250f322525f96d3c58112b0f.png" class="tm-article-snippet__lead-image" style="object-position:0% 0%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>Как известно, теорема Ферма была доказана в 1995 году. Только поиски простого доказательства не остановились. Ферма, говорят, уместил его на полях книги. Предлагаю очередную попытку. С желанием разобраться в правильности или нет данного доказательства. Оно опирается на школьную математику. Правда, затрагивает лишь трехмерное пространство. Есть надежда, что этот метод подойдет и для n-мерных пространств, где n&gt;3. </p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/185132/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="184884" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-08T19:55:26.000Z" title="2023-02-08, 22:55">8 фев в 22:55</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/184884/" data-article-link="" class="tm-article-snippet__title-link"><span>Как работает буферизация в Rust: стандартная библиотека std::io::{BufReader, BufWriter}</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <div class="tm-article-complexity tm-article-complexity_complexity-low">
+                   <span class="tm-svg-icon__wrapper tm-article-complexity__icon">
+                    <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                     <title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#complexity-low"></use>
+                    </svg></span> <span class="tm-article-complexity__label"> Простой </span>
+                  </div> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/rust/" class="tm-article-snippet__hubs-item-link"><span>Rust</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <!----> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>Для себя задался вопросом, как работает буферизация для Rust и зачем она нужна при чтении файла с текстом. Оказалось, что ответ найти сложно: про буферизацию чаще всего разбирают либо в контексте C++, либо Java, но первый вариант сложноват, а второй не подходит из-за разных подходов к работе с памятью. </p>
+                     <p>Казалось бы, можно открыть стандартную библиотеку Rust, найти документацию std::io::{<a href="https://doc.rust-lang.org/std/io/struct.BufReader.html" rel="noopener noreferrer nofollow">BufReader</a>, <a href="https://doc.rust-lang.org/std/io/struct.BufWriter.html" rel="noopener noreferrer nofollow">BufWriter</a>} и закончить на этом. Однако моя цель разобрать вопрос на более фундаментальном уровне, поэтому ниже попробую сделать это, несмотря на пробелы в базовых знаниях. </p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/184884/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="184888" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-08T19:51:46.000Z" title="2023-02-08, 22:51">8 фев в 22:51</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/184888/" data-article-link="" class="tm-article-snippet__title-link"><span>Как инвестировать россиянину в 2023, и почему именно в крипту?</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <!----> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/p2p/" class="tm-article-snippet__hubs-item-link"><span>Децентрализованные сети</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/cryptocurrency/" class="tm-article-snippet__hubs-item-link"><span>Криптовалюты</span> <!----></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/finance/" class="tm-article-snippet__hubs-item-link"><span>Финансы в IT</span> <!----></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/24d/f29/2a7/24df292a70fe4db424f6b838e8393c91.jpg" class="tm-article-snippet__lead-image" style="object-position:0% 0%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>Как продолжить зарабатывать на собственных средствах, не боясь за их сохранность, обеспечить средства мобильностью и подобрать правильный инструмент для их хранения? </p>
+                     <p></p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/184888/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="184842" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-08T19:22:50.000Z" title="2023-02-08, 22:22">8 фев в 22:22</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/184842/" data-article-link="" class="tm-article-snippet__title-link"><span>Как выложить свой модуль на PyPI</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <!----> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/python/" class="tm-article-snippet__hubs-item-link"><span>Python</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/programming/" class="tm-article-snippet__hubs-item-link"><span>Программирование</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/3d1/575/1c4/3d15751c47a646d6a1e5b9f1e290daf2.jpg" class="tm-article-snippet__lead-image" style="object-position:0% 0%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p><strong>PyPI</strong> (<em>Python Package Index</em>) - это каталог модулей и библиотек для языка программирования Python, которые могут использовать все. Я думаю, все, кто программируют на Python, хотя бы раз устанавливали и использовали модули. Так вот, все пользовательские модули (т. е. те модули, которые вы устанавливаете, а не те, которые идут из-под коробки) выложены на PyPI.</p>
+                     <p>Что же нам нужно, чтобы выложить модуль на PyPI?</p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/184842/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="184750" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-08T07:11:35.000Z" title="2023-02-08, 10:11">8 фев в 10:11</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/184750/" data-article-link="" class="tm-article-snippet__title-link"><span>Command Injections Ч.1</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <!----> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/infosecurity/" class="tm-article-snippet__hubs-item-link"><span>Информационная безопасность</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/web_testing/" class="tm-article-snippet__hubs-item-link"><span>Тестирование веб-сервисов</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/654/39a/efe/65439aefee0097a4cfbf86dcf90abc4f.jpg" class="tm-article-snippet__lead-image" style="object-position:0% 0%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p> Уязвимость <strong>Command injection</strong> (В дальнейшем CMDi) относится к наиболее критическим типам уязвимостей. Она позволяет нам выполнять системные команды непосредственно на внутреннем сервере хостинга, что может привести к плачевным последствиям. Если веб-приложение использует управляемый пользователем ввод для выполнения системной команды на внутреннем сервере, мы можем внедрить вредоносную полезную нагрузку, чтобы выполнять наши команды.</p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/184750/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="184802" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-07T22:54:50.000Z" title="2023-02-08, 01:54">8 фев в 01:54</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/184802/" data-article-link="" class="tm-article-snippet__title-link"><span>Как защитить свои права владельцу опциона на долю в компании.&nbsp;Чек-лист</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <div class="tm-article-complexity tm-article-complexity_complexity-low">
+                   <span class="tm-svg-icon__wrapper tm-article-complexity__icon">
+                    <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                     <title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#complexity-low"></use>
+                    </svg></span> <span class="tm-article-complexity__label"> Простой </span>
+                  </div> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/read/" class="tm-article-snippet__hubs-item-link"><span>Читальный зал</span> <!----></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <!----> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>Добрый день! Мы - команда юристов, по воле судьбы разбросанные по всему миру, но объёдиненные целью помогать предпринимателям решать бизнес-задачи в сфере корпоративного и управленческого консалтинга, оформления инвестиционных и опционных сделок, реализации международных проектов.</p>
+                     <p>На это раз мы хотим рассказать о том, как владельцу опциона на долю в компании защитить свои права. Тема очень щепетильная, тем более что сейчас опционные программы мотивации персонала растут как грибы после дождя. Бизнес хочет экономить и удерживать наиболее ценных сотрудников с помощью опционов. <br>Итак, поехали. </p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/184802/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="184828" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-07T22:31:20.000Z" title="2023-02-08, 01:31">8 фев в 01:31</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/184828/" data-article-link="" class="tm-article-snippet__title-link"><span>Важность непрерывного обучения в быстро развивающейся технологической отрасли</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <div class="tm-article-complexity tm-article-complexity_complexity-low">
+                   <span class="tm-svg-icon__wrapper tm-article-complexity__icon">
+                    <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                     <title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#complexity-low"></use>
+                    </svg></span> <span class="tm-article-complexity__label"> Простой </span>
+                  </div> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/popular_science/" class="tm-article-snippet__hubs-item-link"><span>Научно-популярное</span> <!----></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/study/" class="tm-article-snippet__hubs-item-link"><span>Учебный процесс в IT</span> <!----></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/5d1/4ef/d28/5d14efd281449314cb8aae3d1cd23a1d.jpeg" class="tm-article-snippet__lead-image" style="object-position:0% 0%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>Технологическая отрасль постоянно развивается, что делает необходимым для профессионалов оставаться в курсе последних тенденций и новейших инструментов. Поскольку новые технологии и языки программирования появляются постоянно, непрерывное обучение становится все более важным для профессионалов в технологической отрасли. Независимо от того, являетесь ли вы разработчиком программного обеспечения, специалистом по анализу данных или ИТ-специалистом, быть в курсе последних достижений в своей области очень важно для достижения успеха. В этой статье мы расскажем о важности непрерывного обучения в технологической отрасли и о том, почему профессионалам важно придерживаться такого подхода к своей карьере.</p>
+                     <p>Одна из основных причин, почему непрерывное обучение так важно в технологической отрасли, заключается в постоянно меняющемся характере технологий. Поскольку развитие технологий происходит беспрецедентными темпами, для профессионалов очень важно быть в курсе последних тенденций и инструментов. От искусственного интеллекта и машинного обучения до новых языков программирования и инструментов разработки программного обеспечения - ландшафт технологической отрасли постоянно меняется. Оставаясь информированными и обновленными, профессионалы в технологической отрасли могут опережать события и быть лучше подготовленными к решению новых задач и возможностей. Понимая постоянно меняющуюся природу технологий, вы сможете лучше адаптироваться к новым тенденциям и достижениям, что сделает вас более ценным и востребованным специалистом в технологической отрасли.</p>
+                     <p></p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/184828/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="184808" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-07T22:26:47.000Z" title="2023-02-08, 01:26">8 фев в 01:26</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/184808/" data-article-link="" class="tm-article-snippet__title-link"><span>Математика для входа в Data Science (ресурсы на английском)</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <!----> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/bigdata/" class="tm-article-snippet__hubs-item-link"><span>Big Data</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/maths/" class="tm-article-snippet__hubs-item-link"><span>Математика</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/machine_learning/" class="tm-article-snippet__hubs-item-link"><span>Машинное обучение</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <!----> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>Летом 2021 меня заинтересовала сфера Data Science, а конкретно Machine Learning (далее МЛ). Это не простая профессия и у нее достаточно высокий порог входа, а требования к джунам с каждым годом растут. Для входа в МЛ необходимо иметь сильный бэкграунд в математике.</p>
+                     <p></p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/184808/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="184734" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-03T21:45:12.000Z" title="2023-02-04, 00:45">4 фев в 00:45</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/184734/" data-article-link="" class="tm-article-snippet__title-link"><span>CAN шина</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <!----> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/internet_of_things/" class="tm-article-snippet__hubs-item-link"><span>Интернет вещей</span> <!----></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/hardware/" class="tm-article-snippet__hubs-item-link"><span>Компьютерное железо</span> <!----></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/controllers/" class="tm-article-snippet__hubs-item-link"><span>Программирование микроконтроллеров</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/circuit-design/" class="tm-article-snippet__hubs-item-link"><span>Схемотехника</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/353/57b/e5e/35357be5ee8a2bc2662767eca6eb7d37.png" class="tm-article-snippet__lead-image" style="object-position:0% 0%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>Всем привет! Я начинающий разработчик и увлекся Embedded стороной вопроса. Лучший способ запомнить информацию - написать какой нибудь конспект и поделиться им. Ниже моя краткая выжимка о CAN шине и передаче данных через нее.<br></p>
+                     <p></p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/184734/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="185072" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-03T19:59:31.000Z" title="2023-02-03, 22:59">3 фев в 22:59</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/185072/" data-article-link="" class="tm-article-snippet__title-link"><span>Как сделать статический веб-сайт в object storage на s3 aws sdk</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <!----> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/go/" class="tm-article-snippet__hubs-item-link"><span>Go</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/algorithms/" class="tm-article-snippet__hubs-item-link"><span>Алгоритмы</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/cloud_services/" class="tm-article-snippet__hubs-item-link"><span>Облачные сервисы</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/programming/" class="tm-article-snippet__hubs-item-link"><span>Программирование</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/f1e/d08/b37/f1ed08b3734a51338a708619c82e85c6.png" class="tm-article-snippet__lead-image" style="object-position:0% 0%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>Приветствую! Я сижу в крайне уставшем состоянии, но с чувством гордости за выполненную задачу. Задача: закинуть статический html сайт с css, js,images в object storage и выводить это добро в iframe. В object storage, потому что уже его используем, а чем больше зависимостей, как известно, тем хуже. Мне оказалось крайне сложно найти информацию по этому поводу. С немного подгоревшим стулом я решил написать информацию по этому вопросу, т.к. это должно быть в интернете.</p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/185072/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="184742" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-03T19:54:41.000Z" title="2023-02-03, 22:54">3 фев в 22:54</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/184742/" data-article-link="" class="tm-article-snippet__title-link"><span>ИИ победит человек(а)</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <!----> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/futurenow/" class="tm-article-snippet__hubs-item-link"><span>Будущее здесь</span> <!----></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/artificial_intelligence/" class="tm-article-snippet__hubs-item-link"><span>Искусственный интеллект</span> <!----></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/research/" class="tm-article-snippet__hubs-item-link"><span>Исследования и прогнозы в IT</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <div class="tm-article-snippet__cover tm-article-snippet__cover_cover">
+                   <img src="https://habrastorage.org/getpro/habr/upload_files/cf0/6d2/8b1/cf06d28b1c8bbd4a25557e7cf52c154d.png" class="tm-article-snippet__lead-image" style="object-position:0% 0%;">
+                  </div> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p><em>С чат-ботом я трепался накануне,<br> "Разумен Я!" - меня он убеждал.<br> Увы, его слова пропали втуне,<br> Свет отключился. Занавес. Финал.</em></p>
+                     <p>Чат-бот ChatGPT открыл ящик Пандоры и всерьёз напугал и удивил многих. Как с этим будет жить мир дальше?</p>
+                     <p></p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/184742/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+               <article id="185116" data-navigatable="" tabindex="0" class="tm-sandbox-articles-list__item">
+                <div class="tm-article-snippet tm-article-snippet">
+                 <div class="tm-article-snippet__meta-container">
+                  <div class="tm-article-snippet__meta">
+                   <span class="tm-article-datetime-published"><time datetime="2023-02-03T19:52:11.000Z" title="2023-02-03, 22:52">3 фев в 22:52</time></span>
+                  </div> <!---->
+                 </div> 
+                 <h2 class="tm-article-snippet__title tm-article-snippet__title_h2"><a href="/ru/sandbox/185116/" data-article-link="" class="tm-article-snippet__title-link"><span>Работа локера на примере Python</span></a></h2> 
+                 <div class="tm-article-snippet__stats">
+                  <!----> <!----> <span class="tm-icon-counter tm-data-icons__item">
+                   <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                    <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                   </svg> <span class="tm-icon-counter__value">0</span></span>
+                 </div> 
+                 <div class="tm-article-snippet__hubs-container">
+                  <div class="tm-article-snippet__hubs">
+                   <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/python/" class="tm-article-snippet__hubs-item-link"><span>Python</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/virus/" class="tm-article-snippet__hubs-item-link"><span>Антивирусная защита</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/programming/" class="tm-article-snippet__hubs-item-link"><span>Программирование</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                  </div>
+                 </div> 
+                 <div class="tm-article-snippet__labels-container">
+                  <div class="tm-article-snippet__labels">
+                   <!----> 
+                   <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-invitePending">
+                    <span> Ожидает приглашения </span>
+                   </div>
+                  </div>
+                 </div> <!----> 
+                 <div class="tm-article-body tm-article-snippet__lead">
+                  <!----> 
+                  <div>
+                   <div>
+                    <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                     <p>В этой статье я сделал совершенно рабочий локер на питоне.</p>
+                     <p></p>
+                    </div>
+                   </div> <!----> <!---->
+                  </div> <a href="/ru/sandbox/185116/" class="tm-article-snippet__readmore"><span>Читать далее</span></a>
+                 </div>
+                </div> <!----> <!---->
+               </article>
+              </div> 
+              <div class="tm-pagination">
+               <div id="pagination-prev-page" data-pagination-prev="" event="" rel="prev" class="tm-pagination__navigation-link">
+                <svg height="16" width="16" class="tm-svg-img tm-pagination__arrow tm-pagination__arrow_prev">
+                 <title>Назад</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#arrow-back"></use>
+                </svg> <span class="tm-pagination__navigation-link-title"> Сюда </span>
+               </div> 
+               <div class="tm-pagination__pages"> <span class="tm-pagination__page tm-pagination__page_current"> 1 </span> 
+                <div class="tm-pagination__page-group">
+                 <a href="/ru/sandbox/page2/" class="tm-pagination__page"> 2 </a><a href="/ru/sandbox/page3/" class="tm-pagination__page"> 3 </a> <span class="tm-pagination__page tm-pagination__page_skip"> ... </span>
+                </div>
+                <div class="tm-pagination__page-group">
+                 <a href="/ru/sandbox/page49/" class="tm-pagination__page"> 49 </a><a href="/ru/sandbox/page50/" class="tm-pagination__page"> 50 </a> <!---->
+                </div>
+               </div> <a href="/ru/sandbox/page2/" id="pagination-next-page" data-pagination-next="" rel="next" class="tm-pagination__navigation-link tm-pagination__navigation-link_active"><span class="tm-pagination__navigation-link-title"> Туда </span> 
+                <svg height="16" width="16" class="tm-svg-img tm-pagination__arrow tm-pagination__arrow_next">
+                 <title>Назад</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#arrow-back"></use>
+                </svg></a>
+              </div>
+             </div>
+            </div> <!---->
+           </div>
+          </div>
+         </div> 
+         <div class="tm-page__sidebar">
+          <div class="tm-layout-sidebar">
+           <div class="tm-layout-sidebar__placeholder_initial"></div> 
+           <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;">
+            <aside class="tm-block tm-block tm-block_spacing-bottom">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">О песочнице</h2> 
+              </div> <!---->
+             </header> 
+             <div class="tm-block__body tm-block__body">
+              <div class="await-about-text">
+               Это <a href="/docs/help/sandbox/" target="_blank">«Песочница»</a> — раздел, в который попадают дебютные посты пользователей, желающих стать полноправными участниками сообщества.
+               <br>
+               <br> Если у вас есть <a href="/docs/help/registration/#invite" target="_blank">приглашение</a>, отправьте его автору понравившейся публикации — тогда её смогут прочитать и обсудить все остальные пользователи Хабра. 
+               <br>
+               <br>Чтобы исключить предвзятость при оценке, все публикации анонимны, псевдонимы показываются случайным образом.
+              </div>
+             </div> <!---->
+            </aside> <!---->
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </main> <!---->
+    </div> 
+    <div class="tm-footer-menu">
+     <div class="tm-page-width">
+      <div class="tm-footer-menu__container">
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Ваш аккаунт </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/ru/sandbox/&amp;hl=ru" rel="nofollow" target="_self"> Войти </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/ru/sandbox/&amp;hl=ru" rel="nofollow" target="_self"> Регистрация </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Разделы </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/" class="footer-menu__item-link router-link-active"> Публикации </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/news/" class="footer-menu__item-link"> Новости </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/hubs/" class="footer-menu__item-link"> Хабы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/companies/" class="footer-menu__item-link"> Компании </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/users/" class="footer-menu__item-link"> Авторы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/sandbox/" aria-current="page" class="footer-menu__item-link router-link-exact-active router-link-active"> Песочница </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Информация </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/help/" class="footer-menu__item-link"> Устройство сайта </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/authors/codex/" class="footer-menu__item-link"> Для авторов </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/companies/corpblogs/" class="footer-menu__item-link"> Для компаний </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/docs/transparency/" class="footer-menu__item-link"> Документы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement" target="_blank"> Соглашение </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/" target="_blank"> Конфиденциальность </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Услуги </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/corporate-blogs/" target="_blank"> Корпоративный блог </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/advertising/" target="_blank"> Медийная реклама </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/native-special/" target="_blank"> Нативные проекты </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/education-programs/" target="_blank"> Образовательные программы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/hello-startup/" target="_blank"> Стартапам </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/megaprojects/" class="footer-menu__item-link"> Мегапроекты </a></li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div> 
+    <div class="tm-footer">
+     <div class="tm-page-width">
+      <div class="tm-footer__container">
+       <!----> 
+       <div class="tm-footer__social">
+        <a href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Facebook</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-facebook"></use>
+         </svg></a><a href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Twitter</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-twitter"></use>
+         </svg></a><a href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>VK</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-vkontakte"></use>
+         </svg></a><a href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Telegram</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-telegram"></use>
+         </svg></a><a href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Youtube</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-youtube"></use>
+         </svg></a><a href="https://zen.yandex.ru/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Яндекс Дзен</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-zen"></use>
+         </svg></a>
+       </div> 
+       <div class="v-portal" style="display:none;"></div> <button class="tm-footer__link"><!----> Настройка языка </button> <a href="/ru/feedback/" class="tm-footer__link"> Техническая поддержка </a> <a href="/berserk-mode-nope" class="tm-footer__link"> Вернуться на старую версию </a> 
+       <div class="tm-footer-copyright">
+        <span class="tm-copyright"><span class="tm-copyright__years">© 2006–2023, </span> <span class="tm-copyright__name"><a href="https://company.habr.com/" rel="noopener" target="_blank" class="tm-copyright__link">Habr</a></span></span>
+       </div>
+      </div>
+     </div>
+    </div> <!----> <!---->
+   </div> 
+   <div class="vue-portal-target"></div>
+  </div> 
+  <script>window.__INITIAL_STATE__={"adblock":{"hasAcceptableAdsFilter":false,"hasAdblock":false},"articlesList":{"articlesList":{},"articlesIds":{},"isLoading":false,"pagesCount":{},"route":{},"reasonsList":null,"view":"cards","lastVisitedRoute":{},"ssrCommentsArticleIds":[],"karma":{"userReasonsList":null}},"authorContribution":{"authors":{}},"betaTest":{"currentAnnouncement":null,"announcements":{},"announcementCards":null,"announcementComments":{},"announcementCommentThreads":{},"announcementCommentingStatuses":{},"archivedList":[]},"authorStatistics":{"articleRefs":{},"articleIds":{},"pagesCount":{},"route":{},"viewsCount":[],"maxStatsCount":{}},"career":{"seoLandings":[],"hubs":""},"comments":{"articleComments":{},"articlePinnedComments":{},"searchCommentsResults":null,"pagesCount":null,"commentAccess":{},"scrollParents":{},"pageArticleComments":{"lastViewedComment":0,"postId":null,"lastCommentTimestamp":"","moderated":[],"moderatedIds":[],"commentRoute":""}},"companies":{"companyRefs":{},"companyIds":{},"companyTopIds":{},"pagesCount":{},"companyProfiles":{},"companiesCategories":[],"companiesCategoriesTotalCount":0,"companiesWidgets":{},"companiesWorkers":{},"companiesFans":{},"route":{},"isLoading":false,"companyWorkersLoading":false,"companyFansLoading":false,"vacancies":{},"companiesGalleries":{},"companiesBanners":{},"companiesLandingVacancies":{},"companiesTechnologies":{},"workplaceInfo":null},"companyAdmin":{"companyInfo":null,"companyInfoLoading":false,"faqArticles":null,"brandingPreviewImageUrl":null,"jivoStatus":0,"adminNotifications":null},"companiesContribution":{"hubs":{},"flows":{},"companyRefs":{}},"companyHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"conversation":{"messages":[],"respondent":null,"isLoadMore":false},"conversations":{"conversations":[],"unreadCount":0,"pagesCount":0},"desktopState":{"desktopFl":null,"desktopHl":null,"isChecked":false,"isLoginDemanded":false},"docs":{"menu":{},"articles":{},"mainMenu":[],"loading":{"main":false,"dropdown":false,"article":false}},"feature":{"isProbablyVisible":true},"flows":{"updates":{"countNewPostsBySubscription":null,"countNewPostsAll":33,"countNewNewsAll":7},"flows":[{"alias":"develop","id":"1","route":{"name":"FLOW_PAGE","params":{"flowName":"develop"}}},{"alias":"admin","id":"6","route":{"name":"FLOW_PAGE","params":{"flowName":"admin"}}},{"alias":"design","id":"2","route":{"name":"FLOW_PAGE","params":{"flowName":"design"}}},{"alias":"management","id":"3","route":{"name":"FLOW_PAGE","params":{"flowName":"management"}}},{"alias":"marketing","id":"4","route":{"name":"FLOW_PAGE","params":{"flowName":"marketing"}}},{"alias":"popsci","id":"7","route":{"name":"FLOW_PAGE","params":{"flowName":"popsci"}}}]},"global":{"isPwa":false,"device":"desktop","isHabrCom":true},"hubs":{"hubRefs":{},"hubIds":{},"pagesCount":{},"isLoading":false,"route":{}},"hubsBlock":{"hubRefs":{},"hubIds":{}},"i18n":{"fl":"ru","hl":"ru"},"info":{"infoPage":{},"isLoading":true},"location":{"urlStruct":{"protocol":null,"slashes":null,"auth":null,"host":null,"port":null,"hostname":null,"hash":null,"search":null,"query":{},"pathname":null,"path":null,"href":""}},"me":{"user":null,"ppgDemanded":false,"karmaResetInfo":{"canReincarnate":null,"wasReincarnated":null,"currentScore":null},"notes":null},"modal":{"modals":[]},"mostReadingList":{"mostReadingListIds":[],"mostReadingListRefs":null,"promoPost":null},"ppa":{"articles":{},"card":null,"transactions":null,"totalTransactions":null,"isAccessible":null},"projectsBlocks":{"activeBlocks":{}},"promoData":{"isLoading":false,"hasLoaded":false,"featurer":null,"megaposts":null,"promoLinks":null,"promoPosts":null},"pullRefresh":{"shouldRefresh":false},"sandbox":{"articleIds":{"AWAIT_INVITE_AUTHORS_ARTICLES_LIST":["185596","184786","185330","185224","185266","184232","184840","185218","185132","184884","184888","184842","184750","184802","184828","184808","184734","185072","184742","185116"]},"articleRefs":{"184232":{"id":"184232","timePublished":"2023-02-10T18:24:12+00:00","isCorporative":false,"lang":"ru","titleHtml":"Вывернул DNS наизнанку","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"17708","alias":"dns","type":"collective","title":"DNS","titleHtml":"DNS","isProfiled":true,"relatedData":null},{"id":"183","alias":"domains","type":"collective","title":"Администрирование доменных имен","titleHtml":"Администрирование доменных имен","isProfiled":true,"relatedData":null},{"id":"17123","alias":"network_technologies","type":"collective","title":"Сетевые технологии","titleHtml":"Сетевые технологии","isProfiled":true,"relatedData":null}],"flows":[{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EСтатья о том, \u003Cs\u003Eкак написать dns сервер на python\u003C\u002Fs\u003E превратить служебную dns зону .arpa в свой собственный домен при помощи сервиса, предоставляющего бесплатные IPv6 адреса.\u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fc21\u002Fe0a\u002F5c7\u002Fc21e0a5c75c08200440895448d7d7b60.png","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fc21\u002Fe0a\u002F5c7\u002Fc21e0a5c75c08200440895448d7d7b60.png","fit":"cover","positionY":0,"positionX":0}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":null,"tags":[{"titleHtml":"днс"},{"titleHtml":"днс-сервер"},{"titleHtml":"питон"}]},"184734":{"id":"184734","timePublished":"2023-02-03T21:45:12+00:00","isCorporative":false,"lang":"ru","titleHtml":"CAN шина","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"21970","alias":"internet_of_things","type":"collective","title":"Интернет вещей","titleHtml":"Интернет вещей","isProfiled":false,"relatedData":null},{"id":"21898","alias":"hardware","type":"collective","title":"Компьютерное железо","titleHtml":"Компьютерное железо","isProfiled":false,"relatedData":null},{"id":"19737","alias":"controllers","type":"collective","title":"Программирование микроконтроллеров","titleHtml":"Программирование микроконтроллеров","isProfiled":true,"relatedData":null},{"id":"21472","alias":"circuit-design","type":"collective","title":"Схемотехника","titleHtml":"Схемотехника","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"},{"id":"7","alias":"popsci","title":"Научпоп","titleHtml":"Научпоп"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EВсем привет! Я начинающий разработчик и увлекся Embedded стороной вопроса. Лучший способ запомнить информацию - написать какой нибудь конспект и поделиться им. Ниже моя краткая выжимка о CAN шине и передаче данных через нее.\u003Cbr\u003E\u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F353\u002F57b\u002Fe5e\u002F35357be5ee8a2bc2662767eca6eb7d37.png","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F353\u002F57b\u002Fe5e\u002F35357be5ee8a2bc2662767eca6eb7d37.png","fit":"cover","positionY":0,"positionX":0}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":null,"tags":[{"titleHtml":"can"}]},"184742":{"id":"184742","timePublished":"2023-02-03T19:54:41+00:00","isCorporative":false,"lang":"ru","titleHtml":"ИИ победит человек(а)","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"22014","alias":"futurenow","type":"collective","title":"Будущее здесь","titleHtml":"Будущее здесь","isProfiled":false,"relatedData":null},{"id":"21922","alias":"artificial_intelligence","type":"collective","title":"Искусственный интеллект","titleHtml":"Искусственный интеллект","isProfiled":false,"relatedData":null},{"id":"20688","alias":"research","type":"collective","title":"Исследования и прогнозы в IT","titleHtml":"Исследования и прогнозы в IT","isProfiled":true,"relatedData":null}],"flows":[{"id":"3","alias":"management","title":"Менеджмент","titleHtml":"Менеджмент"},{"id":"7","alias":"popsci","title":"Научпоп","titleHtml":"Научпоп"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003E\u003Cem\u003EС чат-ботом я трепался накануне,\u003Cbr\u003E \"Разумен Я!\" - меня он убеждал.\u003Cbr\u003E Увы, его слова пропали втуне,\u003Cbr\u003E Свет отключился. Занавес. Финал.\u003C\u002Fem\u003E\u003C\u002Fp\u003E\u003Cp\u003EЧат-бот ChatGPT открыл ящик Пандоры и всерьёз напугал и удивил многих. Как с этим будет жить мир дальше?\u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcf0\u002F6d2\u002F8b1\u002Fcf06d28b1c8bbd4a25557e7cf52c154d.png","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcf0\u002F6d2\u002F8b1\u002Fcf06d28b1c8bbd4a25557e7cf52c154d.png","fit":"cover","positionY":0,"positionX":0}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":null,"tags":[{"titleHtml":"chatgpt"},{"titleHtml":"ии"},{"titleHtml":"прогноз"},{"titleHtml":"аналитика"}]},"184750":{"id":"184750","timePublished":"2023-02-08T07:11:35+00:00","isCorporative":false,"lang":"ru","titleHtml":"Command Injections Ч.1","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"50","alias":"infosecurity","type":"collective","title":"Информационная безопасность","titleHtml":"Информационная безопасность","isProfiled":true,"relatedData":null},{"id":"19279","alias":"web_testing","type":"collective","title":"Тестирование веб-сервисов","titleHtml":"Тестирование веб-сервисов","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003E    Уязвимость \u003Cstrong\u003ECommand injection\u003C\u002Fstrong\u003E (В дальнейшем CMDi) относится к наиболее критическим типам уязвимостей. Она позволяет нам выполнять системные команды непосредственно на внутреннем сервере хостинга, что может привести к плачевным последствиям. Если веб-приложение использует управляемый пользователем ввод для выполнения системной команды на внутреннем сервере, мы можем внедрить вредоносную полезную нагрузку, чтобы выполнять наши команды.\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F654\u002F39a\u002Fefe\u002F65439aefee0097a4cfbf86dcf90abc4f.jpg","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F654\u002F39a\u002Fefe\u002F65439aefee0097a4cfbf86dcf90abc4f.jpg","fit":"cover","positionY":0,"positionX":0}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":null,"tags":[{"titleHtml":"pentest"},{"titleHtml":"иб"},{"titleHtml":"CMDi"},{"titleHtml":"Command injection"},{"titleHtml":"тестирование на проникновение"}]},"184786":{"id":"184786","timePublished":"2023-02-14T21:05:10+00:00","isCorporative":false,"lang":"ru","titleHtml":"Что нужно знать для переезда на Бали?","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"22470","alias":"remote","type":"collective","title":"Удалённая работа","titleHtml":"Удалённая работа","isProfiled":false,"relatedData":null}],"flows":[{"id":"3","alias":"management","title":"Менеджмент","titleHtml":"Менеджмент"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EВ этой статьи я расскажу историю, как я переехал на Бали в 2022 году, какие были нюансы и сложности, и поделюсь полезными ресурсами, которые мне в свое время очень помогли.\u003C\u002Fp\u003E\u003Cp\u003EВпервые на острове я оказался еще 3 года назад в качестве туриста, познакомился с классными людьми, которые давно тут живут и решил, что обязательно приеду сюда на несколько месяцев провести зиму.\u003C\u002Fp\u003E\u003Cp\u003EНа Бали кайфовый климат, всегда тепло, довольно лайтовый сезон дождей, не как в Тае, красиво, развито, есть все необходимое для длительного комфортного проживания: быстрый интернет, коворкинги, модные кафе на любой вкус и цвет, жилье на любой бюджет, а главное - огромное русскоговорящее комьюнити.\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4c2\u002F2ba\u002Fbfe\u002F4c22babfe27c954a9bb5b908e88e1295.jpeg","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4c2\u002F2ba\u002Fbfe\u002F4c22babfe27c954a9bb5b908e88e1295.jpeg","fit":"cover","positionY":0,"positionX":0}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":null,"tags":[{"titleHtml":"релокация"},{"titleHtml":"переезд на бали"}]},"184802":{"id":"184802","timePublished":"2023-02-07T22:54:50+00:00","isCorporative":false,"lang":"ru","titleHtml":"Как защитить свои права владельцу опциона на долю в компании. Чек-лист","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"20742","alias":"read","type":"collective","title":"Читальный зал","titleHtml":"Читальный зал","isProfiled":false,"relatedData":null}],"flows":[{"id":"3","alias":"management","title":"Менеджмент","titleHtml":"Менеджмент"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EДобрый день! Мы - команда юристов, по воле судьбы разбросанные по всему миру, но объёдиненные целью помогать предпринимателям решать бизнес-задачи в сфере корпоративного и управленческого консалтинга, оформления инвестиционных и опционных сделок, реализации международных проектов.\u003C\u002Fp\u003E\u003Cp\u003EНа это раз мы хотим рассказать о том, как владельцу опциона на долю в компании защитить свои права. Тема очень щепетильная, тем более что сейчас опционные программы мотивации персонала растут как грибы после дождя. Бизнес хочет экономить и удерживать наиболее ценных сотрудников с помощью опционов. \u003Cbr\u003EИтак, поехали. \u003C\u002Fp\u003E","imageUrl":null,"buttonTextHtml":"Читать далее","image":null},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":"low","tags":[{"titleHtml":"Бизнес"},{"titleHtml":"опционы"},{"titleHtml":"опционные контракты"}]},"184808":{"id":"184808","timePublished":"2023-02-07T22:26:47+00:00","isCorporative":false,"lang":"ru","titleHtml":"Математика для входа в Data Science (ресурсы на английском)","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"17795","alias":"bigdata","type":"collective","title":"Big Data","titleHtml":"Big Data","isProfiled":true,"relatedData":null},{"id":"17812","alias":"maths","type":"collective","title":"Математика","titleHtml":"Математика","isProfiled":true,"relatedData":null},{"id":"19439","alias":"machine_learning","type":"collective","title":"Машинное обучение","titleHtml":"Машинное обучение","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EЛетом 2021 меня заинтересовала сфера Data Science, а конкретно Machine Learning (далее МЛ). Это не простая профессия и у нее достаточно высокий порог входа, а требования к джунам с каждым годом растут. Для входа в МЛ необходимо иметь сильный бэкграунд в математике.\u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E","imageUrl":null,"buttonTextHtml":"Читать далее","image":null},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":null,"tags":[{"titleHtml":"ресурсы"},{"titleHtml":"курсы"},{"titleHtml":"математика"},{"titleHtml":"data science"},{"titleHtml":"machinelearning"},{"titleHtml":"новичкам"}]},"184828":{"id":"184828","timePublished":"2023-02-07T22:31:20+00:00","isCorporative":false,"lang":"ru","titleHtml":"Важность непрерывного обучения в быстро развивающейся технологической отрасли","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"21910","alias":"popular_science","type":"collective","title":"Научно-популярное","titleHtml":"Научно-популярное","isProfiled":false,"relatedData":null},{"id":"20696","alias":"study","type":"collective","title":"Учебный процесс в IT","titleHtml":"Учебный процесс в IT","isProfiled":false,"relatedData":null}],"flows":[{"id":"3","alias":"management","title":"Менеджмент","titleHtml":"Менеджмент"},{"id":"7","alias":"popsci","title":"Научпоп","titleHtml":"Научпоп"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EТехнологическая отрасль постоянно развивается, что делает необходимым для профессионалов оставаться в курсе последних тенденций и новейших инструментов. Поскольку новые технологии и языки программирования появляются постоянно, непрерывное обучение становится все более важным для профессионалов в технологической отрасли. Независимо от того, являетесь ли вы разработчиком программного обеспечения, специалистом по анализу данных или ИТ-специалистом, быть в курсе последних достижений в своей области очень важно для достижения успеха. В этой статье мы расскажем о важности непрерывного обучения в технологической отрасли и о том, почему профессионалам важно придерживаться такого подхода к своей карьере.\u003C\u002Fp\u003E\u003Cp\u003EОдна из основных причин, почему непрерывное обучение так важно в технологической отрасли, заключается в постоянно меняющемся характере технологий. Поскольку развитие технологий происходит беспрецедентными темпами, для профессионалов очень важно быть в курсе последних тенденций и инструментов. От искусственного интеллекта и машинного обучения до новых языков программирования и инструментов разработки программного обеспечения - ландшафт технологической отрасли постоянно меняется. Оставаясь информированными и обновленными, профессионалы в технологической отрасли могут опережать события и быть лучше подготовленными к решению новых задач и возможностей. Понимая постоянно меняющуюся природу технологий, вы сможете лучше адаптироваться к новым тенденциям и достижениям, что сделает вас более ценным и востребованным специалистом в технологической отрасли.\u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5d1\u002F4ef\u002Fd28\u002F5d14efd281449314cb8aae3d1cd23a1d.jpeg","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5d1\u002F4ef\u002Fd28\u002F5d14efd281449314cb8aae3d1cd23a1d.jpeg","fit":"cover","positionY":0,"positionX":0}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":"low","tags":[{"titleHtml":"получение знаний"},{"titleHtml":"развитие"},{"titleHtml":"будущее"},{"titleHtml":"будущее интернета"},{"titleHtml":"навыки"}]},"184840":{"id":"184840","timePublished":"2023-02-09T07:54:58+00:00","isCorporative":false,"lang":"ru","titleHtml":"Оптимизация запроса и запрос оптимизации","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"22374","alias":"data_engineering","type":"collective","title":"Data Engineering","titleHtml":"Data Engineering","isProfiled":true,"relatedData":null},{"id":"21376","alias":"Hadoop","type":"collective","title":"Hadoop","titleHtml":"Hadoop","isProfiled":true,"relatedData":null},{"id":"594","alias":"sql","type":"collective","title":"SQL","titleHtml":"SQL","isProfiled":true,"relatedData":null},{"id":"17681","alias":"db_admins","type":"collective","title":"Администрирование баз данных","titleHtml":"Администрирование баз данных","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"},{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EКак не грабить память, не пытать диск, не мучать кластер. Или делать все это всего одним запросом на Impala к Hadoop.\u003C\u002Fp\u003E\u003Cp\u003EСреди задач аналитиков данных, в рамках которых необходимо иметь дело с большими объемами однотипных данных, выделяются задачи построения витрин данных, автоматизации процессов сбора и обработки данных. Многие аналитики используют различные реляционные базы данных, в таблицах которых хранятся огромные объемы информации, агрегация и доступ к которым может занимать долгое время, поэтому правильное составление и оптимизация запросов к этим таблицам становится критически необходимым фактором для работы аналитиков, инженеров данных и data scientist.\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F45c\u002Ff6a\u002Fa82\u002F45cf6aa82897b4b2f97cd2a536141711.png","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F45c\u002Ff6a\u002Fa82\u002F45cf6aa82897b4b2f97cd2a536141711.png","fit":"cover","positionY":0,"positionX":0}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":"low","tags":[{"titleHtml":"sql"},{"titleHtml":"оптимизация запросов"},{"titleHtml":"impala"},{"titleHtml":"hadoop"},{"titleHtml":"join"}]},"184842":{"id":"184842","timePublished":"2023-02-08T19:22:50+00:00","isCorporative":false,"lang":"ru","titleHtml":"Как выложить свой модуль на PyPI","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"340","alias":"python","type":"collective","title":"Python","titleHtml":"Python","isProfiled":true,"relatedData":null},{"id":"359","alias":"programming","type":"collective","title":"Программирование","titleHtml":"Программирование","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003E\u003Cstrong\u003EPyPI\u003C\u002Fstrong\u003E (\u003Cem\u003EPython Package Index\u003C\u002Fem\u003E) - это каталог модулей и библиотек для языка программирования Python, которые могут использовать все. Я думаю, все, кто программируют на Python, хотя бы раз устанавливали и использовали модули. Так вот, все пользовательские модули (т. е. те модули, которые вы устанавливаете, а не те, которые идут из-под коробки) выложены на PyPI.\u003C\u002Fp\u003E\u003Cp\u003EЧто же нам нужно, чтобы выложить модуль на PyPI?\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F3d1\u002F575\u002F1c4\u002F3d15751c47a646d6a1e5b9f1e290daf2.jpg","buttonTextHtml":"Читать дальше &rarr;","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F3d1\u002F575\u002F1c4\u002F3d15751c47a646d6a1e5b9f1e290daf2.jpg","fit":"cover","positionY":0,"positionX":0}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":null,"tags":[{"titleHtml":"pypi"},{"titleHtml":"модуль"},{"titleHtml":"пакет"},{"titleHtml":"библиотека python"},{"titleHtml":"python"}]},"184884":{"id":"184884","timePublished":"2023-02-08T19:55:26+00:00","isCorporative":false,"lang":"ru","titleHtml":"Как работает буферизация в Rust: стандартная библиотека std::io::{BufReader, BufWriter}","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"18961","alias":"rust","type":"collective","title":"Rust","titleHtml":"Rust","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EДля себя задался вопросом, как работает буферизация для Rust и зачем она нужна при чтении файла с текстом. Оказалось, что ответ найти сложно: про буферизацию чаще всего разбирают либо в контексте C++, либо Java, но первый вариант сложноват, а второй не подходит из-за разных подходов к работе с памятью. \u003C\u002Fp\u003E\u003Cp\u003EКазалось бы, можно открыть стандартную библиотеку Rust, найти документацию std::io::{\u003Ca href=\"https:\u002F\u002Fdoc.rust-lang.org\u002Fstd\u002Fio\u002Fstruct.BufReader.html\" rel=\"noopener noreferrer nofollow\"\u003EBufReader\u003C\u002Fa\u003E, \u003Ca href=\"https:\u002F\u002Fdoc.rust-lang.org\u002Fstd\u002Fio\u002Fstruct.BufWriter.html\" rel=\"noopener noreferrer nofollow\"\u003EBufWriter\u003C\u002Fa\u003E} и закончить на этом. Однако моя цель разобрать вопрос на более фундаментальном уровне, поэтому ниже попробую сделать это, несмотря на пробелы в базовых знаниях. \u003C\u002Fp\u003E","imageUrl":null,"buttonTextHtml":"Читать далее","image":null},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":"low","tags":[{"titleHtml":"rust"},{"titleHtml":"буферизация"},{"titleHtml":"буфер обмена"},{"titleHtml":"буфер"}]},"184888":{"id":"184888","timePublished":"2023-02-08T19:51:46+00:00","isCorporative":false,"lang":"ru","titleHtml":"Как инвестировать россиянину в 2023, и почему именно в крипту?","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"33","alias":"p2p","type":"collective","title":"Децентрализованные сети","titleHtml":"Децентрализованные сети","isProfiled":true,"relatedData":null},{"id":"21986","alias":"cryptocurrency","type":"collective","title":"Криптовалюты","titleHtml":"Криптовалюты","isProfiled":false,"relatedData":null},{"id":"21928","alias":"finance","type":"collective","title":"Финансы в IT","titleHtml":"Финансы в IT","isProfiled":false,"relatedData":null}],"flows":[{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"},{"id":"7","alias":"popsci","title":"Научпоп","titleHtml":"Научпоп"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EКак продолжить зарабатывать на собственных средствах, не боясь за их сохранность, обеспечить средства мобильностью и подобрать правильный инструмент для их хранения?  \u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F24d\u002Ff29\u002F2a7\u002F24df292a70fe4db424f6b838e8393c91.jpg","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F24d\u002Ff29\u002F2a7\u002F24df292a70fe4db424f6b838e8393c91.jpg","fit":"cover","positionY":0,"positionX":0}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":null,"tags":[{"titleHtml":"Бокчейн"},{"titleHtml":"Крипотвалюта"},{"titleHtml":"De-Fi"},{"titleHtml":"Crypto"},{"titleHtml":"blockchain"},{"titleHtml":"investing"},{"titleHtml":"инвестирование"}]},"185072":{"id":"185072","timePublished":"2023-02-03T19:59:31+00:00","isCorporative":false,"lang":"ru","titleHtml":"Как сделать статический веб-сайт в object storage на s3 aws sdk","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"17748","alias":"go","type":"collective","title":"Go","titleHtml":"Go","isProfiled":true,"relatedData":null},{"id":"8000","alias":"algorithms","type":"collective","title":"Алгоритмы","titleHtml":"Алгоритмы","isProfiled":true,"relatedData":null},{"id":"21470","alias":"cloud_services","type":"collective","title":"Облачные сервисы","titleHtml":"Облачные сервисы","isProfiled":true,"relatedData":null},{"id":"359","alias":"programming","type":"collective","title":"Программирование","titleHtml":"Программирование","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"},{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EПриветствую! Я сижу в крайне уставшем состоянии, но с чувством гордости за выполненную задачу. Задача: закинуть статический html сайт с css, js,images в object storage и выводить это добро в iframe. В object storage, потому что уже его используем, а чем больше зависимостей, как известно, тем хуже. Мне оказалось крайне сложно найти информацию по этому поводу. С немного подгоревшим стулом я решил написать информацию по этому вопросу, т.к. это должно быть в интернете.\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff1e\u002Fd08\u002Fb37\u002Ff1ed08b3734a51338a708619c82e85c6.png","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff1e\u002Fd08\u002Fb37\u002Ff1ed08b3734a51338a708619c82e85c6.png","fit":"cover","positionY":0,"positionX":0}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":null,"tags":[{"titleHtml":"sdk"},{"titleHtml":"s3"},{"titleHtml":"object storage"},{"titleHtml":"website"},{"titleHtml":"go"},{"titleHtml":"golang"},{"titleHtml":"aws s3"},{"titleHtml":"aws"},{"titleHtml":"cloud"}]},"185116":{"id":"185116","timePublished":"2023-02-03T19:52:11+00:00","isCorporative":false,"lang":"ru","titleHtml":"Работа локера на примере Python","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"340","alias":"python","type":"collective","title":"Python","titleHtml":"Python","isProfiled":true,"relatedData":null},{"id":"332","alias":"virus","type":"collective","title":"Антивирусная защита","titleHtml":"Антивирусная защита","isProfiled":true,"relatedData":null},{"id":"359","alias":"programming","type":"collective","title":"Программирование","titleHtml":"Программирование","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"},{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EВ этой статье я сделал совершенно рабочий локер на питоне.\u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E","imageUrl":null,"buttonTextHtml":"Читать далее","image":null},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":null,"tags":[{"titleHtml":"python"},{"titleHtml":"вирус"},{"titleHtml":"локер"},{"titleHtml":"Tkinter"}]},"185132":{"id":"185132","timePublished":"2023-02-08T21:40:51+00:00","isCorporative":false,"lang":"ru","titleHtml":"Очередное доказательство","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"17812","alias":"maths","type":"collective","title":"Математика","titleHtml":"Математика","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EКак известно, теорема Ферма была доказана в 1995 году. Только поиски простого доказательства не остановились. Ферма, говорят, уместил его на полях книги. Предлагаю очередную попытку. С желанием разобраться в правильности или нет данного доказательства. Оно опирается на школьную математику. Правда, затрагивает лишь трехмерное пространство. Есть надежда, что этот метод подойдет и для n-мерных пространств, где n&gt;3. \u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F1a2\u002Fbc4\u002Fc92\u002F1a2bc4c9250f322525f96d3c58112b0f.png","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F1a2\u002Fbc4\u002Fc92\u002F1a2bc4c9250f322525f96d3c58112b0f.png","fit":"cover","positionY":0,"positionX":0}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":null,"tags":[{"titleHtml":"доказательство"},{"titleHtml":"теорема ферма"},{"titleHtml":"теорема"}]},"185218":{"id":"185218","timePublished":"2023-02-08T22:41:20+00:00","isCorporative":false,"lang":"ru","titleHtml":"Мультиархитектурность","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"359","alias":"programming","type":"collective","title":"Программирование","titleHtml":"Программирование","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EПривет, читатель! Возникла у меня идея порассуждать на занимательную, на мой скромный взгляд, тему. Возникла она у меня потому что, наверное, просто накипело. Эта тема, как ты уже понял из названия, мультиархитектурность (забавный термин который я сам же и придумал, хотя не уверен, быть может он существовал и до меня).\u003C\u002Fp\u003E\u003Cp\u003EИ еще небольшой дисклеймер – скажу сразу, что в данной статье я не предлагаю никаких решений рассматриваемой проблемы, так как пока просто не знаю таких решений, которые бы помогли обойти ее без потерь.\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fef7\u002F8ff\u002F036\u002Fef78ff036c98f9999d84285de191f094.png","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fef7\u002F8ff\u002F036\u002Fef78ff036c98f9999d84285de191f094.png","fit":"cover","positionY":0,"positionX":0}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":null,"tags":[{"titleHtml":"архитектура"},{"titleHtml":"мультиархитектурность"}]},"185224":{"id":"185224","timePublished":"2023-02-13T20:00:36+00:00","isCorporative":false,"lang":"ru","titleHtml":"Почему вы должны писать на TypeScript в 2023 году?","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"357","alias":"javascript","type":"collective","title":"JavaScript","titleHtml":"JavaScript","isProfiled":true,"relatedData":null},{"id":"17110","alias":"nodejs","type":"collective","title":"Node.JS","titleHtml":"Node.JS","isProfiled":true,"relatedData":null},{"id":"19327","alias":"reactjs","type":"collective","title":"ReactJS","titleHtml":"ReactJS","isProfiled":true,"relatedData":null},{"id":"21370","alias":"typescript","type":"collective","title":"TypeScript","titleHtml":"TypeScript","isProfiled":true,"relatedData":null},{"id":"91","alias":"webdev","type":"collective","title":"Разработка веб-сайтов","titleHtml":"Разработка веб-сайтов","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003E\u003Cstrong\u003ETypeScript\u003C\u002Fstrong\u003E&nbsp;— то&nbsp;же самое, что и&nbsp;\u003Cstrong\u003EJavaScript\u003C\u002Fstrong\u003E, но&nbsp;переменные не&nbsp;могут менять типы.  \u003C\u002Fp\u003E\u003Cp\u003EЦель создания \u003Cstrong\u003ETypeScript \u003C\u002Fstrong\u003E—&nbsp;сделать \u003Cstrong\u003EJavaScript \u003C\u002Fstrong\u003Eлучше. \u003Cstrong\u003ETypeScript \u003C\u002Fstrong\u003Eдобавляет в&nbsp;\u003Cstrong\u003EJavaScript \u003C\u002Fstrong\u003Eтипы, позволяя явно задавать их&nbsp;для всех структур данных. Это увеличивает читаемость кода и&nbsp;уменьшает количество ошибок в&nbsp;финальной сборке приложения.  \u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F185\u002F1a6\u002F53d\u002F1851a653d5b5e43ad5ce70108809a4cf.jpg","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F185\u002F1a6\u002F53d\u002F1851a653d5b5e43ad5ce70108809a4cf.jpg","fit":"cover","positionY":4,"positionX":58}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":"low","tags":[{"titleHtml":"typescript"},{"titleHtml":"javascript"},{"titleHtml":"react"},{"titleHtml":"node"},{"titleHtml":"web"},{"titleHtml":"frontend"},{"titleHtml":"backend"}]},"185266":{"id":"185266","timePublished":"2023-02-12T18:16:50+00:00","isCorporative":false,"lang":"ru","titleHtml":"Clean ABAP — Как сделать код чистым, прочитав рекомендации к единому стилю? Часть 1","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"17699","alias":"erp","type":"collective","title":"ERP-системы","titleHtml":"ERP-системы","isProfiled":true,"relatedData":null},{"id":"359","alias":"programming","type":"collective","title":"Программирование","titleHtml":"Программирование","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"},{"id":"3","alias":"management","title":"Менеджмент","titleHtml":"Менеджмент"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EК сожалению привлечь внимание АБАПера можно лишь рассказав шутку про 1С. Но мы постараемся обойтись без шуток. У нас есть замечательная возможность обсудить стиль чистого кода, к которому надо стремиться. Надо ли?   \u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F482\u002F7c8\u002F2ef\u002F4827c82ef8b13a03e25cec84574907c9.jpg","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F482\u002F7c8\u002F2ef\u002F4827c82ef8b13a03e25cec84574907c9.jpg","fit":"cover","positionY":0,"positionX":0}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":"medium","tags":[{"titleHtml":"abap sap"},{"titleHtml":"clean code"},{"titleHtml":"sap"},{"titleHtml":"sap erp"}]},"185330":{"id":"185330","timePublished":"2023-02-14T02:35:01+00:00","isCorporative":false,"lang":"ru","titleHtml":"Освоение ремесла. Руководство по становлению квалифицированным программистом","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"359","alias":"programming","type":"collective","title":"Программирование","titleHtml":"Программирование","isProfiled":true,"relatedData":null},{"id":"22470","alias":"remote","type":"collective","title":"Удалённая работа","titleHtml":"Удалённая работа","isProfiled":false,"relatedData":null},{"id":"20696","alias":"study","type":"collective","title":"Учебный процесс в IT","titleHtml":"Учебный процесс в IT","isProfiled":false,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"},{"id":"3","alias":"management","title":"Менеджмент","titleHtml":"Менеджмент"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EПрограммирование - это процесс разработки и кодирования компьютерного программного обеспечения, приложений и систем. Он включает в себя сочетание технических навыков, логического мышления и творческого подхода к решению проблем. Искусство компьютерного программирования значительно развилось с момента его возникновения, постоянно разрабатываются новые языки, инструменты и методологии. Однако в своей основе программирование остается неизменным - это процесс создания решений сложных проблем с помощью кода.\u003C\u002Fp\u003E\u003Cp\u003EВ этом руководстве мы рассмотрим основные понятия и методы, необходимые для того, чтобы стать квалифицированным программистом. Мы рассмотрим такие темы, как алгоритмы и структуры данных, объектно-ориентированное программирование, отладка, разработка проектов и многое другое. К концу этого руководства у вас будет твердое понимание того, что требуется для создания высококачественного программного обеспечения, и вы будете на пути к тому, чтобы стать квалифицированным программистом.\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F275\u002F5cb\u002F0e8\u002F2755cb0e8ae86c1e1466ebb366eab914.jpeg","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F275\u002F5cb\u002F0e8\u002F2755cb0e8ae86c1e1466ebb366eab914.jpeg","fit":"cover","positionY":0,"positionX":0}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":"low","tags":[{"titleHtml":"обучение"},{"titleHtml":"обучение программированию"},{"titleHtml":"обучение онлайн"},{"titleHtml":"разработка"}]},"185596":{"id":"185596","timePublished":"2023-02-17T18:45:31+00:00","isCorporative":false,"lang":"ru","titleHtml":"Работа памяти в Python","editorVersion":"2.0","postType":"sandbox","postLabels":[{"type":"invitePending","data":null}],"author":null,"statistics":{"commentsCount":0,"favoritesCount":0,"readingCount":0,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"340","alias":"python","type":"collective","title":"Python","titleHtml":"Python","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cp\u003EPython - интерпретируемый язык программирования, поэтому перед выполнением код транслируется в машиночитаемые инструкции - байт-код. Байт-код интерпретируется виртуальной машиной, определяемой реализацией языка, например, стандартной - CPython.\u003C\u002Fp\u003E\u003Cp\u003EPython не взаимодействует с памятью - только с её виртуальным представлением. В процессе выполнения программы операционная система создаёт процесс и выделяет под него ресурсы. В отличие от С\u002FС++ мы не можем управлять памятью из кучи напрямую, а делаем это посредством memory manager, который и обращается к памяти через Python\u002FC API.\u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe6e\u002F149\u002Fe97\u002Fe6e149e97eecf0bf309d59fd9741e5b8.jpg","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe6e\u002F149\u002Fe97\u002Fe6e149e97eecf0bf309d59fd9741e5b8.jpg","fit":"cover","positionY":0,"positionX":0}},"status":"sbInvitePending","plannedPublishTime":null,"checked":null,"format":"common","readingTime":null,"complexity":"low","tags":[{"titleHtml":"python"},{"titleHtml":"память"},{"titleHtml":"memory management"}]}},"pagesCount":{"AWAIT_INVITE_AUTHORS_ARTICLES_LIST":50},"route":{"name":"AWAIT_INVITE_AUTHORS_ARTICLES_LIST","params":{"hl":"ru"},"query":{}},"lastVisitedRoute":{},"isLoading":false},"search":{"searchQueryError":null},"settingsOther":{"inputs":{"uiLang":{"errors":[],"ref":null,"value":""},"articlesLangEnglish":{"errors":[],"ref":null,"value":false},"articlesLangRussian":{"errors":[],"ref":null,"value":false},"agreement":{"errors":[],"ref":null,"value":false},"email":{"errors":[],"ref":null,"value":true},"digest":{"errors":[],"ref":null,"value":true}}},"similarList":{"similarListIds":[],"similarListRefs":null},"ssr":{"error":null,"isDataLoaded":false,"isDataLoading":false,"isHydrationFailed":false,"isServer":false},"stories":{"stories":[{"id":"story-238","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F552\u002F8b6\u002Fb04\u002F5528b6b043be178d6cb353938a37c41f.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Flotus-main"},"title":"Найти дзен","lang":"ru","startTime":"2023-02-16T12:00:00+03:00","finishTime":"2023-02-26T11:43:00+03:00","slides":[{"id":"story-238_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5b0\u002F96a\u002Fba8\u002F5b096aba81be66041a2aa907dece5800.jpg","button":null},{"id":"story-238_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F710\u002Faaf\u002Fd5e\u002F710aafd5e1dee1d68ec384e25062562d.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Flotus-1","colorType":"light"}},{"id":"story-238_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fabd\u002Ffa8\u002F3ad\u002Fabdfa83ad425d6093bf5b562498d4a0e.jpg","button":{"title":"Чем и кому?","link":"https:\u002F\u002Fu.habr.com\u002Flotus-2","colorType":"light"}},{"id":"story-238_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F74d\u002F464\u002F9af\u002F74d4649af8509dd19e49f44be684bfcd.jpg","button":{"title":"Как это работает?","link":"https:\u002F\u002Fu.habr.com\u002Flotus-3","colorType":"light"}},{"id":"story-238_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4f1\u002Ffbb\u002F5a6\u002F4f1fbb5a6daa2c5839e920db487cb8c1.jpg","button":{"title":"Узнать больше","link":"https:\u002F\u002Fu.habr.com\u002Flotus-4","colorType":"light"}},{"id":"story-238_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8d9\u002Fa2c\u002F146\u002F8d9a2c14645db00326f575c448144b49.jpg","button":{"title":"Как обнаружить?","link":"https:\u002F\u002Fu.habr.com\u002Flotus-5","colorType":"light"}},{"id":"story-238_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7f0\u002F531\u002F294\u002F7f0531294cedd2e9e4dd047ea21b493b.jpg","button":{"title":"Посмотреть","link":"https:\u002F\u002Fu.habr.com\u002Flotus-6","colorType":"light"}}]},{"id":"story-234","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F16a\u002Fe4a\u002Fb61\u002F16ae4ab611326cc11d0d8919c149d95c.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FqQNg9"},"title":"Консультации на Хабр Экспертах: бэкенд","lang":"ru","startTime":"2023-02-15T15:33:00+03:00","finishTime":"2023-02-22T15:27:00+03:00","slides":[{"id":"story-234_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F523\u002F9ed\u002F058\u002F5239ed058e84d21597e19ca56650f880.png","button":null},{"id":"story-234_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F207\u002F976\u002F160\u002F207976160ce35d4fbd90cb705d597fe9.png","button":null},{"id":"story-234_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F38c\u002F675\u002Fd4f\u002F38c675d4f4c5ba17441f2c43949ca4b3.png","button":null},{"id":"story-234_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F287\u002F395\u002F4a4\u002F2873954a46af32bf23ca60d0c2c00c16.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002FqQNg9","colorType":"dark"}}]},{"id":"story-228","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F026\u002F1fe\u002Fc97\u002F0261fec9713f03e7bbaec8a99fd0a95b.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Недельный топ годноты от компаний","lang":"ru","startTime":"2023-02-15T11:00:00+03:00","finishTime":"2023-02-21T17:00:00+03:00","slides":[{"id":"story-228_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F3d5\u002Fe21\u002F351\u002F3d5e21351512ad34216523b08ede4024.jpg","button":null},{"id":"story-228_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8ef\u002Fb1e\u002F7f4\u002F8efb1e7f4a6f5986dbbc2cdd1dd2c447.jpg","button":{"title":"Выбрать сценарий","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Ftimeweb\u002Fblog\u002F711288\u002F","colorType":"light"}},{"id":"story-228_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F03d\u002Ffa3\u002F79d\u002F03dfa379dbc41cedb33d93b658876d76.jpg","button":{"title":"Как именно?","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fbelayaraduga\u002Fblog\u002F713636\u002F","colorType":"light"}},{"id":"story-228_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0c2\u002F6e0\u002Ff07\u002F0c26e0f07bef607419cfc016005b7975.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Ffirst\u002Fblog\u002F714940\u002F","colorType":"light"}},{"id":"story-228_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F668\u002F4c8\u002F0ee\u002F6684c80ee37964dc482d1e4059236c86.jpg","button":{"title":"Смотреть обзор","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fjetinfosystems\u002Fblog\u002F713284\u002F","colorType":"light"}},{"id":"story-228_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8e5\u002F05f\u002Ffa0\u002F8e505ffa0510a1c7ab84eecb2e31f88e.jpg","button":{"title":"Научиться","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fods\u002Fblog\u002F709222\u002F","colorType":"light"}},{"id":"story-228_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F362\u002F4dd\u002Fc41\u002F3624ddc414b0ee14009364669e892adb.jpg","button":{"title":"Ознакомиться","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F715192\u002F","colorType":"light"}},{"id":"story-228_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe1b\u002Ff76\u002F602\u002Fe1bf7660228906801c055ed106e88875.jpg","button":{"title":"Узнать больше","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fgetmatch\u002Fblog\u002F714448\u002F","colorType":"light"}}]},{"id":"story-224","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4fa\u002F899\u002F490\u002F4fa899490d1c57ec7064ea09e8d50a14.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fwebcast_MLOps"},"title":"От MLOps к TriceratОps","lang":"ru","startTime":"2023-02-14T10:00:47+03:00","finishTime":"2023-02-21T23:59:00+03:00","slides":[{"id":"story-224_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F607\u002Fded\u002F888\u002F607ded88881e3c2b400eb781da7e1b1d.png","button":null},{"id":"story-224_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F915\u002Fdb0\u002F681\u002F915db0681d302a5736b4b29689bc2dc1.png","button":{"title":"Симптомы","link":"https:\u002F\u002Fwww.youtube.com\u002Fwatch?v=rK2V4J6Z7CU&t=747s","colorType":"light"}},{"id":"story-224_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F514\u002F8fc\u002F078\u002F5148fc078b174adbb89583a7d8e20ad8.png","button":{"title":"Рецепт полностью","link":"https:\u002F\u002Fwww.youtube.com\u002Fwatch?v=rK2V4J6Z7CU&t=1065s","colorType":"light"}},{"id":"story-224_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2a3\u002F41f\u002F544\u002F2a341f544d0576086b9f48783854934f.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fwww.youtube.com\u002Fwatch?v=rK2V4J6Z7CU&t=2273s","colorType":"light"}},{"id":"story-224_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F518\u002Fdde\u002F7e8\u002F518dde7e8d747cb1f3fce200094abaee.png","button":{"title":"В чём подвох","link":"https:\u002F\u002Fwww.youtube.com\u002Fwatch?v=rK2V4J6Z7CU&t=2912s","colorType":"light"}},{"id":"story-224_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcce\u002Fa7e\u002F58b\u002Fccea7e58b28908ec545db0e361347a43.jpg","button":{"title":"Посмотреть","link":"https:\u002F\u002Fyoutu.be\u002FyLsY984z_iI?list=PLTlO6nV_TaGCFJ4AZM5IA7JnMDSpoC0_Y","colorType":"light"}}]},{"id":"story-222","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F312\u002Fabe\u002Fd4c\u002F312abed4c2617f05f485c19ae101de7e.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Любовь, Хабр и роботы","lang":"ru","startTime":"2023-02-14T09:00:14+03:00","finishTime":"2023-02-26T23:59:00+03:00","slides":[{"id":"story-222_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd35\u002Fce5\u002F716\u002Fd35ce5716f14544be26d53e05dc155ab.jpg","button":null},{"id":"story-222_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F191\u002Fb9c\u002F449\u002F191b9c449738d2cb2333ffa8daa1bd39.jpg","button":{"title":"Читать переводы","link":"https:\u002F\u002Fu.habr.com\u002Fval1","colorType":"light"}},{"id":"story-222_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7c6\u002F61d\u002F6d9\u002F7c661d6d915ca10f037ccc7307fa36ec.jpg","button":{"title":"Что получилось?","link":"https:\u002F\u002Fu.habr.com\u002Fval2","colorType":"light"}},{"id":"story-222_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F02c\u002F20a\u002Fa28\u002F02c20aa28f1e1cb7d70943bd96eb5ac7.jpg","button":{"title":"Созерцать","link":"https:\u002F\u002Fu.habr.com\u002Fval3","colorType":"light"}},{"id":"story-222_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe94\u002F9d6\u002F03e\u002Fe949d603e63cf1c98dcc4597ba41abfa.jpg","button":{"title":"На свидание","link":"https:\u002F\u002Fu.habr.com\u002Fval4","colorType":"light"}},{"id":"story-222_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7b0\u002F3b3\u002Fed9\u002F7b03b3ed931ce73a0cda771b5e39c813.jpg","button":{"title":"Нашёл?","link":"https:\u002F\u002Fu.habr.com\u002Fval5","colorType":"light"}},{"id":"story-222_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F594\u002Fff6\u002Fbad\u002F594ff6badc0503fa3ca0dffafc31d3a3.jpg","button":{"title":"И сколько же?","link":"https:\u002F\u002Fu.habr.com\u002Fval6","colorType":"light"}},{"id":"story-222_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F452\u002Ff87\u002F9aa\u002F452f879aaf0db9530f35204663ec00e6.jpg","button":{"title":"Глянуть код","link":"https:\u002F\u002Fu.habr.com\u002Fval7","colorType":"light"}}]},{"id":"story-218","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F95d\u002F032\u002F360\u002F95d03236093f23cb006751a911c1ca1b.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FIcDGH"},"title":"Активность найма на IT-рынке в январе","lang":"ru","startTime":"2023-02-13T10:40:00+03:00","finishTime":"2023-02-20T23:59:41+03:00","slides":[{"id":"story-218_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F63e\u002Fcd3\u002F3ff\u002F63ecd33ff8e108e28fcb72af09339823.png","button":null},{"id":"story-218_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0d1\u002F442\u002Ffa0\u002F0d1442fa021337f0c716405b19bd9aac.png","button":null},{"id":"story-218_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F16c\u002F7c1\u002F755\u002F16c7c17552d38519e88e3ac166ae4826.png","button":null},{"id":"story-218_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F802\u002Fbb8\u002Fed1\u002F802bb8ed1bddd0bf8afff9d90507fe8a.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002FIcDGH","colorType":"dark"}}]},{"id":"story-214","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F02e\u002F69c\u002F1b8\u002F02e69c1b8cc1292fe53929083a93f699.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"ИБ от Луки: топ-7 самых рейтинговых постов","lang":"ru","startTime":"2023-02-09T13:45:00+03:00","finishTime":"2023-02-19T23:59:00+03:00","slides":[{"id":"story-214_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F1aa\u002F5cc\u002F9d7\u002F1aa5cc9d7d557d97845d7d2bc0b1fe6a.jpg","button":null},{"id":"story-214_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd34\u002Fdc1\u002Ffee\u002Fd34dc1fee24eef1780fcb50decad4c6f.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-01","colorType":"light"}},{"id":"story-214_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F3e6\u002F2c4\u002F857\u002F3e62c4857decb9a45a38deacbf607879.jpg","button":{"title":"Читать пост","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-02","colorType":"light"}},{"id":"story-214_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa72\u002F490\u002Fd35\u002Fa72490d3551469f32d8895f0cc4899ff.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-03","colorType":"light"}},{"id":"story-214_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9f4\u002Ffed\u002F927\u002F9f4fed92715d9632655fa6ee5c281afa.jpg","button":{"title":"Читать","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-04","colorType":"light"}},{"id":"story-214_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F6be\u002Fbd5\u002Fe91\u002F6bebd5e913cc08b41010e9188e35156c.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-05","colorType":"light"}},{"id":"story-214_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2b3\u002F98b\u002Fa15\u002F2b398ba15bfb71e57d306aad220d466c.jpg","button":{"title":"Читать пост","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-06","colorType":"light"}},{"id":"story-214_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa9e\u002Fac9\u002Ffba\u002Fa9eac9fba81f7ae1feb21f2ddb42635a.jpg","button":{"title":"Читать","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-07","colorType":"light"}}]},{"id":"story-202","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F355\u002F61d\u002F02e\u002F35561d02e68fad97acb3023f5ed0943e.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-2"},"title":"Зарплаты в IT во второй половине 2022","lang":"ru","startTime":"2023-02-06T11:00:00+03:00","finishTime":"2023-02-19T23:59:00+03:00","slides":[{"id":"story-202_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F872\u002F6da\u002F434\u002F8726da4345864736c32cea5f6d0e8520.png","button":null},{"id":"story-202_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F079\u002F168\u002F80c\u002F07916880c5cd1a3e489233861be84a72.png","button":null},{"id":"story-202_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F600\u002F579\u002F3ab\u002F6005793ab7a69e006a6b13026dbf89a5.png","button":null},{"id":"story-202_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcb8\u002Fdc0\u002F099\u002Fcb8dc00992a4cd63c5d614b57e8037b5.png","button":null},{"id":"story-202_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Faff\u002F90f\u002Fe80\u002Faff90fe80f9466fe702f08b13658e8f2.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-2","colorType":"dark"}}]},{"id":"story-190","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fac3\u002F3cd\u002F1b0\u002Fac33cd1b02027add0414f306d5e37731.png","title":"Мир Plat.Form (НСПК)","link":"https:\u002F\u002Fu.habr.com\u002Fstories_mir_QRcode"},"title":"О QR-коде в гравюрах и хокку","lang":"ru","startTime":"2023-02-02T12:30:00+03:00","finishTime":"2023-02-19T23:59:00+03:00","slides":[{"id":"story-190_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5bb\u002F2f6\u002F42c\u002F5bb2f642cf18bbacbfd01bb1736d303d.jpg","button":{"title":"Подслушать","link":"https:\u002F\u002Fu.habr.com\u002Fstories_mir_QRcode","colorType":"dark"}},{"id":"story-190_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9b5\u002Fc66\u002F564\u002F9b5c665645bf62db2907bfe22b3decf4.png","button":{"title":"Узнать почему","link":"https:\u002F\u002Fu.habr.com\u002Fstories_mir_QRcode","colorType":"dark"}},{"id":"story-190_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fc4e\u002F457\u002F8c0\u002Fc4e4578c0ae364b388a38a78023007e1.jpg","button":{"title":"Как он работает","link":"https:\u002F\u002Fu.habr.com\u002Fstories_mir_QRcode","colorType":"dark"}},{"id":"story-190_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Febb\u002Fa53\u002Fe42\u002Febba53e42c52e27a0e815af78be5bdd9.png","button":{"title":"Узнать подробности","link":"https:\u002F\u002Fu.habr.com\u002Fstories_mir_QRcode","colorType":"dark"}}]},{"id":"story-186","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fb6b\u002F720\u002F180\u002Fb6b72018041811571246ddf5ef07bd33.png","title":"Сезоны Хабра","link":"https:\u002F\u002Fu.habr.com\u002Fstory_season-kuber"},"title":"Столкнуться с кубом","lang":"ru","startTime":"2023-02-01T11:30:00+03:00","finishTime":"2023-02-28T23:59:00+03:00","slides":[{"id":"story-186_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2b0\u002F5e8\u002Fffb\u002F2b05e8ffb30634f0f7f5c9602d8e43e6.png","button":null},{"id":"story-186_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fdfb\u002F838\u002F9c1\u002Fdfb8389c197e915942f9144978b91ce4.png","button":null},{"id":"story-186_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F634\u002Fc42\u002Fdfd\u002F634c42dfddb260cdf37f9c9b9d3f34ea.png","button":null},{"id":"story-186_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F401\u002F9f5\u002F59e\u002F4019f559e6c090ded0b46d6deeb4883c.png","button":null},{"id":"story-186_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F82a\u002F9cd\u002Fa48\u002F82a9cda4870156765b749271aca48241.png","button":{"title":"Смотреть участников","link":"https:\u002F\u002Fu.habr.com\u002Fstory_season-kuber_members","colorType":"light"}}]},{"id":"story-152","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa49\u002F0d3\u002F609\u002Fa490d3609f29b6dfc53a7b88ab47ca64.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa"},"title":"Сеньоры — очень странные люди","lang":"ru","startTime":"2023-01-23T11:00:00+03:00","finishTime":"2023-03-01T23:59:00+03:00","slides":[{"id":"story-152_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbbb\u002F901\u002F063\u002Fbbb9010630ae483ed1f41ec4e2572c13.png","button":null},{"id":"story-152_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4f8\u002F66c\u002F14f\u002F4f866c14f0ca8999334438d7f17c0e3a.png","button":null},{"id":"story-152_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F6b9\u002Fa07\u002Fa61\u002F6b9a07a612df213ac3a1c179301828df.png","button":null},{"id":"story-152_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff6b\u002Fadb\u002Fb99\u002Ff6badbb9969d7e34ef4f7492767c6a77.png","button":null},{"id":"story-152_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd9c\u002F9ac\u002F878\u002Fd9c9ac878bec5b494699e0080dd2e813.png","button":null},{"id":"story-152_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fdb1\u002Faf9\u002Fc3b\u002Fdb1af9c3bb557f6cee698cf67610f977.png","button":null},{"id":"story-152_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5cf\u002Fbed\u002F65b\u002F5cfbed65bd20b7051b1aac2b9d6e807e.png","button":null},{"id":"story-152_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffa8\u002F251\u002F4a9\u002Ffa82514a9471cd455339e97178d8c021.png","button":null},{"id":"story-152_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbd5\u002F901\u002Fe95\u002Fbd5901e952d9cf638355a3cc8b0c0911.png","button":{"title":"Хочу помочь джуну","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa","colorType":"light"}}]}]},"technotext":{"years":[],"technotextDocForNominees":null,"technotextDocForWinners":null,"technotextInfo":{},"technotextInfoLoading":false,"technotextWinners":{},"technotextWinnersLoading":false},"userHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"userInvites":{"availableInvites":0,"usedInvitesIds":[],"usedInvitesRefs":{},"usedInvitesPagesCount":0,"unusedInvitesIds":[],"unusedInvitesRefs":{},"unusedInvitesPagesCount":0},"userVotes":{"karmaVotesList":[],"karmaVotesPagesCount":null,"karmaVotesListLoading":false,"commentsVotesList":[],"commentsVotesPagesCount":null,"commentsVotesListLoading":false,"postsVotesList":[],"postsVotesPagesCount":null,"postsVotesListLoading":false,"userVotesList":[],"userVotesPagesCount":null,"userVotesListLoading":false},"users":{"authorRefs":{},"authorIds":{},"pagesCount":{},"authorProfiles":{},"userHubs":{},"userInvitations":{},"authorFollowers":{},"authorFollowed":{},"userSpecialization":{},"karmaStats":[],"statistics":null,"isLoading":false,"authorFollowersLoading":false,"authorFollowedLoading":false,"userHubsLoading":false,"userInvitationsLoading":false,"route":{}},"viewport":{"prevScrollY":{},"scrollY":0,"width":0},"tracker":{"items":{},"pagesCache":{},"markedViewedSilently":{},"markedRead":{},"unreadCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null},"unviewedCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null}}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script> 
+  <script src="https://assets.habr.com/habr-web/js/chunk-vendors.a5368ccd.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/sandbox.c402c0c3.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/app.34e7f643.js" defer></script> 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-726094-1"></script> 
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script> 
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(24049213, "init", {
+      defer:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:false,
+    });
+  </script> 
+  <noscript> 
+   <div> 
+    <img src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;" alt=""> 
+   </div> 
+  </noscript> 
+  <script type="text/javascript">
+      window.addEventListener('load', function () {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = 'https://vk.com/rtrg?p=VK-RTRG-421343-57vKE';
+        }, 0);
+      });
+    </script> 
+  <script src="/js/ads.js" onload="window['zhY4i4nJ9K'] = true"></script>  
+ </body>
+</html>

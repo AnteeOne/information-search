@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="ru" data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0"> 
+  <meta name="referrer" content="unsafe-url"> 
+  <title>Большие данные в строительстве / Хабр</title> 
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSxf6TF0.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveQhf6TF0.woff2) format('woff2');
+      unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSBf6TF0.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveRhf6.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* non-breaking hyphen */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmEU9vBh0_IsHAlmrO6g&skey=ee881451c540fdec&v=v29) format('woff2');
+      unicode-range: U+02011;
+    }
+  </style> 
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/chunk-vendors.66f44d11.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/chunk-vendors.a5368ccd.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/app.080de328.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/app.34e7f643.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/6741.eb1970d2.js" as="script"> 
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/chunk-vendors.66f44d11.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/app.080de328.css"> 
+  <script>window.i18nFetch = new Promise((res, rej) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', '/js/i18n/ru-compiled.55f14b6ad3f6b5d3418716684e371add.json');
+          xhr.responseType = 'json';
+          xhr.onload = function(e) {
+            if (this.status === 200) {
+              res({ru: xhr.response});
+            } else {
+              rej(e);
+            }
+          };
+          xhr.send();
+        });</script> 
+  <script data-vue-meta="ssr" type="application/ld+json" data-vmid="ldjson-schema">{"@context":"http:\/\/schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/habr.com\/ru\/post\/717840\/"},"headline":"Большие данные в строительстве","datePublished":"2023-02-19T11:40:28+03:00","dateModified":"2023-02-19T11:40:28+03:00","author":{"@type":"Person","name":"AlehLiashkevich"},"publisher":{"@type":"Organization","name":"Habr","logo":{"@type":"ImageObject","url":"https:\/\/habrastorage.org\/webt\/a_\/lk\/9m\/a_lk9mjkccjox-zccjrpfolmkmq.png"}},"description":"В настоящее время данные, которые условно относят к Big Data в строительстве,&nbsp; применяется для решения простейших задач, к примеру, поиска оптимальных конструкти...","url":"https:\/\/habr.com\/ru\/post\/717840\/#post-content-body","about":["h_cad_cam","h_bigdata","h_business_models","f_develop","f_management"],"image":["https:\/\/habr.com\/share\/publication\/717840\/aa4a3de05083d02af9c8aee64242d189\/"]}</script> 
+  <script src="//www.googletagservices.com/tag/js/gpt.js" async></script> 
+  <style>.grecaptcha-badge{visibility: hidden;}</style> 
+  <meta name="habr-version" content="2.112.0"> 
+  <meta data-vue-meta="ssr" property="fb:app_id" content="444736788986613">
+  <meta data-vue-meta="ssr" property="fb:pages" content="472597926099084">
+  <meta data-vue-meta="ssr" name="twitter:card" content="summary_large_image">
+  <meta data-vue-meta="ssr" name="twitter:site" content="@habr_com">
+  <meta data-vue-meta="ssr" property="og:site_name" content="Хабр" data-vmid="og:site_name">
+  <meta data-vue-meta="ssr" property="og:title" content="Большие данные в строительстве" data-vmid="og:title">
+  <meta data-vue-meta="ssr" name="twitter:title" content="Большие данные в строительстве" data-vmid="twitter:title">
+  <meta data-vue-meta="ssr" name="aiturec:title" content="Большие данные в строительстве" data-vmid="aiturec:title">
+  <meta data-vue-meta="ssr" name="description" content="В настоящее время данные, которые условно относят к Big Data в строительстве,&amp;nbsp; применяется для решения простейших задач, к примеру, поиска оптимальных конструктивных решений зданий в целях..." data-vmid="description">
+  <meta data-vue-meta="ssr" itemprop="description" content="В настоящее время данные, которые условно относят к Big Data в строительстве,&amp;nbsp; применяется для решения простейших задач, к примеру, поиска оптимальных конструктивных решений зданий в целях..." data-vmid="description:itemprop">
+  <meta data-vue-meta="ssr" property="og:description" content="В настоящее время данные, которые условно относят к Big Data в строительстве,&amp;nbsp; применяется для решения простейших задач, к примеру, поиска оптимальных конструктивных решений зданий в целях..." data-vmid="og:description">
+  <meta data-vue-meta="ssr" name="twitter:description" content="В настоящее время данные, которые условно относят к Big Data в строительстве,&amp;nbsp; применяется для решения простейших задач, к примеру, поиска оптимальных конструктивных решений зданий в целях..." data-vmid="twitter:description">
+  <meta data-vue-meta="ssr" property="aiturec:description" content="В настоящее время данные, которые условно относят к Big Data в строительстве,&amp;nbsp; применяется для решения простейших задач, к примеру, поиска оптимальных конструктивных решений зданий в целях..." data-vmid="aiturec:description">
+  <meta data-vue-meta="ssr" itemprop="image" content="https://habr.com/share/publication/717840/aa4a3de05083d02af9c8aee64242d189/" data-vmid="image:itemprop">
+  <meta data-vue-meta="ssr" property="og:image" content="https://habr.com/share/publication/717840/aa4a3de05083d02af9c8aee64242d189/" data-vmid="og:image">
+  <meta data-vue-meta="ssr" property="og:image:width" content="1200" data-vmid="og:image:width">
+  <meta data-vue-meta="ssr" property="og:image:height" content="630" data-vmid="og:image:height">
+  <meta data-vue-meta="ssr" property="aiturec:image" content="https://habr.com/share/publication/717840/aa4a3de05083d02af9c8aee64242d189/" data-vmid="aiturec:image">
+  <meta data-vue-meta="ssr" name="twitter:image" content="https://habr.com/share/publication/717840/aa4a3de05083d02af9c8aee64242d189/" data-vmid="twitter:image">
+  <meta data-vue-meta="ssr" property="vk:image" content="https://habr.com/share/publication/717840/aa4a3de05083d02af9c8aee64242d189/?format=vk" data-vmid="vk:image">
+  <meta data-vue-meta="ssr" property="aiturec:item_id" content="717840" data-vmid="aiturec:item_id">
+  <meta data-vue-meta="ssr" property="aiturec:datetime" content="2023-02-19T08:40:28.000Z" data-vmid="aiturec:datetime">
+  <meta data-vue-meta="ssr" content="https://habr.com/ru/post/717840/" property="og:url" data-vmid="og:url">
+  <meta data-vue-meta="ssr" property="og:type" content="article" data-vmid="og:type">
+  <meta data-vue-meta="ssr" property="og:locale" content="ru_RU" data-vmid="og:locale">
+  <meta data-vue-meta="ssr" name="keywords" content="cad, bim, bigdata, строительство"> 
+  <link data-vue-meta="ssr" href="https://habr.com/ru/rss/post/717840/?fl=ru" type="application/rss+xml" title="" rel="alternate" name="rss">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/post/717840/" rel="canonical" data-vmid="canonical">
+  <link data-vue-meta="ssr" rel="image_src" href="https://habr.com/share/publication/717840/aa4a3de05083d02af9c8aee64242d189/" data-vmid="image:href">
+  <link data-vue-meta="ssr" rel="amphtml" href="https://habr.com/ru/amp/post/717840/"> 
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303b44"> 
+  <meta name="msapplication-TileColor" content="#629FBC"> 
+  <meta name="apple-mobile-web-app-capable" content="yes"> 
+  <meta name="mobile-web-app-capable" content="yes"> 
+  <link rel="shortcut icon" type="image/png" sizes="16x16" href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png"> 
+  <link rel="shortcut icon" type="image/png" sizes="32x32" href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-152.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-180.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-256.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1136x640.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2436x1125.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1792x828.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_828x1792.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1334x750.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2208x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1125x2436.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2208.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2732x2048.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2688x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2224x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_750x1334.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x2732.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2388x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2224.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_640x1136.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2388.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x1536.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1536x2048.png"> 
+  <link rel="mask-icon" color="#77a2b6" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.svg"> 
+  <link crossorigin="use-credentials" href="/manifest.webmanifest" rel="manifest"> 
+  <script async src="https://unpkg.com/pwacompat" crossorigin="anonymous"></script> 
+  <script>window.yaContextCb = window.yaContextCb || []</script> 
+  <script src="https://yandex.ru/ads/system/context.js" async></script> 
+ </head> 
+ <body> 
+  <div id="app" data-server-rendered="true" data-async-called="true">
+   <div class="tm-layout__wrapper">
+    <!----> 
+    <div></div> <!----> 
+    <header class="tm-header">
+     <div class="tm-page-width">
+      <div class="tm-header__container">
+       <!----> <span class="tm-header__logo-wrap"><a href="/ru/" class="tm-header__logo tm-header__logo_ru">
+         <svg height="16" width="16" class="tm-svg-img tm-header__icon">
+          <title>Хабр</title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use>
+         </svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span> 
+       <div class="tm-dropdown tm-header__projects">
+        <div class="tm-dropdown__head">
+         <button class="tm-header__dropdown-toggle">
+          <svg height="16" width="16" class="tm-svg-img tm-header__icon tm-header__icon_dropdown">
+           <title>Открыть список</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#arrow-down"></use>
+          </svg></button>
+        </div> <!---->
+       </div> <a href="/ru/sandbox/start/" class="tm-header__become-author-btn"> Как стать автором </a> 
+       <div class="tm-feature tm-header__feature tm-feature tm-feature_variant-inline">
+        <!---->
+       </div> <!----> <!---->
+      </div>
+     </div>
+    </header> 
+    <div class="tm-layout">
+     <div class="tm-page-progress-bar"></div> 
+     <div data-menu-sticky="true" class="tm-base-layout__header tm-base-layout__header_is-sticky">
+      <div class="tm-page-width">
+       <div class="tm-base-layout__header-wrapper">
+        <div class="tm-main-menu">
+         <div class="tm-main-menu__section">
+          <nav class="tm-main-menu__section-content">
+           <!----> <a href="/ru/all/" class="tm-main-menu__item"> Все потоки </a> <a href="/ru/flows/develop/" class="tm-main-menu__item"> Разработка </a><a href="/ru/flows/admin/" class="tm-main-menu__item"> Администрирование </a><a href="/ru/flows/design/" class="tm-main-menu__item"> Дизайн </a><a href="/ru/flows/management/" class="tm-main-menu__item"> Менеджмент </a><a href="/ru/flows/marketing/" class="tm-main-menu__item"> Маркетинг </a><a href="/ru/flows/popsci/" class="tm-main-menu__item"> Научпоп </a>
+          </nav>
+         </div>
+        </div> 
+        <div class="tm-header-user-menu tm-base-layout__user-menu">
+         <a href="/ru/search/" class="tm-header-user-menu__item tm-header-user-menu__search">
+          <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark">
+           <title>Поиск</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#search"></use>
+          </svg></a> <!----> <!----> <!----> 
+         <div class="tm-header-user-menu__item tm-header-user-menu__user_desktop">
+          <div class="tm-dropdown">
+           <div class="tm-dropdown__head">
+            <svg height="24" width="24" data-test-id="menu-toggle-guest" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_dark">
+             <title>Профиль</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#header-user"></use>
+            </svg> <!---->
+           </div> <!---->
+          </div> <!---->
+         </div> <!---->
+        </div>
+       </div>
+      </div>
+     </div> <!----> 
+     <div class="tm-page-width"></div> 
+     <main class="tm-layout__container">
+      <div hl="ru" data-async-called="true" class="tm-page">
+       <div class="tm-page-width">
+        <!----> 
+        <div class="tm-page__wrapper">
+         <div class="tm-page__main tm-page__main_has-sidebar">
+          <div class="pull-down">
+           <!----> 
+           <div class="pull-down__header" style="height:0px;">
+            <div class="pull-down__content" style="bottom:10px;">
+             <svg height="24" width="24" class="tm-svg-img pull-down__arrow">
+              <title>Обновить</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#pull-arrow"></use>
+             </svg>
+            </div>
+           </div> 
+           <div class="tm-article-presenter"> 
+            <div class="tm-article-presenter__body">
+             <div class="tm-misprint-area">
+              <div class="tm-misprint-area__wrapper">
+               <article class="tm-article-presenter__content tm-article-presenter__content_narrow">
+                <div class="tm-article-presenter__header"> 
+                 <div class="tm-article-snippet tm-article-presenter__snippet tm-article-snippet">
+                  <div class="tm-article-snippet__meta-container">
+                   <div class="tm-article-snippet__meta">
+                    <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/AlehLiashkevich/" title="AlehLiashkevich" class="tm-user-info__userpic">
+                      <div class="tm-entity-image">
+                       <svg height="24" width="24" class="tm-svg-img tm-image-placeholder tm-image-placeholder_pink">
+                        <!----> <use xlink:href="/img/megazord-v28.78dd0d98..svg#placeholder-user"></use>
+                       </svg>
+                      </div></a> <span class="tm-user-info__user"><a href="/ru/users/AlehLiashkevich/" class="tm-user-info__username"> AlehLiashkevich <!----></a> <span class="tm-article-datetime-published"><time datetime="2023-02-19T08:40:28.000Z" title="2023-02-19, 11:40">7 часов назад</time></span></span></span>
+                   </div> <!---->
+                  </div> 
+                  <h1 lang="ru" class="tm-article-snippet__title tm-article-snippet__title_h1"><span>Большие данные в строительстве</span></h1> 
+                  <div class="tm-article-snippet__stats">
+                   <div class="tm-article-complexity tm-article-complexity_complexity-low">
+                    <span class="tm-svg-icon__wrapper tm-article-complexity__icon">
+                     <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                      <title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#complexity-low"></use>
+                     </svg></span> <span class="tm-article-complexity__label"> Простой </span>
+                   </div> 
+                   <div class="tm-article-reading-time">
+                    <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                     <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                      <title>Время на прочтение</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#clock"></use>
+                     </svg></span> <span class="tm-article-reading-time__label"> 6 мин </span>
+                   </div> <span class="tm-icon-counter tm-data-icons__item">
+                    <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                     <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-views"></use>
+                    </svg> <span class="tm-icon-counter__value">896</span></span>
+                  </div> 
+                  <div class="tm-article-snippet__hubs-container">
+                   <div class="tm-article-snippet__hubs">
+                    <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/cad_cam/" class="tm-article-snippet__hubs-item-link"><span>CAD/CAM</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/bigdata/" class="tm-article-snippet__hubs-item-link"><span>Big Data</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/business_models/" class="tm-article-snippet__hubs-item-link"><span>Бизнес-модели</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                   </div>
+                  </div> 
+                  <div class="tm-article-snippet__labels-container">
+                   <div class="tm-article-snippet__labels">
+                    <!----> 
+                    <div class="tm-article-snippet__label tm-article-snippet__label tm-article-snippet__label_variant-sandbox">
+                     <span> Из песочницы </span>
+                    </div>
+                   </div>
+                  </div> <!----> <!---->
+                 </div>
+                </div> <!----> 
+                <div data-gallery-root="" lang="ru" class="tm-article-body">
+                 <div></div> 
+                 <div id="post-content-body">
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                    <div xmlns="http://www.w3.org/1999/xhtml">
+                     <p>В настоящее время данные, которые условно относят к Big Data в строительстве,&nbsp; применяется для решения простейших задач, к примеру, поиска оптимальных конструктивных решений зданий в целях энергосбережения. Для решения данной задачи базу данных формируют из сведений о теплотехнических показателей ограждающих конструкций и затратах на отопление в зависимости от региона расположения объектов. Анализ данных по нескольким тысячам зданий позволяет выявить закономерности, которые можно использовать для последующего проектирования более энергоэффективных объектов. Приведенный пример иллюстрирует работу с данными на двух показателях. При этом каждый строительный объект это многие тысячи показателей и процессов различного рода представление о которых прямо или косвенно определяется в первую очередь проектом.&nbsp;</p>
+                     <p>Это отличает данные в строительстве от данных в иных областях - связь с целями определяется специальным документом - проектом строительного объекта. К примеру, банковские, торговые или данные в сфере услуг автоматически имеют атрибута цели и временные параметры в качестве. Иллюстрируя различия, можно провести аналогию с оплатой капучино или билета в кино, которая несет в себе всю необходимую полноту информации о месте и целях. ели же транзакций в строительстве неразрывно связаны с возможностью последующего прогнозирования. Т.е. без понимания целей ценность данных существенно снижается. Оплата, к примеру, тонны щебня не несет никакой информации о дальнейших целях этой транзакции. Щебень может быть использован множеством разных способов в любое время для различных целей. Т.о. данные без привязки к конкретному проекту не являются данными именно в строительстве. При этом необходимо учитывать, что Big Data в строительстве включает в себя не только данные о непосредственном&nbsp; возведении объектов, но также и обо всем, что связано с эксплуатацией, энергообеспечением, последующими ремонтами и реконструкциями, риэлторскими услугами и т.д. Учитывая долю затрат на жилье у частных лиц и на коммерческую недвижимость у организаций, затраты, связанные прямо или косвенно со строительством, показывают, что среди всех больших данных именно строительные являются самыми большими. При всей ценности они до сих пор не используются в полном масштабе.</p>
+                     <p>Основные причины, по которым любые данные в строительстве не могут&nbsp; рассматриваться в качестве больших данных.</p>
+                     <h4>1. Отсутствие единой стандартизации представления данных в строительстве</h4>
+                     <p>В общем случае для единичного объекта данные формируют на основе индивидуальных предпосылок в т.ч. носящий вероятностный и субъективный характер. Это приводит к тому, что уже для двух и более объектов вся совокупность данных не будет полностью сопоставимой.&nbsp;</p>
+                     <h4>2. Рассредоточенность и недоступность данных</h4>
+                     <p>Каждый участник (субъект) строительства, как и всех иных процессов в отношении возводимых или готовых объектов, являются не только источником данных, но во многом их собственником.&nbsp;</p>
+                     <h4>3. Потеря данных</h4>
+                     <p>Хранение данных после того как выполнена соответствующая услуга не всегда обеспечивается в необходимом масштабе. В большинстве случае через некоторое время доступ к данным строительстве для третьих лиц становится невозможным.</p>
+                     <h4>4. Закрытость и непрозрачность форматов данных</h4>
+                     <p><em> </em>Разнообразие ПО, в первую очередь САПР, и его версий приводит к соответствующему разнообразию форматов данных. При конвертации файлов неизбежна потеря данных.&nbsp;</p>
+                     <h4>5. Искажаемость данных </h4>
+                     <p>Различным участникам проектирования, строительства и эксплуатации объекта необходимы различные данные для реализации целей своей деятельности. С учетом непрозрачности строительства в целом, субъекты строительной деятельности могут их трактовать и искажать с учетом собственных экономических интересов.</p>
+                     <p>В общем случае базовым процессом для формирования данных в строительстве является процесс проектирования строительного объекта. В настоящее время в практику проектирование внедряется т.н. BIM-технология, целью которой является придание всем графическим элементам модели объекта конкретных атрибутов с целью последующего их использования при формировании смет. Никаких иных стратегических задач относительно процесса проектирования BIM-технология не решает. Все организационные отношения сохранились со времен кульманов с чертежами на бумаге. Т.о. фактически развитие САПР в строительстве в течении предыдущих трех десятилетий основано на решении задаче об упрощении сметных расчетов для возможности создания различных баз данных. Однако данная технология создает противоречие, которое не позволяет формировать данные, которые можно отнести к большим, и при этом не решая никаких задач непосредственно для целей самого проектирования. Проектировщику оплачивают разработку разделов строительного проекта после выдачи рабочей документации в установленный срок. BIM-технология подразумевает моделирование объекта (что неравносильно разработке рабочей документации), которое вынуждает дополнительно инвестировать в ПО и персонал. При этом применение BIM-технологии увеличивает срок и себестоимость проектирования. Финансовый же результат деятельности проектировщика определяется скоростью и качеством передаваемых в строительство рабочей документации, а не качеством моделирования и подготовки баз данных. Иными словами проектировщика вынуждают дополнительно инвестировать и осуществлять деятельность, на результатах которой зарабатывают иные структуры. Данное противоречие объясняет причину столь сложного, долгого и во многом безуспешного внедрения BIM-технологий в практику строительства. В разных странах преодоление этого противоречия решают разнообразными способами на национальном уровне. Все они фактически предполагают понуждение проектировщика административными и экономическими методами к выполнению бесполезной для него работы.</p>
+                     <p>Если попытка внедрения новой технологий с соответствующим прикладным инструментарием в практику строительного проектирования в различных странах на протяжении десятилетий повсеместно не привела к желаемому результату, значит на то существует общая фундаментальная причина. Строительство является одной из наиболее консервативных отраслей экономики, которая формировалась под влиянием комбинации ограничивающих факторов, в т.ч. наличия строительных норм, а также регулирования деятельности на местном и национальном уровне. Строительство является местной промышленностью, невозможно импортировать строительные объекты (как, например, продукцию машиностроения) для усиления конкуренции, что приводит к формированию местных инженерных традиций и отношений, которые складываются на протяжении поколений. Также можно предположить, что вышеперечисленные факторы приводят к тому, что в строительстве заняты люди которых можно условно отнести к традиционалистам и консерваторам. Как минимум, профессиональный рост строителей всегда происходит в отсутствии либо незначительности изменений в технологическом укладе. В результате влияния всех факторов строительная отрасль является мало восприимчивой к нововведениям. </p>
+                     <blockquote>
+                      <p>Т.о. BIM-технологии фактически представляются попыткой навязать субъектам строительной деятельности, сформировавшимся в традиционалистской парадигме в условиях ограничений и регулирования, в ущерб собственным экономическим интересам дополнительно принять на себя обязательства в интересах третьих лиц.</p>
+                     </blockquote>
+                     <p> Очевидно, что существующие BIM-технологии посредством ПО, представленного на рынке, концептуально противоречат природе взаимоотношений в строительстве, поэтому для получения соответствующих больших данных нужен принципиально иной подход, который бы учитывал отраслевые особенности.&nbsp;</p>
+                     <p>С учетом изложенных особенностей для формирования баз на всей совокупности данных в строительстве необходимо решение, которые бы удовлетворяло бы следующим условиям:</p>
+                     <ul>
+                      <li><p>все данные управляются и накапливаются централизованно;</p></li>
+                      <li><p>консолидация данных осуществляется силами и на основе экономической заинтересованности субъектов строительной деятельности;</p></li>
+                      <li><p>во избежание потерь и искажений передача данных только в рамках решения без использования сторонних приложений;&nbsp;</p></li>
+                      <li><p>трудоемкость и срок выполнения проектных работ существенно снижается;&nbsp;</p></li>
+                      <li><p>влияния пользователя на данные осуществляется в рамках полномочий, прозрачно установленных для всех участников проекта.</p></li>
+                     </ul>
+                     <p>Исходя из теоретических предпосылок, основой такого решения может быть только решение для машинной генерации рабочей документации, которое на основании архитектурной модели объекта автономно (без участия пользователей) создает все необходимые далее модели в т.ч. расчетные и конструктивные. Владелец проекта настраивает права доступа необходимых ему пользователей. Все процедуры и взаимоотношения могут копировать аналогичные в любой конкретной стране, вплоть до финансовых между участниками строительства, в т.ч. и после ввода в эксплуатацию объекта недвижимости. Все действия со строительными объектами на всех стадиях его жизненного цикла сохраняются в облаке. В результате владелец проекта покупает услугу, которая сокращает его затраты, а владелец облачного решения помимо монетизации своих услуг дополнительно получает доступ к данным на всей совокупности проектов, на которых и могут быть сформированы большие данные.&nbsp;</p>
+                     <h3>Заключение</h3>
+                     <p>В настоящее время данные в строительстве рассредоточены между всеми субъектам строительной деятельности без возможности централизации их обработки. При этом используемый инструментарий для формирования баз данных не учитывает основ отношений в строительстве. Исходя из отраслевых особенностей, сбор и систематизация данных предлагаемым на рынке ПО в рамках существующих технологий проектирования невозможна. Не существует решения в строительстве, собирающего все необходимые данные, которые можно было рассматривать в качестве Big Data. Таким может стать только облачное ПО при условии, что его использование существенно сократит издержки участников строительной деятельности (в первую очередь проектировщиков и заказчиков) не конфликтуя со сложившимися отношениями.</p>
+                    </div>
+                   </div>
+                  </div> <!----> <!---->
+                 </div> <!----> <!---->
+                </div> <!----> 
+                <div class="tm-article-presenter__meta">
+                 <div class="tm-separated-list tm-article-presenter__meta-list">
+                  <span class="tm-separated-list__title">Теги:</span> 
+                  <ul class="tm-separated-list__list">
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bcad%5D" class="tm-tags-list__link">cad</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bbim%5D" class="tm-tags-list__link">bim</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bbigdata%5D" class="tm-tags-list__link">bigdata</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D1%81%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D1%82%D0%B2%D0%BE%5D" class="tm-tags-list__link">строительство</a></li>
+                  </ul>
+                 </div> 
+                 <div class="tm-separated-list tm-article-presenter__meta-list">
+                  <span class="tm-separated-list__title">Хабы:</span> 
+                  <ul class="tm-separated-list__list">
+                   <li class="tm-separated-list__item"><a href="/ru/hub/cad_cam/" class="tm-hubs-list__link">CAD/CAM</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/hub/bigdata/" class="tm-hubs-list__link">Big Data</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/hub/business_models/" class="tm-hubs-list__link">Бизнес-модели</a></li>
+                  </ul>
+                 </div>
+                </div>
+               </article>
+              </div> <!---->
+             </div> 
+             <div class="tm-article-sticky-panel">
+              <div class="tm-data-icons tm-article-sticky-panel__icons">
+               <div class="tm-article-rating tm-data-icons__item">
+                <div class="tm-votes-meter tm-article-rating__votes-switcher">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>Всего голосов 2: ↑1 и ↓1</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-rating"></use>
+                 </svg> <span title="Всего голосов 2: ↑1 и ↓1" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">0</span>
+                </div> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> <!----> <!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                 <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                  <title>Добавить в закладки</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-favorite"></use>
+                 </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 3 </span></button> 
+               <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                <a href="/ru/post/717840/comments/" class="tm-article-comments-counter-link__link">
+                 <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                  <title>Комментарии</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-comments"></use>
+                 </svg> <span class="tm-article-comments-counter-link__value"> 1 </span></a> <!---->
+               </div> 
+               <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                <button type="button" class="tm-sharing__button">
+                 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                  <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                 </svg></button> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> 
+               <div class="v-portal" style="display:none;"></div>
+              </div> 
+             </div>
+            </div> 
+            <div class="v-portal" style="display:none;"></div> 
+            <div class="tm-article-presenter__footer">
+             <div class="tm-article-blocks">
+              <!----> 
+              <section class="tm-block tm-block tm-block_spacing-bottom">
+               <!----> 
+               <div class="tm-block__body tm-block__body tm-block__body_variant-balanced">
+                <div class="tm-article-author"> 
+                 <div class="tm-user-card tm-article-author__user-card tm-user-card tm-user-card_variant-article">
+                  <div class="tm-user-card__info-container">
+                   <div class="tm-user-card__header">
+                    <div class="tm-user-card__header-data">
+                     <a href="/ru/users/AlehLiashkevich/" class="tm-user-card__userpic tm-user-card__userpic_size-40">
+                      <div class="tm-entity-image">
+                       <svg class="tm-svg-img tm-image-placeholder tm-image-placeholder_pink">
+                        <!----> <use xlink:href="/img/megazord-v28.78dd0d98..svg#placeholder-user"></use>
+                       </svg>
+                      </div></a> 
+                     <div class="tm-user-card__meta">
+                      <div title=" 1 голос " class="tm-karma tm-user-card__karma tm-karma">
+                       <div class="tm-karma__votes tm-karma__votes_positive">
+                         1 
+                       </div> 
+                       <div class="tm-karma__text">
+                         Карма 
+                       </div> 
+                       <div class="v-portal" style="display:none;"></div>
+                      </div> 
+                      <div title="Рейтинг пользователя" class="tm-rating tm-user-card__rating">
+                       <div class="tm-rating__header"> 
+                        <div class="tm-rating__counter tm-rating__counter">
+                         0
+                        </div>
+                       </div> 
+                       <div class="tm-rating__text tm-rating__text">
+                         Рейтинг 
+                       </div>
+                      </div>
+                     </div>
+                    </div>
+                   </div> 
+                   <div class="tm-user-card__info tm-user-card__info tm-user-card__info_variant-article">
+                    <div class="tm-user-card__title tm-user-card__title tm-user-card__title_variant-article">
+                     <!----> <a href="/ru/users/AlehLiashkevich/" class="tm-user-card__nickname tm-user-card__nickname tm-user-card__nickname_variant-article"> @AlehLiashkevich </a> <!---->
+                    </div> 
+                    <p class="tm-user-card__short-info tm-user-card__short-info tm-user-card__short-info_variant-article">Пользователь</p>
+                   </div>
+                  </div> 
+                  <div class="tm-user-card__buttons tm-user-card__buttons tm-user-card__buttons_variant-article">
+                   <!----> <!----> <!----> <!----> <!---->
+                  </div>
+                 </div> <!---->
+                </div> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> <!---->
+              </section> 
+              <div class="tm-adfox-banner__container tm-page-article__banner">
+               <!----> 
+               <div id="adfox_164725660339535756" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-leaderboard"></div>
+              </div> 
+              <div class="tm-article-blocks__comments">
+               <div class="tm-article-page-comments">
+                <div class="tm-article-comments-counter-link tm-article-comments-counter-button">
+                 <a href="/ru/post/717840/comments/" class="tm-article-comments-counter-link__link tm-article-comments-counter-link__link_button-style">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon tm-article-comments-counter-link__icon_contrasted">
+                   <title>Комментарии</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#counter-comments"></use>
+                  </svg> <span class="tm-article-comments-counter-link__value tm-article-comments-counter-link__value_contrasted"> Комментарии 1 </span></a> <!---->
+                </div>
+               </div>
+              </div> 
+              <section class="tm-block tm-block tm-block_spacing-bottom">
+               <header class="tm-block__header tm-block__header tm-block__header_variant-borderless">
+                <div class="tm-block__header-container">
+                 <h2 class="tm-block__title tm-block__title tm-block__title_variant-large">Публикации</h2> 
+                </div> <!---->
+               </header> 
+               <div class="tm-block__body tm-block__body tm-block__body_variant-condensed-slim">
+                <div class="tm-tabs tm-tabs">
+                 <div>
+                  <span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active tm-tabs__tab-link_slim"> Лучшие за сутки </button></span><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_slim"> Похожие </button></span>
+                 </div> <!---->
+                </div> 
+                <div class="similar-and-daily__tab-view">
+                 <div>
+                  <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+                  <div class="tm-placeholder-article-cards">
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                  </div> <!----> <!----> <!----> <!---->
+                 </div> <!---->
+                </div>
+               </div> <!---->
+              </section> 
+              <div>
+               <div>
+                <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+                <div class="tm-placeholder-promo">
+                 <div class="tm-placeholder-promo__header">
+                  <div class="tm-placeholder__line tm-placeholder__line_promo-title"></div>
+                 </div> 
+                 <div class="tm-placeholder-promo__body">
+                  <div class="tm-placeholder-promo__posts">
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div> 
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div> 
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div>
+                  </div> 
+                  <div class="tm-placeholder-promo__dots">
+                   <div class="tm-placeholder-promo__dot"></div> 
+                   <div class="tm-placeholder-promo__dot"></div> 
+                   <div class="tm-placeholder-promo__dot"></div>
+                  </div>
+                 </div>
+                </div> <!----> <!----> <!----> <!----> <!---->
+               </div>
+              </div> 
+              <div>
+               <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+               <div class="tm-placeholder-inset tm-placeholder-vacancies">
+                <div class="tm-placeholder-inset__header">
+                 <div class="tm-placeholder__line tm-placeholder__line_inset-header loads"></div>
+                </div> 
+                <div class="tm-placeholder-inset__body">
+                 <ul class="tm-placeholder-list">
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                 </ul>
+                </div> 
+                <div class="tm-placeholder-inset__footer">
+                 <div class="tm-placeholder__line tm-placeholder__line_inset-footer loads"></div>
+                </div>
+               </div> <!----> <!----> <!----> <!----> <!----> <!---->
+              </div> <!----> <!----> 
+             </div>
+            </div>
+           </div>
+          </div>
+         </div> 
+         <div class="tm-page__sidebar">
+          <div class="tm-layout-sidebar">
+           <div class="tm-layout-sidebar__ads tm-layout-sidebar__ads_initial">
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_top">
+             <!----> 
+             <div id="adfox_164725680533065327" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-half-page"></div>
+            </div>
+           </div> 
+           <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;">
+            <!----> 
+            <section data-navigatable="" tabindex="0" data-async-called="true" class="tm-block tm-stories-block tm-block tm-block_spacing-top">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Истории</h2> 
+              </div> <!---->
+             </header> 
+             <div class="tm-block__body tm-block__body tm-block__body_variant-equal-small">
+              <div class="tm-stories-empty">
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+              </div> <!---->
+             </div> <!---->
+            </section> 
+            <section data-async-called="true" class="tm-block tm-block tm-block_spacing-around">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Работа</h2> 
+              </div> <!---->
+             </header> 
+             <div class="tm-block__body tm-block__body">
+              <div class="tm-vacancies-block__item">
+               <a href="https://career.habr.com/vacancies/data_scientist" target="_blank" class="tm-vacancies-block__vacancy-title"> Data Scientist </a> 
+               <div class="tm-vacancies-block__vacancies-count">
+                 121 вакансия 
+               </div>
+              </div>
+             </div> 
+             <footer class="tm-block__footer">
+              <a href="https://career.habr.com/catalog" class="tm-block-extralink"> Все вакансии </a>
+             </footer>
+            </section> 
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_bottom">
+             <!----> 
+             <div id="adfox_164725691003361602" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-medium-rectangle"></div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </main> <!---->
+    </div> 
+    <div class="tm-footer-menu">
+     <div class="tm-page-width">
+      <div class="tm-footer-menu__container">
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Ваш аккаунт </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/ru/post/717840/&amp;hl=ru" rel="nofollow" target="_self"> Войти </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/ru/post/717840/&amp;hl=ru" rel="nofollow" target="_self"> Регистрация </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Разделы </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/" class="footer-menu__item-link router-link-active"> Публикации </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/news/" class="footer-menu__item-link"> Новости </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/hubs/" class="footer-menu__item-link"> Хабы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/companies/" class="footer-menu__item-link"> Компании </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/users/" class="footer-menu__item-link"> Авторы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/sandbox/" class="footer-menu__item-link"> Песочница </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Информация </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/help/" class="footer-menu__item-link"> Устройство сайта </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/authors/codex/" class="footer-menu__item-link"> Для авторов </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/companies/corpblogs/" class="footer-menu__item-link"> Для компаний </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/docs/transparency/" class="footer-menu__item-link"> Документы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement" target="_blank"> Соглашение </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/" target="_blank"> Конфиденциальность </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Услуги </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/corporate-blogs/" target="_blank"> Корпоративный блог </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/advertising/" target="_blank"> Медийная реклама </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/native-special/" target="_blank"> Нативные проекты </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/education-programs/" target="_blank"> Образовательные программы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/hello-startup/" target="_blank"> Стартапам </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/megaprojects/" class="footer-menu__item-link"> Мегапроекты </a></li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div> 
+    <div class="tm-footer">
+     <div class="tm-page-width">
+      <div class="tm-footer__container">
+       <!----> 
+       <div class="tm-footer__social">
+        <a href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Facebook</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-facebook"></use>
+         </svg></a><a href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Twitter</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-twitter"></use>
+         </svg></a><a href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>VK</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-vkontakte"></use>
+         </svg></a><a href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Telegram</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-telegram"></use>
+         </svg></a><a href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Youtube</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-youtube"></use>
+         </svg></a><a href="https://zen.yandex.ru/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Яндекс Дзен</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-zen"></use>
+         </svg></a>
+       </div> 
+       <div class="v-portal" style="display:none;"></div> <button class="tm-footer__link"><!----> Настройка языка </button> <a href="/ru/feedback/" class="tm-footer__link"> Техническая поддержка </a> <a href="/berserk-mode-nope" class="tm-footer__link"> Вернуться на старую версию </a> 
+       <div class="tm-footer-copyright">
+        <span class="tm-copyright"><span class="tm-copyright__years">© 2006–2023, </span> <span class="tm-copyright__name"><a href="https://company.habr.com/" rel="noopener" target="_blank" class="tm-copyright__link">Habr</a></span></span>
+       </div>
+      </div>
+     </div>
+    </div> <!----> <!---->
+   </div> 
+   <div class="vue-portal-target"></div>
+  </div> 
+  <script>window.__INITIAL_STATE__={"adblock":{"hasAcceptableAdsFilter":false,"hasAdblock":false},"articlesList":{"articlesList":{"717840":{"id":"717840","timePublished":"2023-02-19T08:40:28+00:00","isCorporative":false,"lang":"ru","titleHtml":"Большие данные в строительстве","leadData":{"textHtml":"\u003Cp\u003EСтроительная отрасль генерирует огромное количество данных, которые во всей их совокупности системно не используют в полном объеме для извлечения потенциально ценной информации. Причиной является конфликт между практикой взаимодействия субъектов строительства и BIM-технологией для проектирования объектов. Иная структура САПР в строительстве позволит собирать данные не конфликтуя со сложившимися отношениями.\u003C\u002Fp\u003E","imageUrl":null,"buttonTextHtml":"Читать далее","image":null},"editorVersion":"2.0","postType":"article","postLabels":[{"type":"sandbox","data":null}],"author":{"id":"3464183","alias":"AlehLiashkevich","fullname":null,"avatarUrl":null,"speciality":null,"scoreStats":{"score":1,"votesCount":1},"rating":0,"relatedData":null,"contacts":[],"authorContacts":[],"paymentDetails":{"paymentYandexMoney":null,"paymentPayPalMe":null,"paymentWebmoney":null}},"statistics":{"commentsCount":1,"favoritesCount":3,"readingCount":896,"score":0,"votesCount":2,"votesCountPlus":1,"votesCountMinus":1},"hubs":[{"id":"17698","alias":"cad_cam","type":"collective","title":"CAD\u002FCAM","titleHtml":"CAD\u002FCAM","isProfiled":true,"relatedData":null},{"id":"17795","alias":"bigdata","type":"collective","title":"Big Data","titleHtml":"Big Data","isProfiled":true,"relatedData":null},{"id":"20752","alias":"business_models","type":"collective","title":"Бизнес-модели","titleHtml":"Бизнес-модели","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"},{"id":"3","alias":"management","title":"Менеджмент","titleHtml":"Менеджмент"}],"relatedData":null,"textHtml":"\u003Cdiv xmlns=\"http:\u002F\u002Fwww.w3.org\u002F1999\u002Fxhtml\"\u003E\u003Cp\u003EВ настоящее время данные, которые условно относят к Big Data в строительстве,  применяется для решения простейших задач, к примеру, поиска оптимальных конструктивных решений зданий в целях энергосбережения. Для решения данной задачи базу данных формируют из сведений о теплотехнических показателей ограждающих конструкций и затратах на отопление в зависимости от региона расположения объектов. Анализ данных по нескольким тысячам зданий позволяет выявить закономерности, которые можно использовать для последующего проектирования более энергоэффективных объектов. Приведенный пример иллюстрирует работу с данными на двух показателях. При этом каждый строительный объект это многие тысячи показателей и процессов различного рода представление о которых прямо или косвенно определяется в первую очередь проектом. \u003C\u002Fp\u003E\u003Cp\u003EЭто отличает данные в строительстве от данных в иных областях - связь с целями определяется специальным документом - проектом строительного объекта. К примеру, банковские, торговые или данные в сфере услуг автоматически имеют атрибута цели и временные параметры в качестве. Иллюстрируя различия, можно провести аналогию с оплатой капучино или билета в кино, которая несет в себе всю необходимую полноту информации о месте и целях. ели же транзакций в строительстве неразрывно связаны с возможностью последующего прогнозирования. Т.е. без понимания целей ценность данных существенно снижается. Оплата, к примеру, тонны щебня не несет никакой информации о дальнейших целях этой транзакции. Щебень может быть использован множеством разных способов в любое время для различных целей. Т.о. данные без привязки к конкретному проекту не являются данными именно в строительстве. При этом необходимо учитывать, что Big Data в строительстве включает в себя не только данные о непосредственном  возведении объектов, но также и обо всем, что связано с эксплуатацией, энергообеспечением, последующими ремонтами и реконструкциями, риэлторскими услугами и т.д. Учитывая долю затрат на жилье у частных лиц и на коммерческую недвижимость у организаций, затраты, связанные прямо или косвенно со строительством, показывают, что среди всех больших данных именно строительные являются самыми большими. При всей ценности они до сих пор не используются в полном масштабе.\u003C\u002Fp\u003E\u003Cp\u003EОсновные причины, по которым любые данные в строительстве не могут  рассматриваться в качестве больших данных.\u003C\u002Fp\u003E\u003Ch4\u003E1. Отсутствие единой стандартизации представления данных в строительстве\u003C\u002Fh4\u003E\u003Cp\u003EВ общем случае для единичного объекта данные формируют на основе индивидуальных предпосылок в т.ч. носящий вероятностный и субъективный характер. Это приводит к тому, что уже для двух и более объектов вся совокупность данных не будет полностью сопоставимой. \u003C\u002Fp\u003E\u003Ch4\u003E2. Рассредоточенность и недоступность данных\u003C\u002Fh4\u003E\u003Cp\u003EКаждый участник (субъект) строительства, как и всех иных процессов в отношении возводимых или готовых объектов, являются не только источником данных, но во многом их собственником. \u003C\u002Fp\u003E\u003Ch4\u003E3. Потеря данных\u003C\u002Fh4\u003E\u003Cp\u003EХранение данных после того как выполнена соответствующая услуга не всегда обеспечивается в необходимом масштабе. В большинстве случае через некоторое время доступ к данным строительстве для третьих лиц становится невозможным.\u003C\u002Fp\u003E\u003Ch4\u003E4. Закрытость и непрозрачность форматов данных\u003C\u002Fh4\u003E\u003Cp\u003E\u003Cem\u003E\t\u003C\u002Fem\u003EРазнообразие ПО, в первую очередь САПР, и его версий приводит к соответствующему разнообразию форматов данных. При конвертации файлов неизбежна потеря данных. \u003C\u002Fp\u003E\u003Ch4\u003E5. Искажаемость данных \t\u003C\u002Fh4\u003E\u003Cp\u003EРазличным участникам проектирования, строительства и эксплуатации объекта необходимы различные данные для реализации целей своей деятельности. С учетом непрозрачности строительства в целом, субъекты строительной деятельности могут их трактовать и искажать с учетом собственных экономических интересов.\u003C\u002Fp\u003E\u003Cp\u003EВ общем случае базовым процессом для формирования данных в строительстве является процесс проектирования строительного объекта. В настоящее время в практику проектирование внедряется т.н. BIM-технология, целью которой является придание всем графическим элементам модели объекта конкретных атрибутов с целью последующего их использования при формировании смет. Никаких иных стратегических задач относительно процесса проектирования BIM-технология не решает. Все организационные отношения сохранились со времен кульманов с чертежами на бумаге. Т.о. фактически развитие САПР в строительстве в течении предыдущих трех десятилетий основано на решении задаче об упрощении сметных расчетов для возможности создания различных баз данных. Однако данная технология создает противоречие, которое не позволяет формировать данные, которые можно отнести к большим, и при этом не решая никаких задач непосредственно для целей самого проектирования. Проектировщику оплачивают разработку разделов строительного проекта после выдачи рабочей документации в установленный срок. BIM-технология подразумевает моделирование объекта (что неравносильно разработке рабочей документации), которое вынуждает дополнительно инвестировать в ПО и персонал. При этом применение BIM-технологии увеличивает срок и себестоимость проектирования. Финансовый же результат деятельности проектировщика определяется скоростью и качеством передаваемых в строительство рабочей документации, а не качеством моделирования и подготовки баз данных. Иными словами проектировщика вынуждают дополнительно инвестировать и осуществлять деятельность, на результатах которой зарабатывают иные структуры. Данное противоречие объясняет причину столь сложного, долгого и во многом безуспешного внедрения BIM-технологий в практику строительства. В разных странах преодоление этого противоречия решают разнообразными способами на национальном уровне. Все они фактически предполагают понуждение проектировщика административными и экономическими методами к выполнению бесполезной для него работы.\u003C\u002Fp\u003E\u003Cp\u003EЕсли попытка внедрения новой технологий с соответствующим прикладным инструментарием в практику строительного проектирования в различных странах на протяжении десятилетий повсеместно не привела к желаемому результату, значит на то существует общая фундаментальная причина. Строительство является одной из наиболее консервативных отраслей экономики, которая формировалась под влиянием комбинации ограничивающих факторов, в т.ч. наличия строительных норм, а также регулирования деятельности на местном и национальном уровне. Строительство является местной промышленностью, невозможно импортировать строительные объекты (как, например, продукцию машиностроения) для усиления конкуренции, что приводит к формированию местных инженерных традиций и отношений, которые складываются на протяжении поколений. Также можно предположить, что вышеперечисленные факторы приводят к тому, что в строительстве заняты люди которых можно условно отнести к традиционалистам и консерваторам. Как минимум, профессиональный рост строителей всегда происходит в отсутствии либо незначительности изменений в технологическом укладе. В результате влияния всех факторов строительная отрасль является мало восприимчивой к нововведениям. \u003C\u002Fp\u003E\u003Cblockquote\u003E\u003Cp\u003EТ.о. BIM-технологии фактически представляются попыткой навязать субъектам строительной деятельности, сформировавшимся в традиционалистской парадигме в условиях ограничений и регулирования, в ущерб собственным экономическим интересам дополнительно принять на себя обязательства в интересах третьих лиц.\u003C\u002Fp\u003E\u003C\u002Fblockquote\u003E\u003Cp\u003E Очевидно, что существующие BIM-технологии посредством ПО, представленного на рынке, концептуально противоречат природе взаимоотношений в строительстве, поэтому для получения соответствующих больших данных нужен принципиально иной подход, который бы учитывал отраслевые особенности. \u003C\u002Fp\u003E\u003Cp\u003EС учетом изложенных особенностей для формирования баз на всей совокупности данных в строительстве необходимо решение, которые бы удовлетворяло бы следующим условиям:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003Eвсе данные управляются и накапливаются централизованно;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003Eконсолидация данных осуществляется силами и на основе экономической заинтересованности субъектов строительной деятельности;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003Eво избежание потерь и искажений передача данных только в рамках решения без использования сторонних приложений; \u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003Eтрудоемкость и срок выполнения проектных работ существенно снижается; \u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003Eвлияния пользователя на данные осуществляется в рамках полномочий, прозрачно установленных для всех участников проекта.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Ful\u003E\u003Cp\u003EИсходя из теоретических предпосылок, основой такого решения может быть только решение для машинной генерации рабочей документации, которое на основании архитектурной модели объекта автономно (без участия пользователей) создает все необходимые далее модели в т.ч. расчетные и конструктивные. Владелец проекта настраивает права доступа необходимых ему пользователей. Все процедуры и взаимоотношения могут копировать аналогичные в любой конкретной стране, вплоть до финансовых между участниками строительства, в т.ч. и после ввода в эксплуатацию объекта недвижимости. Все действия со строительными объектами на всех стадиях его жизненного цикла сохраняются в облаке. В результате владелец проекта покупает услугу, которая сокращает его затраты, а владелец облачного решения помимо монетизации своих услуг дополнительно получает доступ к данным на всей совокупности проектов, на которых и могут быть сформированы большие данные. \u003C\u002Fp\u003E\u003Ch3\u003EЗаключение\u003C\u002Fh3\u003E\u003Cp\u003EВ настоящее время данные в строительстве рассредоточены между всеми субъектам строительной деятельности без возможности централизации их обработки. При этом используемый инструментарий для формирования баз данных не учитывает основ отношений в строительстве. Исходя из отраслевых особенностей, сбор и систематизация данных предлагаемым на рынке ПО в рамках существующих технологий проектирования невозможна. Не существует решения в строительстве, собирающего все необходимые данные, которые можно было рассматривать в качестве Big Data. Таким может стать только облачное ПО при условии, что его использование существенно сократит издержки участников строительной деятельности (в первую очередь проектировщиков и заказчиков) не конфликтуя со сложившимися отношениями.\u003C\u002Fp\u003E\u003C\u002Fdiv\u003E","tags":[{"titleHtml":"cad"},{"titleHtml":"bim"},{"titleHtml":"bigdata"},{"titleHtml":"строительство"}],"metadata":{"stylesUrls":[],"scriptUrls":[],"shareImageUrl":"https:\u002F\u002Fhabr.com\u002Fshare\u002Fpublication\u002F717840\u002Faa4a3de05083d02af9c8aee64242d189\u002F","shareImageWidth":1200,"shareImageHeight":630,"vkShareImageUrl":"https:\u002F\u002Fhabr.com\u002Fshare\u002Fpublication\u002F717840\u002Faa4a3de05083d02af9c8aee64242d189\u002F?format=vk","schemaJsonLd":"{\"@context\":\"http:\\\u002F\\\u002Fschema.org\",\"@type\":\"Article\",\"mainEntityOfPage\":{\"@type\":\"WebPage\",\"@id\":\"https:\\\u002F\\\u002Fhabr.com\\\u002Fru\\\u002Fpost\\\u002F717840\\\u002F\"},\"headline\":\"Большие данные в строительстве\",\"datePublished\":\"2023-02-19T11:40:28+03:00\",\"dateModified\":\"2023-02-19T11:40:28+03:00\",\"author\":{\"@type\":\"Person\",\"name\":\"AlehLiashkevich\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Habr\",\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fwebt\\\u002Fa_\\\u002Flk\\\u002F9m\\\u002Fa_lk9mjkccjox-zccjrpfolmkmq.png\"}},\"description\":\"В настоящее время данные, которые условно относят к Big Data в строительстве,&nbsp; применяется для решения простейших задач, к примеру, поиска оптимальных конструкти...\",\"url\":\"https:\\\u002F\\\u002Fhabr.com\\\u002Fru\\\u002Fpost\\\u002F717840\\\u002F#post-content-body\",\"about\":[\"h_cad_cam\",\"h_bigdata\",\"h_business_models\",\"f_develop\",\"f_management\"],\"image\":[\"https:\\\u002F\\\u002Fhabr.com\\\u002Fshare\\\u002Fpublication\\\u002F717840\\\u002Faa4a3de05083d02af9c8aee64242d189\\\u002F\"]}","metaDescription":"В настоящее время данные, которые условно относят к Big Data в строительстве,&nbsp; применяется для решения простейших задач, к примеру, поиска оптимальных конструктивных решений зданий в целях...","mainImageUrl":null,"amp":true,"customTrackerLinks":[]},"polls":[],"commentsEnabled":true,"rulesRemindEnabled":false,"votesEnabled":true,"status":"published","plannedPublishTime":null,"checked":null,"hasPinnedComments":false,"format":null,"readingTime":6,"complexity":"low","isEditorial":false}},"articlesIds":{},"isLoading":false,"pagesCount":{},"route":{},"reasonsList":null,"view":"cards","lastVisitedRoute":{},"ssrCommentsArticleIds":[""],"karma":{"userReasonsList":null}},"authorContribution":{"authors":{}},"betaTest":{"currentAnnouncement":null,"announcements":{},"announcementCards":null,"announcementComments":{},"announcementCommentThreads":{},"announcementCommentingStatuses":{},"archivedList":[]},"authorStatistics":{"articleRefs":{},"articleIds":{},"pagesCount":{},"route":{},"viewsCount":[],"maxStatsCount":{}},"career":{"seoLandings":[{"title":"Data Scientist","vacanciesCount":121,"itemUrl":"https:\u002F\u002Fcareer.habr.com\u002Fvacancies\u002Fdata_scientist","itemHubs":["bigdata","r","data_mining","python","machine_learning"]}],"hubs":"cad_cam,bigdata,business_models"},"comments":{"articleComments":{},"articlePinnedComments":{},"searchCommentsResults":null,"pagesCount":null,"commentAccess":{},"scrollParents":{},"pageArticleComments":{"lastViewedComment":0,"postId":null,"lastCommentTimestamp":"","moderated":[],"moderatedIds":[],"commentRoute":""}},"companies":{"companyRefs":{},"companyIds":{},"companyTopIds":{},"pagesCount":{},"companyProfiles":{},"companiesCategories":[],"companiesCategoriesTotalCount":0,"companiesWidgets":{},"companiesWorkers":{},"companiesFans":{},"route":{},"isLoading":false,"companyWorkersLoading":false,"companyFansLoading":false,"vacancies":{},"companiesGalleries":{},"companiesBanners":{},"companiesLandingVacancies":{},"companiesTechnologies":{},"workplaceInfo":null},"companyAdmin":{"companyInfo":null,"companyInfoLoading":false,"faqArticles":null,"brandingPreviewImageUrl":null,"jivoStatus":0,"adminNotifications":null},"companiesContribution":{"hubs":{},"flows":{},"companyRefs":{}},"companyHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"conversation":{"messages":[],"respondent":null,"isLoadMore":false},"conversations":{"conversations":[],"unreadCount":0,"pagesCount":0},"desktopState":{"desktopFl":null,"desktopHl":null,"isChecked":false,"isLoginDemanded":false},"docs":{"menu":{},"articles":{},"mainMenu":[],"loading":{"main":false,"dropdown":false,"article":false}},"feature":{"isProbablyVisible":true},"flows":{"updates":{"countNewPostsBySubscription":null,"countNewPostsAll":33,"countNewNewsAll":7},"flows":[{"alias":"develop","id":"1","route":{"name":"FLOW_PAGE","params":{"flowName":"develop"}}},{"alias":"admin","id":"6","route":{"name":"FLOW_PAGE","params":{"flowName":"admin"}}},{"alias":"design","id":"2","route":{"name":"FLOW_PAGE","params":{"flowName":"design"}}},{"alias":"management","id":"3","route":{"name":"FLOW_PAGE","params":{"flowName":"management"}}},{"alias":"marketing","id":"4","route":{"name":"FLOW_PAGE","params":{"flowName":"marketing"}}},{"alias":"popsci","id":"7","route":{"name":"FLOW_PAGE","params":{"flowName":"popsci"}}}]},"global":{"isPwa":false,"device":"desktop","isHabrCom":true},"hubs":{"hubRefs":{},"hubIds":{},"pagesCount":{},"isLoading":false,"route":{}},"hubsBlock":{"hubRefs":{},"hubIds":{}},"i18n":{"fl":"ru","hl":"ru"},"info":{"infoPage":{},"isLoading":true},"location":{"urlStruct":{"protocol":null,"slashes":null,"auth":null,"host":null,"port":null,"hostname":null,"hash":null,"search":null,"query":{},"pathname":null,"path":null,"href":""}},"me":{"user":null,"ppgDemanded":false,"karmaResetInfo":{"canReincarnate":null,"wasReincarnated":null,"currentScore":null},"notes":null},"modal":{"modals":[]},"mostReadingList":{"mostReadingListIds":[],"mostReadingListRefs":null,"promoPost":null},"ppa":{"articles":{},"card":null,"transactions":null,"totalTransactions":null,"isAccessible":null},"projectsBlocks":{"activeBlocks":{"vacancies":"project-block-article"}},"promoData":{"isLoading":false,"hasLoaded":false,"featurer":null,"megaposts":null,"promoLinks":null,"promoPosts":null},"pullRefresh":{"shouldRefresh":false},"sandbox":{"articleIds":[],"articleRefs":{},"pagesCount":null,"route":{},"lastVisitedRoute":{},"isLoading":false},"search":{"searchQueryError":null},"settingsOther":{"inputs":{"uiLang":{"errors":[],"ref":null,"value":""},"articlesLangEnglish":{"errors":[],"ref":null,"value":false},"articlesLangRussian":{"errors":[],"ref":null,"value":false},"agreement":{"errors":[],"ref":null,"value":false},"email":{"errors":[],"ref":null,"value":true},"digest":{"errors":[],"ref":null,"value":true}}},"similarList":{"similarListIds":[],"similarListRefs":null},"ssr":{"error":null,"isDataLoaded":false,"isDataLoading":false,"isHydrationFailed":false,"isServer":false},"stories":{"stories":[{"id":"story-238","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F552\u002F8b6\u002Fb04\u002F5528b6b043be178d6cb353938a37c41f.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Flotus-main"},"title":"Найти дзен","lang":"ru","startTime":"2023-02-16T12:00:00+03:00","finishTime":"2023-02-26T11:43:00+03:00","slides":[{"id":"story-238_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5b0\u002F96a\u002Fba8\u002F5b096aba81be66041a2aa907dece5800.jpg","button":null},{"id":"story-238_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F710\u002Faaf\u002Fd5e\u002F710aafd5e1dee1d68ec384e25062562d.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Flotus-1","colorType":"light"}},{"id":"story-238_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fabd\u002Ffa8\u002F3ad\u002Fabdfa83ad425d6093bf5b562498d4a0e.jpg","button":{"title":"Чем и кому?","link":"https:\u002F\u002Fu.habr.com\u002Flotus-2","colorType":"light"}},{"id":"story-238_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F74d\u002F464\u002F9af\u002F74d4649af8509dd19e49f44be684bfcd.jpg","button":{"title":"Как это работает?","link":"https:\u002F\u002Fu.habr.com\u002Flotus-3","colorType":"light"}},{"id":"story-238_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4f1\u002Ffbb\u002F5a6\u002F4f1fbb5a6daa2c5839e920db487cb8c1.jpg","button":{"title":"Узнать больше","link":"https:\u002F\u002Fu.habr.com\u002Flotus-4","colorType":"light"}},{"id":"story-238_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8d9\u002Fa2c\u002F146\u002F8d9a2c14645db00326f575c448144b49.jpg","button":{"title":"Как обнаружить?","link":"https:\u002F\u002Fu.habr.com\u002Flotus-5","colorType":"light"}},{"id":"story-238_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7f0\u002F531\u002F294\u002F7f0531294cedd2e9e4dd047ea21b493b.jpg","button":{"title":"Посмотреть","link":"https:\u002F\u002Fu.habr.com\u002Flotus-6","colorType":"light"}}]},{"id":"story-234","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F16a\u002Fe4a\u002Fb61\u002F16ae4ab611326cc11d0d8919c149d95c.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FqQNg9"},"title":"Консультации на Хабр Экспертах: бэкенд","lang":"ru","startTime":"2023-02-15T15:33:00+03:00","finishTime":"2023-02-22T15:27:00+03:00","slides":[{"id":"story-234_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F523\u002F9ed\u002F058\u002F5239ed058e84d21597e19ca56650f880.png","button":null},{"id":"story-234_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F207\u002F976\u002F160\u002F207976160ce35d4fbd90cb705d597fe9.png","button":null},{"id":"story-234_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F38c\u002F675\u002Fd4f\u002F38c675d4f4c5ba17441f2c43949ca4b3.png","button":null},{"id":"story-234_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F287\u002F395\u002F4a4\u002F2873954a46af32bf23ca60d0c2c00c16.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002FqQNg9","colorType":"dark"}}]},{"id":"story-228","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F026\u002F1fe\u002Fc97\u002F0261fec9713f03e7bbaec8a99fd0a95b.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Недельный топ годноты от компаний","lang":"ru","startTime":"2023-02-15T11:00:00+03:00","finishTime":"2023-02-21T17:00:00+03:00","slides":[{"id":"story-228_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F3d5\u002Fe21\u002F351\u002F3d5e21351512ad34216523b08ede4024.jpg","button":null},{"id":"story-228_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8ef\u002Fb1e\u002F7f4\u002F8efb1e7f4a6f5986dbbc2cdd1dd2c447.jpg","button":{"title":"Выбрать сценарий","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Ftimeweb\u002Fblog\u002F711288\u002F","colorType":"light"}},{"id":"story-228_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F03d\u002Ffa3\u002F79d\u002F03dfa379dbc41cedb33d93b658876d76.jpg","button":{"title":"Как именно?","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fbelayaraduga\u002Fblog\u002F713636\u002F","colorType":"light"}},{"id":"story-228_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0c2\u002F6e0\u002Ff07\u002F0c26e0f07bef607419cfc016005b7975.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Ffirst\u002Fblog\u002F714940\u002F","colorType":"light"}},{"id":"story-228_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F668\u002F4c8\u002F0ee\u002F6684c80ee37964dc482d1e4059236c86.jpg","button":{"title":"Смотреть обзор","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fjetinfosystems\u002Fblog\u002F713284\u002F","colorType":"light"}},{"id":"story-228_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8e5\u002F05f\u002Ffa0\u002F8e505ffa0510a1c7ab84eecb2e31f88e.jpg","button":{"title":"Научиться","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fods\u002Fblog\u002F709222\u002F","colorType":"light"}},{"id":"story-228_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F362\u002F4dd\u002Fc41\u002F3624ddc414b0ee14009364669e892adb.jpg","button":{"title":"Ознакомиться","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F715192\u002F","colorType":"light"}},{"id":"story-228_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe1b\u002Ff76\u002F602\u002Fe1bf7660228906801c055ed106e88875.jpg","button":{"title":"Узнать больше","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fgetmatch\u002Fblog\u002F714448\u002F","colorType":"light"}}]},{"id":"story-224","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4fa\u002F899\u002F490\u002F4fa899490d1c57ec7064ea09e8d50a14.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fwebcast_MLOps"},"title":"От MLOps к TriceratОps","lang":"ru","startTime":"2023-02-14T10:00:47+03:00","finishTime":"2023-02-21T23:59:00+03:00","slides":[{"id":"story-224_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F607\u002Fded\u002F888\u002F607ded88881e3c2b400eb781da7e1b1d.png","button":null},{"id":"story-224_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F915\u002Fdb0\u002F681\u002F915db0681d302a5736b4b29689bc2dc1.png","button":{"title":"Симптомы","link":"https:\u002F\u002Fwww.youtube.com\u002Fwatch?v=rK2V4J6Z7CU&t=747s","colorType":"light"}},{"id":"story-224_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F514\u002F8fc\u002F078\u002F5148fc078b174adbb89583a7d8e20ad8.png","button":{"title":"Рецепт полностью","link":"https:\u002F\u002Fwww.youtube.com\u002Fwatch?v=rK2V4J6Z7CU&t=1065s","colorType":"light"}},{"id":"story-224_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2a3\u002F41f\u002F544\u002F2a341f544d0576086b9f48783854934f.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fwww.youtube.com\u002Fwatch?v=rK2V4J6Z7CU&t=2273s","colorType":"light"}},{"id":"story-224_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F518\u002Fdde\u002F7e8\u002F518dde7e8d747cb1f3fce200094abaee.png","button":{"title":"В чём подвох","link":"https:\u002F\u002Fwww.youtube.com\u002Fwatch?v=rK2V4J6Z7CU&t=2912s","colorType":"light"}},{"id":"story-224_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcce\u002Fa7e\u002F58b\u002Fccea7e58b28908ec545db0e361347a43.jpg","button":{"title":"Посмотреть","link":"https:\u002F\u002Fyoutu.be\u002FyLsY984z_iI?list=PLTlO6nV_TaGCFJ4AZM5IA7JnMDSpoC0_Y","colorType":"light"}}]},{"id":"story-222","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F312\u002Fabe\u002Fd4c\u002F312abed4c2617f05f485c19ae101de7e.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Любовь, Хабр и роботы","lang":"ru","startTime":"2023-02-14T09:00:14+03:00","finishTime":"2023-02-26T23:59:00+03:00","slides":[{"id":"story-222_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd35\u002Fce5\u002F716\u002Fd35ce5716f14544be26d53e05dc155ab.jpg","button":null},{"id":"story-222_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F191\u002Fb9c\u002F449\u002F191b9c449738d2cb2333ffa8daa1bd39.jpg","button":{"title":"Читать переводы","link":"https:\u002F\u002Fu.habr.com\u002Fval1","colorType":"light"}},{"id":"story-222_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7c6\u002F61d\u002F6d9\u002F7c661d6d915ca10f037ccc7307fa36ec.jpg","button":{"title":"Что получилось?","link":"https:\u002F\u002Fu.habr.com\u002Fval2","colorType":"light"}},{"id":"story-222_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F02c\u002F20a\u002Fa28\u002F02c20aa28f1e1cb7d70943bd96eb5ac7.jpg","button":{"title":"Созерцать","link":"https:\u002F\u002Fu.habr.com\u002Fval3","colorType":"light"}},{"id":"story-222_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe94\u002F9d6\u002F03e\u002Fe949d603e63cf1c98dcc4597ba41abfa.jpg","button":{"title":"На свидание","link":"https:\u002F\u002Fu.habr.com\u002Fval4","colorType":"light"}},{"id":"story-222_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7b0\u002F3b3\u002Fed9\u002F7b03b3ed931ce73a0cda771b5e39c813.jpg","button":{"title":"Нашёл?","link":"https:\u002F\u002Fu.habr.com\u002Fval5","colorType":"light"}},{"id":"story-222_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F594\u002Fff6\u002Fbad\u002F594ff6badc0503fa3ca0dffafc31d3a3.jpg","button":{"title":"И сколько же?","link":"https:\u002F\u002Fu.habr.com\u002Fval6","colorType":"light"}},{"id":"story-222_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F452\u002Ff87\u002F9aa\u002F452f879aaf0db9530f35204663ec00e6.jpg","button":{"title":"Глянуть код","link":"https:\u002F\u002Fu.habr.com\u002Fval7","colorType":"light"}}]},{"id":"story-218","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F95d\u002F032\u002F360\u002F95d03236093f23cb006751a911c1ca1b.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FIcDGH"},"title":"Активность найма на IT-рынке в январе","lang":"ru","startTime":"2023-02-13T10:40:00+03:00","finishTime":"2023-02-20T23:59:41+03:00","slides":[{"id":"story-218_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F63e\u002Fcd3\u002F3ff\u002F63ecd33ff8e108e28fcb72af09339823.png","button":null},{"id":"story-218_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0d1\u002F442\u002Ffa0\u002F0d1442fa021337f0c716405b19bd9aac.png","button":null},{"id":"story-218_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F16c\u002F7c1\u002F755\u002F16c7c17552d38519e88e3ac166ae4826.png","button":null},{"id":"story-218_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F802\u002Fbb8\u002Fed1\u002F802bb8ed1bddd0bf8afff9d90507fe8a.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002FIcDGH","colorType":"dark"}}]},{"id":"story-214","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F02e\u002F69c\u002F1b8\u002F02e69c1b8cc1292fe53929083a93f699.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"ИБ от Луки: топ-7 самых рейтинговых постов","lang":"ru","startTime":"2023-02-09T13:45:00+03:00","finishTime":"2023-02-19T23:59:00+03:00","slides":[{"id":"story-214_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F1aa\u002F5cc\u002F9d7\u002F1aa5cc9d7d557d97845d7d2bc0b1fe6a.jpg","button":null},{"id":"story-214_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd34\u002Fdc1\u002Ffee\u002Fd34dc1fee24eef1780fcb50decad4c6f.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-01","colorType":"light"}},{"id":"story-214_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F3e6\u002F2c4\u002F857\u002F3e62c4857decb9a45a38deacbf607879.jpg","button":{"title":"Читать пост","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-02","colorType":"light"}},{"id":"story-214_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa72\u002F490\u002Fd35\u002Fa72490d3551469f32d8895f0cc4899ff.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-03","colorType":"light"}},{"id":"story-214_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9f4\u002Ffed\u002F927\u002F9f4fed92715d9632655fa6ee5c281afa.jpg","button":{"title":"Читать","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-04","colorType":"light"}},{"id":"story-214_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F6be\u002Fbd5\u002Fe91\u002F6bebd5e913cc08b41010e9188e35156c.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-05","colorType":"light"}},{"id":"story-214_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2b3\u002F98b\u002Fa15\u002F2b398ba15bfb71e57d306aad220d466c.jpg","button":{"title":"Читать пост","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-06","colorType":"light"}},{"id":"story-214_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa9e\u002Fac9\u002Ffba\u002Fa9eac9fba81f7ae1feb21f2ddb42635a.jpg","button":{"title":"Читать","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-07","colorType":"light"}}]},{"id":"story-202","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F355\u002F61d\u002F02e\u002F35561d02e68fad97acb3023f5ed0943e.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-2"},"title":"Зарплаты в IT во второй половине 2022","lang":"ru","startTime":"2023-02-06T11:00:00+03:00","finishTime":"2023-02-19T23:59:00+03:00","slides":[{"id":"story-202_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F872\u002F6da\u002F434\u002F8726da4345864736c32cea5f6d0e8520.png","button":null},{"id":"story-202_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F079\u002F168\u002F80c\u002F07916880c5cd1a3e489233861be84a72.png","button":null},{"id":"story-202_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F600\u002F579\u002F3ab\u002F6005793ab7a69e006a6b13026dbf89a5.png","button":null},{"id":"story-202_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcb8\u002Fdc0\u002F099\u002Fcb8dc00992a4cd63c5d614b57e8037b5.png","button":null},{"id":"story-202_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Faff\u002F90f\u002Fe80\u002Faff90fe80f9466fe702f08b13658e8f2.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-2","colorType":"dark"}}]},{"id":"story-190","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fac3\u002F3cd\u002F1b0\u002Fac33cd1b02027add0414f306d5e37731.png","title":"Мир Plat.Form (НСПК)","link":"https:\u002F\u002Fu.habr.com\u002Fstories_mir_QRcode"},"title":"О QR-коде в гравюрах и хокку","lang":"ru","startTime":"2023-02-02T12:30:00+03:00","finishTime":"2023-02-19T23:59:00+03:00","slides":[{"id":"story-190_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5bb\u002F2f6\u002F42c\u002F5bb2f642cf18bbacbfd01bb1736d303d.jpg","button":{"title":"Подслушать","link":"https:\u002F\u002Fu.habr.com\u002Fstories_mir_QRcode","colorType":"dark"}},{"id":"story-190_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9b5\u002Fc66\u002F564\u002F9b5c665645bf62db2907bfe22b3decf4.png","button":{"title":"Узнать почему","link":"https:\u002F\u002Fu.habr.com\u002Fstories_mir_QRcode","colorType":"dark"}},{"id":"story-190_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fc4e\u002F457\u002F8c0\u002Fc4e4578c0ae364b388a38a78023007e1.jpg","button":{"title":"Как он работает","link":"https:\u002F\u002Fu.habr.com\u002Fstories_mir_QRcode","colorType":"dark"}},{"id":"story-190_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Febb\u002Fa53\u002Fe42\u002Febba53e42c52e27a0e815af78be5bdd9.png","button":{"title":"Узнать подробности","link":"https:\u002F\u002Fu.habr.com\u002Fstories_mir_QRcode","colorType":"dark"}}]},{"id":"story-186","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fb6b\u002F720\u002F180\u002Fb6b72018041811571246ddf5ef07bd33.png","title":"Сезоны Хабра","link":"https:\u002F\u002Fu.habr.com\u002Fstory_season-kuber"},"title":"Столкнуться с кубом","lang":"ru","startTime":"2023-02-01T11:30:00+03:00","finishTime":"2023-02-28T23:59:00+03:00","slides":[{"id":"story-186_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2b0\u002F5e8\u002Fffb\u002F2b05e8ffb30634f0f7f5c9602d8e43e6.png","button":null},{"id":"story-186_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fdfb\u002F838\u002F9c1\u002Fdfb8389c197e915942f9144978b91ce4.png","button":null},{"id":"story-186_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F634\u002Fc42\u002Fdfd\u002F634c42dfddb260cdf37f9c9b9d3f34ea.png","button":null},{"id":"story-186_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F401\u002F9f5\u002F59e\u002F4019f559e6c090ded0b46d6deeb4883c.png","button":null},{"id":"story-186_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F82a\u002F9cd\u002Fa48\u002F82a9cda4870156765b749271aca48241.png","button":{"title":"Смотреть участников","link":"https:\u002F\u002Fu.habr.com\u002Fstory_season-kuber_members","colorType":"light"}}]},{"id":"story-152","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa49\u002F0d3\u002F609\u002Fa490d3609f29b6dfc53a7b88ab47ca64.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa"},"title":"Сеньоры — очень странные люди","lang":"ru","startTime":"2023-01-23T11:00:00+03:00","finishTime":"2023-03-01T23:59:00+03:00","slides":[{"id":"story-152_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbbb\u002F901\u002F063\u002Fbbb9010630ae483ed1f41ec4e2572c13.png","button":null},{"id":"story-152_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4f8\u002F66c\u002F14f\u002F4f866c14f0ca8999334438d7f17c0e3a.png","button":null},{"id":"story-152_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F6b9\u002Fa07\u002Fa61\u002F6b9a07a612df213ac3a1c179301828df.png","button":null},{"id":"story-152_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff6b\u002Fadb\u002Fb99\u002Ff6badbb9969d7e34ef4f7492767c6a77.png","button":null},{"id":"story-152_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd9c\u002F9ac\u002F878\u002Fd9c9ac878bec5b494699e0080dd2e813.png","button":null},{"id":"story-152_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fdb1\u002Faf9\u002Fc3b\u002Fdb1af9c3bb557f6cee698cf67610f977.png","button":null},{"id":"story-152_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5cf\u002Fbed\u002F65b\u002F5cfbed65bd20b7051b1aac2b9d6e807e.png","button":null},{"id":"story-152_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffa8\u002F251\u002F4a9\u002Ffa82514a9471cd455339e97178d8c021.png","button":null},{"id":"story-152_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbd5\u002F901\u002Fe95\u002Fbd5901e952d9cf638355a3cc8b0c0911.png","button":{"title":"Хочу помочь джуну","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa","colorType":"light"}}]}]},"technotext":{"years":[],"technotextDocForNominees":null,"technotextDocForWinners":null,"technotextInfo":{},"technotextInfoLoading":false,"technotextWinners":{},"technotextWinnersLoading":false},"userHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"userInvites":{"availableInvites":0,"usedInvitesIds":[],"usedInvitesRefs":{},"usedInvitesPagesCount":0,"unusedInvitesIds":[],"unusedInvitesRefs":{},"unusedInvitesPagesCount":0},"userVotes":{"karmaVotesList":[],"karmaVotesPagesCount":null,"karmaVotesListLoading":false,"commentsVotesList":[],"commentsVotesPagesCount":null,"commentsVotesListLoading":false,"postsVotesList":[],"postsVotesPagesCount":null,"postsVotesListLoading":false,"userVotesList":[],"userVotesPagesCount":null,"userVotesListLoading":false},"users":{"authorRefs":{},"authorIds":{},"pagesCount":{},"authorProfiles":{},"userHubs":{},"userInvitations":{},"authorFollowers":{},"authorFollowed":{},"userSpecialization":{},"karmaStats":[],"statistics":null,"isLoading":false,"authorFollowersLoading":false,"authorFollowedLoading":false,"userHubsLoading":false,"userInvitationsLoading":false,"route":{}},"viewport":{"prevScrollY":{},"scrollY":0,"width":0},"tracker":{"items":{},"pagesCache":{},"markedViewedSilently":{},"markedRead":{},"unreadCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null},"unviewedCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null}}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script> 
+  <script src="https://assets.habr.com/habr-web/js/chunk-vendors.a5368ccd.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/6741.eb1970d2.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/app.34e7f643.js" defer></script> 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-726094-1"></script> 
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script> 
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(24049213, "init", {
+      defer:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:false,
+    });
+  </script> 
+  <noscript> 
+   <div> 
+    <img src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;" alt=""> 
+   </div> 
+  </noscript> 
+  <script type="text/javascript">
+      window.addEventListener('load', function () {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = 'https://vk.com/rtrg?p=VK-RTRG-421343-57vKE';
+        }, 0);
+      });
+    </script> 
+  <script src="/js/ads.js" onload="window['zhY4i4nJ9K'] = true"></script>  
+ </body>
+</html>

@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en" data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22en%22%7D%7D"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0"> 
+  <meta name="referrer" content="unsafe-url"> 
+  <title>Interviewing People / For Authors / Habr</title> 
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSxf6TF0.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveQhf6TF0.woff2) format('woff2');
+      unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSBf6TF0.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveRhf6.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* non-breaking hyphen */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmEU9vBh0_IsHAlmrO6g&skey=ee881451c540fdec&v=v29) format('woff2');
+      unicode-range: U+02011;
+    }
+  </style> 
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/chunk-vendors.66f44d11.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/chunk-vendors.a5368ccd.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/app.080de328.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/app.34e7f643.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/docs.4a666a27.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/docs.376b195c.js" as="script"> 
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/chunk-vendors.66f44d11.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/app.080de328.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/docs.4a666a27.css"> 
+  <script>window.i18nFetch = new Promise((res, rej) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', '/js/i18n/en-compiled.be4ce46ac6b9918537183f8ac191ce10.json');
+          xhr.responseType = 'json';
+          xhr.onload = function(e) {
+            if (this.status === 200) {
+              res({en: xhr.response});
+            } else {
+              rej(e);
+            }
+          };
+          xhr.send();
+        });</script> 
+  <script src="//www.googletagservices.com/tag/js/gpt.js" async></script> 
+  <style>.grecaptcha-badge{visibility: hidden;}</style> 
+  <meta name="habr-version" content="2.112.0"> 
+  <meta data-vue-meta="ssr" itemprop="image" content="/img/habr_en.png" data-vmid="image:itemprop">
+  <meta data-vue-meta="ssr" property="og:image" content="/img/habr_en.png" data-vmid="og:image">
+  <meta data-vue-meta="ssr" property="og:image:width" content="1200" data-vmid="og:image:width">
+  <meta data-vue-meta="ssr" property="og:image:height" content="630" data-vmid="og:image:height">
+  <meta data-vue-meta="ssr" property="aiturec:image" content="/img/habr_en.png" data-vmid="aiturec:image">
+  <meta data-vue-meta="ssr" name="twitter:image" content="/img/habr_en.png" data-vmid="twitter:image">
+  <meta data-vue-meta="ssr" property="vk:image" content="/img/habr_en.png?format=vk" data-vmid="vk:image">
+  <meta data-vue-meta="ssr" property="fb:app_id" content="444736788986613">
+  <meta data-vue-meta="ssr" property="fb:pages" content="472597926099084">
+  <meta data-vue-meta="ssr" name="twitter:card" content="summary_large_image">
+  <meta data-vue-meta="ssr" name="twitter:site" content="@habr_eng">
+  <meta data-vue-meta="ssr" property="og:locale" content="en_US" data-vmid="og:locale">
+  <meta data-vue-meta="ssr" property="og:type" content="website" data-vmid="og:type">
+  <meta data-vue-meta="ssr" property="og:site_name" content="Habr" data-vmid="og:site_name">
+  <meta data-vue-meta="ssr" property="og:title" content="Habr" data-vmid="og:title">
+  <meta data-vue-meta="ssr" property="og:url" content="https://habr.com/en/docs/authors/interview/" data-vmid="og:url">
+  <meta data-vue-meta="ssr" name="description" content="How to prepare for an interview, how to take it, and finally how to compose it" data-vmid="description"> 
+  <link data-vue-meta="ssr" rel="image_src" href="/img/habr_en.png" data-vmid="image:href">
+  <link data-vue-meta="ssr" href="https://habr.com/en/docs/authors/interview/" rel="canonical" data-vmid="canonical"> 
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303b44"> 
+  <meta name="msapplication-TileColor" content="#629FBC"> 
+  <meta name="apple-mobile-web-app-capable" content="yes"> 
+  <meta name="mobile-web-app-capable" content="yes"> 
+  <link rel="shortcut icon" type="image/png" sizes="16x16" href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png"> 
+  <link rel="shortcut icon" type="image/png" sizes="32x32" href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-152.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-180.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-256.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1136x640.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2436x1125.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1792x828.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_828x1792.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1334x750.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2208x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1125x2436.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2208.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2732x2048.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2688x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2224x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_750x1334.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x2732.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2388x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2224.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_640x1136.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2388.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x1536.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1536x2048.png"> 
+  <link rel="mask-icon" color="#77a2b6" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.svg"> 
+  <link crossorigin="use-credentials" href="/manifest.webmanifest" rel="manifest"> 
+  <script async src="https://unpkg.com/pwacompat" crossorigin="anonymous"></script> 
+  <script>window.yaContextCb = window.yaContextCb || []</script> 
+  <script src="https://yandex.ru/ads/system/context.js" async></script> 
+ </head> 
+ <body> 
+  <div id="app" data-server-rendered="true" data-async-called="true">
+   <div class="tm-layout__wrapper">
+    <!----> 
+    <div></div> <!----> 
+    <header class="tm-header">
+     <div class="tm-page-width">
+      <div class="tm-header__container">
+       <!----> <span class="tm-header__logo-wrap"><a href="/en/" class="tm-header__logo tm-header__logo_en">
+         <svg height="16" width="16" class="tm-svg-img tm-header__icon">
+          <title>Habr</title> <use xlink:href="/img/habr-logo-en.svg#logo"></use>
+         </svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span> <!----> <a href="/en/sandbox/start/" class="tm-header__become-author-btn"> How to become an author </a> <!----> <!----> <!---->
+      </div>
+     </div>
+    </header> 
+    <div class="tm-layout">
+     <div class="tm-page-progress-bar"></div> 
+     <div data-menu-sticky="true" class="tm-base-layout__header tm-base-layout__header_is-sticky">
+      <div class="tm-page-width">
+       <div class="tm-base-layout__header-wrapper">
+        <div class="tm-main-menu">
+         <div class="tm-main-menu__section">
+          <nav class="tm-main-menu__section-content">
+           <!----> <a href="/en/all/" class="tm-main-menu__item"> All streams </a> <a href="/en/flows/develop/" class="tm-main-menu__item"> Development </a><a href="/en/flows/admin/" class="tm-main-menu__item"> Admin </a><a href="/en/flows/design/" class="tm-main-menu__item"> Design </a><a href="/en/flows/management/" class="tm-main-menu__item"> Management </a><a href="/en/flows/marketing/" class="tm-main-menu__item"> Marketing </a><a href="/en/flows/popsci/" class="tm-main-menu__item"> PopSci </a>
+          </nav>
+         </div>
+        </div> 
+        <div class="tm-header-user-menu tm-base-layout__user-menu">
+         <a href="/en/search/" class="tm-header-user-menu__item tm-header-user-menu__search">
+          <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark">
+           <title>Search</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#search"></use>
+          </svg></a> <!----> <!----> <!----> 
+         <div class="tm-header-user-menu__item tm-header-user-menu__user_desktop">
+          <div class="tm-dropdown">
+           <div class="tm-dropdown__head">
+            <svg height="24" width="24" data-test-id="menu-toggle-guest" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_dark">
+             <title>Profile</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#header-user"></use>
+            </svg> <!---->
+           </div> <!---->
+          </div> <!---->
+         </div> <!---->
+        </div>
+       </div>
+      </div>
+     </div> <!----> 
+     <div class="tm-page-width"></div> 
+     <main class="tm-layout__container">
+      <div data-async-called="true" class="tm-page">
+       <div class="tm-page-width">
+        <!----> 
+        <div class="tm-page__wrapper">
+         <div class="tm-page__main tm-page__main_has-sidebar">
+          <div class="pull-down">
+           <!----> 
+           <div class="pull-down__header" style="height:0px;">
+            <div class="pull-down__content" style="bottom:10px;">
+             <svg height="24" width="24" class="tm-svg-img pull-down__arrow">
+              <title>Pull to refresh</title> <use xlink:href="/img/megazord-v28.78dd0d98..svg#pull-arrow"></use>
+             </svg>
+            </div>
+           </div> 
+           <div class="tm-page__header">
+            <div class="tm-section-name">
+             <h1 class="tm-section-name__text"> Information </h1> 
+            </div> 
+            <div class="tm-tabs tm-tabs">
+             <div class="tm-tabs__scroll-area">
+              <span class="tm-tabs__tab-item"><a href="/en/docs/help/" class="tm-tabs__tab-link tm-tabs__tab-link"> How it works <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/en/docs/authors/" data-test-id="tab-link-active" class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active"> For Authors <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/en/docs/companies/" class="tm-tabs__tab-link tm-tabs__tab-link"> For Companies <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/en/docs/docs/" class="tm-tabs__tab-link tm-tabs__tab-link"> Documents <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/en/docs/changelog/" class="tm-tabs__tab-link tm-tabs__tab-link"> Changelog <!----> <!----></a></span>
+             </div> <!---->
+            </div> 
+            <div></div>
+           </div> <!----> 
+           <div class="tm-page__info">
+            <h2>How to Interview</h2>
+            <p>Interview is a conversation with a person potentially interesting to the audience. The interviewer asks questions, and the interviewee answers. You can imaginary distinguish two sub-formats of the interview: a story and a discussion.</p>
+            <p>The first one shows the new and previously unknown side of the person. Such an interview does not have to be in a Q&amp;A format. It is also easy to read in the form of monologue.</p>
+            <div class="table">
+             <table>
+              <tbody>
+               <tr>
+                <td><p><strong>Raw</strong></p><p>— What department did you go to?</p><p>— It was computer science department.</p><p>— Did you like it there?</p><p>— The professors were good, but the program is outdated, I often had to look for info on my own.</p><p>— Is that why you quit?</p><p>— Yes.</p><p>— When was that?</p><p>— 2007</p></td>
+                <td><p><strong>Refined</strong></p><p>— I was in the department of computer science. I liked the prefessors, but the program was outdated and I often had to look for info on my own. So in 2007, I dropped out of the university.</p></td>
+               </tr>
+              </tbody>
+             </table>
+            </div>
+            <p>In the second format, the key thing is to look at the known facts from a new perspective, to reflect on and to test its strength. In this case only the Q&amp;A format will work.</p>
+            <p><strong>— People say that your code is not the one you can be proud of.</strong><br>— But we write and we are proud, and we don't f*** around.</p>
+            <h3>Preparation</h3>
+            <p>You have to prepare for both options in its own way.&nbsp;</p>
+            <p>In the first case it's better to make an approximate core of the story from what you've managed to learn about your speaker and to imagine the best way the person can tell the story. Having this core it is easier to come up with questions.</p>
+            <p>In the second case you should study everything too, but you're looking not for a new story, but for weaknesses in the known facts. Here you need not only questions that move the story forward and cover the blind spots, but also provocative talking points with a question mark.</p>
+            <p><strong>— Tesla is crap, and Musk is lying to us. What do you think?</strong><br>— I don't think I'm hitting the ass.</p>
+            <p>There's a powerful type of question that you'd better be careful with — mental experimentation. It allows the speaker to fantasize, reflex and expose. But not everybody likes it — either answering such questions or reading such interviews.</p>
+            <p><strong>— And what if the world had developed in such a way that social services and photo apps did not bring money — what would you do?</strong><br>— Whatever brings them.</p>
+            <h3>Talk</h3>
+            <p>It's better to record a conversation on two devices so there's always a backup.&nbsp;</p>
+            <p>Perfect pace: one narrative and two clarifying questions.</p>
+            <p><strong>— Tell me about the idea of a quantum coagulator for flea udders.</strong> <em>(moves the speaker further along the story)<br></em><strong>—</strong> <strong>How's it even set up?</strong> <em>(stops and asks to spell out)</em><br><strong>— Why fleas and not seals?</strong> <em>(and a little more details, but not getting carried away)</em></p>
+            <p>If questions become irrelevant during the conversation, throw them away in process. If there are new ones it is better to write them down quickly while you listen to the answer and ask later so as not to interrupt. Or when it's more appropriate. <strong>If you suddenly feel a sympathy for the speaker during the conversation and no longer want to ask uncomfortable question, you should slap yourself right away and ask it anyway.</strong></p>
+            <h3>Editing</h3>
+            <p>The transcript has to be taken apart and reassembled. The text should have a linear sequence, a collection of all thoughts in their places and no repetitions. Each topic stems from the previous one.</p>
+            <div class="table">
+             <table>
+              <tbody>
+               <tr>
+                <td><p><strong>Raw</strong></p>
+                 <ul>
+                  <li><p>5 mins on product;</p></li>
+                  <li><p>1 min on wonderful people who created it;</p></li>
+                  <li><p>6 mins on studentship;</p></li>
+                  <li><p>3 mins on how to hire developers;</p></li>
+                  <li><p>2 mins on that cool product feature;</p></li>
+                  <li><p>the history of the product invention, 3 mins;</p></li>
+                  <li><p>one more minute on wonderful people;</p></li>
+                  <li><p>cool story from studentship, 1 min;</p></li>
+                  <li><p>more 10 minutes on product;</p></li>
+                  <li><p>remembered one more life-hack for hiring developers, 30 seconds.</p></li>
+                 </ul></td>
+                <td><p><strong>Refined</strong></p>
+                 <ul>
+                  <li><p>cool story and the reflection on the whole studentship, 7 mins;</p></li>
+                  <li><p>the story of how the product was invented, 3 mins;</p></li>
+                  <li><p>17 minutes about the product and its features;</p></li>
+                  <li><p>2 minutes on wonderful people who created it;</p></li>
+                  <li><p>3,5 minutes for hiring life-hacks.</p></li>
+                 </ul></td>
+               </tr>
+              </tbody>
+             </table>
+            </div>
+            <p>The beginning should be as close to the point of the conversation as possible. No greetings, introductory questions or expositions. Everything the reader needs to know before the interview is great to put into the lead. It is totally acceptable, fancy and OK to begin the interview as if the reader joined the conversation a couple of minutes after the start. It's like Jack London.</p>
+            <div class="table">
+             <table>
+              <tbody>
+               <tr>
+                <td><p><strong>Raw</strong></p><p>— Hi, thanks for agreeing to talk with us.</p><p>— No problem, my pleasure.</p><p>— First tell the Habr readers who you are?</p><p>— I'm Batman.</p><p>— Wow, cool.</p><p>— Yeah!</p><p>— So how did you become Batman?</p><p>— When I was 9 a mugger killed my parents right in front of me.</p></td>
+                <td><p><strong>Refined</strong></p><p>We talked to Batman, he's cool.</p><p>&lt;cut/&gt;</p><p>— When I was 9 a mugger killed my parents right in front of me.</p></td>
+               </tr>
+              </tbody>
+             </table>
+            </div>
+            <p>If during the assembly and disassembly of the text some fragment doesn't not fit into the architecture and interfere with the narrative, rewrite speaker's words and put the side story in the special text box.</p>
+            <p>The ending as well as the beginning should be free of colloquial garbage like 'Goodbye' and 'Thanks for the conversation'.</p>
+            <p>When the architecture is ready, you can move on to cosmetics.</p>
+            <p>Author's questions should be short, no more than one line. It is necessary to get rid of any hooey.</p>
+            <div class="table">
+             <table>
+              <tbody>
+               <tr>
+                <td><p><strong>Raw</strong></p><p>— Take your company for example: you say that you have grown three hundred thousand times and written a billion thousand lines of code in six months. But how would you describe your feelings while that had been happenning? How did you manage to do that? How did you grow up and not burst? How did you even do that? Tell me about it, huh? How did you manage to grow up?</p></td>
+                <td><p><strong>Refined</strong></p><p>— How did you cope with 300,000 times growth and not burst?</p></td>
+               </tr>
+              </tbody>
+             </table>
+            </div>
+            <p>It is also better to split double questions.</p>
+            <div class="table">
+             <table>
+              <tbody>
+               <tr>
+                <td><p><strong>Raw</strong></p><p>— How did it all began? And how did it end up?</p><p>— Good and bad.</p></td>
+                <td><p><strong>Refined</strong></p><p>— How did it all began?</p><p>— Good.</p><p>— And how did it end up?</p><p>— Bad.</p></td>
+               </tr>
+              </tbody>
+             </table>
+            </div>
+            <p>There is no need to fight cruelly with the vocabulary — it's up to speaker what words to pick. But you can remove unnecessary parts of the speech, correct inversions and reassemble the narrative chronology.</p>
+            <div class="table">
+             <table>
+              <tbody>
+               <tr>
+                <td><p><strong>Raw</strong></p><p>— Well, if you talk about funny stories, I can tell you one. I was fired for a module that had disconnected half of Moscow from electricity. I used to be doing quite nicely, but now I'm a bum. I used to work in a service that watches everyone. I was doing the best I could. I wrote the module, and you know there was no one to ask for help or advice. And I was just a junior back then. The module was running and no one found the memory leak. Well, the energy started to be consumed way over the top. Because the module was controlling all the cameras. And the overvoltage happened. That's it.</p></td>
+                <td><p><strong>Refined</strong></p><p>— There's a funny story that happened to me. I was a junior in a surveillance service. I was doing quite nicely, but one day I got a task to write a module that was used in all the security cameras. There was no one to ask for help or advice, so I figured it out my own way.</p><p>When the module started, there was a memory leak in it and the cameras began to burn energy over the top. This caused an overvoltage which knocked out electricity in half of Moscow.</p><p>After that I was fired, and I've been a bum ever since.</p></td>
+               </tr>
+              </tbody>
+             </table>
+            </div>
+            <h3>Formatting</h3>
+            <p>Each line starts with a long dash, and questions are highlighted in bold.</p>
+            <p>If there are several speakers in the interview it's better to mark the names as follows:</p>
+            <p>— <em>Bill Gates (@username1):</em> There are a lot of us here, we will answer one at a time.<br>— <em>Tim Cook (@username2):</em> Heh-heh.<br>— <em>BG:</em> What's so funny?</p>
+            <h3>Approval</h3>
+            <p><strong>The interviewee is considered to be the co-author of a Q&amp;A material and his/her agreement for publication is required.</strong></p>
+            <p>And besides, it is just common sense, good tone and common practice. If you treat the speakers' words rather freely, it is better to show them the result before publication. But requests to rewrite, change the meaning, smooth the wording and everything like that should be rejected till the last breath. The only thing you should correct without a peep is factual inaccuracies.</p>
+            <p>Often it is not the actual speaker who deals with coordination, but PR service. Here's how you can convince PR, if they are trying to add to the text imaginary facts, or vice versa — to throw something away:</p>
+            <ul>
+             <li><p>explain that the PR department is not allowed to overwrite the text — it is considered as an infringement of your copyright and their boss;</p></li>
+             <li><p>to fight for facts use a simple argument — that's what your boss said, but this did not;</p></li>
+             <li><p>explain they can't throw away questions, because it is an editorial copyright.</p></li>
+            </ul>
+            <p>Approve on the interview itself, and not the intro or the headline.</p>
+           </div>
+          </div>
+         </div> 
+         <div class="tm-page__sidebar">
+          <div class="tm-layout-sidebar">
+           <div class="tm-layout-sidebar__placeholder_initial"></div> 
+           <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;">
+            <section class="tm-block tm-block tm-block_spacing-bottom">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Sections</h2> 
+              </div> <!---->
+             </header> 
+             <div class="tm-block__body tm-block__body">
+              <a href="/en/docs/authors/codex/" class="tm-docs__link_sidebar"> Habr Code of Authors </a><a href="/en/docs/authors/ppa/" class="tm-docs__link_sidebar"> Author Support Program (ASP) </a><a href="/en/docs/authors/design/" class="tm-docs__link_sidebar"> Making Up a Post </a><a href="/en/docs/authors/news/" class="tm-docs__link_sidebar"> Writing News </a><a href="/en/docs/authors/case/" class="tm-docs__link_sidebar"> Telling a Case Story </a><a href="/en/docs/authors/interview/" aria-current="page" class="tm-docs__link_sidebar router-link-exact-active tm-docs__link_sidebar_active"> Interviewing People </a><a href="/en/docs/authors/tutorial/" class="tm-docs__link_sidebar"> Making a Tutorial </a><a href="/en/docs/authors/retrospective/" class="tm-docs__link_sidebar"> Composing Retrospective Review </a><a href="/en/docs/authors/review/" class="tm-docs__link_sidebar"> Making a Review </a><a href="/en/docs/authors/opinion/" class="tm-docs__link_sidebar"> Writing a Column </a><a href="/en/docs/authors/infocards/" class="tm-docs__link_sidebar"> Сreating Info Cards </a><a href="/en/docs/authors/digest/" class="tm-docs__link_sidebar"> Composing a Digest </a><a href="/en/docs/authors/report/" class="tm-docs__link_sidebar"> Making a Report </a><a href="/en/docs/authors/typographics/" class="tm-docs__link_sidebar"> Typographics </a>
+             </div> <!---->
+            </section> <!---->
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </main> <!---->
+    </div> 
+    <div class="tm-footer-menu">
+     <div class="tm-page-width">
+      <div class="tm-footer-menu__container">
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Your account </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/en/docs/authors/interview/&amp;hl=en" rel="nofollow" target="_self"> Log in </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/en/docs/authors/interview/&amp;hl=en" rel="nofollow" target="_self"> Sign up </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Sections </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/en/" class="footer-menu__item-link router-link-active"> Posts </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/en/news/" class="footer-menu__item-link"> News </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/en/hubs/" class="footer-menu__item-link"> Hubs </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/en/companies/" class="footer-menu__item-link"> Companies </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/en/users/" class="footer-menu__item-link"> Authors </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/en/sandbox/" class="footer-menu__item-link"> Sandbox </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Information </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/en/docs/help/" class="footer-menu__item-link"> How it works </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/en/docs/authors/codex/" class="footer-menu__item-link"> For authors </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/en/docs/companies/corpblogs/" class="footer-menu__item-link"> For companies </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/en/docs/docs/transparency/" class="footer-menu__item-link"> Documents </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement" target="_blank"> Agreement </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/" target="_blank"> Confidential </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Services </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/en/corporate-blogs/" target="_blank"> Corporate blogs </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/en/advertising/" target="_blank"> Advertising </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/en/native-special/" target="_blank"> Special projects </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/en/education-programs/" target="_blank"> Education programs </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/en/hello-startup/" target="_blank"> Startups </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/en/megaprojects/" class="footer-menu__item-link"> Megaprojects </a></li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div> 
+    <div class="tm-footer">
+     <div class="tm-page-width">
+      <div class="tm-footer__container">
+       <!----> 
+       <div class="tm-footer__social">
+        <a href="https://www.facebook.com/habr.eng" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Facebook</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-facebook"></use>
+         </svg></a><a href="https://twitter.com/habr_eng" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Twitter</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-twitter"></use>
+         </svg></a><a href="https://t.me/habr_eng" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Telegram</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-telegram"></use>
+         </svg></a>
+       </div> 
+       <div class="v-portal" style="display:none;"></div> <button class="tm-footer__link"><!----> Language settings </button> <a href="/en/feedback/" class="tm-footer__link"> Support </a> <a href="/berserk-mode-nope" class="tm-footer__link"> Return to old version </a> 
+       <div class="tm-footer-copyright">
+        <span class="tm-copyright"><span class="tm-copyright__years">© 2006–2023, </span> <span class="tm-copyright__name"><a href="https://company.habr.com/en/" rel="noopener" target="_blank" class="tm-copyright__link">Habr</a></span></span>
+       </div>
+      </div>
+     </div>
+    </div> <!----> <!---->
+   </div> 
+   <div class="vue-portal-target"></div>
+  </div> 
+  <script>window.__INITIAL_STATE__={"adblock":{"hasAcceptableAdsFilter":false,"hasAdblock":false},"articlesList":{"articlesList":{},"articlesIds":{},"isLoading":false,"pagesCount":{},"route":{},"reasonsList":null,"view":"cards","lastVisitedRoute":{},"ssrCommentsArticleIds":[],"karma":{"userReasonsList":null}},"authorContribution":{"authors":{}},"betaTest":{"currentAnnouncement":null,"announcements":{},"announcementCards":null,"announcementComments":{},"announcementCommentThreads":{},"announcementCommentingStatuses":{},"archivedList":[]},"authorStatistics":{"articleRefs":{},"articleIds":{},"pagesCount":{},"route":{},"viewsCount":[],"maxStatsCount":{}},"career":{"seoLandings":[],"hubs":""},"comments":{"articleComments":{},"articlePinnedComments":{},"searchCommentsResults":null,"pagesCount":null,"commentAccess":{},"scrollParents":{},"pageArticleComments":{"lastViewedComment":0,"postId":null,"lastCommentTimestamp":"","moderated":[],"moderatedIds":[],"commentRoute":""}},"companies":{"companyRefs":{},"companyIds":{},"companyTopIds":{},"pagesCount":{},"companyProfiles":{},"companiesCategories":[],"companiesCategoriesTotalCount":0,"companiesWidgets":{},"companiesWorkers":{},"companiesFans":{},"route":{},"isLoading":false,"companyWorkersLoading":false,"companyFansLoading":false,"vacancies":{},"companiesGalleries":{},"companiesBanners":{},"companiesLandingVacancies":{},"companiesTechnologies":{},"workplaceInfo":null},"companyAdmin":{"companyInfo":null,"companyInfoLoading":false,"faqArticles":null,"brandingPreviewImageUrl":null,"jivoStatus":0,"adminNotifications":null},"companiesContribution":{"hubs":{},"flows":{},"companyRefs":{}},"companyHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"conversation":{"messages":[],"respondent":null,"isLoadMore":false},"conversations":{"conversations":[],"unreadCount":0,"pagesCount":0},"desktopState":{"desktopFl":null,"desktopHl":null,"isChecked":false,"isLoginDemanded":false},"docs":{"menu":{"authors":[{"alias":"codex","name":"Habr Code of Authors","description":"The code followed by the authors publishing their material on Habr"},{"alias":"ppa","name":"Author Support Program (ASP)","description":"A reward system for authors whose publications receive a good rating from the audience."},{"alias":"design","name":"Making Up a Post","description":"Shortly on the most important things in formatting a post"},{"alias":"news","name":"Writing News","description":"How news differ from other formats and how to write them"},{"alias":"case","name":"Telling a Case Story","description":""},{"alias":"interview","name":"Interviewing People","description":"How to prepare for an interview, how to take it, and finally how to compose it"},{"alias":"tutorial","name":"Making a Tutorial","description":"Short guide on how to make a tutorial"},{"alias":"retrospective","name":"Composing Retrospective Review","description":"Retrospective reviews is a story of how one or another program, a line of devices, a company or even the whole knowledge area or industry has been developing."},{"alias":"review","name":"Making a Review","description":"How to prepare to write a review or a test: what to write about, how much will be enough and how to choose illustrations."},{"alias":"opinion","name":"Writing a Column","description":"How to share an opinion and write an author's column. Here is how how to make it great. "},{"alias":"infocards","name":"Сreating Info Cards","description":"How to create Info Cards and slice and dice complicated things into simple ones."},{"alias":"digest","name":"Composing a Digest","description":"The Digest is a compilation of the most interesting, useful and meaningful items on a single topic or another single criteria. The main purpose of a digest is to save the reader's time and give an overview without going into details. "},{"alias":"report","name":"Making a Report","description":"A report is an eyewitness account of current events. The main task of a report is to take the reader to the scene and to tell about the most important and brightest aspects of what was going on. "},{"alias":"typographics","name":"Typographics","description":"Typographics"}]},"articles":{"authors\u002Finterview":{"locale":"en","alias":"interview","name":"Interviewing People","description":"How to prepare for an interview, how to take it, and finally how to compose it","content":"\u003Ch2\u003EHow to Interview\u003C\u002Fh2\u003E\u003Cp\u003EInterview is a conversation with a person potentially interesting to the audience. The interviewer asks questions, and the interviewee answers. You can imaginary distinguish two sub-formats of the interview: a story and a discussion.\u003C\u002Fp\u003E\u003Cp\u003EThe first one shows the new and previously unknown side of the person. Such an interview does not have to be in a Q&amp;A format. It is also easy to read in the form of monologue.\u003C\u002Fp\u003E\u003Cdiv class=\"table\"\u003E\u003Ctable\u003E\u003Ctbody\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp\u003E\u003Cstrong\u003ERaw\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003E— What department did you go to?\u003C\u002Fp\u003E\u003Cp\u003E— It was computer science department.\u003C\u002Fp\u003E\u003Cp\u003E— Did you like it there?\u003C\u002Fp\u003E\u003Cp\u003E— The professors were good, but the program is outdated, I often had to look for info on my own.\u003C\u002Fp\u003E\u003Cp\u003E— Is that why you quit?\u003C\u002Fp\u003E\u003Cp\u003E— Yes.\u003C\u002Fp\u003E\u003Cp\u003E— When was that?\u003C\u002Fp\u003E\u003Cp\u003E— 2007\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp\u003E\u003Cstrong\u003ERefined\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003E— I was in the department of computer science. I liked the prefessors, but the program was outdated and I often had to look for info on my own. So in 2007, I dropped out of the university.\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003C\u002Ftbody\u003E\u003C\u002Ftable\u003E\u003C\u002Fdiv\u003E\u003Cp\u003EIn the second format, the key thing is to look at the known facts from a new perspective, to reflect on and to test its strength. In this case only the Q&amp;A format will work.\u003C\u002Fp\u003E\u003Cp\u003E\u003Cstrong\u003E— People say that your code is not the one you can be proud of.\u003C\u002Fstrong\u003E\u003Cbr \u002F\u003E— But we write and we are proud, and we don't f*** around.\u003C\u002Fp\u003E\u003Ch3\u003EPreparation\u003C\u002Fh3\u003E\u003Cp\u003EYou have to prepare for both options in its own way. \u003C\u002Fp\u003E\u003Cp\u003EIn the first case it's better to make an approximate core of the story from what you've managed to learn about your speaker and to imagine the best way the person can tell the story. Having this core it is easier to come up with questions.\u003C\u002Fp\u003E\u003Cp\u003EIn the second case you should study everything too, but you're looking not for a new story, but for weaknesses in the known facts. Here you need not only questions that move the story forward and cover the blind spots, but also provocative talking points with a question mark.\u003C\u002Fp\u003E\u003Cp\u003E\u003Cstrong\u003E— Tesla is crap, and Musk is lying to us. What do you think?\u003C\u002Fstrong\u003E\u003Cbr \u002F\u003E— I don't think I'm hitting the ass.\u003C\u002Fp\u003E\u003Cp\u003EThere's a powerful type of question that you'd better be careful with — mental experimentation. It allows the speaker to fantasize, reflex and expose. But not everybody likes it — either answering such questions or reading such interviews.\u003C\u002Fp\u003E\u003Cp\u003E\u003Cstrong\u003E— And what if the world had developed in such a way that social services and photo apps did not bring money — what would you do?\u003C\u002Fstrong\u003E\u003Cbr \u002F\u003E— Whatever brings them.\u003C\u002Fp\u003E\u003Ch3\u003ETalk\u003C\u002Fh3\u003E\u003Cp\u003EIt's better to record a conversation on two devices so there's always a backup. \u003C\u002Fp\u003E\u003Cp\u003EPerfect pace: one narrative and two clarifying questions.\u003C\u002Fp\u003E\u003Cp\u003E\u003Cstrong\u003E— Tell me about the idea of a quantum coagulator for flea udders.\u003C\u002Fstrong\u003E \u003Cem\u003E(moves the speaker further along the story)\u003Cbr \u002F\u003E\u003C\u002Fem\u003E\u003Cstrong\u003E—\u003C\u002Fstrong\u003E \u003Cstrong\u003EHow's it even set up?\u003C\u002Fstrong\u003E \u003Cem\u003E(stops and asks to spell out)\u003C\u002Fem\u003E\u003Cbr \u002F\u003E\u003Cstrong\u003E— Why fleas and not seals?\u003C\u002Fstrong\u003E \u003Cem\u003E(and a little more details, but not getting carried away)\u003C\u002Fem\u003E\u003C\u002Fp\u003E\u003Cp\u003EIf questions become irrelevant during the conversation, throw them away in process. If there are new ones it is better to write them down quickly while you listen to the answer and ask later so as not to interrupt. Or when it's more appropriate. \u003Cstrong\u003EIf you suddenly feel a sympathy for the speaker during the conversation and no longer want to ask uncomfortable question, you should slap yourself right away and ask it anyway.\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Ch3\u003EEditing\u003C\u002Fh3\u003E\u003Cp\u003EThe transcript has to be taken apart and reassembled. The text should have a linear sequence, a collection of all thoughts in their places and no repetitions. Each topic stems from the previous one.\u003C\u002Fp\u003E\u003Cdiv class=\"table\"\u003E\u003Ctable\u003E\u003Ctbody\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp\u003E\u003Cstrong\u003ERaw\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003E5 mins on product;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E1 min on wonderful people who created it;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E6 mins on studentship;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E3 mins on how to hire developers;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E2 mins on that cool product feature;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003Ethe history of the product invention, 3 mins;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003Eone more minute on wonderful people;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003Ecool story from studentship, 1 min;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003Emore 10 minutes on product;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003Eremembered one more life-hack for hiring developers, 30 seconds.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Ful\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp\u003E\u003Cstrong\u003ERefined\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003Ecool story and the reflection on the whole studentship, 7 mins;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003Ethe story of how the product was invented, 3 mins;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E17 minutes about the product and its features;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E2 minutes on wonderful people who created it;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E3,5 minutes for hiring life-hacks.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Ful\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003C\u002Ftbody\u003E\u003C\u002Ftable\u003E\u003C\u002Fdiv\u003E\u003Cp\u003EThe beginning should be as close to the point of the conversation as possible. No greetings, introductory questions or expositions. Everything the reader needs to know before the interview is great to put into the lead. It is totally acceptable, fancy and OK to begin the interview as if the reader joined the conversation a couple of minutes after the start. It's like Jack London.\u003C\u002Fp\u003E\u003Cdiv class=\"table\"\u003E\u003Ctable\u003E\u003Ctbody\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp\u003E\u003Cstrong\u003ERaw\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003E— Hi, thanks for agreeing to talk with us.\u003C\u002Fp\u003E\u003Cp\u003E— No problem, my pleasure.\u003C\u002Fp\u003E\u003Cp\u003E— First tell the Habr readers who you are?\u003C\u002Fp\u003E\u003Cp\u003E— I'm Batman.\u003C\u002Fp\u003E\u003Cp\u003E— Wow, cool.\u003C\u002Fp\u003E\u003Cp\u003E— Yeah!\u003C\u002Fp\u003E\u003Cp\u003E— So how did you become Batman?\u003C\u002Fp\u003E\u003Cp\u003E— When I was 9 a mugger killed my parents right in front of me.\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp\u003E\u003Cstrong\u003ERefined\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003EWe talked to Batman, he's cool.\u003C\u002Fp\u003E\u003Cp\u003E&lt;cut\u002F&gt;\u003C\u002Fp\u003E\u003Cp\u003E— When I was 9 a mugger killed my parents right in front of me.\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003C\u002Ftbody\u003E\u003C\u002Ftable\u003E\u003C\u002Fdiv\u003E\u003Cp\u003EIf during the assembly and disassembly of the text some fragment doesn't not fit into the architecture and interfere with the narrative, rewrite speaker's words and put the side story in the special text box.\u003C\u002Fp\u003E\u003Cp\u003EThe ending as well as the beginning should be free of colloquial garbage like 'Goodbye' and 'Thanks for the conversation'.\u003C\u002Fp\u003E\u003Cp\u003EWhen the architecture is ready, you can move on to cosmetics.\u003C\u002Fp\u003E\u003Cp\u003EAuthor's questions should be short, no more than one line. It is necessary to get rid of any hooey.\u003C\u002Fp\u003E\u003Cdiv class=\"table\"\u003E\u003Ctable\u003E\u003Ctbody\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp\u003E\u003Cstrong\u003ERaw\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003E— Take your company for example: you say that you have grown three hundred thousand times and written a billion thousand lines of code in six months. But how would you describe your feelings while that had been happenning? How did you manage to do that? How did you grow up and not burst? How did you even do that? Tell me about it, huh? How did you manage to grow up?\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp\u003E\u003Cstrong\u003ERefined\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003E— How did you cope with 300,000 times growth and not burst?\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003C\u002Ftbody\u003E\u003C\u002Ftable\u003E\u003C\u002Fdiv\u003E\u003Cp\u003EIt is also better to split double questions.\u003C\u002Fp\u003E\u003Cdiv class=\"table\"\u003E\u003Ctable\u003E\u003Ctbody\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp\u003E\u003Cstrong\u003ERaw\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003E— How did it all began? And how did it end up?\u003C\u002Fp\u003E\u003Cp\u003E— Good and bad.\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp\u003E\u003Cstrong\u003ERefined\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003E— How did it all began?\u003C\u002Fp\u003E\u003Cp\u003E— Good.\u003C\u002Fp\u003E\u003Cp\u003E— And how did it end up?\u003C\u002Fp\u003E\u003Cp\u003E— Bad.\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003C\u002Ftbody\u003E\u003C\u002Ftable\u003E\u003C\u002Fdiv\u003E\u003Cp\u003EThere is no need to fight cruelly with the vocabulary — it's up to speaker what words to pick. But you can remove unnecessary parts of the speech, correct inversions and reassemble the narrative chronology.\u003C\u002Fp\u003E\u003Cdiv class=\"table\"\u003E\u003Ctable\u003E\u003Ctbody\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp\u003E\u003Cstrong\u003ERaw\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003E— Well, if you talk about funny stories, I can tell you one. I was fired for a module that had disconnected half of Moscow from electricity. I used to be doing quite nicely, but now I'm a bum. I used to work in a service that watches everyone. I was doing the best I could. I wrote the module, and you know there was no one to ask for help or advice. And I was just a junior back then. The module was running and no one found the memory leak. Well, the energy started to be consumed way over the top. Because the module was controlling all the cameras. And the overvoltage happened. That's it.\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp\u003E\u003Cstrong\u003ERefined\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003E— There's a funny story that happened to me. I was a junior in a surveillance service. I was doing quite nicely, but one day I got a task to write a module that was used in all the security cameras. There was no one to ask for help or advice, so I figured it out my own way.\u003C\u002Fp\u003E\u003Cp\u003EWhen the module started, there was a memory leak in it and the cameras began to burn energy over the top. This caused an overvoltage which knocked out electricity in half of Moscow.\u003C\u002Fp\u003E\u003Cp\u003EAfter that I was fired, and I've been a bum ever since.\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003C\u002Ftbody\u003E\u003C\u002Ftable\u003E\u003C\u002Fdiv\u003E\u003Ch3\u003EFormatting\u003C\u002Fh3\u003E\u003Cp\u003EEach line starts with a long dash, and questions are highlighted in bold.\u003C\u002Fp\u003E\u003Cp\u003EIf there are several speakers in the interview it's better to mark the names as follows:\u003C\u002Fp\u003E\u003Cp\u003E— \u003Cem\u003EBill Gates (@username1):\u003C\u002Fem\u003E There are a lot of us here, we will answer one at a time.\u003Cbr \u002F\u003E— \u003Cem\u003ETim Cook (@username2):\u003C\u002Fem\u003E Heh-heh.\u003Cbr \u002F\u003E— \u003Cem\u003EBG:\u003C\u002Fem\u003E What's so funny?\u003C\u002Fp\u003E\u003Ch3\u003EApproval\u003C\u002Fh3\u003E\u003Cp\u003E\u003Cstrong\u003EThe interviewee is considered to be the co-author of a Q&amp;A material and his\u002Fher agreement for publication is required.\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003EAnd besides, it is just common sense, good tone and common practice. If you treat the speakers' words rather freely, it is better to show them the result before publication. But requests to rewrite, change the meaning, smooth the wording and everything like that should be rejected till the last breath. The only thing you should correct without a peep is factual inaccuracies.\u003C\u002Fp\u003E\u003Cp\u003EOften it is not the actual speaker who deals with coordination, but PR service. Here's how you can convince PR, if they are trying to add to the text imaginary facts, or vice versa — to throw something away:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003Eexplain that the PR department is not allowed to overwrite the text — it is considered as an infringement of your copyright and their boss;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003Eto fight for facts use a simple argument — that's what your boss said, but this did not;\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003Eexplain they can't throw away questions, because it is an editorial copyright.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Ful\u003E\u003Cp\u003EApprove on the interview itself, and not the intro or the headline.\u003C\u002Fp\u003E","isPublished":true}},"mainMenu":[{"alias":"help","name":"How it works","pubArticlesCount":19},{"alias":"authors","name":"For Authors","pubArticlesCount":14},{"alias":"companies","name":"For Companies","pubArticlesCount":8},{"alias":"docs","name":"Documents","pubArticlesCount":9},{"alias":"changelog","name":"Changelog","pubArticlesCount":2}],"loading":{"main":false,"dropdown":false,"article":false}},"feature":{"isProbablyVisible":true},"flows":{"updates":{"countNewPostsBySubscription":null,"countNewPostsAll":0,"countNewNewsAll":0},"flows":[{"alias":"develop","id":"1","route":{"name":"FLOW_PAGE","params":{"flowName":"develop"}}},{"alias":"admin","id":"6","route":{"name":"FLOW_PAGE","params":{"flowName":"admin"}}},{"alias":"design","id":"2","route":{"name":"FLOW_PAGE","params":{"flowName":"design"}}},{"alias":"management","id":"3","route":{"name":"FLOW_PAGE","params":{"flowName":"management"}}},{"alias":"marketing","id":"4","route":{"name":"FLOW_PAGE","params":{"flowName":"marketing"}}},{"alias":"popsci","id":"7","route":{"name":"FLOW_PAGE","params":{"flowName":"popsci"}}}]},"global":{"isPwa":false,"device":"desktop","isHabrCom":true},"hubs":{"hubRefs":{},"hubIds":{},"pagesCount":{},"isLoading":false,"route":{}},"hubsBlock":{"hubRefs":{},"hubIds":{}},"i18n":{"fl":"en","hl":"en"},"info":{"infoPage":{},"isLoading":true},"location":{"urlStruct":{"protocol":null,"slashes":null,"auth":null,"host":null,"port":null,"hostname":null,"hash":null,"search":null,"query":{},"pathname":null,"path":null,"href":""}},"me":{"user":null,"ppgDemanded":false,"karmaResetInfo":{"canReincarnate":null,"wasReincarnated":null,"currentScore":null},"notes":null},"modal":{"modals":[]},"mostReadingList":{"mostReadingListIds":[],"mostReadingListRefs":null,"promoPost":null},"ppa":{"articles":{},"card":null,"transactions":null,"totalTransactions":null,"isAccessible":null},"projectsBlocks":{"activeBlocks":{}},"promoData":{"isLoading":false,"hasLoaded":false,"featurer":null,"megaposts":null,"promoLinks":null,"promoPosts":null},"pullRefresh":{"shouldRefresh":false},"sandbox":{"articleIds":[],"articleRefs":{},"pagesCount":null,"route":{},"lastVisitedRoute":{},"isLoading":false},"search":{"searchQueryError":null},"settingsOther":{"inputs":{"uiLang":{"errors":[],"ref":null,"value":""},"articlesLangEnglish":{"errors":[],"ref":null,"value":false},"articlesLangRussian":{"errors":[],"ref":null,"value":false},"agreement":{"errors":[],"ref":null,"value":false},"email":{"errors":[],"ref":null,"value":true},"digest":{"errors":[],"ref":null,"value":true}}},"similarList":{"similarListIds":[],"similarListRefs":null},"ssr":{"error":null,"isDataLoaded":false,"isDataLoading":false,"isHydrationFailed":false,"isServer":false},"stories":{"stories":[{"id":"story-238","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F552\u002F8b6\u002Fb04\u002F5528b6b043be178d6cb353938a37c41f.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Flotus-main"},"title":"Найти дзен","lang":"ru","startTime":"2023-02-16T12:00:00+03:00","finishTime":"2023-02-26T11:43:00+03:00","slides":[{"id":"story-238_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5b0\u002F96a\u002Fba8\u002F5b096aba81be66041a2aa907dece5800.jpg","button":null},{"id":"story-238_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F710\u002Faaf\u002Fd5e\u002F710aafd5e1dee1d68ec384e25062562d.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Flotus-1","colorType":"light"}},{"id":"story-238_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fabd\u002Ffa8\u002F3ad\u002Fabdfa83ad425d6093bf5b562498d4a0e.jpg","button":{"title":"Чем и кому?","link":"https:\u002F\u002Fu.habr.com\u002Flotus-2","colorType":"light"}},{"id":"story-238_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F74d\u002F464\u002F9af\u002F74d4649af8509dd19e49f44be684bfcd.jpg","button":{"title":"Как это работает?","link":"https:\u002F\u002Fu.habr.com\u002Flotus-3","colorType":"light"}},{"id":"story-238_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4f1\u002Ffbb\u002F5a6\u002F4f1fbb5a6daa2c5839e920db487cb8c1.jpg","button":{"title":"Узнать больше","link":"https:\u002F\u002Fu.habr.com\u002Flotus-4","colorType":"light"}},{"id":"story-238_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8d9\u002Fa2c\u002F146\u002F8d9a2c14645db00326f575c448144b49.jpg","button":{"title":"Как обнаружить?","link":"https:\u002F\u002Fu.habr.com\u002Flotus-5","colorType":"light"}},{"id":"story-238_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7f0\u002F531\u002F294\u002F7f0531294cedd2e9e4dd047ea21b493b.jpg","button":{"title":"Посмотреть","link":"https:\u002F\u002Fu.habr.com\u002Flotus-6","colorType":"light"}}]},{"id":"story-234","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F16a\u002Fe4a\u002Fb61\u002F16ae4ab611326cc11d0d8919c149d95c.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FqQNg9"},"title":"Консультации на Хабр Экспертах: бэкенд","lang":"ru","startTime":"2023-02-15T15:33:00+03:00","finishTime":"2023-02-22T15:27:00+03:00","slides":[{"id":"story-234_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F523\u002F9ed\u002F058\u002F5239ed058e84d21597e19ca56650f880.png","button":null},{"id":"story-234_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F207\u002F976\u002F160\u002F207976160ce35d4fbd90cb705d597fe9.png","button":null},{"id":"story-234_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F38c\u002F675\u002Fd4f\u002F38c675d4f4c5ba17441f2c43949ca4b3.png","button":null},{"id":"story-234_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F287\u002F395\u002F4a4\u002F2873954a46af32bf23ca60d0c2c00c16.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002FqQNg9","colorType":"dark"}}]},{"id":"story-228","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F026\u002F1fe\u002Fc97\u002F0261fec9713f03e7bbaec8a99fd0a95b.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Недельный топ годноты от компаний","lang":"ru","startTime":"2023-02-15T11:00:00+03:00","finishTime":"2023-02-21T17:00:00+03:00","slides":[{"id":"story-228_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F3d5\u002Fe21\u002F351\u002F3d5e21351512ad34216523b08ede4024.jpg","button":null},{"id":"story-228_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8ef\u002Fb1e\u002F7f4\u002F8efb1e7f4a6f5986dbbc2cdd1dd2c447.jpg","button":{"title":"Выбрать сценарий","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Ftimeweb\u002Fblog\u002F711288\u002F","colorType":"light"}},{"id":"story-228_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F03d\u002Ffa3\u002F79d\u002F03dfa379dbc41cedb33d93b658876d76.jpg","button":{"title":"Как именно?","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fbelayaraduga\u002Fblog\u002F713636\u002F","colorType":"light"}},{"id":"story-228_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0c2\u002F6e0\u002Ff07\u002F0c26e0f07bef607419cfc016005b7975.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Ffirst\u002Fblog\u002F714940\u002F","colorType":"light"}},{"id":"story-228_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F668\u002F4c8\u002F0ee\u002F6684c80ee37964dc482d1e4059236c86.jpg","button":{"title":"Смотреть обзор","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fjetinfosystems\u002Fblog\u002F713284\u002F","colorType":"light"}},{"id":"story-228_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8e5\u002F05f\u002Ffa0\u002F8e505ffa0510a1c7ab84eecb2e31f88e.jpg","button":{"title":"Научиться","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fods\u002Fblog\u002F709222\u002F","colorType":"light"}},{"id":"story-228_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F362\u002F4dd\u002Fc41\u002F3624ddc414b0ee14009364669e892adb.jpg","button":{"title":"Ознакомиться","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F715192\u002F","colorType":"light"}},{"id":"story-228_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe1b\u002Ff76\u002F602\u002Fe1bf7660228906801c055ed106e88875.jpg","button":{"title":"Узнать больше","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fgetmatch\u002Fblog\u002F714448\u002F","colorType":"light"}}]},{"id":"story-224","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4fa\u002F899\u002F490\u002F4fa899490d1c57ec7064ea09e8d50a14.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fwebcast_MLOps"},"title":"От MLOps к TriceratОps","lang":"ru","startTime":"2023-02-14T10:00:47+03:00","finishTime":"2023-02-21T23:59:00+03:00","slides":[{"id":"story-224_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F607\u002Fded\u002F888\u002F607ded88881e3c2b400eb781da7e1b1d.png","button":null},{"id":"story-224_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F915\u002Fdb0\u002F681\u002F915db0681d302a5736b4b29689bc2dc1.png","button":{"title":"Симптомы","link":"https:\u002F\u002Fwww.youtube.com\u002Fwatch?v=rK2V4J6Z7CU&t=747s","colorType":"light"}},{"id":"story-224_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F514\u002F8fc\u002F078\u002F5148fc078b174adbb89583a7d8e20ad8.png","button":{"title":"Рецепт полностью","link":"https:\u002F\u002Fwww.youtube.com\u002Fwatch?v=rK2V4J6Z7CU&t=1065s","colorType":"light"}},{"id":"story-224_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2a3\u002F41f\u002F544\u002F2a341f544d0576086b9f48783854934f.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fwww.youtube.com\u002Fwatch?v=rK2V4J6Z7CU&t=2273s","colorType":"light"}},{"id":"story-224_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F518\u002Fdde\u002F7e8\u002F518dde7e8d747cb1f3fce200094abaee.png","button":{"title":"В чём подвох","link":"https:\u002F\u002Fwww.youtube.com\u002Fwatch?v=rK2V4J6Z7CU&t=2912s","colorType":"light"}},{"id":"story-224_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcce\u002Fa7e\u002F58b\u002Fccea7e58b28908ec545db0e361347a43.jpg","button":{"title":"Посмотреть","link":"https:\u002F\u002Fyoutu.be\u002FyLsY984z_iI?list=PLTlO6nV_TaGCFJ4AZM5IA7JnMDSpoC0_Y","colorType":"light"}}]},{"id":"story-222","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F312\u002Fabe\u002Fd4c\u002F312abed4c2617f05f485c19ae101de7e.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Любовь, Хабр и роботы","lang":"ru","startTime":"2023-02-14T09:00:14+03:00","finishTime":"2023-02-26T23:59:00+03:00","slides":[{"id":"story-222_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd35\u002Fce5\u002F716\u002Fd35ce5716f14544be26d53e05dc155ab.jpg","button":null},{"id":"story-222_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F191\u002Fb9c\u002F449\u002F191b9c449738d2cb2333ffa8daa1bd39.jpg","button":{"title":"Читать переводы","link":"https:\u002F\u002Fu.habr.com\u002Fval1","colorType":"light"}},{"id":"story-222_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7c6\u002F61d\u002F6d9\u002F7c661d6d915ca10f037ccc7307fa36ec.jpg","button":{"title":"Что получилось?","link":"https:\u002F\u002Fu.habr.com\u002Fval2","colorType":"light"}},{"id":"story-222_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F02c\u002F20a\u002Fa28\u002F02c20aa28f1e1cb7d70943bd96eb5ac7.jpg","button":{"title":"Созерцать","link":"https:\u002F\u002Fu.habr.com\u002Fval3","colorType":"light"}},{"id":"story-222_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe94\u002F9d6\u002F03e\u002Fe949d603e63cf1c98dcc4597ba41abfa.jpg","button":{"title":"На свидание","link":"https:\u002F\u002Fu.habr.com\u002Fval4","colorType":"light"}},{"id":"story-222_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7b0\u002F3b3\u002Fed9\u002F7b03b3ed931ce73a0cda771b5e39c813.jpg","button":{"title":"Нашёл?","link":"https:\u002F\u002Fu.habr.com\u002Fval5","colorType":"light"}},{"id":"story-222_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F594\u002Fff6\u002Fbad\u002F594ff6badc0503fa3ca0dffafc31d3a3.jpg","button":{"title":"И сколько же?","link":"https:\u002F\u002Fu.habr.com\u002Fval6","colorType":"light"}},{"id":"story-222_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F452\u002Ff87\u002F9aa\u002F452f879aaf0db9530f35204663ec00e6.jpg","button":{"title":"Глянуть код","link":"https:\u002F\u002Fu.habr.com\u002Fval7","colorType":"light"}}]},{"id":"story-218","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F95d\u002F032\u002F360\u002F95d03236093f23cb006751a911c1ca1b.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FIcDGH"},"title":"Активность найма на IT-рынке в январе","lang":"ru","startTime":"2023-02-13T10:40:00+03:00","finishTime":"2023-02-20T23:59:41+03:00","slides":[{"id":"story-218_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F63e\u002Fcd3\u002F3ff\u002F63ecd33ff8e108e28fcb72af09339823.png","button":null},{"id":"story-218_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0d1\u002F442\u002Ffa0\u002F0d1442fa021337f0c716405b19bd9aac.png","button":null},{"id":"story-218_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F16c\u002F7c1\u002F755\u002F16c7c17552d38519e88e3ac166ae4826.png","button":null},{"id":"story-218_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F802\u002Fbb8\u002Fed1\u002F802bb8ed1bddd0bf8afff9d90507fe8a.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002FIcDGH","colorType":"dark"}}]},{"id":"story-214","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F02e\u002F69c\u002F1b8\u002F02e69c1b8cc1292fe53929083a93f699.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"ИБ от Луки: топ-7 самых рейтинговых постов","lang":"ru","startTime":"2023-02-09T13:45:00+03:00","finishTime":"2023-02-19T23:59:00+03:00","slides":[{"id":"story-214_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F1aa\u002F5cc\u002F9d7\u002F1aa5cc9d7d557d97845d7d2bc0b1fe6a.jpg","button":null},{"id":"story-214_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd34\u002Fdc1\u002Ffee\u002Fd34dc1fee24eef1780fcb50decad4c6f.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-01","colorType":"light"}},{"id":"story-214_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F3e6\u002F2c4\u002F857\u002F3e62c4857decb9a45a38deacbf607879.jpg","button":{"title":"Читать пост","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-02","colorType":"light"}},{"id":"story-214_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa72\u002F490\u002Fd35\u002Fa72490d3551469f32d8895f0cc4899ff.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-03","colorType":"light"}},{"id":"story-214_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9f4\u002Ffed\u002F927\u002F9f4fed92715d9632655fa6ee5c281afa.jpg","button":{"title":"Читать","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-04","colorType":"light"}},{"id":"story-214_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F6be\u002Fbd5\u002Fe91\u002F6bebd5e913cc08b41010e9188e35156c.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-05","colorType":"light"}},{"id":"story-214_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2b3\u002F98b\u002Fa15\u002F2b398ba15bfb71e57d306aad220d466c.jpg","button":{"title":"Читать пост","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-06","colorType":"light"}},{"id":"story-214_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa9e\u002Fac9\u002Ffba\u002Fa9eac9fba81f7ae1feb21f2ddb42635a.jpg","button":{"title":"Читать","link":"https:\u002F\u002Fu.habr.com\u002Fluka2-07","colorType":"light"}}]},{"id":"story-202","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F355\u002F61d\u002F02e\u002F35561d02e68fad97acb3023f5ed0943e.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-2"},"title":"Зарплаты в IT во второй половине 2022","lang":"ru","startTime":"2023-02-06T11:00:00+03:00","finishTime":"2023-02-19T23:59:00+03:00","slides":[{"id":"story-202_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F872\u002F6da\u002F434\u002F8726da4345864736c32cea5f6d0e8520.png","button":null},{"id":"story-202_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F079\u002F168\u002F80c\u002F07916880c5cd1a3e489233861be84a72.png","button":null},{"id":"story-202_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F600\u002F579\u002F3ab\u002F6005793ab7a69e006a6b13026dbf89a5.png","button":null},{"id":"story-202_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcb8\u002Fdc0\u002F099\u002Fcb8dc00992a4cd63c5d614b57e8037b5.png","button":null},{"id":"story-202_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Faff\u002F90f\u002Fe80\u002Faff90fe80f9466fe702f08b13658e8f2.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-2","colorType":"dark"}}]},{"id":"story-190","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fac3\u002F3cd\u002F1b0\u002Fac33cd1b02027add0414f306d5e37731.png","title":"Мир Plat.Form (НСПК)","link":"https:\u002F\u002Fu.habr.com\u002Fstories_mir_QRcode"},"title":"О QR-коде в гравюрах и хокку","lang":"ru","startTime":"2023-02-02T12:30:00+03:00","finishTime":"2023-02-19T23:59:00+03:00","slides":[{"id":"story-190_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5bb\u002F2f6\u002F42c\u002F5bb2f642cf18bbacbfd01bb1736d303d.jpg","button":{"title":"Подслушать","link":"https:\u002F\u002Fu.habr.com\u002Fstories_mir_QRcode","colorType":"dark"}},{"id":"story-190_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9b5\u002Fc66\u002F564\u002F9b5c665645bf62db2907bfe22b3decf4.png","button":{"title":"Узнать почему","link":"https:\u002F\u002Fu.habr.com\u002Fstories_mir_QRcode","colorType":"dark"}},{"id":"story-190_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fc4e\u002F457\u002F8c0\u002Fc4e4578c0ae364b388a38a78023007e1.jpg","button":{"title":"Как он работает","link":"https:\u002F\u002Fu.habr.com\u002Fstories_mir_QRcode","colorType":"dark"}},{"id":"story-190_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Febb\u002Fa53\u002Fe42\u002Febba53e42c52e27a0e815af78be5bdd9.png","button":{"title":"Узнать подробности","link":"https:\u002F\u002Fu.habr.com\u002Fstories_mir_QRcode","colorType":"dark"}}]},{"id":"story-186","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fb6b\u002F720\u002F180\u002Fb6b72018041811571246ddf5ef07bd33.png","title":"Сезоны Хабра","link":"https:\u002F\u002Fu.habr.com\u002Fstory_season-kuber"},"title":"Столкнуться с кубом","lang":"ru","startTime":"2023-02-01T11:30:00+03:00","finishTime":"2023-02-28T23:59:00+03:00","slides":[{"id":"story-186_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2b0\u002F5e8\u002Fffb\u002F2b05e8ffb30634f0f7f5c9602d8e43e6.png","button":null},{"id":"story-186_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fdfb\u002F838\u002F9c1\u002Fdfb8389c197e915942f9144978b91ce4.png","button":null},{"id":"story-186_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F634\u002Fc42\u002Fdfd\u002F634c42dfddb260cdf37f9c9b9d3f34ea.png","button":null},{"id":"story-186_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F401\u002F9f5\u002F59e\u002F4019f559e6c090ded0b46d6deeb4883c.png","button":null},{"id":"story-186_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F82a\u002F9cd\u002Fa48\u002F82a9cda4870156765b749271aca48241.png","button":{"title":"Смотреть участников","link":"https:\u002F\u002Fu.habr.com\u002Fstory_season-kuber_members","colorType":"light"}}]},{"id":"story-152","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa49\u002F0d3\u002F609\u002Fa490d3609f29b6dfc53a7b88ab47ca64.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa"},"title":"Сеньоры — очень странные люди","lang":"ru","startTime":"2023-01-23T11:00:00+03:00","finishTime":"2023-03-01T23:59:00+03:00","slides":[{"id":"story-152_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbbb\u002F901\u002F063\u002Fbbb9010630ae483ed1f41ec4e2572c13.png","button":null},{"id":"story-152_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4f8\u002F66c\u002F14f\u002F4f866c14f0ca8999334438d7f17c0e3a.png","button":null},{"id":"story-152_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F6b9\u002Fa07\u002Fa61\u002F6b9a07a612df213ac3a1c179301828df.png","button":null},{"id":"story-152_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff6b\u002Fadb\u002Fb99\u002Ff6badbb9969d7e34ef4f7492767c6a77.png","button":null},{"id":"story-152_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd9c\u002F9ac\u002F878\u002Fd9c9ac878bec5b494699e0080dd2e813.png","button":null},{"id":"story-152_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fdb1\u002Faf9\u002Fc3b\u002Fdb1af9c3bb557f6cee698cf67610f977.png","button":null},{"id":"story-152_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5cf\u002Fbed\u002F65b\u002F5cfbed65bd20b7051b1aac2b9d6e807e.png","button":null},{"id":"story-152_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffa8\u002F251\u002F4a9\u002Ffa82514a9471cd455339e97178d8c021.png","button":null},{"id":"story-152_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbd5\u002F901\u002Fe95\u002Fbd5901e952d9cf638355a3cc8b0c0911.png","button":{"title":"Хочу помочь джуну","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa","colorType":"light"}}]}]},"technotext":{"years":[],"technotextDocForNominees":null,"technotextDocForWinners":null,"technotextInfo":{},"technotextInfoLoading":false,"technotextWinners":{},"technotextWinnersLoading":false},"userHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"userInvites":{"availableInvites":0,"usedInvitesIds":[],"usedInvitesRefs":{},"usedInvitesPagesCount":0,"unusedInvitesIds":[],"unusedInvitesRefs":{},"unusedInvitesPagesCount":0},"userVotes":{"karmaVotesList":[],"karmaVotesPagesCount":null,"karmaVotesListLoading":false,"commentsVotesList":[],"commentsVotesPagesCount":null,"commentsVotesListLoading":false,"postsVotesList":[],"postsVotesPagesCount":null,"postsVotesListLoading":false,"userVotesList":[],"userVotesPagesCount":null,"userVotesListLoading":false},"users":{"authorRefs":{},"authorIds":{},"pagesCount":{},"authorProfiles":{},"userHubs":{},"userInvitations":{},"authorFollowers":{},"authorFollowed":{},"userSpecialization":{},"karmaStats":[],"statistics":null,"isLoading":false,"authorFollowersLoading":false,"authorFollowedLoading":false,"userHubsLoading":false,"userInvitationsLoading":false,"route":{}},"viewport":{"prevScrollY":{},"scrollY":0,"width":0},"tracker":{"items":{},"pagesCache":{},"markedViewedSilently":{},"markedRead":{},"unreadCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null},"unviewedCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null}}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script> 
+  <script src="https://assets.habr.com/habr-web/js/chunk-vendors.a5368ccd.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/docs.376b195c.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/app.34e7f643.js" defer></script> 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-726094-1"></script> 
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script> 
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(24049213, "init", {
+      defer:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:false,
+    });
+  </script> 
+  <noscript> 
+   <div> 
+    <img src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;" alt=""> 
+   </div> 
+  </noscript> 
+  <script type="text/javascript">
+      window.addEventListener('load', function () {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = 'https://vk.com/rtrg?p=VK-RTRG-421343-57vKE';
+        }, 0);
+      });
+    </script> 
+  <script src="/js/ads.js" onload="window['zhY4i4nJ9K'] = true"></script>  
+ </body>
+</html>

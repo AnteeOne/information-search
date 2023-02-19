@@ -1,0 +1,1356 @@
+<html lang="ru" class="no-js">
+ <head>
+  <title>Хабр — корпоративные блоги</title>
+  <meta itemprop="name" content="Хабр — корпоративные блоги">
+  <meta property="og:title" content="Хабр — корпоративные блоги">
+  <meta name="twitter:title" content="Хабр — корпоративные блоги">
+  <meta name="description" content="Хабр — крупнейшее сообщество айтишников. Корпоративный блог даст вам доступ к IT-аудитории и поможет стать своим">
+  <meta itemprop="description" content="Хабр — крупнейшее сообщество айтишников. Корпоративный блог даст вам доступ к IT-аудитории и поможет стать своим">
+  <meta property="og:description" content="Хабр — крупнейшее сообщество айтишников. Корпоративный блог даст вам доступ к IT-аудитории и поможет стать своим">
+  <meta name="twitter:description" content="Хабр — крупнейшее сообщество айтишников. Корпоративный блог даст вам доступ к IT-аудитории и поможет стать своим.">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#77a2b6">
+  <meta name="application-name" content="habr">
+  <meta name="msapplication-TileColor" content="#77a2b6">
+  <meta name="theme-color" content="#77a2b6">
+  <meta property="fb:app_id" content="444736788986613">
+  <meta property="fb:pages" content="472597926099084">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@habrahabr">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://company.habr.com/images/habr-about.png">
+  <meta property="og:url" content="https://company.habr.com/ru/corporate-blogs/">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="628">
+  <link rel="image_src" href="/images/habr-about.png">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="alternate" href="https://company.habr.com/ru/corporate-blogs/" hreflang="ru">
+  <link rel="alternate" href="https://company.habr.com/en/corporate-blogs/" hreflang="en">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&amp;display=swap" rel="stylesheet">
+  <link href="/styles.css" rel="stylesheet">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#77a2b6">
+  <meta name="application-name" content="Хабр">
+  <meta name="msapplication-TileColor" content="#77a2b6">
+  <meta name="theme-color" content="#77a2b6">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4ZLMLR31N3"></script>
+  <script>function a(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],a("js",new Date),a("config","G-4ZLMLR31N3",{transport_type:"beacon"});</script>
+ </head>
+ <body> 
+  <div class="tm-layout" id="layout"> 
+   <main class="tm-layout__container"> 
+    <div class="tm-blank-layout"> 
+     <div class="tm-menu"> <a href="https://company.habr.com/" class="tm-menu__logo"> <img src="/images/logo-ru.svg" alt="logo"> </a> 
+      <div class="tm-menu__burger" data-menu-icon=""> <span class="tm-menu__burger-stripes"></span> 
+      </div> 
+      <div class="tm-menu__items" data-menu=""> <a class="tm-menu-item" href="#about">О&nbsp;проекте</a> <a class="tm-menu-item" href="#tasks">Задачи</a> <a class="tm-menu-item" href="#formats">Форматы</a> <a class="tm-menu-item" href="#adaptation">Адаптация</a> <a class="tm-menu-item" href="#examples">Примеры</a> <a class="tm-menu-item" href="#tariffs">Тарифы</a> <a class="tm-menu-item" href="#contacts">Контакты</a> 
+       <div class="tm-menu__langs"> <span class="tm-lang"> RU </span> <a href="/en/corporate-blogs/" class="tm-lang"> EN </a> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="tm-overlay tm-overlay_hidden" data-overlay=""></div> 
+     <div class="tm-container"> 
+      <div class="tm-cover"> 
+       <h1 class="tm-title"> Корпоративные<br>блоги </h1> 
+       <div class="tm-cover-caption">
+         Ваш бренд в&nbsp;самом сердце IT-сообщества 
+       </div> 
+       <div class="tm-block-link"> <a class="tm-link tm-link_down" href="#tariffs">Выбор тарифного плана</a> 
+       </div> 
+       <img class="tm-cover__image" src="/images/figure-cor-blog.png" alt="figure"> 
+      </div> 
+      <div class="tm-block-steps"> 
+       <div class="tm-steps"> 
+        <div class="tm-steps__item"> 
+         <img class="tm-steps__item-image" src="/images/came.svg" alt="came"> 
+         <div class="tm-steps__item-info"> 
+          <div class="tm-steps__item-name">
+           Пришёл
+          </div> 
+          <div class="tm-steps__item-caption">
+           Вы&nbsp;заводите свой блог на&nbsp;Хабре и&nbsp;обдумываете круг тем, которые будете освещать
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-steps__item"> 
+         <img class="tm-steps__item-image" src="/images/told.svg" alt="told"> 
+         <div class="tm-steps__item-info"> 
+          <div class="tm-steps__item-name">
+           Рассказал
+          </div> 
+          <div class="tm-steps__item-caption">
+           Пишете о&nbsp;достижениях и&nbsp;неудачах, делитесь советами и&nbsp;интересными историями
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-steps__item"> 
+         <img class="tm-steps__item-image" src="/images/impressed.svg" alt="impressed"> 
+         <div class="tm-steps__item-info"> 
+          <div class="tm-steps__item-name">
+           Впечатлил
+          </div> 
+          <div class="tm-steps__item-caption">
+           Завоёвываете любовь аудитории и&nbsp;становитесь важной частью IT-сообщества
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="tm-block-link"> <a class="tm-link" href="/static/Tariffs_2022.pdf" target="_blank"> Презентация возможностей </a> 
+       </div> 
+      </div> 
+      <div class="tm-block-about" id="about"> 
+       <div class="tm-block-label">
+        О&nbsp;проекте
+       </div> 
+       <div class="tm-block-description">
+        Хабр&nbsp;— крупнейшее сообщество айтишников. Корпоративный блог даст вам доступ к&nbsp;IT-аудитории и&nbsp;поможет стать своим.
+       </div> 
+       <div class="tm-indicators"> 
+        <div class="tm-indicators__item"> 
+         <div class="tm-indicators__item-title">
+          20
+         </div> 
+         <div class="tm-indicators__item-caption">
+          крупнейших команий Рунета ведут хабраблоги более 10&nbsp;лет
+         </div> 
+        </div> 
+        <div class="tm-indicators__item"> 
+         <div class="tm-indicators__item-title">
+          11&nbsp;000&nbsp;000
+         </div> 
+         <div class="tm-indicators__item-caption">
+          уникальных читателей ежемесячно
+         </div> 
+        </div> 
+        <div class="tm-indicators__item"> 
+         <div class="tm-indicators__item-title">
+          350
+         </div> 
+         <div class="tm-indicators__item-caption">
+          компаний ведут корпоративные блоги на&nbsp;Хабре
+         </div> 
+        </div> 
+        <div class="tm-indicators__item"> 
+         <div class="tm-indicators__item-title">
+          75&nbsp;%
+         </div> 
+         <div class="tm-indicators__item-caption">
+          зарегистрированных пользователей&nbsp;— разработчики с&nbsp;грейдом middle и&nbsp;выше
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="tm-block-list" id="tasks"> 
+       <div class="tm-block-label">
+        Задачи
+       </div> 
+       <div class="tm-block-title">
+        Что даёт блог
+       </div> 
+       <div class="tm-list"> 
+        <div class="tm-list__item"> 
+         <div class="tm-list__item-number">
+          / 01
+         </div> 
+         <div class="tm-list__item-info"> 
+          <div class="tm-list__item-title">
+           Создание имиджа
+          </div> 
+          <div class="tm-list__item-caption">
+           Айтишники узнают, что в&nbsp;вашей компании есть дружелюбная и&nbsp;современная IT-команда.
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-list__item"> 
+         <div class="tm-list__item-number">
+          / 02
+         </div> 
+         <div class="tm-list__item-info"> 
+          <div class="tm-list__item-title">
+           Прокачка IT-бренда
+          </div> 
+          <div class="tm-list__item-caption">
+           Когда вы&nbsp;больше расскажете о&nbsp;себе, специалисты поймут, что хотят работать в&nbsp;вашей компании.
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-list__item"></div> 
+        <div class="tm-list__item"> 
+         <div class="tm-list__item-number">
+          / 03
+         </div> 
+         <div class="tm-list__item-info"> 
+          <div class="tm-list__item-title">
+           Решение HR-задач
+          </div> 
+          <div class="tm-list__item-caption">
+           На&nbsp;ваши вакансии станут чаще откликаться&nbsp;— и&nbsp;это будут именно&nbsp;те, кто вам нужен.
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="tm-block-list" id="formats"> 
+       <div class="tm-block-label">
+        Форматы
+       </div> 
+       <div class="tm-block-title">
+        Как мы&nbsp;это делаем
+       </div> 
+       <div class="tm-block-caption">
+         Корпоративный блог&nbsp;— это диалог c&nbsp;сообществом. Но&nbsp;о&nbsp;чём общаться? У&nbsp;нас есть проверенные идеи: 
+       </div> 
+       <div class="tm-list tm-list_skinny"> 
+        <div class="tm-list__item"> 
+         <div class="tm-list__item-number">
+          / 01
+         </div> 
+         <div class="tm-list__item-title">
+          Рассказы об&nbsp;интересных проектах
+         </div> 
+        </div> 
+        <div class="tm-list__item"> 
+         <div class="tm-list__item-number">
+          / 02
+         </div> 
+         <div class="tm-list__item-title">
+          Дата-сайентистские расследования
+         </div> 
+        </div> 
+        <div class="tm-list__item"> 
+         <div class="tm-list__item-number">
+          / 03
+         </div> 
+         <div class="tm-list__item-title">
+          Байки из&nbsp;жизни айтишников
+         </div> 
+        </div> 
+        <div class="tm-list__item"> 
+         <div class="tm-list__item-number">
+          / 04
+         </div> 
+         <div class="tm-list__item-title">
+          Анонсы интересных событий
+         </div> 
+        </div> 
+        <div class="tm-list__item"> 
+         <div class="tm-list__item-number">
+          / 05
+         </div> 
+         <div class="tm-list__item-title">
+          Кухня разработки
+         </div> 
+        </div> 
+        <div class="tm-list__item"> 
+         <div class="tm-list__item-number">
+          / 06
+         </div> 
+         <div class="tm-list__item-title">
+          Полезные туториалы
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="tm-block-list" id="adaptation"> 
+       <div class="tm-block-label">
+        Адаптация
+       </div> 
+       <div class="tm-block-title">
+        Поможем стартовать
+       </div> 
+       <div class="tm-list tm-list_indented"> 
+        <div class="tm-list__item"> 
+         <img class="tm-list__item-image" src="/images/analyze.svg" alt="analyze"> 
+         <div class="tm-list__item-info"> 
+          <div class="tm-list__item-title">
+           Проанализируем
+          </div> 
+          <div class="tm-list__item-caption">
+           Количественно и&nbsp;качественно исследуем блоги конкурентов и&nbsp;составим подробный отчёт.
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-list__item"> 
+         <img class="tm-list__item-image" src="/images/hint.svg" alt="hint"> 
+         <div class="tm-list__item-info"> 
+          <div class="tm-list__item-title">
+           Подскажем
+          </div> 
+          <div class="tm-list__item-caption">
+           Изучим ваш контент-план и&nbsp;дадим рекомендации на&nbsp;примере первой&nbsp;же статьи.
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-list__item"> 
+         <img class="tm-list__item-image" src="/images/teach.svg" alt="teach"> 
+         <div class="tm-list__item-info"> 
+          <div class="tm-list__item-title">
+           Научим
+          </div> 
+          <div class="tm-list__item-caption">
+           Проведём мастер-классы с&nbsp;вашими авторами и&nbsp;покажем, как правильно развивать блог.
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-list__item"> 
+         <img class="tm-list__item-image" src="/images/statistics.svg" alt="statistics"> 
+         <div class="tm-list__item-info"> 
+          <div class="tm-list__item-title">
+           Дадим статистику
+          </div> 
+          <div class="tm-list__item-caption">
+           Поделимся всей веб-аналитикой, поможем отслеживать рейтинг компании и&nbsp;его динамику.
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="tm-block-half" id="examples"> 
+       <div class="tm-block-label">
+        Примеры
+       </div> 
+       <div class="tm-block-title">
+        Блоги компаний
+       </div> 
+       <div class="tm-block-caption">
+         С&nbsp;помощью корпоративных блогов эти компании стали важным источником профессионального опыта в&nbsp;современном IT-сообществе. Они выстроили правильную коммуникацию с&nbsp;аудиторией и&nbsp;участвуют в&nbsp;мероприятиях, которые организует Хабр. 
+       </div> 
+      </div> 
+      <div class="tm-slider"> 
+       <div class="tm-counter"> 
+        <div class="tm-counter__arrow tm-counter__arrow_left" data-arrow-left=""> 
+         <img src="/images/arrow-right.svg" alt="arrow-left"> 
+        </div> 
+        <div class="tm-counter__value" data-slider-counter="">
+          10/10 
+        </div> 
+        <div class="tm-counter__arrow tm-counter__arrow_right" data-arrow-right=""> 
+         <img src="/images/arrow-right.svg" alt="arrow-right"> 
+        </div> 
+       </div> 
+       <div class="tm-company-list" data-companies=""> 
+        <div class="tm-company" data-company="dododev"> 
+         <img class="tm-company__logo" src="/images/dododev.png" alt="dododev"> <span class="tm-company__name">Dodo Engineering</span> 
+         <div class="tm-company__link"> <a class="tm-link" href="https://habr.com/ru/company/dododev/blog/" target="_blank">Блог компании на&nbsp;Хабре</a> 
+         </div> 
+         <div class="tm-company-info"> 
+          <div class="tm-indicators tm-indicators_company"> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-registered=""></div> 
+            <div class="tm-indicators__item-caption">
+             Регистрации на&nbsp;Хабре
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-posts=""></div> 
+            <div class="tm-indicators__item-caption">
+             Публикаций в&nbsp;блоге
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-reading=""></div> 
+            <div class="tm-indicators__item-caption">
+             Просмотров у&nbsp;публикаций
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-comments=""></div> 
+            <div class="tm-indicators__item-caption">
+             Комментариев к&nbsp;публикациям
+            </div> 
+           </div> 
+           <div class="tm-directions"> 
+            <div class="tm-paragraph">
+              Топ-3 направления блога 
+            </div> 
+            <div class="tm-block-caption"> 
+             <p>Веб-разработка</p> 
+             <p>Программное обеспечение</p> 
+             <p>Мобильные технологии</p> 
+            </div> 
+           </div> 
+          </div> 
+          <div class="tm-company-description"> 
+           <div class="tm-paragraph">
+             Формула блога 
+           </div> 
+           <div class="tm-block-caption">
+             IT&nbsp;управляет всем бизнесом: blameless culture + no&nbsp;bullshit. Блог от&nbsp;первого лица разработчиков 
+           </div> 
+           <div class="tm-paragraph">
+             Достижения 
+           </div> 
+           <div class="tm-block-caption"> 
+            <p class="tm-paragraph-space">Победа в&nbsp;номинации «Лучший блог компании» премии «Технотекст-2020»</p> 
+            <p>В&nbsp;каждом 5-м посте 100 и&nbsp;более комментариев.</p> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-company" data-company="vk"> 
+         <img class="tm-company__logo" src="/images/mail.png" alt="vk"> <span class="tm-company__name">VK</span> 
+         <div class="tm-company__link"> <a class="tm-link" href="https://habr.com/ru/company/vk/blog/" target="_blank">Блог компании на&nbsp;Хабре</a> 
+         </div> 
+         <div class="tm-company-info"> 
+          <div class="tm-indicators tm-indicators_company"> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-registered=""></div> 
+            <div class="tm-indicators__item-caption">
+             Регистрации на&nbsp;Хабре
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-posts=""></div> 
+            <div class="tm-indicators__item-caption">
+             Публикаций в&nbsp;блоге
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-reading=""></div> 
+            <div class="tm-indicators__item-caption">
+             Просмотров у&nbsp;публикаций
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-comments=""></div> 
+            <div class="tm-indicators__item-caption">
+             Комментариев к&nbsp;публикациям
+            </div> 
+           </div> 
+           <div class="tm-directions"> 
+            <div class="tm-paragraph">
+              Топ-3 направления блога 
+            </div> 
+            <div class="tm-block-caption"> 
+             <p>Мобильные технологии</p> 
+             <p>Веб-сервисы</p> 
+             <p>Игры и&nbsp;развлечения</p> 
+            </div> 
+           </div> 
+          </div> 
+          <div class="tm-company-description"> 
+           <div class="tm-paragraph">
+             Формула блога 
+           </div> 
+           <div class="tm-block-caption">
+             Пользу&nbsp;— вперёд. Уникальные технические кейсы от&nbsp;специалиста&nbsp;— специалисту. 
+           </div> 
+           <div class="tm-paragraph">
+             Достижения 
+           </div> 
+           <div class="tm-block-caption"> 
+            <p class="tm-paragraph-space">173 хабраавтора работают в&nbsp;компании</p> 
+            <p>150 000–200&nbsp;000 человек посещают блог ежемесячно</p> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-company" data-company="ruvds"> 
+         <img class="tm-company__logo" src="/images/ruvds.png" alt="ruvds"> <span class="tm-company__name">RUVDS</span> 
+         <div class="tm-company__link"> <a class="tm-link" href="https://habr.com/ru/company/ruvds/blog/" target="_blank">Блог компании на&nbsp;Хабре</a> 
+         </div> 
+         <div class="tm-company-info"> 
+          <div class="tm-indicators tm-indicators_company"> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-registered=""></div> 
+            <div class="tm-indicators__item-caption">
+             Регистрации на&nbsp;Хабре
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-posts=""></div> 
+            <div class="tm-indicators__item-caption">
+             Публикаций в&nbsp;блоге
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-reading=""></div> 
+            <div class="tm-indicators__item-caption">
+             Просмотров у&nbsp;публикаций
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-comments=""></div> 
+            <div class="tm-indicators__item-caption">
+             Комментариев к&nbsp;публикациям
+            </div> 
+           </div> 
+           <div class="tm-directions"> 
+            <div class="tm-paragraph">
+              Топ-3 направления блога 
+            </div> 
+            <div class="tm-block-caption"> 
+             <p>Связь и&nbsp;телекоммуникации</p> 
+             <p>Домены и&nbsp;хостинг</p> 
+             <p>Веб-сервисы</p> 
+            </div> 
+           </div> 
+          </div> 
+          <div class="tm-company-description"> 
+           <div class="tm-paragraph">
+             Формула блога 
+           </div> 
+           <div class="tm-block-caption">
+             DIY-культура с&nbsp;привкусом ностальгии + уважение к&nbsp;инженерному складу ума. 
+           </div> 
+           <div class="tm-paragraph">
+             Достижения 
+           </div> 
+           <div class="tm-block-caption"> 
+            <p>Около 350&nbsp;000 прочтений статей за&nbsp;месяц</p> 
+            <p>Более 550 комментариев в&nbsp;неделю</p> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-company" data-company="selectel"> 
+         <img class="tm-company__logo" src="/images/selectel.png" alt="selectel"> <span class="tm-company__name">Selectel</span> 
+         <div class="tm-company__link"> <a class="tm-link" href="https://habr.com/ru/company/selectel/blog/" target="_blank">Блог компании на&nbsp;Хабре</a> 
+         </div> 
+         <div class="tm-company-info"> 
+          <div class="tm-indicators tm-indicators_company"> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-registered=""></div> 
+            <div class="tm-indicators__item-caption">
+             Регистрации на&nbsp;Хабре
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-posts=""></div> 
+            <div class="tm-indicators__item-caption">
+             Публикаций в&nbsp;блоге
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-reading=""></div> 
+            <div class="tm-indicators__item-caption">
+             Просмотров у&nbsp;публикаций
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-comments=""></div> 
+            <div class="tm-indicators__item-caption">
+             Комментариев к&nbsp;публикациям
+            </div> 
+           </div> 
+           <div class="tm-directions"> 
+            <div class="tm-paragraph">
+              Топ-3 направления блога 
+            </div> 
+            <div class="tm-block-caption"> 
+             <p>Аппаратное обеспечение</p> 
+             <p>Связь и&nbsp;телекоммуникации</p> 
+             <p>Домены и&nbsp;хостинг</p> 
+            </div> 
+           </div> 
+          </div> 
+          <div class="tm-company-description"> 
+           <div class="tm-paragraph">
+             Формула блога 
+           </div> 
+           <div class="tm-block-caption">
+             Научпоп&nbsp;— это сила! Ежедневные новости из&nbsp;мира науки и&nbsp;технологий в&nbsp;популярном изложении. 
+           </div> 
+           <div class="tm-paragraph">
+             Достижения 
+           </div> 
+           <div class="tm-block-caption"> 
+            <p class="tm-paragraph-space">2-е место в&nbsp;рейтинге корпоративных блогов</p> 
+            <p>Несколько десятков авторов с&nbsp;профессиональной экспертизой стали сотрудниками компании</p> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-company" data-company="rostelecom"> 
+         <img class="tm-company__logo" src="/images/rostelecom.png" alt="rostelecom"> <span class="tm-company__name">Ростелеком</span> 
+         <div class="tm-company__link"> <a class="tm-link" href="https://habr.com/ru/company/rostelecom/blog/" target="_blank">Блог компании на&nbsp;Хабре</a> 
+         </div> 
+         <div class="tm-company-info"> 
+          <div class="tm-indicators tm-indicators_company"> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-registered=""></div> 
+            <div class="tm-indicators__item-caption">
+             Регистрации на&nbsp;Хабре
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-posts=""></div> 
+            <div class="tm-indicators__item-caption">
+             Публикаций в&nbsp;блоге
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-reading=""></div> 
+            <div class="tm-indicators__item-caption">
+             Просмотров у&nbsp;публикаций
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-comments=""></div> 
+            <div class="tm-indicators__item-caption">
+             Комментариев к&nbsp;публикациям
+            </div> 
+           </div> 
+           <div class="tm-directions"> 
+            <div class="tm-paragraph">
+              Топ-3 направления блога 
+            </div> 
+            <div class="tm-block-caption"> 
+             <p>Программное обеспечение</p> 
+             <p>Связь и&nbsp;телекоммуникации</p> 
+             <p>Веб-сервисы</p> 
+            </div> 
+           </div> 
+          </div> 
+          <div class="tm-company-description"> 
+           <div class="tm-paragraph">
+             Формула блога 
+           </div> 
+           <div class="tm-block-caption">
+             IT-бренд всему голова. Продуктовый блог крупнейшей госкорпорации. 
+           </div> 
+           <div class="tm-paragraph">
+             Достижения 
+           </div> 
+           <div class="tm-block-caption"> 
+            <p class="tm-paragraph-space">111 опубликованных статей</p> 
+            <p class="tm-paragraph-space">Кратный рост рейтинга (хабраиндекса) за&nbsp;последние полгода</p> 
+            <p>Участие в&nbsp;премии «Технотекст-2020» в&nbsp;номинациях «Блог&nbsp;— эксперт по&nbsp;Big Data», «Блог&nbsp;— эксперт в&nbsp;цифровизации»</p> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-company" data-company="flant"> 
+         <img class="tm-company__logo" src="/images/flant.png" alt="flant"> <span class="tm-company__name">Флант</span> 
+         <div class="tm-company__link"> <a class="tm-link" href="https://habr.com/ru/company/flant/blog/" target="_blank">Блог компании на&nbsp;Хабре</a> 
+         </div> 
+         <div class="tm-company-info"> 
+          <div class="tm-indicators tm-indicators_company"> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-registered=""></div> 
+            <div class="tm-indicators__item-caption">
+             Регистрации на&nbsp;Хабре
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-posts=""></div> 
+            <div class="tm-indicators__item-caption">
+             Публикаций в&nbsp;блоге
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-reading=""></div> 
+            <div class="tm-indicators__item-caption">
+             Просмотров у&nbsp;публикаций
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-comments=""></div> 
+            <div class="tm-indicators__item-caption">
+             Комментариев к&nbsp;публикациям
+            </div> 
+           </div> 
+           <div class="tm-directions"> 
+            <div class="tm-paragraph">
+              Топ-3 направления блога 
+            </div> 
+            <div class="tm-block-caption"> 
+             <p>Консалтинг и&nbsp;поддержка</p> 
+             <p>Веб-сервисы</p> 
+             <p>DevOps</p> 
+            </div> 
+           </div> 
+          </div> 
+          <div class="tm-company-description"> 
+           <div class="tm-paragraph">
+             Формула блога 
+           </div> 
+           <div class="tm-block-caption">
+             Статьи по&nbsp;профильным для компании технологиям, написанные инженерами. 
+           </div> 
+           <div class="tm-paragraph">
+             Достижения 
+           </div> 
+           <div class="tm-block-caption"> 
+            <p class="tm-paragraph-space">Блог основан в&nbsp;2017&nbsp;году, а&nbsp;уже в&nbsp;2020 получил ачивку «Лучший блог компании»</p> 
+            <p class="tm-paragraph-space">Сотрудники «Флант»&nbsp;— топовые авторы ряда хабов Хабра (например, Kubernetes и&nbsp;DevOps)</p> 
+            <p>Входит в&nbsp;топ-20&nbsp;на Хабре по&nbsp;рейтингу</p> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-company" data-company="lanit"> 
+         <img class="tm-company__logo" src="/images/lanit.jpg" alt="lanit"> <span class="tm-company__name">ГК&nbsp;ЛАНИТ</span> 
+         <div class="tm-company__link"> <a class="tm-link" href="https://habr.com/ru/company/lanit/blog/" target="_blank">Блог компании на&nbsp;Хабре</a> 
+         </div> 
+         <div class="tm-company-info"> 
+          <div class="tm-indicators tm-indicators_company"> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-registered=""></div> 
+            <div class="tm-indicators__item-caption">
+             Регистрации на&nbsp;Хабре
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-posts=""></div> 
+            <div class="tm-indicators__item-caption">
+             Публикаций в&nbsp;блоге
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-reading=""></div> 
+            <div class="tm-indicators__item-caption">
+             Просмотров у&nbsp;публикаций
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-comments=""></div> 
+            <div class="tm-indicators__item-caption">
+             Комментариев к&nbsp;публикациям
+            </div> 
+           </div> 
+           <div class="tm-directions"> 
+            <div class="tm-paragraph">
+              Топ-3 направления блога 
+            </div> 
+            <div class="tm-block-caption"> 
+             <p>Программное обеспечение</p> 
+             <p>Аппаратное обеспечение</p> 
+             <p>Консалтинг и&nbsp;поддержка</p> 
+            </div> 
+           </div> 
+          </div> 
+          <div class="tm-company-description"> 
+           <div class="tm-paragraph">
+             Формула блога 
+           </div> 
+           <div class="tm-block-caption">
+             Все грани&nbsp;IT в&nbsp;материалах блога&nbsp;— от&nbsp;кейсов компании и&nbsp;новостей до&nbsp;обзоров книг и&nbsp;масскульта. 
+           </div> 
+           <div class="tm-paragraph">
+             Достижения 
+           </div> 
+           <div class="tm-block-caption"> 
+            <p class="tm-paragraph-space">Стабильные публикации&nbsp;— каждую неделю</p> 
+            <p class="tm-paragraph-space">Быстрый рост популярности блога (попал в&nbsp;топ-20 за&nbsp;первые&nbsp;же полгода)</p> 
+            <p class="tm-paragraph-space">Входит в&nbsp;топ-10 блогов компаний на&nbsp;Хабре</p> 
+            <p>38&nbsp;000 подписчиков</p> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-company" data-company="tuturu"> 
+         <img class="tm-company__logo" src="/images/tuturu.jpg" alt="tuturu"> <span class="tm-company__name">Tutu.ru</span> 
+         <div class="tm-company__link"> <a class="tm-link" href="https://habr.com/ru/company/tuturu/blog/" target="_blank">Блог компании на&nbsp;Хабре</a> 
+         </div> 
+         <div class="tm-company-info"> 
+          <div class="tm-indicators tm-indicators_company"> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-registered=""></div> 
+            <div class="tm-indicators__item-caption">
+             Регистрации на&nbsp;Хабре
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-posts=""></div> 
+            <div class="tm-indicators__item-caption">
+             Публикаций в&nbsp;блоге
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-reading=""></div> 
+            <div class="tm-indicators__item-caption">
+             Просмотров у&nbsp;публикаций
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-comments=""></div> 
+            <div class="tm-indicators__item-caption">
+             Комментариев к&nbsp;публикациям
+            </div> 
+           </div> 
+           <div class="tm-directions"> 
+            <div class="tm-paragraph">
+              Топ-3 направления блога 
+            </div> 
+            <div class="tm-block-caption"> 
+             <p>Веб-разработка</p> 
+             <p>Электронная коммерция</p> 
+             <p>Веб-сервисы</p> 
+            </div> 
+           </div> 
+          </div> 
+          <div class="tm-company-description"> 
+           <div class="tm-paragraph">
+             Формула блога 
+           </div> 
+           <div class="tm-block-caption">
+             Всесторонний взгляд на&nbsp;путешествия: IT, usability, научпоп о&nbsp;транспорте и&nbsp;мире. 
+           </div> 
+           <div class="tm-paragraph">
+             Достижения 
+           </div> 
+           <div class="tm-block-caption"> 
+            <p class="tm-paragraph-space">Познавательные материалы для читателей из&nbsp;разных сфер деятельности</p> 
+            <p class="tm-paragraph-space">74&nbsp;000 подписчиков (2-е место по&nbsp;числу подписчиков среди топ-20 блогов компаний)</p> 
+            <p>Ачивка «Лучший блог компании&nbsp;— 2020»</p> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-company" data-company="sberbank"> 
+         <img class="tm-company__logo" src="/images/sberbank.jpg" alt="sberbank"> <span class="tm-company__name">Сбер</span> 
+         <div class="tm-company__link"> <a class="tm-link" href="https://habr.com/ru/company/sberbank/blog/" target="_blank">Блог компании на&nbsp;Хабре</a> 
+         </div> 
+         <div class="tm-company-info"> 
+          <div class="tm-indicators tm-indicators_company"> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-registered=""></div> 
+            <div class="tm-indicators__item-caption">
+             Регистрации на&nbsp;Хабре
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-posts=""></div> 
+            <div class="tm-indicators__item-caption">
+             Публикаций в&nbsp;блоге
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-reading=""></div> 
+            <div class="tm-indicators__item-caption">
+             Просмотров у&nbsp;публикаций
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-comments=""></div> 
+            <div class="tm-indicators__item-caption">
+             Комментариев к&nbsp;публикациям
+            </div> 
+           </div> 
+           <div class="tm-directions"> 
+            <div class="tm-paragraph">
+              Топ-3 направления блога 
+            </div> 
+            <div class="tm-block-caption"> 
+             <p>Программное обеспечение</p> 
+             <p>Мобильные технологии</p> 
+             <p>Веб-разработка</p> 
+            </div> 
+           </div> 
+          </div> 
+          <div class="tm-company-description"> 
+           <div class="tm-paragraph">
+             Формула блога 
+           </div> 
+           <div class="tm-block-caption">
+             Больше чем банк: показываем свою экспертизу в&nbsp;ИТ через кейсы и&nbsp;достижения своих разработчиков. Блог-бустер, где собираются статьи от&nbsp;лица айтишников разных специализаций и&nbsp;направлений. 
+           </div> 
+           <div class="tm-paragraph">
+             Достижения 
+           </div> 
+           <div class="tm-block-caption"> 
+            <p class="tm-paragraph-space">Один из&nbsp;самых успешных блогов 2020&nbsp;— две статьи набрали около 130 тысяч просмотров каждый <a href="https://habr.com/ru/company/sberbank/blog/524522/" target="_blank">(Сбер выложил русскоязычную модель GPT-3 Large с&nbsp;760 миллионами параметров в&nbsp;открытый доступ,</a> <a href="https://habr.com/ru/company/sberbank/blog/530120/" target="_blank">NFC на&nbsp;банкомате: небольшой ликбез),</a> еще четыре статьи&nbsp;— более 20&nbsp;тысяч.</p> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-company" data-company="ozontech"> 
+         <img class="tm-company__logo" src="/images/ozontech.jpg" alt="ozontech"> <span class="tm-company__name">Ozon Tech</span> 
+         <div class="tm-company__link"> <a class="tm-link" href="https://habr.com/ru/company/ozontech/blog/" target="_blank">Блог компании на&nbsp;Хабре</a> 
+         </div> 
+         <div class="tm-company-info"> 
+          <div class="tm-indicators tm-indicators_company"> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-registered=""></div> 
+            <div class="tm-indicators__item-caption">
+             Регистрации на&nbsp;Хабре
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-posts=""></div> 
+            <div class="tm-indicators__item-caption">
+             Публикаций в&nbsp;блоге
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-reading=""></div> 
+            <div class="tm-indicators__item-caption">
+             Просмотров у&nbsp;публикаций
+            </div> 
+           </div> 
+           <div class="tm-indicators__item"> 
+            <div class="tm-indicators__item-title" data-comments=""></div> 
+            <div class="tm-indicators__item-caption">
+             Комментариев к&nbsp;публикациям
+            </div> 
+           </div> 
+           <div class="tm-directions"> 
+            <div class="tm-paragraph">
+              Топ-3 направления блога 
+            </div> 
+            <div class="tm-block-caption"> 
+             <p>Веб-разработка</p> 
+             <p>Электронная коммерция</p> 
+             <p>Веб-сервисы</p> 
+            </div> 
+           </div> 
+          </div> 
+          <div class="tm-company-description"> 
+           <div class="tm-paragraph">
+             Формула блога 
+           </div> 
+           <div class="tm-block-caption">
+             Everything as&nbsp;code: минимум ручных действий, максимум автоматизации. Блог лидирующего e-com в&nbsp;России. 
+           </div> 
+           <div class="tm-paragraph">
+             Достижения 
+           </div> 
+           <div class="tm-block-caption"> 
+            <p class="tm-paragraph-space">Входит в&nbsp;топ-20&nbsp;на Хабре по&nbsp;рейтингу</p> 
+            <p class="tm-paragraph-space">73&nbsp;опубликованных статьи</p> 
+            <p>Участие в&nbsp;премии «Технотекст-2021» в&nbsp;номинациях «Блог&nbsp;— эксперт по&nbsp;программированию», «Блог&nbsp;— эксперт в&nbsp;DevOps»</p> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="tm-tariffs" id="tariffs"> 
+       <div class="tm-tariffs-header"> 
+        <div class="tm-block-label">
+         Тарифы
+        </div> 
+        <div class="tm-block-title">
+         Тарифные планы
+        </div> 
+        <div class="tm-block-caption">
+          Для развития блога мы&nbsp;предлагаем два варианта: тариф «Бизнес» и&nbsp;«Гигант». К&nbsp;последнему можно добавить подписку «Гигант+», чтобы были доступны новые функции Хабра. 
+        </div> 
+        <div class="tm-tabs"> <span class="tm-tabs__item tm-tabs__item_active" data-resident=""> Резидент РФ </span> <span class="tm-tabs__item" data-non-resident=""> Нерезидент РФ </span> 
+        </div> <a class="tm-link" href="/static/price-resident-ru.pdf" download="" data-price-resident="">Прайс для резидентов РФ</a> <a class="tm-link tm-link_hidden" href="/static/price-non-resident-ru.pdf" download="" data-price-non-resident="">Прайс для нерезидентов РФ</a> 
+       </div> 
+       <div class="tm-tariffs-item"> 
+        <div class="tm-subtitle">
+         Гигант
+        </div> 
+        <div class="tm-tariffs-info"> 
+         <div class="tm-tariffs-section"> 
+          <div class="tm-paragraph">
+           15&nbsp;опций тарифа
+          </div> 
+          <img class="tm-tariffs-section__image" src="/images/section-arrow.svg" alt="section-arrow" data-section="giant-common"> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="giant-common"> 
+          <div class="tm-paragraph">
+            «Общение с&nbsp;аудиторией» <span class="tm-paragraph__count">6</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_globe"> 
+           <p>На&nbsp;двух языках:</p> 
+           <p>Описание компании</p> 
+           <p>Публикация постов</p> 
+           <p>Публикация новостей</p> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_settings">
+           Отложенная публикация
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_settings">
+           Отсутствие сторонней рекламы
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_settings">
+           Управление правами сотрудников в&nbsp;блоге
+          </div> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="giant-common"> 
+          <div class="tm-paragraph">
+            «Повышение узнаваемости» <span class="tm-paragraph__count">6</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_expand"> 
+           <p>Виджеты:</p> 
+           <p>Стандартные виджеты</p> 
+           <p>20&nbsp;Произвольных виджетов</p> 
+           <p>10&nbsp;Виджетов для мобильных приложений</p> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_tracker">
+           2&nbsp;Счётчика статистики: Google Analytics и&nbsp;Яндекс.Метрики
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_notifications">
+           Трекинг читателей постов
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_settings">
+           Брендирование корпоративного блога
+          </div> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="giant-common"> 
+          <div class="tm-paragraph">
+            «Успешный старт блога» <span class="tm-paragraph__count">3</span> 
+          </div> 
+          <div class="tm-paragraph-caption">
+           (услуги для новых клинтов)
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_search">
+           Экспресс-рецензия на&nbsp;первую статью
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_search">
+           Анализ-оценка контент-плана
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_webinar">
+           Групповой вебинар по&nbsp;Хабру до&nbsp;5&nbsp;человек
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-tabs tm-tabs_desktop"> <span class="tm-tabs__item tm-tabs__item_active" data-tab="giant-3"> 3&nbsp;месяца </span> <span class="tm-tabs__item" data-tab="giant-6"> 6&nbsp;месяцев </span> <span class="tm-tabs__item" data-tab="giant-12"> 12&nbsp;месяцев </span> 
+        </div> 
+        <div class="tm-tabs tm-tabs_mobile"> <span class="tm-tabs__item tm-tabs__item_active" data-tab="giant-3"> 3&nbsp;мес </span> <span class="tm-tabs__item" data-tab="giant-6"> 6&nbsp;мес </span> <span class="tm-tabs__item" data-tab="giant-12"> 12&nbsp;мес </span> 
+        </div> 
+        <div class="tm-tariffs-info" data-info="giant-3"> 
+         <div class="tm-tariffs-section"> 
+          <div class="tm-paragraph">
+           1&nbsp;дополнительная опция
+          </div> 
+          <img class="tm-tariffs-section__image" src="/images/section-arrow.svg" alt="section-arrow" data-section="giant-additional"> 
+         </div> 
+         <div class="tm-tariffs-block tm-tariffs-block_single" data-block="giant-additional"> 
+          <div class="tm-paragraph">
+            «Развитие блога» <span class="tm-paragraph__count">1</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_search">
+           Экспресс-контент-анализ
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-tariffs-info tm-tariffs-info_hidden" data-info="giant-6"> 
+         <div class="tm-tariffs-section"> 
+          <div class="tm-paragraph">
+           5&nbsp;дополнительных опций
+          </div> 
+          <img class="tm-tariffs-section__image" src="/images/section-arrow.svg" alt="section-arrow" data-section="giant-additional"> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="giant-additional"> 
+          <div class="tm-paragraph">
+            «Развитие блога» <span class="tm-paragraph__count">2</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_search">
+           Контент-анализ блога
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_search">
+           Рецензия на&nbsp;статью
+          </div> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="giant-additional"> 
+          <div class="tm-paragraph">
+            «Промо поста» <span class="tm-paragraph__count">1</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_pencil">
+           Анонс поста в&nbsp;соцсетях Хабра (BК, Twitter, ТГ)
+          </div> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="giant-additional"> 
+          <div class="tm-paragraph">
+            «Мотивация хабраавтора» <span class="tm-paragraph__count">2</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_expand">
+           5&nbsp;Дополнительных инвайтов для авторов
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_webinar">
+           Участие в&nbsp;групповом вебинаре по&nbsp;контенту или групповом вебинаре «PRO блог» при продлении блога для 2&nbsp;сотрудников компании
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-tariffs-info tm-tariffs-info_hidden" data-info="giant-12"> 
+         <div class="tm-tariffs-section"> 
+          <div class="tm-paragraph">
+           15&nbsp;дополнительных опций
+          </div> 
+          <img class="tm-tariffs-section__image" src="/images/section-arrow.svg" alt="section-arrow" data-section="giant-additional"> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="giant-additional"> 
+          <div class="tm-paragraph">
+            «Развитие блога» <span class="tm-paragraph__count">5</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_search">
+           Контент-анализ блога
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_search">
+           Рецензия на&nbsp;статью
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_search">
+           Контент-анализ: сравнение с&nbsp;конкурентами
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_webinar">
+           Воркшоп по&nbsp;креативу для блога компании
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_pencil">
+           Пост в&nbsp;соцсетях с&nbsp;рассказом о&nbsp;блоге компании
+          </div> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="giant-additional"> 
+          <div class="tm-paragraph">
+            «Промо поста» <span class="tm-paragraph__count">3</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_pencil">
+           Размещение на&nbsp;1&nbsp;неделю в&nbsp;промоблоке
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_pencil">
+           Размещение на&nbsp;5&nbsp;дней в&nbsp;блоке «Читают сейчас»
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_pencil">
+           Анонс 2&nbsp;постов в&nbsp;соцсетях Хабра (FB, BК, Twitter, ТГ)
+          </div> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="giant-additional"> 
+          <div class="tm-paragraph">
+            «Мотивация хабраавтора» <span class="tm-paragraph__count">7</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_webinar">
+           Участие в&nbsp;курсе «Код контента» для 2&nbsp;сотрудников компании
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_expand">
+           10&nbsp;Дополнительных инвайтов для авторов (при продлении*)
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_gift">
+           Подарок из&nbsp;«Набора Хабраавтора»
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_eye">
+           Возможность разместить логотип Хабра на&nbsp;1&nbsp;мероприятии
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_webinar">
+           Вебинар по&nbsp;контенту для авторов до&nbsp;30&nbsp;участников
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_webinar">
+           Групповой вебинар «PRO блог» на&nbsp;Хабре (при продлении*)
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_webinar">
+           Мастер-класс для 1&nbsp;автора (1&nbsp;из&nbsp;4&nbsp;в год)
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-price"> 
+         <div class="tm-price-block"> 
+          <div class="tm-price-first"> <span class="tm-price-value" data-before-vat="giant">165&nbsp;000&nbsp;₽</span> <span class="tm-price-caption" data-vat="giant">до&nbsp;НДС</span> 
+          </div> 
+          <div class="tm-price-second"> <span class="tm-price-value tm-price-value_large" data-after-vat="giant">198&nbsp;000&nbsp;₽</span> <span class="tm-price-caption" data-vat="giant">с&nbsp;учётом НДС</span> 
+          </div> 
+         </div> 
+         <div class="tm-price-block tm-price-block_bottom"> <a class="tm-button" href="https://habr.com/ru/companies/add/" data-order-button="giant"> <span>Оформить тариф Гигант 3</span> <img src="/images/arrow-white.svg" alt="arrow-white"> </a> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="tm-tariffs-separator"></div> 
+       <div class="tm-tariffs-item"> 
+        <div class="tm-subtitle">
+         Бизнес
+        </div> 
+        <div class="tm-tariffs-info"> 
+         <div class="tm-tariffs-section"> 
+          <div class="tm-paragraph">
+           13&nbsp;опций тарифа
+          </div> 
+          <img class="tm-tariffs-section__image" src="/images/section-arrow.svg" alt="section-arrow" data-section="business-common"> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="business-common"> 
+          <div class="tm-paragraph">
+            «Общение с&nbsp;аудиторией» <span class="tm-paragraph__count">6</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_globe"> 
+           <p>На&nbsp;двух языках:</p> 
+           <p>Описание компании</p> 
+           <p>Публикация постов</p> 
+           <p>Публикация новостей</p> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_settings">
+           Отложенная публикация
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_settings">
+           Отсутствие сторонней рекламы
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_settings">
+           Управление правами сотрудников в&nbsp;блоге
+          </div> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="business-common"> 
+          <div class="tm-paragraph">
+            «Повышение узнаваемости» <span class="tm-paragraph__count">4</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_expand"> 
+           <p>Виджеты:</p> 
+           <p>Стандартные виджеты</p> 
+           <p>2&nbsp;Произвольных виджетов</p> 
+           <p>5&nbsp;Виджетов для мобильных приложений</p> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_tracker">
+            1&nbsp;Счётчик статистики: Google Analytics или Яндекс.Метрика
+          </div> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="business-common"> 
+          <div class="tm-paragraph">
+            «Успешный старт блога» <span class="tm-paragraph__count">3</span> 
+          </div> 
+          <div class="tm-paragraph-caption">
+           (услуги для новых клинтов)
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_search">
+           Экспресс-рецензия на&nbsp;первую статью
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_search">
+           Анализ-оценка контент-плана
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_webinar">
+           Групповой вебинар по&nbsp;Хабру до&nbsp;5&nbsp;человек
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-tabs tm-tabs_desktop"> <span class="tm-tabs__item tm-tabs__item_active" data-tab="business-3"> 3&nbsp;месяца </span> <span class="tm-tabs__item" data-tab="business-6"> 6&nbsp;месяцев </span> <span class="tm-tabs__item" data-tab="business-12"> 12&nbsp;месяцев </span> 
+        </div> 
+        <div class="tm-tabs tm-tabs_mobile"> <span class="tm-tabs__item tm-tabs__item_active" data-tab="business-3"> 3&nbsp;мес </span> <span class="tm-tabs__item" data-tab="business-6"> 6&nbsp;мес </span> <span class="tm-tabs__item" data-tab="business-12"> 12&nbsp;мес </span> 
+        </div> 
+        <div class="tm-tariffs-info" data-info="business-3"> 
+         <div class="tm-tariffs-section"> 
+          <div class="tm-paragraph">
+           1&nbsp;дополнительная опция
+          </div> 
+          <img class="tm-tariffs-section__image" src="/images/section-arrow.svg" alt="section-arrow" data-section="business-additional"> 
+         </div> 
+         <div class="tm-tariffs-block tm-tariffs-block_single" data-block="business-additional"> 
+          <div class="tm-paragraph">
+            «Развитие блога» <span class="tm-paragraph__count">1</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_search">
+           Экспресс-контент-анализ
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-tariffs-info tm-tariffs-info_hidden" data-info="business-6"> 
+         <div class="tm-tariffs-section"> 
+          <div class="tm-paragraph">
+           2&nbsp;дополнительных опций
+          </div> 
+          <img class="tm-tariffs-section__image" src="/images/section-arrow.svg" alt="section-arrow" data-section="business-additional"> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="business-additional"> 
+          <div class="tm-paragraph">
+            «Развитие блога» <span class="tm-paragraph__count">1</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_search">
+           Контент-анализ блога
+          </div> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="business-additional"> 
+          <div class="tm-paragraph">
+            «Мотивация хабраавтора» <span class="tm-paragraph__count">1</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_webinar">
+           Участие в&nbsp;групповом вебинаре по&nbsp;контенту для 2&nbsp;сотрудников компании
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-tariffs-info tm-tariffs-info_hidden" data-info="business-12"> 
+         <div class="tm-tariffs-section"> 
+          <div class="tm-paragraph">
+           7&nbsp;дополнительных опций
+          </div> 
+          <img class="tm-tariffs-section__image" src="/images/section-arrow.svg" alt="section-arrow" data-section="business-additional"> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="business-additional"> 
+          <div class="tm-paragraph">
+            «Развитие блога» <span class="tm-paragraph__count">2</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_search">
+           Контент-анализ блога
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_search">
+           10&nbsp;идей для блога
+          </div> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="business-additional"> 
+          <div class="tm-paragraph">
+            «Промо поста» <span class="tm-paragraph__count">2</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_pencil">
+           Размещение на&nbsp;1&nbsp;неделю в&nbsp;промоблоке
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_pencil">
+           Анонс 1&nbsp;поста в&nbsp;соцсетях Хабра (FB, BК, Twitter, ТГ)
+          </div> 
+         </div> 
+         <div class="tm-tariffs-block" data-block="business-additional"> 
+          <div class="tm-paragraph">
+            «Мотивация хабраавтора» <span class="tm-paragraph__count">3</span> 
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_webinar">
+           Участие в&nbsp;курсе «Код контента» для 1&nbsp;сотрудника компании
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_expand">
+           5&nbsp;Дополнительных инвайтов для авторов (при продлении*)
+          </div> 
+          <div class="tm-icon-caption tm-icon-caption_webinar">
+           Вебинар по&nbsp;контенту для 3&nbsp;авторов
+          </div> 
+         </div> 
+        </div> 
+        <div class="tm-price"> 
+         <div class="tm-price-block"> 
+          <div class="tm-price-first"> <span class="tm-price-value" data-before-vat="business">110&nbsp;000&nbsp;₽</span> <span class="tm-price-caption" data-vat="business">до&nbsp;НДС</span> 
+          </div> 
+          <div class="tm-price-second"> <span class="tm-price-value tm-price-value_large" data-after-vat="business">132&nbsp;000&nbsp;₽</span> <span class="tm-price-caption" data-vat="business">с&nbsp;учётом НДС</span> 
+          </div> 
+         </div> 
+         <div class="tm-price-block tm-price-block_bottom"> <a class="tm-button" href="https://habr.com/ru/companies/add/" data-order-button="business"> <span>Оформить тариф Бизнес 3</span> <img src="/images/arrow-white.svg" alt="arrow-white"> </a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="tm-block-contacts" id="contacts"> 
+       <div class="tm-block-label">
+        Контакты
+       </div> 
+       <div class="tm-contacts-title">
+        Есть вопросы? Пишите:
+       </div> <a class="tm-link tm-link_large" href="mailto:corp@habr.team">corp@habr.team</a> 
+       <div class="tm-contacts-container"> 
+        <div class="tm-contacts-block tm-contacts-block_small"> 
+         <div class="tm-block-caption">
+          Телефон
+         </div> <a class="tm-paragraph" href="tel:+74996535961">+7 (499) 653-59-61</a> 
+        </div> 
+        <div class="tm-contacts-wrapper"> 
+         <div class="tm-contacts-block tm-contacts-block_medium"> 
+          <div class="tm-block-caption">
+           Офис
+          </div> 
+          <div class="tm-paragraph">
+           105082, Москва, Спартаковский переулок, д.&nbsp;2, стр.&nbsp;1, секция 3,
+          </div> 
+          <div class="tm-paragraph">
+           ООО «Хабр»
+          </div> 
+         </div> 
+         <div class="tm-contacts-block tm-contacts-block_small"> 
+          <div class="tm-block-caption tm-block-caption_margin">
+           Услуги для компаний
+          </div> <a class="tm-link" href="/ru/advertising/">Медийная реклама</a> <a class="tm-link" href="/ru/native-special/">Нативные проекты</a> <a class="tm-link" href="/ru/education-programs/">Образовательные программы</a> <a class="tm-link" href="/ru/hello-startup/">Стартапы на Хабре</a> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="tm-network"> 
+        <div class="tm-block-caption">
+         Мы&nbsp;в&nbsp;соцсетях
+        </div> <a href="https://telegram.me/habr_com" target="_blank" class="tm-network-link"> <img src="/images/tg.svg" alt="telegram"> </a> <a href="https://vk.com/habr" target="_blank" class="tm-network-link"> <img src="/images/vk.svg" alt="vk"> </a> <a href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" target="_blank" class="tm-network-link"> <img src="/images/ut.svg" alt="youtube"> </a> <a href="https://twitter.com/habr_com" target="_blank" class="tm-network-link"> <img src="/images/twe.svg" alt="twitter"> </a> 
+       </div> 
+      </div> 
+      <div class="tm-block-caption">
+       © 2022. Сделано в Хабре
+      </div> 
+     </div> 
+    </div> 
+   </main> 
+  </div> 
+  <script type="text/javascript" src="/static/service-main-state.js"></script> 
+  <script type="text/javascript" src="/static/service-corpblog-state.js"></script> 
+  <script type="text/javascript" src="/static/service-corpblog.js"></script> 
+  <script type="text/javascript" src="/static/service-common.js"></script> 
+ </body>
+</html>
