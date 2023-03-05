@@ -12,13 +12,14 @@ repositories {
     mavenCentral()
     jcenter()
     maven("https://jitpack.io")
-    maven("https://dl.bintray.com/cuba-platform/main/")
 }
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
     implementation("org.jsoup:jsoup:1.13.1")
-
+    implementation("com.google.code.gson:gson:2.8.6")
+    implementation("org.apache.lucene:lucene-core:9.5.0")
+    implementation("org.apache.lucene:lucene-analyzers-common:8.11.2")
     testImplementation(kotlin("test-junit"))
 }
 

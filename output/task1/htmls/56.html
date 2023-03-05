@@ -1,0 +1,1276 @@
+<!doctype html>
+<html lang="ru" data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0"> 
+  <meta name="referrer" content="unsafe-url"> 
+  <title>Перевод предобученной модели Keras на матричные вычисления / Хабр</title> 
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSxf6TF0.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveQhf6TF0.woff2) format('woff2');
+      unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSBf6TF0.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveRhf6.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* non-breaking hyphen */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmEU9vBh0_IsHAlmrO6g&skey=ee881451c540fdec&v=v29) format('woff2');
+      unicode-range: U+02011;
+    }
+  </style> 
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/chunk-vendors.b6238726.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/chunk-vendors.129fcbcb.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/app.2dc3dce9.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/app.8a380906.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" as="script"> 
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/chunk-vendors.b6238726.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/app.2dc3dce9.css"> 
+  <script>window.i18nFetch = new Promise((res, rej) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', '/js/i18n/ru-compiled.99fdff73029c662d76a25e7927355795.json');
+          xhr.responseType = 'json';
+          xhr.onload = function(e) {
+            if (this.status === 200) {
+              res({ru: xhr.response});
+            } else {
+              rej(e);
+            }
+          };
+          xhr.send();
+        });</script> 
+  <script data-vue-meta="ssr" type="application/ld+json" data-vmid="ldjson-schema">{"@context":"http:\/\/schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/habr.com\/ru\/post\/719230\/"},"headline":"Перевод предобученной модели Keras на матричные вычисления","datePublished":"2023-03-05T14:17:23+03:00","dateModified":"2023-03-05T14:17:23+03:00","author":{"@type":"Person","name":"Владимир"},"publisher":{"@type":"Organization","name":"Habr","logo":{"@type":"ImageObject","url":"https:\/\/habrastorage.org\/webt\/a_\/lk\/9m\/a_lk9mjkccjox-zccjrpfolmkmq.png"}},"description":"О чем статья  По заказу одного из проектов мне потребовалось сделать агрегатор новостей в Телеграм. Есть список новостных порталов, с которых требовалось собират...","url":"https:\/\/habr.com\/ru\/post\/719230\/#post-content-body","about":["h_python","h_machine_learning","h_tensorflow","f_develop"],"image":["https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/bdb\/6cb\/a9a\/bdb6cba9af346733a1c517fa51c33493.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/16b\/26a\/6a8\/16b26a6a8716e55ccd570794c86a3d66.png"]}</script> 
+  <script src="//www.googletagservices.com/tag/js/gpt.js" async></script> 
+  <style>.grecaptcha-badge{visibility: hidden;}</style> 
+  <meta name="habr-version" content="2.114.0"> 
+  <meta data-vue-meta="ssr" property="fb:app_id" content="444736788986613">
+  <meta data-vue-meta="ssr" property="fb:pages" content="472597926099084">
+  <meta data-vue-meta="ssr" name="twitter:card" content="summary_large_image">
+  <meta data-vue-meta="ssr" name="twitter:site" content="@habr_com">
+  <meta data-vue-meta="ssr" property="og:site_name" content="Хабр" data-vmid="og:site_name">
+  <meta data-vue-meta="ssr" property="og:title" content="Перевод предобученной модели Keras на матричные вычисления" data-vmid="og:title">
+  <meta data-vue-meta="ssr" name="twitter:title" content="Перевод предобученной модели Keras на матричные вычисления" data-vmid="twitter:title">
+  <meta data-vue-meta="ssr" name="aiturec:title" content="Перевод предобученной модели Keras на матричные вычисления" data-vmid="aiturec:title">
+  <meta data-vue-meta="ssr" name="description" content="О чем статья По заказу одного из проектов мне потребовалось сделать агрегатор новостей в Телеграм. Есть список новостных порталов, с которых требовалось собирать новости; после этого необходимо..." data-vmid="description">
+  <meta data-vue-meta="ssr" itemprop="description" content="О чем статья По заказу одного из проектов мне потребовалось сделать агрегатор новостей в Телеграм. Есть список новостных порталов, с которых требовалось собирать новости; после этого необходимо..." data-vmid="description:itemprop">
+  <meta data-vue-meta="ssr" property="og:description" content="О чем статья По заказу одного из проектов мне потребовалось сделать агрегатор новостей в Телеграм. Есть список новостных порталов, с которых требовалось собирать новости; после этого необходимо..." data-vmid="og:description">
+  <meta data-vue-meta="ssr" name="twitter:description" content="О чем статья По заказу одного из проектов мне потребовалось сделать агрегатор новостей в Телеграм. Есть список новостных порталов, с которых требовалось собирать новости; после этого необходимо..." data-vmid="twitter:description">
+  <meta data-vue-meta="ssr" property="aiturec:description" content="О чем статья По заказу одного из проектов мне потребовалось сделать агрегатор новостей в Телеграм. Есть список новостных порталов, с которых требовалось собирать новости; после этого необходимо..." data-vmid="aiturec:description">
+  <meta data-vue-meta="ssr" itemprop="image" content="https://habr.com/share/publication/719230/df34b838ef8e847174c86f084c601f98/" data-vmid="image:itemprop">
+  <meta data-vue-meta="ssr" property="og:image" content="https://habr.com/share/publication/719230/df34b838ef8e847174c86f084c601f98/" data-vmid="og:image">
+  <meta data-vue-meta="ssr" property="og:image:width" content="1200" data-vmid="og:image:width">
+  <meta data-vue-meta="ssr" property="og:image:height" content="630" data-vmid="og:image:height">
+  <meta data-vue-meta="ssr" property="aiturec:image" content="https://habr.com/share/publication/719230/df34b838ef8e847174c86f084c601f98/" data-vmid="aiturec:image">
+  <meta data-vue-meta="ssr" name="twitter:image" content="https://habr.com/share/publication/719230/df34b838ef8e847174c86f084c601f98/" data-vmid="twitter:image">
+  <meta data-vue-meta="ssr" property="vk:image" content="https://habr.com/share/publication/719230/df34b838ef8e847174c86f084c601f98/?format=vk" data-vmid="vk:image">
+  <meta data-vue-meta="ssr" property="aiturec:item_id" content="719230" data-vmid="aiturec:item_id">
+  <meta data-vue-meta="ssr" property="aiturec:datetime" content="2023-03-05T11:17:23.000Z" data-vmid="aiturec:datetime">
+  <meta data-vue-meta="ssr" content="https://habr.com/ru/post/719230/" property="og:url" data-vmid="og:url">
+  <meta data-vue-meta="ssr" property="og:type" content="article" data-vmid="og:type">
+  <meta data-vue-meta="ssr" property="og:locale" content="ru_RU" data-vmid="og:locale">
+  <meta data-vue-meta="ssr" name="keywords" content="классификатор текстов, tensorflow, python"> 
+  <link data-vue-meta="ssr" href="https://habr.com/ru/rss/post/719230/?fl=ru" type="application/rss+xml" title="" rel="alternate" name="rss">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/post/719230/" rel="canonical" data-vmid="canonical">
+  <link data-vue-meta="ssr" rel="image_src" href="https://habr.com/share/publication/719230/df34b838ef8e847174c86f084c601f98/" data-vmid="image:href">
+  <link data-vue-meta="ssr" rel="amphtml" href="https://habr.com/ru/amp/post/719230/"> 
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303b44"> 
+  <meta name="msapplication-TileColor" content="#629FBC"> 
+  <meta name="apple-mobile-web-app-capable" content="yes"> 
+  <meta name="mobile-web-app-capable" content="yes"> 
+  <link rel="shortcut icon" type="image/png" sizes="16x16" href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png"> 
+  <link rel="shortcut icon" type="image/png" sizes="32x32" href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-152.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-180.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-256.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1136x640.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2436x1125.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1792x828.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_828x1792.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1334x750.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2208x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1125x2436.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2208.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2732x2048.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2688x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2224x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_750x1334.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x2732.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2388x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2224.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_640x1136.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2388.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x1536.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1536x2048.png"> 
+  <link rel="mask-icon" color="#77a2b6" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.svg"> 
+  <link crossorigin="use-credentials" href="/manifest.webmanifest" rel="manifest"> 
+  <script async src="https://unpkg.com/pwacompat" crossorigin="anonymous"></script> 
+  <script>window.yaContextCb = window.yaContextCb || []</script> 
+  <script src="https://yandex.ru/ads/system/context.js" async></script> 
+ </head> 
+ <body> 
+  <div id="app" data-server-rendered="true" data-async-called="true">
+   <div class="tm-layout__wrapper">
+    <!----> 
+    <div></div> <!----> 
+    <header class="tm-header">
+     <div class="tm-page-width">
+      <div class="tm-header__container">
+       <!----> <span class="tm-header__logo-wrap"><a href="/ru/" class="tm-header__logo tm-header__logo_ru">
+         <svg height="16" width="16" class="tm-svg-img tm-header__icon">
+          <title>Хабр</title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use>
+         </svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span> 
+       <div class="tm-dropdown tm-header__projects">
+        <div class="tm-dropdown__head">
+         <button class="tm-header__dropdown-toggle">
+          <svg height="16" width="16" class="tm-svg-img tm-header__icon tm-header__icon_dropdown">
+           <title>Открыть список</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#arrow-down"></use>
+          </svg></button>
+        </div> <!---->
+       </div> <a href="/ru/sandbox/start/" class="tm-header__become-author-btn"> Как стать автором </a> 
+       <div class="tm-feature tm-header__feature tm-feature tm-feature_variant-inline">
+        <!---->
+       </div> <!----> <!---->
+      </div>
+     </div>
+    </header> 
+    <div class="tm-layout">
+     <div class="tm-page-progress-bar"></div> 
+     <div data-menu-sticky="true" class="tm-base-layout__header tm-base-layout__header_is-sticky">
+      <div class="tm-page-width">
+       <div class="tm-base-layout__header-wrapper">
+        <div class="tm-main-menu">
+         <div class="tm-main-menu__section">
+          <nav class="tm-main-menu__section-content">
+           <!----> <a href="/ru/all/" class="tm-main-menu__item"> Все потоки </a> <a href="/ru/flows/develop/" class="tm-main-menu__item"> Разработка </a><a href="/ru/flows/admin/" class="tm-main-menu__item"> Администрирование </a><a href="/ru/flows/design/" class="tm-main-menu__item"> Дизайн </a><a href="/ru/flows/management/" class="tm-main-menu__item"> Менеджмент </a><a href="/ru/flows/marketing/" class="tm-main-menu__item"> Маркетинг </a><a href="/ru/flows/popsci/" class="tm-main-menu__item"> Научпоп </a>
+          </nav>
+         </div>
+        </div> 
+        <div class="tm-header-user-menu tm-base-layout__user-menu">
+         <a href="/ru/search/" class="tm-header-user-menu__item tm-header-user-menu__search">
+          <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark">
+           <title>Поиск</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#search"></use>
+          </svg></a> <!----> <!----> <!----> 
+         <div class="tm-header-user-menu__item tm-header-user-menu__user_desktop">
+          <div class="tm-dropdown">
+           <div class="tm-dropdown__head">
+            <svg height="24" width="24" data-test-id="menu-toggle-guest" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_dark">
+             <title>Профиль</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#header-user"></use>
+            </svg> <!---->
+           </div> <!---->
+          </div> <!---->
+         </div> <!---->
+        </div>
+       </div>
+      </div>
+     </div> <!----> 
+     <div class="tm-page-width"></div> 
+     <main class="tm-layout__container">
+      <div hl="ru" data-async-called="true" class="tm-page">
+       <div class="tm-page-width">
+        <!----> 
+        <div class="tm-page__wrapper">
+         <div class="tm-page__main tm-page__main_has-sidebar">
+          <div class="pull-down">
+           <!----> 
+           <div class="pull-down__header" style="height:0px;">
+            <div class="pull-down__content" style="bottom:10px;">
+             <svg height="24" width="24" class="tm-svg-img pull-down__arrow">
+              <title>Обновить</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#pull-arrow"></use>
+             </svg>
+            </div>
+           </div> 
+           <div class="tm-article-presenter"> 
+            <div class="tm-article-presenter__body">
+             <div class="tm-misprint-area">
+              <div class="tm-misprint-area__wrapper">
+               <article class="tm-article-presenter__content tm-article-presenter__content_narrow">
+                <div class="tm-article-presenter__header"> 
+                 <div class="tm-article-snippet tm-article-presenter__snippet tm-article-snippet">
+                  <div class="tm-article-snippet__meta-container">
+                   <div class="tm-article-snippet__meta">
+                    <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/vova_sam/" title="vova_sam" class="tm-user-info__userpic">
+                      <div class="tm-entity-image">
+                       <svg height="24" width="24" class="tm-svg-img tm-image-placeholder tm-image-placeholder_blue">
+                        <!----> <use xlink:href="/img/megazord-v28.2b11c25e..svg#placeholder-user"></use>
+                       </svg>
+                      </div></a> <span class="tm-user-info__user"><a href="/ru/users/vova_sam/" class="tm-user-info__username"> vova_sam <!----></a> <span class="tm-article-datetime-published"><time datetime="2023-03-05T11:17:23.000Z" title="2023-03-05, 14:17">5 часов назад</time></span></span></span>
+                   </div> <!---->
+                  </div> 
+                  <h1 lang="ru" class="tm-article-snippet__title tm-article-snippet__title_h1"><span>Перевод предобученной модели Keras на матричные вычисления</span></h1> 
+                  <div class="tm-article-snippet__stats">
+                   <div class="tm-article-complexity tm-article-complexity_complexity-medium">
+                    <span class="tm-svg-icon__wrapper tm-article-complexity__icon">
+                     <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                      <title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#complexity-medium"></use>
+                     </svg></span> <span class="tm-article-complexity__label"> Средний </span>
+                   </div> 
+                   <div class="tm-article-reading-time">
+                    <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                     <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                      <title>Время на прочтение</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#clock"></use>
+                     </svg></span> <span class="tm-article-reading-time__label"> 13 мин </span>
+                   </div> <span class="tm-icon-counter tm-data-icons__item">
+                    <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                     <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-views"></use>
+                    </svg> <span class="tm-icon-counter__value">667</span></span>
+                  </div> 
+                  <div class="tm-article-snippet__hubs-container">
+                   <div class="tm-article-snippet__hubs">
+                    <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/python/" class="tm-article-snippet__hubs-item-link"><span>Python</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/machine_learning/" class="tm-article-snippet__hubs-item-link"><span>Машинное обучение</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/tensorflow/" class="tm-article-snippet__hubs-item-link"><span>TensorFlow</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                   </div>
+                  </div> 
+                  <div class="tm-article-snippet__labels-container">
+                   <div class="tm-article-snippet__labels">
+                    <div class="tm-article-snippet__label tm-article-snippet__label_variant-tutorial">
+                     <span> Туториал </span>
+                    </div> 
+                   </div>
+                  </div> <!----> <!---->
+                 </div>
+                </div> <!----> 
+                <div data-gallery-root="" lang="ru" class="tm-article-body">
+                 <div></div> 
+                 <div id="post-content-body">
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                    <div xmlns="http://www.w3.org/1999/xhtml">
+                     <h3>О чем статья </h3>
+                     <p>По заказу одного из проектов мне потребовалось сделать агрегатор новостей в Телеграм. Есть список новостных порталов, с которых требовалось собирать новости; после этого необходимо отфильтровать новости по релевантности: убрать рекламные сообщения, в также те, которые по разным причинам не подходили под требования. Сформулировать точные критерии "плохих" новостей было нельзя, но была сделана разметка ("естественным интеллектом", т.е. человеком) их по критерию: 0 - "хорошая", 1 - "плохая". Постоянная фильтрация вручную очень трудоемкий процесс. Поэтому напрашивалась идея реализации автоматической фильтрации на базе машинного обучения. </p>
+                     <p>После долгих поисков реализации (о них ниже в статье) была создана нейронная сеть на базе <a href="https://keras.io/" rel="noopener noreferrer nofollow">Keras</a>, которая имела высокое качество, но оказалось, что Keras нельзя было установить на инфраструктуре (просто не было соответствующей сборки) и мне пришлось решать вопрос, как перевести обученную модель в Keras на реализацию, которая не требует установленного Keras. Я не нашел соответствующего материала в Интернет (разве что вот <a href="https://habr.com/ru/post/656635/" rel="noopener noreferrer nofollow">тут</a> автор делал что-то похоже, только для LTSM), поэтому сделал это сам. </p>
+                     <p>Эта статья о том, как я переписал обученную в Keras сеть на работу с матричными операциями в Python Numpy. Заодно это помогло мне "заглянуть под капот" нейронной сети.</p>
+                     <p>Отдельно хотел бы отметить, что код упрощен для наглядности, но в целом он полностью рабочий</p>
+                     <details class="spoiler">
+                      <summary>Немного о себе</summary>
+                      <div class="spoiler__content">
+                       <p>Думаю, тут важно сообщить, что к моменту поступления задачи у меня не было никакого опыта в data science. Был любительский опыт создания Телеграм ботов на Python. Я просто стал смотреть в Интернете, как классификацию текста делают другие и больше всего мне помогла классическая страница от <a href="https://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html" rel="noopener noreferrer nofollow">sklearn</a>. Первая "коммерческая" версия была сделана по этому принципу.</p>
+                       <p>И самое главное, что успешный опыт решения этого вопроса привел меня к тому, что я решил попробовать сменить специальность (в которой у меня 20 лет стажа), стать профессиональным data science и спустя пару лет прошел соответствующее профильное обучение. </p>
+                      </div>
+                     </details>
+                     <h2>Выбор модели классификации текста </h2>
+                     <p>Целью данной статьи не является разбор методов классификации текста, но без описания пути, который был пройден для создания рабочей модели, статья будет неполной.</p>
+                     <p>Задание от заказчика - это типовая задача классификации текста; а т.к. у нас только две категории (плохая/хорошая новость) это условный подвид классификации, часто упоминаемый как "бинарная классификация".</p>
+                     <p>Классически в задачах машинного обучения (см. <a href="https://ru.wikipedia.org/wiki/CRISP-DM" rel="noopener noreferrer nofollow"><u>CRISP-DM</u></a>) исходные данные надо: 1) предобработать, 2) подготовить параметры, включая целевой, 3) обучить модель (и наиболее вероятно снова вернуться на первый этап для улучшения качества модели).</p>
+                     <p>В используемых в проекте моделях (кроме, разве что, BERT) обязательно надо надо провести лемматизацию (и, возможно, стемминг) текста, удаление стоп-слов, очистку текста от html-тэгов и разного "мусора" (ведь новости собираются с разных сайтов). В моем проекте используется <a href="https://pymorphy2.readthedocs.io/en/stable/" rel="noopener noreferrer nofollow"><u>pymorphy2</u></a> для лемматизации, регулярные выражения - для фильтрации всего, кроме текста. Про это в данной статье нет информации - подробного материала в Сети предостаточно.</p>
+                     <p>Кстати, на большинстве новостных сайтов не было RSS-версии (они "местного уровня" - там, возможно, не очень в этом понимают) и мне пришлось активно использовать <a href="https://www.crummy.com/software/BeautifulSoup/" rel="noopener noreferrer nofollow"><u>BeautifulSoup</u></a> для разбора html-версий сайтов и извлечения оттуда новостей. (Интересно, как большие агрегаторы, типа Google, Yandex, это решают? Пишут под каждый сайт свой парсер?)</p>
+                     <p>У нас несбалансированная выборка - новости с положительным классом составляют 30% от всей выборки, а поэтому разумно применять какой-то метод выравнивания при обучении. Я использовал "upsampling" (дублировал новости с положительным классом) и наглядно убедился, что этот простой метод значительно повышает качество модели.</p>
+                     <h3>Реализация на базе TF-IDF и моделей sklearn</h3>
+                     <p>В первой и долгое время работающей реализации классификатора мною использовалось <a href="https://ru.wikipedia.org/wiki/TF-IDF" rel="noopener noreferrer nofollow"><u>TF-IDF</u></a> для создания векторного представления текста, а именно <a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html" rel="noopener noreferrer nofollow"><u>TfidfVectorizer</u></a> c параметром max_features = 20, подобранным опытным путем.</p>
+                     <p>Можно много писать про метрики; мне свое время очень помогла статья <a href="https://habr.com/ru/company/ods/blog/328372/" rel="noopener noreferrer nofollow"><u>"Метрики в задачах машинного обучения"</u></a>, и для этой статьи я буду использовать F1, которая в целом более точно оценивает способность модели различать классы.</p>
+                     <p>После многих стадий предобработки, выбора и обучения моделей были получены получены следующие результаты на валидационной выборке (см. таблицу ниже).</p>
+                     <div>
+                      <div class="table">
+                       <table>
+                        <tbody>
+                         <tr>
+                          <th><p><strong>Модель</strong></p></th>
+                          <th><p><strong>F1 score</strong></p></th>
+                         </tr>
+                         <tr>
+                          <td><p align="left">Random Forest</p></td>
+                          <td><p align="left">0.82</p></td>
+                         </tr>
+                         <tr>
+                          <td><p align="left">SGDClassifier</p></td>
+                          <td><p align="left">0.82</p></td>
+                         </tr>
+                         <tr>
+                          <td><p align="left">LogisticRegression</p></td>
+                          <td><p align="left">0.81</p></td>
+                         </tr>
+                         <tr>
+                          <td><p align="left">MultinomialNB</p></td>
+                          <td><p align="left">0.69</p></td>
+                         </tr>
+                         <tr>
+                          <td><p align="left">KNeighborsClassifier</p></td>
+                          <td><p align="left">0.80</p></td>
+                         </tr>
+                         <tr>
+                          <td><p align="left">LGBMClassifier*</p></td>
+                          <td><p align="left">0.82</p></td>
+                         </tr>
+                        </tbody>
+                       </table>
+                      </div>
+                     </div>
+                     <ul>
+                      <li><p><em>- это, конечно, модель не&nbsp;от&nbsp;sklearn, а&nbsp;от </em><a href="https://lightgbm.readthedocs.io/" rel="noopener noreferrer nofollow"><em><u>LightGBM</u></em></a><em>&nbsp;— она приведена для&nbsp;сравнения качества</em></p></li>
+                     </ul>
+                     <p>Какие <strong>выводы</strong> можно сделать после анализа моделей на базе TF-IDF?</p>
+                     <ol>
+                      <li><p>Все модели в целом имеют одинаковое качество&nbsp;</p></li>
+                      <li><p>Для практической задачи можно выбрать любую из них. Я выбрал в итоге SGDClassifier&nbsp;</p></li>
+                     </ol>
+                     <p>Но поиски более качественной модели не останавливались.</p>
+                     <h2>Модели на базе BERT</h2>
+                     <p>При исследовании также была протестирована модель на базе BERT (в том числе fine-tunning последнего слоя). В качестве реализации использовалась версия из следующего <a href="https://huggingface.co/cointegrated/rubert-tiny2?text=%D0%9C%D0%B8%D0%BD%D0%B8%D0%B0%D1%82%D1%8E%D1%80%D0%BD%D0%B0%D1%8F+%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D1%8C+%D0%B4%D0%BB%D1%8F+%5BMASK%5D+%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D1%85+%D0%B7%D0%B0%D0%B4%D0%B0%D1%87" rel="noopener noreferrer nofollow"><u>источника</u></a> - robert-tiny2, предобученная на большом количестве текстов на русском языке.</p>
+                     <p>Т.е. с помощью BERT проведена векторизация исходного текста без очистки (BERT лояльна к сырому тексту - она обучается как раз на таком), и на основании этих данных обучены модели, которые использовались ранее для TF-IDF.</p>
+                     <p>Метрика F1 в этом случае становилась равной 0,87 - значительно выше, чем при TF-IDF, но развернуть BERT на продуктовой среде не получилось - нет соответствующей версии.</p>
+                     <p>Было принято решение подобрать модель на базе нейронной сети</p>
+                     <h3>Классификатор на базе нейронной сети</h3>
+                     <p>После изучения материалов, тестирования различных вариантов и конфигураций была выбрана достаточно простая модель нейронной сети, которая показала себя хорошо с точки зрения соотношения качество/ресурсы.&nbsp; Метрика F1 для нее равна 0,88 - показатель выше, чем было получено ранее.&nbsp;</p>
+                     <p>Схема модели приведена на рисунке 1</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/bdb/6cb/a9a/bdb6cba9af346733a1c517fa51c33493.png" alt="Рисунок 1. Модель нейронной сети для классификации текста" title="Рисунок 1. Модель нейронной сети для классификации текста" width="719" height="292" data-src="https://habrastorage.org/getpro/habr/upload_files/bdb/6cb/a9a/bdb6cba9af346733a1c517fa51c33493.png">
+                      <div>
+                       <figcaption>
+                        Рисунок 1. Модель нейронной сети для классификации текста
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>В виде кода данная модель выглядит следующим образом:</p>
+                     <pre><code class="python">vocab_size = 1000 # количество уникальных слов в словаре
+embedding_dim = 40 # число параметров после эмбеддинга
+max_length = 100 # максимальная длина новости
+
+model = tf.keras.Sequential([
+    tf.keras.layers.Embedding(vocab_size, embedding_dim, input_length=max_length),
+    tf.keras.layers.GlobalAveragePooling1D(),
+    tf.keras.layers.Dense(6, activation='relu'),
+    tf.keras.layers.Dense(1, activation='sigmoid')
+])
+
+model.compile(loss='binary_crossentropy',optimizer='adam',
+              metrics=[tf.metrics.BinaryAccuracy(threshold=0.5)])
+
+num_epochs = 10
+history=model.fit(features_train, 
+                  training_labels_final, 
+                  epochs=num_epochs, 
+                  validation_data=(features_valid, testing_labels_final))</code></pre>
+                     <p>Итак мы подобрали, обучили модель и получили нужное качество. Но на целевой системе нет tensorflow, а есть стандартный python 3 и, максимум, библиотека numpy; т.е. мы не может просто сохранить модель и реализовать предсказание, как </p>
+                     <pre><code class="python">predictions = model.predict(news)</code></pre>
+                     <p>Необходимо перевести эту модель на обычные “матричные вычисления” для чего требуется выполнить следующие шаги:</p>
+                     <ol>
+                      <li><p>получить веса обученной модели,</p></li>
+                      <li><p>понять, как работает каждый этап,&nbsp;</p></li>
+                      <li><p>создать код для расчета предсказания.&nbsp;</p></li>
+                     </ol>
+                     <h4>Получение весов и смещений обученной модели</h4>
+                     <p>Получить веса i-го слоя можно с помощью следующей команды:</p>
+                     <pre><code class="python">weights = model.layers[i].get_weights()[0]</code></pre>
+                     <p>Смещение (bias), если оно есть в данном слое, получают с помощью команды:</p>
+                     <pre><code class="python">bias = model.layers[i].get_weights()[1]</code></pre>
+                     <h4>Проверка обученной модели</h4>
+                     <p>Есть очень полезный инструмент для самоконтроля при реализации модели. Можно запустить обученную модель на какой-нибудь выборке и посмотреть, какие промежуточные значения она (модель) рассчитывает на каждом этапе.</p>
+                     <pre><code class="python">from tensorflow import keras
+from tensorflow.keras import layers
+
+extractor = keras.Model(inputs=model.inputs,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outputs=[layer.output for layer in model.layers])
+
+features = extractor( features_valid[0].numpy().reshape(-1,100))
+print(features)</code></pre>
+                     <p>Вывод получает примерно такой:</p>
+                     <pre><code class="python">[&lt;tf.Tensor: shape=(1, 100, 20), dtype=float32, numpy=
+array([[[-0.3023754 ,&nbsp; 0.0460441 , -0.03640036, ...,&nbsp; 0.14973998,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.04820368, -0.16159618],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[-0.16039295,&nbsp; 0.25132295, -0.13751882, ...,&nbsp; 0.16573162,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-0.15154448, -0.0574923 ],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[-0.3023754 ,&nbsp; 0.0460441 , -0.03640036, ...,&nbsp; 0.14973998,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.04820368, -0.16159618],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[-0.3023754 ,&nbsp; 0.0460441 , -0.03640036, ...,&nbsp; 0.14973998,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.04820368, -0.16159618],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[-0.22955681, -0.08269349,&nbsp; 0.13517892, ...,&nbsp; 0.00153243,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.13046908, -0.16767927],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[-0.3023754 ,&nbsp; 0.0460441 , -0.03640036, ...,&nbsp; 0.14973998,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.04820368, -0.16159618]]], dtype=float32)&gt;, &lt;tf.Tensor: shape=(1, 20), dtype=float32, numpy=
+array([[-0.18203291,&nbsp; 0.11690798, -0.08938053,&nbsp; 0.10450792, -0.09504858,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-0.08279163,&nbsp; 0.29856998, -0.23120254, -0.2559827 , -0.12028799,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.00566523, -0.06708373,&nbsp; 0.05338131, -0.15103005,&nbsp; 0.08447236,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.10225956, -0.33394486,&nbsp; 0.15348543, -0.04525973, -0.07986856]],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dtype=float32)&gt;, &lt;tf.Tensor: shape=(1, 6), dtype=float32, numpy=
+array([[1.9048874 , 0.07643622, 1.4660159 , 1.907875&nbsp; , 0.02882011,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.&nbsp; &nbsp; &nbsp; &nbsp; ]], dtype=float32)&gt;, &lt;tf.Tensor: shape=(1, 1), dtype=float32, numpy=array([[0.0283242]], dtype=float32)&gt;]</code></pre>
+                     <p>Т.е. код выводит результаты работы каждого слоя - можно сверить, верно ли мы реализовали вычисления. </p>
+                     <h4>TextVectorization &nbsp;</h4>
+                     <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/TextVectorization)" rel="noopener noreferrer nofollow">TextVectorization </a>- это слой tf.keras.layers, который преобразует текст в числовые тензоры. Он может выполнять стандартизацию, токенизацию и векторизацию текста. Он также может создавать словарь из часто встречающихся слов и отображать их на целочисленные индексы:</p>
+                     <p>В моей реализации он делает следующее (см. рис. 2):&nbsp;</p>
+                     <ol>
+                      <li><p>Назначает всем уникальным словам из текстового корпуса числовой идентификатор (от 2 до числа уникальных слов). В качестве гиперпараметра <em>max_tokens </em>мы указываем максимальное количество уникальных слов - все остальные слова будут обозначаться единицей.&nbsp;</p></li>
+                      <li><p>Приводит текст в векторных вид, в котором каждому слову соответствует выбранный на предыдущем шаге числовой идентификатор. При этом он ограничивает максимальную длину текста заданную параметром <em>output_sequence_length</em>.&nbsp; И наоборот, если текст короче максимального, он будет дополнен нулями</p></li>
+                     </ol>
+                     <figure class="">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/16b/26a/6a8/16b26a6a8716e55ccd570794c86a3d66.png" alt="Рисунок 2. Принцип работы модуля TextVectorization" title="Рисунок 2. Принцип работы модуля TextVectorization" width="431" height="252" data-src="https://habrastorage.org/getpro/habr/upload_files/16b/26a/6a8/16b26a6a8716e55ccd570794c86a3d66.png">
+                      <div>
+                       <figcaption>
+                        Рисунок 2. Принцип работы модуля TextVectorization
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Важно отдельно отметить, что тексты должны быть предобработаны (лемматизация и очистка) перед загрузкой их в TextVectorization</p>
+                     <p>TextVectorization с примером (но помним, что нам надо будет сделать это без использования Keras)</p>
+                     <pre><code class="python">import tensorflow as tf
+
+# определяем TextVectorization. Максимальное кол-во уникальных слов 10, максимальная длина теста - 8 слов
+vectorize_layer = tf.keras.layers.TextVectorization(
+#     standardize=custom_standardization,
+    max_tokens=10,
+    output_mode='int',
+    output_sequence_length=8)
+
+
+test_texts=["chatgpt чатбот с искусственный интеллект разработать компания openai и способен работать в диалоговый режим",
+            "чатбот нет аналоги в россия разработка"]
+
+vectorize_layer.adapt(test_texts)
+
+features_train = vectorize_layer(test_texts)
+
+print("Преобразованная выборка:", features_train)
+
+print("Словарь. Индекс слова в словаре и есть его числовой идентификатор:", vectorize_layer.get_vocabulary())</code></pre>
+                     <pre><code class="python">Преобразованная выборка: tf.Tensor(
+[[1 2 5 1 1 9 1 1]
+ [2 1 1 3 6 8 0 0]], shape=(2, 8), dtype=int64)
+Словарь. Индекс слова в словаре и есть его числовой идентификатор: ['', '[UNK]', 'чатбот', 'в', 'способен', 'с', 'россия', 'режим', 'разработка', 'разработать']</code></pre>
+                     <p>В реальной задаче размер словаря составляет 1000 слов, максимальная длина текста - 100 слов (средняя длина текста новостей в выборке 187 слов - немного сократим текст)</p>
+                     <p>"Матричная реализация" TextVectorizaion, сделанная мной следующая:</p>
+                     <pre><code class="python">zero_line=[1]+ [0] * (vocab_size-1) # нулевой вектор для заполнения матрицы до нужного размера 
+
+def text_to_numbers(text):
+      out = []
+      for word in text.split()[:max_length]:
+          # создаем вектро размера словаря из нулей
+          line = [0] * vocab_size 
+
+          # на месте с индексом слова ставим единицу
+          line[vocal_dict.get(word, 1)] = 1 
+          out.append(line)
+      
+      # если текст короче максимального, дополняем нулевыми векторами
+      out += [zero_line] * (max_length - len(out))
+      return np.array(out)</code></pre>
+                     <p>Далее будет описание слоя эмбеддинга, но тут надо отметить, что преобразование в разреженную матрицу мною вынесено в модуль text_to_numbers. Т.е. для упрощения кода мною объедены функции TextVectorization и частично Embedding (в части создания разреженной матрицы) </p>
+                     <h4>Слои нейронной сети</h4>
+                     <p>Сама модель нейронной сети состоит из следующих слоев:</p>
+                     <p><strong>Слой Embedding</strong> </p>
+                     <p>В целом эмбеддинги нужны для того, чтобы представлять категориальные признаки в виде числовых векторов меньшей размерности. Это позволяет повысить производительность и точность моделей машинного обучения, а также извлекать семантические и синтаксические свойства языковых сущностей.&nbsp;</p>
+                     <p>Embedding layer - это слой tf.keras.layers, который преобразует целочисленные последовательности в плотные векторы. Выходом Embedding layer является трехмерный тензор с формой (batch_size, output_sequence_length, embedding_dim). В отличите от&nbsp; популярных предобученных эмбеддингов в нашем случае он обучается во время обучения нейронной сети (back-propagation).&nbsp;</p>
+                     <p>Слой получает на вход выборку из числовых индексов (см. рис. 2), подготовленных TextVectorization, и далее преобразует их в вектора вида:</p>
+                     <pre><code>[
+[0, 0, ….., 1, 0, …, 0]
+[0, 0, ….., 0, 1, …, 0]
+…
+[1, 0, ….., 0, 0, …, 0],
+[0, 0, ….., 0, 1, …, 0]
+[0, 0, ….., 1, 0, …, 0]
+…
+[0, 0, ….., 0, 0, …, 1],
+]</code></pre>
+                     <p>В таком представлении каждому слову соответствует вектор: он состоит из нулей, за исключением единственной единицы, которая стоит на месте, индекс которого равен числовому представлению слова (напомню, что в моей реализации это вынесено в функцию <em>text_to_numbers</em>)</p>
+                     <p>Таким образом, если на входе была матрица размером (100) - 100 числовых индексов, соответствующих словам), то он преобразуется в матрицу (100, 1000)&nbsp; - 100 векторов, каждый состоит из 1000 элементов - нулей и единиц.&nbsp;</p>
+                     <p>В полученной модели размер вектора&nbsp; 40 элементов (это значение было подобрано опытным путем) и после слоя эмбеддинга будет матрица (100, 40).</p>
+                     <p>"Матричная реализация" слоя Embedding:</p>
+                     <pre><code class="python"># на вход поступает разреженная матрица
+def embedding(data):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;emb_out = []
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for char_hot in data:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;emb_out.append(np.dot(char_hot, emb_weights ))
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;emb_out = np.array(emb_out)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return np.array(emb_out)</code></pre>
+                     <p>Есть одна неприятная особенность этого кода: матрицы, получаемые для расчета разреженные, поэтому их умножение занимается значительные вычислительные ресурсы. В моем проекте это неважно, т.к. одновременно проверяется несколько десятков новостей. А вот если надо обрабатывать несколько тысяч новостей, то это может занять длительное время (на core i5 2500K, c 8ГБ RAM без GPU 2000 новостей обрабатываются около 3х минут). Для того, чтобы обойти это ограничение можно использовать библиотеки, в которых реализованы операции с разреженными матрицами: например, <a href="https://docs.scipy.org/doc/scipy/reference/sparse.html" rel="noopener noreferrer nofollow">scipy</a>.</p>
+                     <p><strong>Слой GlobalAveragePooling1D</strong></p>
+                     <p>Этот слой просто усредняет значения матрицы: на входе у него матрица (100, 40), на выходе вектор из 40 элементов. </p>
+                     <p>Код для его реализации следующий:</p>
+                     <pre><code class="python">def avarage(data):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;av_out = np.mean(data, axis=0)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return av_out</code></pre>
+                     <p><strong>Слой Dense.</strong></p>
+                     <p>Тут тоже достаточно просто - это по сути умножение входного вектора на веса в “нейронах”. В нашем случае их 6 и веса в этом слое имеют размер (40, 6) = (размер эмбеддинга, количество нейронов).</p>
+                     <pre><code class="python">def ReLU(x):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return x * (x &gt; 0)
+
+def dense_6(data):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dense_6_out = ReLU(np.dot(data, dense_6_weights) + dense_6_bias)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return dense_6_out</code></pre>
+                     <p>На выходе имеем вектор из 6 элементов.</p>
+                     <p><strong>Выходной слой</strong></p>
+                     <p>Далее умножаем полученные вектор на вектор весов выходного слоя (плюс смещение) и применяем сигмоиду.&nbsp;</p>
+                     <pre><code class="python">def sigmoid(data):
+    return 1 / (1 + np.exp((-1) * data))
+
+def dense_out(data):
+  _dense_out = sigmoid(np.dot(data, weights_out) + self.bias_out[0])
+  return _dense_out</code></pre>
+                     <p>Предсказание готово!&nbsp;</p>
+                     <details class="spoiler">
+                      <summary>Полный класс предсказателя выглядит следующим образом</summary>
+                      <div class="spoiler__content">
+                       <pre><code class="python">class Predictor:
+    def __init__(self, emb_weights, dense_6_weights, dense_6_bias,
+                 weights_out, bias_out, vocal_dict, vocab_size,
+                 max_length, show_intermediate_data=False):
+
+        self.emb_weights = emb_weights
+        self.dense_6_weights = dense_6_weights
+        self.dense_6_bias = dense_6_bias
+        self.weights_out = weights_out
+        self.bias_out = bias_out
+        self.max_length = max_length
+        self.vocab_size = vocab_size
+        self.show_data = show_intermediate_data
+        self.vocal_dict = {vocal_dict[k]: k for k in range(self.vocab_size)} 
+        self.zero_line=[1]+ [0] * (self.vocab_size-1)
+       
+    def text_to_numbers(self, text):
+        out = []
+        for word in text.split()[:self.max_length]:
+            line = [0] * self.vocab_size
+            line[self.vocal_dict.get(word, 1)] = 1
+            out.append(line)
+        
+        out += [self.zero_line] * (self.max_length - len(out))
+
+        return np.array(out)
+
+
+    def predict(self, x):
+        results = []
+        for sentanence in x:
+            emb_out = self.embedding(self.text_to_numbers(sentanence))
+            out_avarage = self.avarage(emb_out)
+            out_dense_6 = self.dense_6(out_avarage)
+            results.append(self.dense_out(out_dense_6))
+        return np.array(results)
+
+    def embedding(self, data):
+        emb_out = []
+        for char_hot in data:
+            emb_out.append(np.dot(char_hot, self.emb_weights ))
+        emb_out = np.array(emb_out)
+
+        if self.show_data:
+            print(f'embedding out:{emb_out}')
+
+        return np.array(emb_out)
+
+    def avarage(self, data):
+        av_out = np.mean(data, axis=0)
+
+        if self.show_data:
+            print(f'avarage out:{av_out}')
+
+        return av_out
+
+    def dense_6(self, data):
+        dense_6_out = self.ReLU(np.dot(data, self.dense_6_weights) + self.dense_6_bias)
+
+        if self.show_data:
+            print(f'Dense 6 out:{dense_6_out}')
+
+        return dense_6_out
+
+    def dense_out(self, data):
+        _dense_out = self.sigmoid(np.dot(data, self.weights_out) + self.bias_out[0])
+
+        if self.show_data:
+            print(f'Final out:{_dense_out}')
+
+        return _dense_out
+
+
+    def ReLU(self, x):
+        return x * (x &gt; 0)
+
+    def sigmoid(self, data):
+        return 1 / (1 + np.exp((-1) * data))
+
+config_dict={
+    
+    'emb_weights':model.layers[0].get_weights()[0].tolist(),
+    'dense_6_weights':model.layers[2].get_weights()[0].tolist(),
+    'dense_6_bias': model.layers[2].get_weights()[1].tolist(),
+    'weights_out':model.layers[3].get_weights()[0].tolist(),
+    'bias_out':model.layers[3].get_weights()[1].tolist(),
+    "vocab_size":vocab_size,
+    "max_length":max_length,
+    "vocal_dict":vectorize_layer.get_vocabulary()
+    
+}
+
+# Использование
+predictor=Predictor(**config_dict, show_intermediate_data=False) 
+
+prediction = predictor.predict(testing_sentences)
+</code></pre>
+                       <p>Сохранение (после обучения) и загрузку (на продуктовой среде) конфигурации я делаю с помощью следующего кода</p>
+                       <pre><code class="python">import json
+
+# сохранить  config
+with open('./data/config.json', 'w') as fp:
+    json.dump(config_dict, fp)</code></pre>
+                       <pre><code class="python">import json
+
+# загрузить config
+with open('./data/config.json', 'r') as fp:
+    config_dict = json.load(fp)
+config_dict
+</code></pre>
+                       <p></p>
+                      </div>
+                     </details>
+                     <h2>Заключение</h2>
+                     <p>В результате я смог перевести обученную модель Keras на работу со "стандартными" библиотеками Python без необходимости установки Keras/Tensorflow на продуктовую среду. Это позволило использовать её в продуктовой среде. </p>
+                     <p>В случае, если в модель будут добавлены слои, возможно дополнить класс предсказателя дополнительными вычислениями. </p>
+                     <p></p>
+                    </div>
+                   </div>
+                  </div> <!----> <!---->
+                 </div> <!----> <!---->
+                </div> <!----> 
+                <div class="tm-article-presenter__meta">
+                 <div class="tm-separated-list tm-article-presenter__meta-list">
+                  <span class="tm-separated-list__title">Теги:</span> 
+                  <ul class="tm-separated-list__list">
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%BE%D1%80%20%D1%82%D0%B5%D0%BA%D1%81%D1%82%D0%BE%D0%B2%5D" class="tm-tags-list__link">классификатор текстов</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Btensorflow%5D" class="tm-tags-list__link">tensorflow</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bpython%5D" class="tm-tags-list__link">python</a></li>
+                  </ul>
+                 </div> 
+                 <div class="tm-separated-list tm-article-presenter__meta-list">
+                  <span class="tm-separated-list__title">Хабы:</span> 
+                  <ul class="tm-separated-list__list">
+                   <li class="tm-separated-list__item"><a href="/ru/hub/python/" class="tm-hubs-list__link">Python</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/hub/machine_learning/" class="tm-hubs-list__link">Машинное обучение</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/hub/tensorflow/" class="tm-hubs-list__link">TensorFlow</a></li>
+                  </ul>
+                 </div>
+                </div>
+               </article>
+              </div> <!---->
+             </div> 
+             <div class="tm-article-sticky-panel">
+              <div class="tm-data-icons tm-article-sticky-panel__icons">
+               <div class="tm-article-rating tm-data-icons__item">
+                <div class="tm-votes-meter tm-article-rating__votes-switcher">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>Всего голосов 3: ↑3 и ↓0</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-rating"></use>
+                 </svg> <span title="Всего голосов 3: ↑3 и ↓0" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+3</span>
+                </div> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> <!----> <!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                 <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                  <title>Добавить в закладки</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-favorite"></use>
+                 </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 12 </span></button> 
+               <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                <a href="/ru/post/719230/comments/" class="tm-article-comments-counter-link__link">
+                 <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                  <title>Комментарии</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-comments"></use>
+                 </svg> <span class="tm-article-comments-counter-link__value"> 2 </span></a> <!---->
+               </div> 
+               <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                <button type="button" class="tm-sharing__button">
+                 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                  <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                 </svg></button> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> 
+               <div class="v-portal" style="display:none;"></div>
+              </div> 
+             </div>
+            </div> 
+            <div class="v-portal" style="display:none;"></div> 
+            <div class="tm-article-presenter__footer">
+             <div class="tm-article-blocks">
+              <!----> 
+              <div></div> 
+              <section class="tm-block tm-block tm-block_spacing-bottom">
+               <!----> 
+               <div class="tm-block__body tm-block__body tm-block__body_variant-balanced">
+                <div class="tm-article-author"> 
+                 <div class="tm-user-card tm-article-author__user-card tm-user-card tm-user-card_variant-article">
+                  <div class="tm-user-card__info-container">
+                   <div class="tm-user-card__header">
+                    <div class="tm-user-card__header-data">
+                     <a href="/ru/users/vova_sam/" class="tm-user-card__userpic tm-user-card__userpic_size-40">
+                      <div class="tm-entity-image">
+                       <svg class="tm-svg-img tm-image-placeholder tm-image-placeholder_blue">
+                        <!----> <use xlink:href="/img/megazord-v28.2b11c25e..svg#placeholder-user"></use>
+                       </svg>
+                      </div></a> 
+                     <div class="tm-user-card__meta">
+                      <div title=" 8 голосов " class="tm-counter-container tm-karma tm-karma">
+                       <div class="tm-counter-container__header">
+                        <div class="tm-karma__votes tm-karma__votes_positive">
+                          6 
+                        </div>
+                       </div> 
+                       <div class="tm-counter-container__footer">
+                        <div class="tm-karma__text">
+                          Карма 
+                        </div> 
+                        <div class="v-portal" style="display:none;"></div>
+                       </div>
+                      </div> 
+                      <div title="Рейтинг пользователя" class="tm-counter-container">
+                       <div class="tm-counter-container__header"> 
+                        <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating">
+                         <!----> 
+                         <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating">
+                          <span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating"> 3 </span>
+                         </div> <!---->
+                        </div>
+                       </div> 
+                       <div class="tm-counter-container__footer">
+                        <span class="tm-rating__text tm-rating__text"> Рейтинг </span>
+                       </div>
+                      </div>
+                     </div>
+                    </div>
+                   </div> 
+                   <div class="tm-user-card__info tm-user-card__info tm-user-card__info_variant-article">
+                    <div class="tm-user-card__title tm-user-card__title tm-user-card__title_variant-article">
+                     <span class="tm-user-card__name tm-user-card__name tm-user-card__name_variant-article">Владимир</span> <a href="/ru/users/vova_sam/" class="tm-user-card__nickname tm-user-card__nickname tm-user-card__nickname_variant-article"> @vova_sam </a> <!---->
+                    </div> 
+                    <p class="tm-user-card__short-info tm-user-card__short-info tm-user-card__short-info_variant-article">Data scientist</p>
+                   </div>
+                  </div> 
+                  <div class="tm-user-card__buttons tm-user-card__buttons tm-user-card__buttons_variant-article">
+                   <!----> <!----> <!----> <!----> <!---->
+                  </div>
+                 </div> <!---->
+                </div> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> <!---->
+              </section> 
+              <div class="tm-adfox-banner__container tm-page-article__banner">
+               <!----> 
+               <div id="adfox_164725660339535756" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-leaderboard"></div>
+              </div> 
+              <div class="tm-article-blocks__comments">
+               <div class="tm-article-page-comments">
+                <div class="tm-article-comments-counter-link tm-article-comments-counter-button">
+                 <a href="/ru/post/719230/comments/" class="tm-article-comments-counter-link__link tm-article-comments-counter-link__link_button-style">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon tm-article-comments-counter-link__icon_contrasted">
+                   <title>Комментарии</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-comments"></use>
+                  </svg> <span class="tm-article-comments-counter-link__value tm-article-comments-counter-link__value_contrasted"> Комментарии 2 </span></a> <!---->
+                </div>
+               </div>
+              </div> 
+              <section class="tm-block tm-block tm-block_spacing-bottom">
+               <header class="tm-block__header tm-block__header tm-block__header_variant-borderless">
+                <div class="tm-block__header-container">
+                 <h2 class="tm-block__title tm-block__title tm-block__title_variant-large">Публикации</h2> 
+                </div> <!---->
+               </header> 
+               <div class="tm-block__body tm-block__body tm-block__body_variant-condensed-slim">
+                <div class="tm-tabs tm-tabs">
+                 <div>
+                  <span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active tm-tabs__tab-link_slim"> Лучшие за сутки </button></span><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_slim"> Похожие </button></span>
+                 </div> <!---->
+                </div> 
+                <div class="similar-and-daily__tab-view">
+                 <div>
+                  <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+                  <div class="tm-placeholder-article-cards">
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                  </div> <!----> <!----> <!----> <!---->
+                 </div> <!---->
+                </div>
+               </div> <!---->
+              </section> 
+              <div>
+               <div>
+                <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+                <div class="tm-placeholder-promo">
+                 <div class="tm-placeholder-promo__header">
+                  <div class="tm-placeholder__line tm-placeholder__line_promo-title"></div>
+                 </div> 
+                 <div class="tm-placeholder-promo__body">
+                  <div class="tm-placeholder-promo__posts">
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div> 
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div> 
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div>
+                  </div> 
+                  <div class="tm-placeholder-promo__dots">
+                   <div class="tm-placeholder-promo__dot"></div> 
+                   <div class="tm-placeholder-promo__dot"></div> 
+                   <div class="tm-placeholder-promo__dot"></div>
+                  </div>
+                 </div>
+                </div> <!----> <!----> <!----> <!----> <!---->
+               </div>
+              </div> 
+              <div>
+               <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+               <div class="tm-placeholder-inset tm-placeholder-tasks">
+                <div class="tm-placeholder-inset__header">
+                 <div class="tm-placeholder__line tm-placeholder__line_inset-header loads"></div>
+                </div> 
+                <div class="tm-placeholder-inset__body">
+                 <ul class="tm-placeholder-list">
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                 </ul>
+                </div> 
+                <div class="tm-placeholder-inset__footer">
+                 <div class="tm-placeholder__line tm-placeholder__line_inset-footer loads"></div>
+                </div>
+               </div> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
+              </div> <!----> 
+             </div>
+            </div>
+           </div>
+          </div>
+         </div> 
+         <div class="tm-page__sidebar">
+          <div class="tm-layout-sidebar">
+           <div class="tm-layout-sidebar__ads tm-layout-sidebar__ads_initial">
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_top">
+             <!----> 
+             <div id="adfox_164725680533065327" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-half-page"></div>
+            </div>
+           </div> 
+           <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;">
+            <!----> 
+            <section data-navigatable="" tabindex="0" data-async-called="true" class="tm-block tm-stories-block tm-block tm-block_spacing-around">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Истории</h2> 
+              </div> <!---->
+             </header> 
+             <div class="tm-block__body tm-block__body tm-block__body_variant-equal-small">
+              <div class="tm-stories-empty">
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+              </div> <!---->
+             </div> <!---->
+            </section> 
+            <section data-async-called="true" class="tm-block tm-block tm-block_spacing-around">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Работа</h2> 
+              </div> <!---->
+             </header> 
+             <div class="tm-block__body tm-block__body">
+              <div class="tm-vacancies-block__item">
+               <a href="https://career.habr.com/vacancies/django_razrabotchik" target="_blank" class="tm-vacancies-block__vacancy-title"> Django разработчик </a> 
+               <div class="tm-vacancies-block__vacancies-count">
+                 56 вакансий 
+               </div>
+              </div>
+              <div class="tm-vacancies-block__item">
+               <a href="https://career.habr.com/vacancies/data_scientist" target="_blank" class="tm-vacancies-block__vacancy-title"> Data Scientist </a> 
+               <div class="tm-vacancies-block__vacancies-count">
+                 122 вакансии 
+               </div>
+              </div>
+              <div class="tm-vacancies-block__item">
+               <a href="https://career.habr.com/vacancies/programmist_python" target="_blank" class="tm-vacancies-block__vacancy-title"> Python разработчик </a> 
+               <div class="tm-vacancies-block__vacancies-count">
+                 144 вакансии 
+               </div>
+              </div>
+             </div> 
+             <footer class="tm-block__footer">
+              <a href="https://career.habr.com/catalog" class="tm-block-extralink"> Все вакансии </a>
+             </footer>
+            </section> 
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_bottom">
+             <!----> 
+             <div id="adfox_164725691003361602" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-medium-rectangle"></div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </main> <!---->
+    </div> 
+    <div class="tm-footer-menu">
+     <div class="tm-page-width">
+      <div class="tm-footer-menu__container">
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Ваш аккаунт </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/ru/post/719230/&amp;hl=ru" rel="nofollow" target="_self"> Войти </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/ru/post/719230/&amp;hl=ru" rel="nofollow" target="_self"> Регистрация </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Разделы </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/" class="footer-menu__item-link router-link-active"> Публикации </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/news/" class="footer-menu__item-link"> Новости </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/hubs/" class="footer-menu__item-link"> Хабы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/companies/" class="footer-menu__item-link"> Компании </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/users/" class="footer-menu__item-link"> Авторы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/sandbox/" class="footer-menu__item-link"> Песочница </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Информация </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/help/" class="footer-menu__item-link"> Устройство сайта </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/authors/codex/" class="footer-menu__item-link"> Для авторов </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/companies/corpblogs/" class="footer-menu__item-link"> Для компаний </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/docs/transparency/" class="footer-menu__item-link"> Документы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement" target="_blank"> Соглашение </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/" target="_blank"> Конфиденциальность </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Услуги </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/corporate-blogs/" target="_blank"> Корпоративный блог </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/advertising/" target="_blank"> Медийная реклама </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/native-special/" target="_blank"> Нативные проекты </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/education-programs/" target="_blank"> Образовательные программы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/hello-startup/" target="_blank"> Стартапам </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/megaprojects/" class="footer-menu__item-link"> Мегапроекты </a></li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div> 
+    <div class="tm-footer">
+     <div class="tm-page-width">
+      <div class="tm-footer__container">
+       <!----> 
+       <div class="tm-footer__social">
+        <a href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Facebook</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-facebook"></use>
+         </svg></a><a href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Twitter</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-twitter"></use>
+         </svg></a><a href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>VK</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-vkontakte"></use>
+         </svg></a><a href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Telegram</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-telegram"></use>
+         </svg></a><a href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Youtube</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-youtube"></use>
+         </svg></a><a href="https://zen.yandex.ru/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Яндекс Дзен</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-zen"></use>
+         </svg></a>
+       </div> 
+       <div class="v-portal" style="display:none;"></div> <button class="tm-footer__link"><!----> Настройка языка </button> <a href="/ru/feedback/" class="tm-footer__link"> Техническая поддержка </a> <a href="/berserk-mode-nope" class="tm-footer__link"> Вернуться на старую версию </a> 
+       <div class="tm-footer-copyright">
+        <span class="tm-copyright"><span class="tm-copyright__years">© 2006–2023, </span> <span class="tm-copyright__name"><a href="https://company.habr.com/" rel="noopener" target="_blank" class="tm-copyright__link">Habr</a></span></span>
+       </div>
+      </div>
+     </div>
+    </div> <!----> <!---->
+   </div> 
+   <div class="vue-portal-target"></div>
+  </div> 
+  <script>window.__INITIAL_STATE__={"adblock":{"hasAcceptableAdsFilter":false,"hasAdblock":false},"articlesList":{"articlesList":{"719230":{"id":"719230","timePublished":"2023-03-05T11:17:23+00:00","isCorporative":false,"lang":"ru","titleHtml":"Перевод предобученной модели Keras на матричные вычисления","leadData":{"textHtml":"\u003Cp\u003EПо заказу одного из проектов мне потребовалось сделать агрегатор новостей в Телеграм. После долгих поисков реализации (о них ниже в статье) была создана нейронная сеть на базе \u003Ca href=\"https:\u002F\u002Fkeras.io\u002F\" rel=\"noopener noreferrer nofollow\"\u003EKeras\u003C\u002Fa\u003E, которая имела высокое качество, но оказалось, что Keras нельзя было установить на инфраструктуре (просто не было соответствующей сборки) и мне пришлось решать вопрос, как перевести обученную модель в Keras на реализацию, которая не требует установленного Keras. \u003C\u002Fp\u003E\u003Cp\u003EЭта статья о том, как я переписал обученную в Keras сеть на работу с матричными операциями в Numpy. Заодно это помогло мне \"заглянуть под капот\" нейронной сети.\u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E","imageUrl":null,"buttonTextHtml":"Читать далее","image":null},"editorVersion":"2.0","postType":"article","postLabels":[],"author":{"id":"997478","alias":"vova_sam","fullname":"Владимир","avatarUrl":null,"speciality":"Data scientist","scoreStats":{"score":6,"votesCount":8},"rating":3,"relatedData":null,"contacts":[],"authorContacts":[],"paymentDetails":{"paymentYandexMoney":null,"paymentPayPalMe":null,"paymentWebmoney":null}},"statistics":{"commentsCount":2,"favoritesCount":12,"readingCount":667,"score":3,"votesCount":3,"votesCountPlus":3,"votesCountMinus":0},"hubs":[{"id":"340","alias":"python","type":"collective","title":"Python","titleHtml":"Python","isProfiled":true,"relatedData":null},{"id":"19439","alias":"machine_learning","type":"collective","title":"Машинное обучение","titleHtml":"Машинное обучение","isProfiled":true,"relatedData":null},{"id":"22392","alias":"tensorflow","type":"collective","title":"TensorFlow","titleHtml":"TensorFlow","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"textHtml":"\u003Cdiv xmlns=\"http:\u002F\u002Fwww.w3.org\u002F1999\u002Fxhtml\"\u003E\u003Ch3\u003EО чем статья  \u003C\u002Fh3\u003E\u003Cp\u003EПо заказу одного из проектов мне потребовалось сделать агрегатор новостей в Телеграм. Есть список новостных порталов, с которых требовалось собирать новости; после этого необходимо отфильтровать новости по релевантности: убрать рекламные сообщения, в также те, которые по разным причинам не подходили под требования. Сформулировать точные критерии \"плохих\" новостей было нельзя, но была сделана разметка (\"естественным интеллектом\", т.е. человеком) их по критерию: 0 - \"хорошая\", 1 - \"плохая\".  Постоянная фильтрация вручную очень трудоемкий процесс. Поэтому напрашивалась идея реализации автоматической фильтрации на базе машинного обучения. \u003C\u002Fp\u003E\u003Cp\u003EПосле долгих поисков реализации (о них ниже в статье) была создана нейронная сеть на базе \u003Ca href=\"https:\u002F\u002Fkeras.io\u002F\" rel=\"noopener noreferrer nofollow\"\u003EKeras\u003C\u002Fa\u003E, которая имела высокое качество, но оказалось, что Keras нельзя было установить на инфраструктуре (просто не было соответствующей сборки) и мне пришлось решать вопрос, как перевести обученную модель в Keras на реализацию, которая не требует установленного Keras. Я не нашел соответствующего материала в Интернет (разве что вот \u003Ca href=\"https:\u002F\u002Fhabr.com\u002Fru\u002Fpost\u002F656635\u002F\" rel=\"noopener noreferrer nofollow\"\u003Eтут\u003C\u002Fa\u003E автор делал что-то похоже, только для LTSM), поэтому сделал это сам. \u003C\u002Fp\u003E\u003Cp\u003EЭта статья о том, как я переписал обученную в Keras сеть на работу с матричными операциями в Python Numpy. Заодно это помогло мне \"заглянуть под капот\" нейронной сети.\u003C\u002Fp\u003E\u003Cp\u003EОтдельно хотел бы отметить, что код упрощен для наглядности, но в целом он полностью рабочий\u003C\u002Fp\u003E\u003Cdetails class=\"spoiler\"\u003E\u003Csummary\u003EНемного о себе\u003C\u002Fsummary\u003E\u003Cdiv class=\"spoiler__content\"\u003E\u003Cp\u003EДумаю, тут важно сообщить, что к моменту поступления задачи у меня не было никакого опыта в data science. Был любительский опыт создания Телеграм ботов на Python. Я просто стал смотреть в Интернете, как классификацию текста делают другие и больше всего мне помогла классическая страница от \u003Ca href=\"https:\u002F\u002Fscikit-learn.org\u002Fstable\u002Ftutorial\u002Ftext_analytics\u002Fworking_with_text_data.html\" rel=\"noopener noreferrer nofollow\"\u003Esklearn\u003C\u002Fa\u003E. Первая \"коммерческая\" версия была сделана по этому принципу.\u003C\u002Fp\u003E\u003Cp\u003EИ самое главное, что успешный опыт решения этого вопроса привел меня к тому, что я решил попробовать сменить специальность (в которой у меня 20 лет стажа), стать профессиональным data science и спустя пару лет прошел соответствующее профильное обучение. \u003C\u002Fp\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdetails\u003E\u003Ch2\u003EВыбор модели классификации текста  \u003C\u002Fh2\u003E\u003Cp\u003EЦелью данной статьи не является разбор методов классификации текста, но без описания пути, который был пройден для создания рабочей модели, статья будет неполной.\u003C\u002Fp\u003E\u003Cp\u003EЗадание от заказчика - это типовая задача классификации текста; а т.к. у нас только две категории (плохая\u002Fхорошая новость) это условный подвид классификации, часто упоминаемый как \"бинарная классификация\".\u003C\u002Fp\u003E\u003Cp\u003EКлассически в задачах машинного обучения (см. \u003Ca href=\"https:\u002F\u002Fru.wikipedia.org\u002Fwiki\u002FCRISP-DM\" rel=\"noopener noreferrer nofollow\"\u003E\u003Cu\u003ECRISP-DM\u003C\u002Fu\u003E\u003C\u002Fa\u003E) исходные данные надо: 1) предобработать, 2) подготовить параметры, включая целевой, 3) обучить модель (и наиболее вероятно снова вернуться на первый этап для улучшения качества модели).\u003C\u002Fp\u003E\u003Cp\u003EВ используемых в проекте моделях (кроме, разве что, BERT) обязательно надо надо провести лемматизацию (и, возможно, стемминг) текста, удаление стоп-слов, очистку текста от html-тэгов и разного \"мусора\" (ведь новости собираются с разных сайтов). В моем проекте используется \u003Ca href=\"https:\u002F\u002Fpymorphy2.readthedocs.io\u002Fen\u002Fstable\u002F\" rel=\"noopener noreferrer nofollow\"\u003E\u003Cu\u003Epymorphy2\u003C\u002Fu\u003E\u003C\u002Fa\u003E для лемматизации, регулярные выражения - для фильтрации всего, кроме текста. Про это в данной статье нет информации - подробного материала в Сети предостаточно.\u003C\u002Fp\u003E\u003Cp\u003EКстати, на большинстве новостных сайтов не было RSS-версии (они \"местного уровня\" - там, возможно, не очень в этом понимают) и мне пришлось активно использовать \u003Ca href=\"https:\u002F\u002Fwww.crummy.com\u002Fsoftware\u002FBeautifulSoup\u002F\" rel=\"noopener noreferrer nofollow\"\u003E\u003Cu\u003EBeautifulSoup\u003C\u002Fu\u003E\u003C\u002Fa\u003E для разбора html-версий сайтов и извлечения оттуда новостей. (Интересно, как большие агрегаторы, типа Google, Yandex, это решают? Пишут под каждый сайт свой парсер?)\u003C\u002Fp\u003E\u003Cp\u003EУ нас несбалансированная выборка - новости с положительным классом составляют 30% от всей выборки, а поэтому разумно применять какой-то метод выравнивания при обучении. Я использовал \"upsampling\" (дублировал новости с положительным классом) и наглядно убедился, что этот простой метод значительно повышает качество модели.\u003C\u002Fp\u003E\u003Ch3\u003EРеализация на базе TF-IDF и моделей sklearn\u003C\u002Fh3\u003E\u003Cp\u003EВ первой и долгое время работающей реализации классификатора мною использовалось \u003Ca href=\"https:\u002F\u002Fru.wikipedia.org\u002Fwiki\u002FTF-IDF\" rel=\"noopener noreferrer nofollow\"\u003E\u003Cu\u003ETF-IDF\u003C\u002Fu\u003E\u003C\u002Fa\u003E для создания векторного представления текста, а именно \u003Ca href=\"https:\u002F\u002Fscikit-learn.org\u002Fstable\u002Fmodules\u002Fgenerated\u002Fsklearn.feature_extraction.text.TfidfVectorizer.html\" rel=\"noopener noreferrer nofollow\"\u003E\u003Cu\u003ETfidfVectorizer\u003C\u002Fu\u003E\u003C\u002Fa\u003E c параметром max_features = 20, подобранным опытным путем.\u003C\u002Fp\u003E\u003Cp\u003EМожно много писать про метрики; мне свое время очень помогла статья \u003Ca href=\"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fods\u002Fblog\u002F328372\u002F\" rel=\"noopener noreferrer nofollow\"\u003E\u003Cu\u003E\"Метрики в задачах машинного обучения\"\u003C\u002Fu\u003E\u003C\u002Fa\u003E, и для этой статьи я буду использовать F1, которая в целом более точно оценивает способность модели различать классы.\u003C\u002Fp\u003E\u003Cp\u003EПосле многих стадий предобработки, выбора и обучения моделей были получены получены следующие результаты на валидационной выборке (см. таблицу ниже).\u003C\u002Fp\u003E\u003Cdiv\u003E\u003Cdiv class=\"table\"\u003E\u003Ctable\u003E\u003Ctbody\u003E\u003Ctr\u003E\u003Cth\u003E\u003Cp\u003E\u003Cstrong\u003EМодель\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003C\u002Fth\u003E\u003Cth\u003E\u003Cp\u003E\u003Cstrong\u003EF1 score\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003C\u002Fth\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003ERandom Forest\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003E0.82\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003ESGDClassifier\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003E0.82\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003ELogisticRegression\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003E0.81\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003EMultinomialNB\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003E0.69\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003EKNeighborsClassifier\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003E0.80\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003ELGBMClassifier*\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003E0.82\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003C\u002Ftbody\u003E\u003C\u002Ftable\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003E\u003Cem\u003E- это, конечно, модель не от sklearn, а от \u003C\u002Fem\u003E\u003Ca href=\"https:\u002F\u002Flightgbm.readthedocs.io\u002F\" rel=\"noopener noreferrer nofollow\"\u003E\u003Cem\u003E\u003Cu\u003ELightGBM\u003C\u002Fu\u003E\u003C\u002Fem\u003E\u003C\u002Fa\u003E\u003Cem\u003E — она приведена для сравнения качества\u003C\u002Fem\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Ful\u003E\u003Cp\u003EКакие \u003Cstrong\u003Eвыводы\u003C\u002Fstrong\u003E можно сделать после анализа моделей на базе TF-IDF?\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003E\u003Cp\u003EВсе модели в целом имеют одинаковое качество \u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EДля практической задачи можно выбрать любую из них. Я выбрал в итоге SGDClassifier \u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Fol\u003E\u003Cp\u003EНо поиски более качественной модели не останавливались.\u003C\u002Fp\u003E\u003Ch2\u003EМодели на базе BERT\u003C\u002Fh2\u003E\u003Cp\u003EПри исследовании также была протестирована модель на базе BERT (в том числе fine-tunning последнего слоя). В качестве реализации использовалась версия из следующего \u003Ca href=\"https:\u002F\u002Fhuggingface.co\u002Fcointegrated\u002Frubert-tiny2?text=%D0%9C%D0%B8%D0%BD%D0%B8%D0%B0%D1%82%D1%8E%D1%80%D0%BD%D0%B0%D1%8F+%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D1%8C+%D0%B4%D0%BB%D1%8F+%5BMASK%5D+%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D1%85+%D0%B7%D0%B0%D0%B4%D0%B0%D1%87\" rel=\"noopener noreferrer nofollow\"\u003E\u003Cu\u003Eисточника\u003C\u002Fu\u003E\u003C\u002Fa\u003E - robert-tiny2, предобученная на большом количестве текстов на русском языке.\u003C\u002Fp\u003E\u003Cp\u003EТ.е. с помощью BERT проведена векторизация исходного текста без очистки (BERT лояльна к сырому тексту - она обучается как раз на таком), и на основании этих данных обучены модели, которые использовались ранее для TF-IDF.\u003C\u002Fp\u003E\u003Cp\u003EМетрика F1 в этом случае становилась равной 0,87 - значительно выше, чем при TF-IDF, но развернуть BERT на продуктовой среде не получилось - нет соответствующей версии.\u003C\u002Fp\u003E\u003Cp\u003EБыло принято решение подобрать модель на базе нейронной сети\u003C\u002Fp\u003E\u003Ch3\u003EКлассификатор на базе нейронной сети\u003C\u002Fh3\u003E\u003Cp\u003EПосле изучения материалов, тестирования различных вариантов и конфигураций была выбрана достаточно простая модель нейронной сети, которая показала себя хорошо с точки зрения соотношения качество\u002Fресурсы.  Метрика F1 для нее равна 0,88 - показатель выше, чем было получено ранее. \u003C\u002Fp\u003E\u003Cp\u003EСхема модели приведена на рисунке 1\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbdb\u002F6cb\u002Fa9a\u002Fbdb6cba9af346733a1c517fa51c33493.png\" alt=\"Рисунок 1. Модель нейронной сети для классификации текста\" title=\"Рисунок 1. Модель нейронной сети для классификации текста\" width=\"719\" height=\"292\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbdb\u002F6cb\u002Fa9a\u002Fbdb6cba9af346733a1c517fa51c33493.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EРисунок 1. Модель нейронной сети для классификации текста\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EВ виде кода данная модель выглядит следующим образом:\u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003Evocab_size = 1000 # количество уникальных слов в словаре\nembedding_dim = 40 # число параметров после эмбеддинга\nmax_length = 100 # максимальная длина новости\n\nmodel = tf.keras.Sequential([\n    tf.keras.layers.Embedding(vocab_size, embedding_dim, input_length=max_length),\n    tf.keras.layers.GlobalAveragePooling1D(),\n    tf.keras.layers.Dense(6, activation='relu'),\n    tf.keras.layers.Dense(1, activation='sigmoid')\n])\n\nmodel.compile(loss='binary_crossentropy',optimizer='adam',\n              metrics=[tf.metrics.BinaryAccuracy(threshold=0.5)])\n\nnum_epochs = 10\nhistory=model.fit(features_train, \n                  training_labels_final, \n                  epochs=num_epochs, \n                  validation_data=(features_valid, testing_labels_final))\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003EИтак мы подобрали, обучили модель и получили нужное качество. Но на целевой системе нет tensorflow, а есть стандартный python 3 и, максимум, библиотека numpy; т.е. мы не может просто сохранить модель и реализовать предсказание, как \u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003Epredictions = model.predict(news)\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003EНеобходимо перевести эту модель на обычные “матричные вычисления” для чего требуется выполнить следующие шаги:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003E\u003Cp\u003Eполучить веса обученной модели,\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003Eпонять, как работает каждый этап, \u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003Eсоздать код для расчета предсказания. \u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Fol\u003E\u003Ch4\u003EПолучение весов и смещений обученной модели\u003C\u002Fh4\u003E\u003Cp\u003EПолучить веса i-го слоя можно с помощью следующей команды:\u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003Eweights = model.layers[i].get_weights()[0]\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003EСмещение (bias), если оно есть в данном слое, получают с помощью команды:\u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003Ebias = model.layers[i].get_weights()[1]\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Ch4\u003EПроверка обученной модели\u003C\u002Fh4\u003E\u003Cp\u003EЕсть очень полезный инструмент для самоконтроля при реализации модели. Можно запустить обученную модель на какой-нибудь выборке и посмотреть, какие промежуточные значения она (модель) рассчитывает на каждом этапе.\u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003Efrom tensorflow import keras\nfrom tensorflow.keras import layers\n\nextractor = keras.Model(inputs=model.inputs,\n                        outputs=[layer.output for layer in model.layers])\n\nfeatures = extractor( features_valid[0].numpy().reshape(-1,100))\nprint(features)\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003EВывод получает примерно такой:\u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003E[&lt;tf.Tensor: shape=(1, 100, 20), dtype=float32, numpy=\narray([[[-0.3023754 ,  0.0460441 , -0.03640036, ...,  0.14973998,\n          0.04820368, -0.16159618],\n        [-0.16039295,  0.25132295, -0.13751882, ...,  0.16573162,\n         -0.15154448, -0.0574923 ],\n        [-0.3023754 ,  0.0460441 , -0.03640036, ...,  0.14973998,\n          0.04820368, -0.16159618],\n        ...,\n        [-0.3023754 ,  0.0460441 , -0.03640036, ...,  0.14973998,\n          0.04820368, -0.16159618],\n        [-0.22955681, -0.08269349,  0.13517892, ...,  0.00153243,\n          0.13046908, -0.16767927],\n        [-0.3023754 ,  0.0460441 , -0.03640036, ...,  0.14973998,\n          0.04820368, -0.16159618]]], dtype=float32)\u003E, &lt;tf.Tensor: shape=(1, 20), dtype=float32, numpy=\narray([[-0.18203291,  0.11690798, -0.08938053,  0.10450792, -0.09504858,\n        -0.08279163,  0.29856998, -0.23120254, -0.2559827 , -0.12028799,\n         0.00566523, -0.06708373,  0.05338131, -0.15103005,  0.08447236,\n         0.10225956, -0.33394486,  0.15348543, -0.04525973, -0.07986856]],\n      dtype=float32)\u003E, &lt;tf.Tensor: shape=(1, 6), dtype=float32, numpy=\narray([[1.9048874 , 0.07643622, 1.4660159 , 1.907875  , 0.02882011,\n        0.        ]], dtype=float32)\u003E, &lt;tf.Tensor: shape=(1, 1), dtype=float32, numpy=array([[0.0283242]], dtype=float32)\u003E]\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003EТ.е. код выводит результаты работы каждого слоя - можно сверить, верно ли мы реализовали вычисления. \u003C\u002Fp\u003E\u003Ch4\u003ETextVectorization  \u003C\u002Fh4\u003E\u003Cp\u003E\u003Ca href=\"https:\u002F\u002Fwww.tensorflow.org\u002Fapi_docs\u002Fpython\u002Ftf\u002Fkeras\u002Flayers\u002FTextVectorization)\" rel=\"noopener noreferrer nofollow\"\u003ETextVectorization \u003C\u002Fa\u003E- это слой tf.keras.layers, который преобразует текст в числовые тензоры. Он может выполнять стандартизацию, токенизацию и векторизацию текста. Он также может создавать словарь из часто встречающихся слов и отображать их на целочисленные индексы:\u003C\u002Fp\u003E\u003Cp\u003EВ моей реализации он делает следующее (см. рис. 2): \u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003E\u003Cp\u003EНазначает всем уникальным словам из текстового корпуса числовой идентификатор (от 2 до числа уникальных слов). В качестве гиперпараметра \u003Cem\u003Emax_tokens \u003C\u002Fem\u003Eмы указываем максимальное количество уникальных слов - все остальные слова будут обозначаться единицей. \u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EПриводит текст в векторных вид, в котором каждому слову соответствует выбранный на предыдущем шаге числовой идентификатор. При этом он ограничивает максимальную длину текста заданную параметром \u003Cem\u003Eoutput_sequence_length\u003C\u002Fem\u003E.  И наоборот, если текст короче максимального, он будет дополнен нулями\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Fol\u003E\u003Cfigure class=\"\"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F16b\u002F26a\u002F6a8\u002F16b26a6a8716e55ccd570794c86a3d66.png\" alt=\"Рисунок 2. Принцип работы модуля TextVectorization\" title=\"Рисунок 2. Принцип работы модуля TextVectorization\" width=\"431\" height=\"252\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F16b\u002F26a\u002F6a8\u002F16b26a6a8716e55ccd570794c86a3d66.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EРисунок 2. Принцип работы модуля TextVectorization\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EВажно отдельно отметить, что тексты должны быть предобработаны (лемматизация и очистка) перед загрузкой их в TextVectorization\u003C\u002Fp\u003E\u003Cp\u003ETextVectorization с примером (но помним, что нам надо будет сделать это без использования Keras)\u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003Eimport tensorflow as tf\n\n# определяем TextVectorization. Максимальное кол-во уникальных слов 10, максимальная длина теста - 8 слов\nvectorize_layer = tf.keras.layers.TextVectorization(\n#     standardize=custom_standardization,\n    max_tokens=10,\n    output_mode='int',\n    output_sequence_length=8)\n\n\ntest_texts=[\"chatgpt чатбот с искусственный интеллект разработать компания openai и способен работать в диалоговый режим\",\n            \"чатбот нет аналоги в россия разработка\"]\n\nvectorize_layer.adapt(test_texts)\n\nfeatures_train = vectorize_layer(test_texts)\n\nprint(\"Преобразованная выборка:\", features_train)\n\nprint(\"Словарь. Индекс слова в словаре и есть его числовой идентификатор:\", vectorize_layer.get_vocabulary())\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003EПреобразованная выборка: tf.Tensor(\n[[1 2 5 1 1 9 1 1]\n [2 1 1 3 6 8 0 0]], shape=(2, 8), dtype=int64)\nСловарь. Индекс слова в словаре и есть его числовой идентификатор: ['', '[UNK]', 'чатбот', 'в', 'способен', 'с', 'россия', 'режим', 'разработка', 'разработать']\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003EВ реальной задаче размер словаря составляет 1000 слов, максимальная длина текста - 100 слов (средняя длина текста новостей в выборке 187 слов - немного сократим текст)\u003C\u002Fp\u003E\u003Cp\u003E\"Матричная реализация\" TextVectorizaion, сделанная мной следующая:\u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003Ezero_line=[1]+ [0] * (vocab_size-1) # нулевой вектор для заполнения матрицы до нужного размера \n\ndef text_to_numbers(text):\n      out = []\n      for word in text.split()[:max_length]:\n          # создаем вектро размера словаря из нулей\n          line = [0] * vocab_size \n\n          # на месте с индексом слова ставим единицу\n          line[vocal_dict.get(word, 1)] = 1 \n          out.append(line)\n      \n      # если текст короче максимального, дополняем нулевыми векторами\n      out += [zero_line] * (max_length - len(out))\n      return np.array(out)\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003EДалее будет описание слоя эмбеддинга, но тут надо отметить, что преобразование в разреженную матрицу мною вынесено в модуль text_to_numbers. Т.е. для упрощения кода мною объедены функции TextVectorization и частично Embedding (в части создания разреженной матрицы)  \u003C\u002Fp\u003E\u003Ch4\u003EСлои нейронной сети\u003C\u002Fh4\u003E\u003Cp\u003EСама модель нейронной сети состоит из следующих слоев:\u003C\u002Fp\u003E\u003Cp\u003E\u003Cstrong\u003EСлой Embedding\u003C\u002Fstrong\u003E  \u003C\u002Fp\u003E\u003Cp\u003EВ целом эмбеддинги нужны для того, чтобы представлять категориальные признаки в виде числовых векторов меньшей размерности. Это позволяет повысить производительность и точность моделей машинного обучения, а также извлекать семантические и синтаксические свойства языковых сущностей. \u003C\u002Fp\u003E\u003Cp\u003EEmbedding layer - это слой tf.keras.layers, который преобразует целочисленные последовательности в плотные векторы. Выходом Embedding layer является трехмерный тензор с формой (batch_size, output_sequence_length, embedding_dim). В отличите от  популярных предобученных эмбеддингов в нашем случае он обучается во время обучения нейронной сети (back-propagation). \u003C\u002Fp\u003E\u003Cp\u003EСлой получает на вход выборку из числовых индексов (см. рис. 2), подготовленных TextVectorization, и далее преобразует их в вектора вида:\u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode\u003E[\n[0, 0, ….., 1, 0, …, 0]\n[0, 0, ….., 0, 1, …, 0]\n…\n[1, 0, ….., 0, 0, …, 0],\n[0, 0, ….., 0, 1, …, 0]\n[0, 0, ….., 1, 0, …, 0]\n…\n[0, 0, ….., 0, 0, …, 1],\n]\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003EВ таком представлении каждому слову соответствует вектор: он состоит из нулей, за исключением единственной единицы, которая стоит на месте, индекс которого равен числовому представлению слова (напомню, что в моей реализации это вынесено в функцию \u003Cem\u003Etext_to_numbers\u003C\u002Fem\u003E)\u003C\u002Fp\u003E\u003Cp\u003EТаким образом, если на входе была матрица размером (100) - 100 числовых индексов, соответствующих словам), то он преобразуется в матрицу (100, 1000)  - 100 векторов, каждый состоит из 1000 элементов - нулей и единиц. \u003C\u002Fp\u003E\u003Cp\u003EВ полученной модели размер вектора  40 элементов (это значение было подобрано опытным путем) и после слоя эмбеддинга будет матрица (100, 40).\u003C\u002Fp\u003E\u003Cp\u003E\"Матричная реализация\" слоя Embedding:\u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003E# на вход поступает разреженная матрица\ndef embedding(data):\n        emb_out = []\n        for char_hot in data:\n            emb_out.append(np.dot(char_hot, emb_weights ))\n        emb_out = np.array(emb_out)\n        return np.array(emb_out)\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003EЕсть одна неприятная особенность этого кода: матрицы, получаемые для расчета разреженные, поэтому их умножение занимается значительные вычислительные ресурсы. В моем проекте это неважно, т.к. одновременно проверяется несколько десятков новостей. А вот если надо обрабатывать несколько тысяч новостей, то это может занять длительное время (на core i5 2500K, c 8ГБ RAM без GPU 2000 новостей обрабатываются около 3х минут). Для того, чтобы обойти это ограничение можно использовать библиотеки, в которых реализованы операции с разреженными матрицами: например, \u003Ca href=\"https:\u002F\u002Fdocs.scipy.org\u002Fdoc\u002Fscipy\u002Freference\u002Fsparse.html\" rel=\"noopener noreferrer nofollow\"\u003Escipy\u003C\u002Fa\u003E.\u003C\u002Fp\u003E\u003Cp\u003E\u003Cstrong\u003EСлой GlobalAveragePooling1D\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003EЭтот слой просто усредняет значения матрицы: на входе у него матрица (100, 40), на выходе вектор из 40 элементов. \u003C\u002Fp\u003E\u003Cp\u003EКод для его реализации следующий:\u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003Edef avarage(data):\n        av_out = np.mean(data, axis=0)\n        return av_out\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003E\u003Cstrong\u003EСлой Dense.\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003EТут тоже достаточно просто - это по сути умножение входного вектора на веса в “нейронах”. В нашем случае их 6 и веса в этом слое имеют размер (40, 6) = (размер эмбеддинга, количество нейронов).\u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003Edef ReLU(x):\n        return x * (x \u003E 0)\n\ndef dense_6(data):\n        dense_6_out = ReLU(np.dot(data, dense_6_weights) + dense_6_bias)\n        return dense_6_out\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003EНа выходе имеем вектор из 6 элементов.\u003C\u002Fp\u003E\u003Cp\u003E\u003Cstrong\u003EВыходной слой\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003EДалее умножаем полученные вектор на вектор весов выходного слоя (плюс смещение) и применяем сигмоиду. \u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003Edef sigmoid(data):\n    return 1 \u002F (1 + np.exp((-1) * data))\n\ndef dense_out(data):\n  _dense_out = sigmoid(np.dot(data, weights_out) + self.bias_out[0])\n  return _dense_out\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003EПредсказание готово! \u003C\u002Fp\u003E\u003Cdetails class=\"spoiler\"\u003E\u003Csummary\u003EПолный класс предсказателя выглядит следующим образом\u003C\u002Fsummary\u003E\u003Cdiv class=\"spoiler__content\"\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003Eclass Predictor:\n    def __init__(self, emb_weights, dense_6_weights, dense_6_bias,\n                 weights_out, bias_out, vocal_dict, vocab_size,\n                 max_length, show_intermediate_data=False):\n\n        self.emb_weights = emb_weights\n        self.dense_6_weights = dense_6_weights\n        self.dense_6_bias = dense_6_bias\n        self.weights_out = weights_out\n        self.bias_out = bias_out\n        self.max_length = max_length\n        self.vocab_size = vocab_size\n        self.show_data = show_intermediate_data\n        self.vocal_dict = {vocal_dict[k]: k for k in range(self.vocab_size)} \n        self.zero_line=[1]+ [0] * (self.vocab_size-1)\n       \n    def text_to_numbers(self, text):\n        out = []\n        for word in text.split()[:self.max_length]:\n            line = [0] * self.vocab_size\n            line[self.vocal_dict.get(word, 1)] = 1\n            out.append(line)\n        \n        out += [self.zero_line] * (self.max_length - len(out))\n\n        return np.array(out)\n\n\n    def predict(self, x):\n        results = []\n        for sentanence in x:\n            emb_out = self.embedding(self.text_to_numbers(sentanence))\n            out_avarage = self.avarage(emb_out)\n            out_dense_6 = self.dense_6(out_avarage)\n            results.append(self.dense_out(out_dense_6))\n        return np.array(results)\n\n    def embedding(self, data):\n        emb_out = []\n        for char_hot in data:\n            emb_out.append(np.dot(char_hot, self.emb_weights ))\n        emb_out = np.array(emb_out)\n\n        if self.show_data:\n            print(f'embedding out:{emb_out}')\n\n        return np.array(emb_out)\n\n    def avarage(self, data):\n        av_out = np.mean(data, axis=0)\n\n        if self.show_data:\n            print(f'avarage out:{av_out}')\n\n        return av_out\n\n    def dense_6(self, data):\n        dense_6_out = self.ReLU(np.dot(data, self.dense_6_weights) + self.dense_6_bias)\n\n        if self.show_data:\n            print(f'Dense 6 out:{dense_6_out}')\n\n        return dense_6_out\n\n    def dense_out(self, data):\n        _dense_out = self.sigmoid(np.dot(data, self.weights_out) + self.bias_out[0])\n\n        if self.show_data:\n            print(f'Final out:{_dense_out}')\n\n        return _dense_out\n\n\n    def ReLU(self, x):\n        return x * (x \u003E 0)\n\n    def sigmoid(self, data):\n        return 1 \u002F (1 + np.exp((-1) * data))\n\nconfig_dict={\n    \n    'emb_weights':model.layers[0].get_weights()[0].tolist(),\n    'dense_6_weights':model.layers[2].get_weights()[0].tolist(),\n    'dense_6_bias': model.layers[2].get_weights()[1].tolist(),\n    'weights_out':model.layers[3].get_weights()[0].tolist(),\n    'bias_out':model.layers[3].get_weights()[1].tolist(),\n    \"vocab_size\":vocab_size,\n    \"max_length\":max_length,\n    \"vocal_dict\":vectorize_layer.get_vocabulary()\n    \n}\n\n# Использование\npredictor=Predictor(**config_dict, show_intermediate_data=False) \n\nprediction = predictor.predict(testing_sentences)\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003EСохранение (после обучения) и загрузку (на продуктовой среде) конфигурации я делаю с помощью следующего кода\u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003Eimport json\n\n# сохранить  config\nwith open('.\u002Fdata\u002Fconfig.json', 'w') as fp:\n    json.dump(config_dict, fp)\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cpre\u003E\u003Ccode class=\"python\"\u003Eimport json\n\n# загрузить config\nwith open('.\u002Fdata\u002Fconfig.json', 'r') as fp:\n    config_dict = json.load(fp)\nconfig_dict\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003E\u003C\u002Fp\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdetails\u003E\u003Ch2\u003EЗаключение\u003C\u002Fh2\u003E\u003Cp\u003EВ результате я смог перевести обученную модель Keras на работу со \"стандартными\" библиотеками Python без необходимости установки Keras\u002FTensorflow на продуктовую среду. Это позволило использовать её в продуктовой среде. \u003C\u002Fp\u003E\u003Cp\u003EВ случае, если в модель будут добавлены слои, возможно дополнить класс предсказателя дополнительными вычислениями.  \u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E\u003C\u002Fdiv\u003E","tags":[{"titleHtml":"классификатор текстов"},{"titleHtml":"tensorflow"},{"titleHtml":"python"}],"metadata":{"stylesUrls":[],"scriptUrls":[],"shareImageUrl":"https:\u002F\u002Fhabr.com\u002Fshare\u002Fpublication\u002F719230\u002Fdf34b838ef8e847174c86f084c601f98\u002F","shareImageWidth":1200,"shareImageHeight":630,"vkShareImageUrl":"https:\u002F\u002Fhabr.com\u002Fshare\u002Fpublication\u002F719230\u002Fdf34b838ef8e847174c86f084c601f98\u002F?format=vk","schemaJsonLd":"{\"@context\":\"http:\\\u002F\\\u002Fschema.org\",\"@type\":\"Article\",\"mainEntityOfPage\":{\"@type\":\"WebPage\",\"@id\":\"https:\\\u002F\\\u002Fhabr.com\\\u002Fru\\\u002Fpost\\\u002F719230\\\u002F\"},\"headline\":\"Перевод предобученной модели Keras на матричные вычисления\",\"datePublished\":\"2023-03-05T14:17:23+03:00\",\"dateModified\":\"2023-03-05T14:17:23+03:00\",\"author\":{\"@type\":\"Person\",\"name\":\"Владимир\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Habr\",\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fwebt\\\u002Fa_\\\u002Flk\\\u002F9m\\\u002Fa_lk9mjkccjox-zccjrpfolmkmq.png\"}},\"description\":\"О чем статья  По заказу одного из проектов мне потребовалось сделать агрегатор новостей в Телеграм. Есть список новостных порталов, с которых требовалось собират...\",\"url\":\"https:\\\u002F\\\u002Fhabr.com\\\u002Fru\\\u002Fpost\\\u002F719230\\\u002F#post-content-body\",\"about\":[\"h_python\",\"h_machine_learning\",\"h_tensorflow\",\"f_develop\"],\"image\":[\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Fbdb\\\u002F6cb\\\u002Fa9a\\\u002Fbdb6cba9af346733a1c517fa51c33493.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F16b\\\u002F26a\\\u002F6a8\\\u002F16b26a6a8716e55ccd570794c86a3d66.png\"]}","metaDescription":"О чем статья По заказу одного из проектов мне потребовалось сделать агрегатор новостей в Телеграм. Есть список новостных порталов, с которых требовалось собирать новости; после этого необходимо...","mainImageUrl":null,"amp":true,"customTrackerLinks":[]},"polls":[],"commentsEnabled":true,"rulesRemindEnabled":false,"votesEnabled":true,"status":"published","plannedPublishTime":null,"checked":null,"hasPinnedComments":false,"format":"tutorial","readingTime":13,"complexity":"medium","isEditorial":false}},"articlesIds":{},"isLoading":false,"pagesCount":{},"route":{},"reasonsList":null,"view":"cards","lastVisitedRoute":{},"ssrCommentsArticleIds":[""],"karma":{"userReasonsList":null}},"authorContribution":{"authors":{}},"betaTest":{"currentAnnouncement":null,"announcements":{},"announcementCards":null,"announcementComments":{},"announcementCommentThreads":{},"announcementCommentingStatuses":{},"archivedList":[]},"authorStatistics":{"articleRefs":{},"articleIds":{},"pagesCount":{},"route":{},"viewsCount":[],"maxStatsCount":{}},"career":{"seoLandings":[{"title":"Django разработчик","vacanciesCount":56,"itemUrl":"https:\u002F\u002Fcareer.habr.com\u002Fvacancies\u002Fdjango_razrabotchik","itemHubs":["django","python"]},{"title":"Data Scientist","vacanciesCount":122,"itemUrl":"https:\u002F\u002Fcareer.habr.com\u002Fvacancies\u002Fdata_scientist","itemHubs":["bigdata","r","data_mining","python","machine_learning"]},{"title":"Python разработчик","vacanciesCount":144,"itemUrl":"https:\u002F\u002Fcareer.habr.com\u002Fvacancies\u002Fprogrammist_python","itemHubs":["django","flask","python"]}],"hubs":"python,machine_learning,tensorflow"},"comments":{"articleComments":{},"articlePinnedComments":{},"searchCommentsResults":null,"pagesCount":null,"commentAccess":{},"scrollParents":{},"pageArticleComments":{"lastViewedComment":0,"postId":null,"lastCommentTimestamp":"","moderated":[],"moderatedIds":[],"commentRoute":""}},"companies":{"companyRefs":{},"companyIds":{},"companyTopIds":{},"pagesCount":{},"companyProfiles":{},"companiesCategories":[],"companiesCategoriesTotalCount":0,"companiesWidgets":{},"companiesWorkers":{},"companiesFans":{},"route":{},"isLoading":false,"companyWorkersLoading":false,"companyFansLoading":false,"vacancies":{},"companiesGalleries":{},"companiesBanners":{},"companiesLandingVacancies":{},"companiesTechnologies":{},"workplaceInfo":null},"companyAdmin":{"companyInfo":null,"companyInfoLoading":false,"faqArticles":null,"brandingPreviewImageUrl":null,"jivoStatus":0,"adminNotifications":null},"companiesContribution":{"hubs":{},"flows":{},"companyRefs":{}},"companyHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"conversation":{"messages":[],"respondent":null,"isLoadMore":false},"conversations":{"conversations":[],"unreadCount":0,"pagesCount":0},"desktopState":{"desktopFl":null,"desktopHl":null,"isChecked":false,"isLoginDemanded":false},"docs":{"menu":{},"articles":{},"mainMenu":[],"loading":{"main":false,"dropdown":false,"article":false}},"feature":{"isProbablyVisible":true},"flows":{"updates":{"countNewPostsBySubscription":null,"countNewPostsAll":30,"countNewNewsAll":10},"flows":[{"alias":"develop","id":"1","route":{"name":"FLOW_PAGE","params":{"flowName":"develop"}}},{"alias":"admin","id":"6","route":{"name":"FLOW_PAGE","params":{"flowName":"admin"}}},{"alias":"design","id":"2","route":{"name":"FLOW_PAGE","params":{"flowName":"design"}}},{"alias":"management","id":"3","route":{"name":"FLOW_PAGE","params":{"flowName":"management"}}},{"alias":"marketing","id":"4","route":{"name":"FLOW_PAGE","params":{"flowName":"marketing"}}},{"alias":"popsci","id":"7","route":{"name":"FLOW_PAGE","params":{"flowName":"popsci"}}}]},"global":{"isPwa":false,"device":"desktop","isHabrCom":true},"hubs":{"hubRefs":{},"hubIds":{},"pagesCount":{},"isLoading":false,"route":{}},"hubsBlock":{"hubRefs":{},"hubIds":{}},"i18n":{"fl":"ru","hl":"ru"},"info":{"infoPage":{},"isLoading":true},"location":{"urlStruct":{"protocol":null,"slashes":null,"auth":null,"host":null,"port":null,"hostname":null,"hash":null,"search":null,"query":{},"pathname":null,"path":null,"href":""}},"me":{"user":null,"uuid":null,"ppgDemanded":false,"karmaResetInfo":{"canReincarnate":null,"wasReincarnated":null,"currentScore":null},"notes":null},"modal":{"modals":[]},"mostReadingList":{"mostReadingListIds":[],"mostReadingListRefs":null,"promoPost":null},"ppa":{"articles":{},"card":null,"transactions":null,"totalTransactions":null,"isAccessible":null},"projectsBlocks":{"activeBlocks":{"tasks":"project-block-article"}},"promoData":{"isLoading":false,"hasLoaded":false,"featurer":null,"megaposts":null,"promoLinks":null,"promoPosts":null},"pullRefresh":{"shouldRefresh":false},"sandbox":{"articleIds":[],"articleRefs":{},"pagesCount":null,"route":{},"lastVisitedRoute":{},"isLoading":false},"search":{"searchQueryError":null},"settingsOther":{"inputs":{"uiLang":{"errors":[],"ref":null,"value":""},"articlesLangEnglish":{"errors":[],"ref":null,"value":false},"articlesLangRussian":{"errors":[],"ref":null,"value":false},"agreement":{"errors":[],"ref":null,"value":false},"email":{"errors":[],"ref":null,"value":true},"digest":{"errors":[],"ref":null,"value":true}}},"similarList":{"similarListIds":[],"similarListRefs":null},"ssr":{"error":null,"isDataLoaded":false,"isDataLoading":false,"isHydrationFailed":false,"isServer":false},"stories":{"stories":[{"id":"story-274","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F386\u002F1a0\u002F577\u002F3861a057738e4cf78f3fc173d952c827.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Топ-7 годноты из блогов компаний","lang":"ru","startTime":"2023-03-02T11:00:00+03:00","finishTime":"2023-03-07T10:15:00+03:00","slides":[{"id":"story-274_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F52c\u002F81a\u002Fe91\u002F52c81ae913532c5df7e90245845ce07c.png","button":null},{"id":"story-274_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff9b\u002Fc65\u002Ff9a\u002Ff9bc65f9a46ebd95a3babce143e6770a.jpg","button":{"title":"Клавиатурный зоопарк","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fcloud4y\u002Fblog\u002F716934\u002F","colorType":"light"}},{"id":"story-274_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa77\u002F2d7\u002Fb4e\u002Fa772d7b4e782a580cf72c5c996514a1f.jpg","button":{"title":"Три приёмника","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fruvds\u002Fblog\u002F716988\u002F","colorType":"light"}},{"id":"story-274_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F78c\u002Fb59\u002F01c\u002F78cb5901c06e97ec94f07bfd6ca12a68.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fruvds\u002Fblog\u002F716058\u002F","colorType":"dark"}},{"id":"story-274_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbe2\u002Fa46\u002F500\u002Fbe2a4650077735388744eb7d2e1ef7dd.jpg","button":{"title":"Очумелые ручки","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fselectel\u002Fblog\u002F718134\u002F","colorType":"dark"}},{"id":"story-274_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7f1\u002F18d\u002F8e3\u002F7f118d8e3f6fc09179c73dde840dd425.jpg","button":{"title":"Узнать причины","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Ftimeweb\u002Fblog\u002F713220\u002F","colorType":"light"}},{"id":"story-274_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F028\u002F038\u002F9f5\u002F0280389f5fb85f9f821fa45ccbaa8803.jpg","button":{"title":"Как это сделать","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fcloud4y\u002Fblog\u002F717342\u002F","colorType":"light"}},{"id":"story-274_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcb0\u002F02d\u002F7c4\u002Fcb002d7c42c03e59d7f124f10cbe4b4d.jpg","button":{"title":"Нырнуть в сеть","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fsouthbridge\u002Fblog\u002F717634\u002F","colorType":"dark"}}]},{"id":"story-272","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F82b\u002Fdd7\u002F7d8\u002F82bdd77d8ef7304d3b1b599191c2bb1c.png","title":"Сезоны Хабра","link":"https:\u002F\u002Fu.habr.com\u002F5P6i7"},"title":"Открыт сезон ML","lang":"ru","startTime":"2023-03-02T09:00:41+03:00","finishTime":"2023-03-31T20:53:00+03:00","slides":[{"id":"story-272_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F27f\u002Fd3a\u002Fddf\u002F27fd3addfe06da09592bdcf61db15795.jpg","button":null},{"id":"story-272_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F935\u002F582\u002F992\u002F935582992e378add33c898451b2a0d9f.jpg","button":null},{"id":"story-272_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe13\u002Feb8\u002Fa24\u002Fe13eb8a24b60622d3da72fd6e7ed3fda.jpg","button":null},{"id":"story-272_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa85\u002F83f\u002F5cc\u002Fa8583f5ccfae747135343f0e68c84112.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002F5P6i7","colorType":"light"}},{"id":"story-272_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F60d\u002F1cb\u002F98c\u002F60d1cb98cdd42d2696ebc0ec54740a23.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002F5P6i7","colorType":"light"}}]},{"id":"story-118","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fjh\u002F3n\u002Fhy\u002Fjh3nhyovspbtyqndibvbttgsprc.png","title":"Хабр Новости","link":"https:\u002F\u002Fu.habr.com\u002FcvdBy"},"title":"Лучшие фотографии «Джеймса Уэбба» за год","lang":"ru","startTime":"2023-03-01T11:00:00+03:00","finishTime":"2023-03-05T23:59:00+03:00","slides":[{"id":"story-118_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fml\u002Fcn\u002Fqx\u002Fmlcnqxuawiz09l-viwmfzybgesw.png","button":null},{"id":"story-118_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fvn\u002F7g\u002Fqt\u002Fvn7gqtssznilh0-zkjmgyq25vpo.png","button":null},{"id":"story-118_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fzg\u002Fi-\u002F1y\u002Fzgi-1ysesbd_givgtouinc97tby.png","button":null},{"id":"story-118_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fvm\u002Frz\u002F_v\u002Fvmrz_vbuvvaj8gsheuhwscrlt8c.png","button":null},{"id":"story-118_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fmq\u002Fs5\u002Fgk\u002Fmqs5gkpfk-iijv2gnlud3huxgpo.png","button":null},{"id":"story-118_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002F93\u002Fuv\u002Fxb\u002F93uvxboezmintyjwjgb5vrf1zcm.png","button":null},{"id":"story-118_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fu4\u002Fdy\u002Fcd\u002Fu4dycdmg1jiinbfztn3zkpocne0.png","button":null},{"id":"story-118_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Ffy\u002Fqr\u002Flg\u002Ffyqrlgev36v3pa3-zy8maak8ipe.png","button":null},{"id":"story-118_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fx7\u002Fx8\u002Ftf\u002Fx7x8tfe8l1ahi_zmusdmtp0b_sy.png","button":{"title":"Подробности","link":"https:\u002F\u002Fu.habr.com\u002FcvdBy","colorType":"light"}}]},{"id":"story-264","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcbd\u002Fe44\u002F753\u002Fcbde44753048ff6655f9f33752fd816a.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FnTaXn"},"title":"Cколько тратят в IT: сеньор бэкендер","lang":"ru","startTime":"2023-02-28T15:50:00+03:00","finishTime":"2023-03-07T23:59:00+03:00","slides":[{"id":"story-264_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd99\u002Ff45\u002Ff14\u002Fd99f45f14dc03b2394a86f50f76844f4.png","button":null},{"id":"story-264_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0e3\u002F529\u002F607\u002F0e3529607bca82d7b8214d422f20ab67.png","button":null},{"id":"story-264_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8ae\u002F39e\u002Fa4f\u002F8ae39ea4fd82c27289b24594adf3c0c0.png","button":null},{"id":"story-264_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F971\u002F361\u002Fd57\u002F971361d574204d51ffe35d8c9cfef943.png","button":null},{"id":"story-264_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F342\u002F5c0\u002Fee7\u002F3425c0ee73301cff942e3d9276ce4a79.png","button":{"title":"Подробности","link":"https:\u002F\u002Fu.habr.com\u002FnTaXn","colorType":"dark"}}]},{"id":"story-262","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2fa\u002Fc8a\u002Fba8\u002F2fac8aba82b995297abea595da7990d1.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Наука сна","lang":"ru","startTime":"2023-02-28T12:15:00+03:00","finishTime":"2023-03-15T23:59:00+03:00","slides":[{"id":"story-262_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa90\u002F725\u002F61c\u002Fa9072561c280c46933ff54fd8702cade.jpg","button":null},{"id":"story-262_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffd7\u002F658\u002F956\u002Ffd7658956ea825b1c317c7f688c48058.jpg","button":{"title":"Читать лекцию","link":"https:\u002F\u002Fu.habr.com\u002Fson01","colorType":"light"}},{"id":"story-262_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F366\u002Fd2e\u002F707\u002F366d2e70725209177fa82a4119139c86.jpg","button":{"title":"При чём же?","link":"https:\u002F\u002Fu.habr.com\u002Fson02","colorType":"light"}},{"id":"story-262_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4bd\u002F40f\u002F731\u002F4bd40f731bfbf571a709dd2f357f06b4.jpg","button":{"title":"Заглянуть в дневник","link":"https:\u002F\u002Fu.habr.com\u002Fson03","colorType":"light"}},{"id":"story-262_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F944\u002F7ad\u002Fe2f\u002F9447ade2f38c3c36790be75bf4462047.jpg","button":{"title":"Последствия","link":"https:\u002F\u002Fu.habr.com\u002Fson04","colorType":"light"}},{"id":"story-262_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F74c\u002Fce1\u002F4dc\u002F74cce14dc903b245dca90df3f2747abb.jpg","button":{"title":"Смотреть список","link":"https:\u002F\u002Fu.habr.com\u002Fson05","colorType":"light"}},{"id":"story-262_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbc9\u002Fa62\u002F9f0\u002Fbc9a629f0c5ef2027cf7796749a06914.jpg","button":{"title":"Следы в истории","link":"https:\u002F\u002Fu.habr.com\u002Fson06","colorType":"light"}},{"id":"story-262_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F085\u002F0ee\u002F868\u002F0850ee868132e1ec4ec3b24caf7e719a.jpg","button":{"title":"Что придумали?","link":"https:\u002F\u002Fu.habr.com\u002Fson07","colorType":"light"}}]},{"id":"story-252","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff19\u002F48d\u002Fd15\u002Ff1948dd155701f88d36e11387c1660ef.png","title":"Geek Travel","link":"https:\u002F\u002Fu.habr.com\u002F9TZjL"},"title":"Где искать северное сияние в России","lang":"ru","startTime":"2023-02-21T11:35:00+03:00","finishTime":"2023-03-12T11:22:00+03:00","slides":[{"id":"story-252_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F506\u002F188\u002F83b\u002F50618883bc97ce517531018d3290d961.jpg","button":{"title":"К посту","link":"https:\u002F\u002Fu.habr.com\u002F9TZjL","colorType":"light"}},{"id":"story-252_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe42\u002Fa71\u002Fe8e\u002Fe42a71e8eb5583814647f5ad55f9e0ae.jpg","button":null},{"id":"story-252_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F685\u002Fdbe\u002F4ff\u002F685dbe4ffe3940eca28ede7406898846.jpg","button":null},{"id":"story-252_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F383\u002F63b\u002F1f4\u002F38363b1f459d5daace0e4502f0780737.jpg","button":null},{"id":"story-252_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F32b\u002F665\u002F0c4\u002F32b6650c448d698b9ca4dba128afb56e.jpg","button":null},{"id":"story-252_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F95e\u002F0b2\u002F5be\u002F95e0b25be55ae919dbebbac6142e670d.jpg","button":null},{"id":"story-252_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F616\u002F1d4\u002Ff84\u002F6161d4f849be8d4e4aeee88ea2e3d572.jpg","button":null}]},{"id":"story-246","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fc41\u002F8cc\u002Fca9\u002Fc418ccca924faf05c11530c5071e627b.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-new"},"title":"Зарплаты в IT во второй половине 2022","lang":"ru","startTime":"2023-02-20T11:05:00+03:00","finishTime":"2023-03-05T23:59:00+03:00","slides":[{"id":"story-246_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbe2\u002F07d\u002F19f\u002Fbe207d19f3cdc4b89e3618025c071ea0.png","button":null},{"id":"story-246_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcda\u002F93e\u002Fed7\u002Fcda93eed762714814ddfc51c4712f4ed.png","button":null},{"id":"story-246_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fb8a\u002Fde4\u002F87f\u002Fb8ade487fa6556af459e032adebf852d.png","button":null},{"id":"story-246_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8f6\u002Fb32\u002F844\u002F8f6b328448ed968a18a60a0cd745bd34.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-new","colorType":"dark"}}]},{"id":"story-152","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa49\u002F0d3\u002F609\u002Fa490d3609f29b6dfc53a7b88ab47ca64.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa"},"title":"Сеньоры — очень странные люди","lang":"ru","startTime":"2023-01-23T11:00:00+03:00","finishTime":"2023-03-31T23:59:00+03:00","slides":[{"id":"story-152_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbbb\u002F901\u002F063\u002Fbbb9010630ae483ed1f41ec4e2572c13.png","button":null},{"id":"story-152_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4f8\u002F66c\u002F14f\u002F4f866c14f0ca8999334438d7f17c0e3a.png","button":null},{"id":"story-152_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F6b9\u002Fa07\u002Fa61\u002F6b9a07a612df213ac3a1c179301828df.png","button":null},{"id":"story-152_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff6b\u002Fadb\u002Fb99\u002Ff6badbb9969d7e34ef4f7492767c6a77.png","button":null},{"id":"story-152_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd9c\u002F9ac\u002F878\u002Fd9c9ac878bec5b494699e0080dd2e813.png","button":null},{"id":"story-152_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fdb1\u002Faf9\u002Fc3b\u002Fdb1af9c3bb557f6cee698cf67610f977.png","button":null},{"id":"story-152_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5cf\u002Fbed\u002F65b\u002F5cfbed65bd20b7051b1aac2b9d6e807e.png","button":null},{"id":"story-152_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffa8\u002F251\u002F4a9\u002Ffa82514a9471cd455339e97178d8c021.png","button":null},{"id":"story-152_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbd5\u002F901\u002Fe95\u002Fbd5901e952d9cf638355a3cc8b0c0911.png","button":{"title":"Хочу помочь джуну","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa","colorType":"light"}}]}]},"technotext":{"years":[],"technotextDocForNominees":null,"technotextDocForWinners":null,"technotextInfo":{},"technotextInfoLoading":false,"technotextWinners":{},"technotextWinnersLoading":false},"userHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"userInvites":{"availableInvites":0,"usedInvitesIds":[],"usedInvitesRefs":{},"usedInvitesPagesCount":0,"unusedInvitesIds":[],"unusedInvitesRefs":{},"unusedInvitesPagesCount":0},"userVotes":{"karmaVotesList":[],"karmaVotesPagesCount":null,"karmaVotesListLoading":false,"commentsVotesList":[],"commentsVotesPagesCount":null,"commentsVotesListLoading":false,"postsVotesList":[],"postsVotesPagesCount":null,"postsVotesListLoading":false,"userVotesList":[],"userVotesPagesCount":null,"userVotesListLoading":false},"users":{"authorRefs":{},"authorIds":{},"pagesCount":{},"authorProfiles":{},"userHubs":{},"userInvitations":{},"authorFollowers":{},"authorFollowed":{},"userSpecialization":{},"karmaStats":[],"statistics":null,"isLoading":false,"authorFollowersLoading":false,"authorFollowedLoading":false,"userHubsLoading":false,"userInvitationsLoading":false,"route":{}},"viewport":{"prevScrollY":{},"scrollY":0,"width":0},"tracker":{"items":{},"pagesCache":{},"markedViewedSilently":{},"markedRead":{},"unreadCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null},"unviewedCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null}}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script> 
+  <script src="https://assets.habr.com/habr-web/js/chunk-vendors.129fcbcb.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/app.8a380906.js" defer></script> 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-726094-1"></script> 
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script> 
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(24049213, "init", {
+      defer:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:false,
+    });
+  </script> 
+  <noscript> 
+   <div> 
+    <img src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;" alt=""> 
+   </div> 
+  </noscript> 
+  <script type="text/javascript">
+      window.addEventListener('load', function () {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = 'https://vk.com/rtrg?p=VK-RTRG-421343-57vKE';
+        }, 0);
+      });
+    </script> 
+  <script src="/js/ads.js" onload="window['zhY4i4nJ9K'] = true"></script>  
+ </body>
+</html>

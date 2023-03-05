@@ -1,0 +1,1296 @@
+<!doctype html>
+<html lang="ru" data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0"> 
+  <meta name="referrer" content="unsafe-url"> 
+  <title>Как сделать простой UPS для NAS / Хабр</title> 
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSxf6TF0.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveQhf6TF0.woff2) format('woff2');
+      unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSBf6TF0.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveRhf6.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* non-breaking hyphen */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmEU9vBh0_IsHAlmrO6g&skey=ee881451c540fdec&v=v29) format('woff2');
+      unicode-range: U+02011;
+    }
+  </style> 
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/chunk-vendors.b6238726.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/chunk-vendors.129fcbcb.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/app.2dc3dce9.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/app.8a380906.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" as="script"> 
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/chunk-vendors.b6238726.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/app.2dc3dce9.css"> 
+  <script>window.i18nFetch = new Promise((res, rej) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', '/js/i18n/ru-compiled.99fdff73029c662d76a25e7927355795.json');
+          xhr.responseType = 'json';
+          xhr.onload = function(e) {
+            if (this.status === 200) {
+              res({ru: xhr.response});
+            } else {
+              rej(e);
+            }
+          };
+          xhr.send();
+        });</script> 
+  <script data-vue-meta="ssr" type="application/ld+json" data-vmid="ldjson-schema">{"@context":"http:\/\/schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/habr.com\/ru\/company\/3rdman\/blog\/720524\/"},"headline":"Как сделать простой UPS для NAS","datePublished":"2023-03-05T17:14:33+03:00","dateModified":"2023-03-05T17:14:33+03:00","author":{"@type":"Person","name":"Дмитрий Сидорович"},"publisher":{"@type":"Organization","name":"Habr","logo":{"@type":"ImageObject","url":"https:\/\/habrastorage.org\/webt\/a_\/lk\/9m\/a_lk9mjkccjox-zccjrpfolmkmq.png"}},"description":"Сборка любого железа само по себе интересное занятие. Особенно, если что-то делается не совсем как у других и для души. Взять, например, NAS - процессор x86 или...","url":"https:\/\/habr.com\/ru\/company\/3rdman\/blog\/720524\/#post-content-body","about":["c_3rdman","h_it-infrastructure","h_data_warehouse","h_energy","h_DIY","f_admin","f_popsci"],"image":["https:\/\/habr.com\/share\/publication\/720524\/7dfc516f23074a7cf9bdb6273267679b\/","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/e21\/81a\/b7d\/e2181ab7d7bd9c0703a403fc2676acd7.svg","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/f73\/ca6\/42c\/f73ca642cf1b4794cc11f52a7747e90f.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/8f3\/7bc\/4a5\/8f37bc4a55e503c29e0aaf4524e099a4.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/b91\/2ff\/742\/b912ff7428521bd80baf727548d72061.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/094\/40e\/0a8\/09440e0a8b3c77b0f01d2083104a3553.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/9e7\/d97\/26b\/9e7d9726b2676f9889c3d9959ea5221b.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/3c2\/aa6\/054\/3c2aa60548223e6038d5132b126e11d4.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/f53\/957\/8fa\/f539578fa7c9abb6cc267e2ec2152dc1.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/9a3\/7a0\/e7d\/9a37a0e7df08eec6b3bb4eecc79c386e.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/366\/8c1\/6d9\/3668c16d9d0c9fcdd173f763170d31f4.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/a10\/e7b\/14b\/a10e7b14b6650d816c2af4d47e676828.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/913\/a84\/2c0\/913a842c04e7f2b303b2b34aac7b27de.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/4da\/398\/d20\/4da398d208b6e3cae84aef43f8557094.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/a63\/e46\/b83\/a63e46b83b817a9b814688b6921c13f0.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/ab0\/6dc\/5f1\/ab06dc5f19ae2f68c34d7e9d6403c1c2.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/71e\/8fc\/81f\/71e8fc81f72b2d863bebb4523aedc30a.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/d12\/ece\/f7b\/d12ecef7b207695c1b52cedc49a3e03e.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/947\/244\/dda\/947244dda6ecec5a23eee4bbe341f5aa.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/0a9\/db4\/c59\/0a9db4c5944a2d437451d00595c1a813.svg","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/ac0\/470\/c0c\/ac0470c0cccbdb5188b449e096ebfd83.svg","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/05f\/90e\/a2a\/05f90ea2a110aa9001b1c47a5135ecc4.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/a0d\/9ee\/128\/a0d9ee128bcd8886a3d3d2c54aed6622.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/995\/7dc\/9c5\/9957dc9c5486800ba6fc3bb7f9f9a6b8.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/ebe\/736\/ccc\/ebe736ccc5a947255cca9d234157f23a.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/9e9\/f47\/30a\/9e9f4730a6509defbcf60487a244f030.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/10a\/190\/07d\/10a19007d6cc077366c965989bd2a5fe.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/1c5\/104\/c47\/1c5104c476a4f66d126f6e0bade891c8.jpg","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/da9\/67c\/e7b\/da967ce7bf2373c7776c10d6ce58c45d.jpg"]}</script> 
+  <script src="//www.googletagservices.com/tag/js/gpt.js" async></script> 
+  <style>.grecaptcha-badge{visibility: hidden;}</style> 
+  <meta name="habr-version" content="2.114.0"> 
+  <meta data-vue-meta="ssr" property="fb:app_id" content="444736788986613">
+  <meta data-vue-meta="ssr" property="fb:pages" content="472597926099084">
+  <meta data-vue-meta="ssr" name="twitter:card" content="summary_large_image">
+  <meta data-vue-meta="ssr" name="twitter:site" content="@habr_com">
+  <meta data-vue-meta="ssr" property="og:site_name" content="Хабр" data-vmid="og:site_name">
+  <meta data-vue-meta="ssr" property="og:title" content="Как сделать простой UPS для NAS" data-vmid="og:title">
+  <meta data-vue-meta="ssr" name="twitter:title" content="Как сделать простой UPS для NAS" data-vmid="twitter:title">
+  <meta data-vue-meta="ssr" name="aiturec:title" content="Как сделать простой UPS для NAS" data-vmid="aiturec:title">
+  <meta data-vue-meta="ssr" name="description" content="Сборка любого железа само по себе интересное занятие. Особенно, если что-то делается не совсем как у других и для души. Взять, например, NAS - процессор x86 или ARM, конструктив, количество и тип..." data-vmid="description">
+  <meta data-vue-meta="ssr" itemprop="description" content="Сборка любого железа само по себе интересное занятие. Особенно, если что-то делается не совсем как у других и для души. Взять, например, NAS - процессор x86 или ARM, конструктив, количество и тип..." data-vmid="description:itemprop">
+  <meta data-vue-meta="ssr" property="og:description" content="Сборка любого железа само по себе интересное занятие. Особенно, если что-то делается не совсем как у других и для души. Взять, например, NAS - процессор x86 или ARM, конструктив, количество и тип..." data-vmid="og:description">
+  <meta data-vue-meta="ssr" name="twitter:description" content="Сборка любого железа само по себе интересное занятие. Особенно, если что-то делается не совсем как у других и для души. Взять, например, NAS - процессор x86 или ARM, конструктив, количество и тип..." data-vmid="twitter:description">
+  <meta data-vue-meta="ssr" property="aiturec:description" content="Сборка любого железа само по себе интересное занятие. Особенно, если что-то делается не совсем как у других и для души. Взять, например, NAS - процессор x86 или ARM, конструктив, количество и тип..." data-vmid="aiturec:description">
+  <meta data-vue-meta="ssr" itemprop="image" content="https://habrastorage.org/getpro/habr/upload_files/8db/97a/f6b/8db97af6bc0978ac0010bd230ccc525e.jpg" data-vmid="image:itemprop">
+  <meta data-vue-meta="ssr" property="og:image" content="https://habrastorage.org/getpro/habr/upload_files/8db/97a/f6b/8db97af6bc0978ac0010bd230ccc525e.jpg" data-vmid="og:image">
+  <meta data-vue-meta="ssr" property="og:image:width" content="1200" data-vmid="og:image:width">
+  <meta data-vue-meta="ssr" property="og:image:height" content="630" data-vmid="og:image:height">
+  <meta data-vue-meta="ssr" property="aiturec:image" content="https://habrastorage.org/getpro/habr/upload_files/8db/97a/f6b/8db97af6bc0978ac0010bd230ccc525e.jpg" data-vmid="aiturec:image">
+  <meta data-vue-meta="ssr" name="twitter:image" content="https://habrastorage.org/getpro/habr/upload_files/8db/97a/f6b/8db97af6bc0978ac0010bd230ccc525e.jpg" data-vmid="twitter:image">
+  <meta data-vue-meta="ssr" property="vk:image" content="https://habrastorage.org/getpro/habr/upload_files/8db/97a/f6b/8db97af6bc0978ac0010bd230ccc525e.jpg?format=vk" data-vmid="vk:image">
+  <meta data-vue-meta="ssr" property="aiturec:item_id" content="720524" data-vmid="aiturec:item_id">
+  <meta data-vue-meta="ssr" property="aiturec:datetime" content="2023-03-05T14:14:33.000Z" data-vmid="aiturec:datetime">
+  <meta data-vue-meta="ssr" content="https://habr.com/ru/company/3rdman/blog/720524/" property="og:url" data-vmid="og:url">
+  <meta data-vue-meta="ssr" property="og:type" content="article" data-vmid="og:type">
+  <meta data-vue-meta="ssr" property="og:locale" content="ru_RU" data-vmid="og:locale">
+  <meta data-vue-meta="ssr" name="keywords" content="UPS, NAS, DIY, BMS, Charger, liion, sepic, aliexpress"> 
+  <link data-vue-meta="ssr" href="https://habr.com/ru/rss/post/720524/?fl=ru" type="application/rss+xml" title="" rel="alternate" name="rss">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/company/3rdman/blog/720524/" rel="canonical" data-vmid="canonical">
+  <link data-vue-meta="ssr" rel="image_src" href="https://habrastorage.org/getpro/habr/upload_files/8db/97a/f6b/8db97af6bc0978ac0010bd230ccc525e.jpg" data-vmid="image:href">
+  <link data-vue-meta="ssr" rel="amphtml" href="https://habr.com/ru/amp/post/720524/"> 
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303b44"> 
+  <meta name="msapplication-TileColor" content="#629FBC"> 
+  <meta name="apple-mobile-web-app-capable" content="yes"> 
+  <meta name="mobile-web-app-capable" content="yes"> 
+  <link rel="shortcut icon" type="image/png" sizes="16x16" href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png"> 
+  <link rel="shortcut icon" type="image/png" sizes="32x32" href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-152.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-180.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-256.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1136x640.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2436x1125.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1792x828.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_828x1792.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1334x750.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2208x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1125x2436.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2208.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2732x2048.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2688x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2224x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_750x1334.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x2732.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2388x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2224.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_640x1136.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2388.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x1536.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1536x2048.png"> 
+  <link rel="mask-icon" color="#77a2b6" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.svg"> 
+  <link crossorigin="use-credentials" href="/manifest.webmanifest" rel="manifest"> 
+  <script async src="https://unpkg.com/pwacompat" crossorigin="anonymous"></script> 
+  <script>window.yaContextCb = window.yaContextCb || []</script> 
+  <script src="https://yandex.ru/ads/system/context.js" async></script> 
+ </head> 
+ <body> 
+  <div id="app" data-server-rendered="true" data-async-called="true">
+   <div class="tm-layout__wrapper">
+    <!----> 
+    <div></div> <!----> 
+    <header class="tm-header">
+     <div class="tm-page-width">
+      <div class="tm-header__container">
+       <!----> <span class="tm-header__logo-wrap"><a href="/ru/" class="tm-header__logo tm-header__logo_ru">
+         <svg height="16" width="16" class="tm-svg-img tm-header__icon">
+          <title>Хабр</title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use>
+         </svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span> 
+       <div class="tm-dropdown tm-header__projects">
+        <div class="tm-dropdown__head">
+         <button class="tm-header__dropdown-toggle">
+          <svg height="16" width="16" class="tm-svg-img tm-header__icon tm-header__icon_dropdown">
+           <title>Открыть список</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#arrow-down"></use>
+          </svg></button>
+        </div> <!---->
+       </div> <a href="/ru/sandbox/start/" class="tm-header__become-author-btn"> Как стать автором </a> 
+       <div class="tm-feature tm-header__feature tm-feature tm-feature_variant-inline">
+        <!---->
+       </div> <!----> <!---->
+      </div>
+     </div>
+    </header> 
+    <div class="tm-layout">
+     <div class="tm-page-progress-bar"></div> 
+     <div data-menu-sticky="true" class="tm-base-layout__header tm-base-layout__header_is-sticky">
+      <div class="tm-page-width">
+       <div class="tm-base-layout__header-wrapper">
+        <div class="tm-main-menu">
+         <div class="tm-main-menu__section">
+          <nav class="tm-main-menu__section-content">
+           <!----> <a href="/ru/all/" class="tm-main-menu__item"> Все потоки </a> <a href="/ru/flows/develop/" class="tm-main-menu__item"> Разработка </a><a href="/ru/flows/admin/" class="tm-main-menu__item"> Администрирование </a><a href="/ru/flows/design/" class="tm-main-menu__item"> Дизайн </a><a href="/ru/flows/management/" class="tm-main-menu__item"> Менеджмент </a><a href="/ru/flows/marketing/" class="tm-main-menu__item"> Маркетинг </a><a href="/ru/flows/popsci/" class="tm-main-menu__item"> Научпоп </a>
+          </nav>
+         </div>
+        </div> 
+        <div class="tm-header-user-menu tm-base-layout__user-menu">
+         <a href="/ru/search/" class="tm-header-user-menu__item tm-header-user-menu__search">
+          <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark">
+           <title>Поиск</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#search"></use>
+          </svg></a> <!----> <!----> <!----> 
+         <div class="tm-header-user-menu__item tm-header-user-menu__user_desktop">
+          <div class="tm-dropdown">
+           <div class="tm-dropdown__head">
+            <svg height="24" width="24" data-test-id="menu-toggle-guest" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_dark">
+             <title>Профиль</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#header-user"></use>
+            </svg> <!---->
+           </div> <!---->
+          </div> <!---->
+         </div> <!---->
+        </div>
+       </div>
+      </div>
+     </div> <!----> 
+     <div class="tm-page-width"></div> 
+     <main class="tm-layout__container">
+      <div hl="ru" companyname="3rdman" data-async-called="true" class="tm-page">
+       <div class="tm-page-width">
+        <div class="tm-page__header">
+         <!---->
+        </div> 
+        <div class="tm-page__wrapper">
+         <div class="tm-page__main tm-page__main_has-sidebar">
+          <div class="pull-down">
+           <!----> 
+           <div class="pull-down__header" style="height:0px;">
+            <div class="pull-down__content" style="bottom:10px;">
+             <svg height="24" width="24" class="tm-svg-img pull-down__arrow">
+              <title>Обновить</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#pull-arrow"></use>
+             </svg>
+            </div>
+           </div> 
+           <div class="tm-article-presenter">
+            <div class="tm-company-profile-card tm-company-article__profile-card">
+             <div class="tm-company-card tm-company-profile-card__info">
+              <div class="tm-company-card__header">
+               <a href="/ru/company/3rdman/profile/" class="tm-company-card__avatar">
+                <div class="tm-entity-image">
+                 <img alt="" height="48" src="//habrastorage.org/getpro/habr/company/e0a/f03/0cb/e0af030cbdb546123b097248bfefc3c9.png" width="48" class="tm-entity-image__pic">
+                </div></a> <!----> 
+               <div class="tm-counter-container tm-company-card__rating">
+                <div class="tm-counter-container__header"> 
+                 <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating">
+                  <!----> 
+                  <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating">
+                   <span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating"> 51.81 </span>
+                  </div> <!---->
+                 </div>
+                </div> 
+                <div class="tm-counter-container__footer">
+                 <span class="tm-rating__text tm-rating__text"> Рейтинг </span>
+                </div>
+               </div> <!---->
+              </div> 
+              <div class="tm-company-card__info">
+               <a href="/ru/company/3rdman/profile/" class="tm-company-card__name">Third Man</a> 
+               <div class="tm-company-card__description"></div>
+              </div>
+             </div> <!---->
+            </div> 
+            <div class="tm-article-presenter__body">
+             <div class="tm-misprint-area">
+              <div class="tm-misprint-area__wrapper">
+               <article class="tm-article-presenter__content tm-article-presenter__content_narrow">
+                <div class="tm-article-presenter__header"> 
+                 <div class="tm-article-snippet tm-article-presenter__snippet tm-article-snippet">
+                  <div class="tm-article-snippet__meta-container">
+                   <div class="tm-article-snippet__meta">
+                    <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/sdy/" title="sdy" class="tm-user-info__userpic">
+                      <div class="tm-entity-image">
+                       <img alt="" height="24" src="//habrastorage.org/r/w32/getpro/habr/avatars/668/7bc/ef5/6687bcef5f448b3278a18f177cb90519.jpg" width="24" class="tm-entity-image__pic">
+                      </div></a> <span class="tm-user-info__user"><a href="/ru/users/sdy/" class="tm-user-info__username"> sdy <!----></a> <span class="tm-article-datetime-published"><time datetime="2023-03-05T14:14:33.000Z" title="2023-03-05, 17:14">2 часа назад</time></span></span></span>
+                   </div> <!---->
+                  </div> 
+                  <h1 lang="ru" class="tm-article-snippet__title tm-article-snippet__title_h1"><span>Как сделать простой UPS для NAS</span></h1> 
+                  <div class="tm-article-snippet__stats">
+                   <div class="tm-article-complexity tm-article-complexity_complexity-medium">
+                    <span class="tm-svg-icon__wrapper tm-article-complexity__icon">
+                     <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                      <title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#complexity-medium"></use>
+                     </svg></span> <span class="tm-article-complexity__label"> Средний </span>
+                   </div> 
+                   <div class="tm-article-reading-time">
+                    <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                     <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                      <title>Время на прочтение</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#clock"></use>
+                     </svg></span> <span class="tm-article-reading-time__label"> 11 мин </span>
+                   </div> <span class="tm-icon-counter tm-data-icons__item">
+                    <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                     <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-views"></use>
+                    </svg> <span class="tm-icon-counter__value">1.2K</span></span>
+                  </div> 
+                  <div class="tm-article-snippet__hubs-container">
+                   <div class="tm-article-snippet__hubs">
+                    <span class="tm-article-snippet__hubs-item"><a href="/ru/company/3rdman/blog/" class="tm-article-snippet__hubs-item-link router-link-active"><span>Блог компании Third Man</span> <!----></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/it-infrastructure/" class="tm-article-snippet__hubs-item-link"><span>IT-инфраструктура</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/data_warehouse/" class="tm-article-snippet__hubs-item-link"><span>Хранилища данных</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/energy/" class="tm-article-snippet__hubs-item-link"><span>Энергия и элементы питания</span> <!----></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/DIY/" class="tm-article-snippet__hubs-item-link"><span>DIY или Сделай сам</span> <!----></a></span>
+                   </div>
+                  </div> 
+                  <div class="tm-article-snippet__labels-container">
+                   <div class="tm-article-snippet__labels">
+                    <div class="tm-article-snippet__label tm-article-snippet__label_variant-tutorial">
+                     <span> Туториал </span>
+                    </div> 
+                   </div>
+                  </div> <!----> <!---->
+                 </div>
+                </div> <!----> 
+                <div data-gallery-root="" lang="ru" class="tm-article-body">
+                 <div></div> 
+                 <div id="post-content-body">
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                    <div xmlns="http://www.w3.org/1999/xhtml">
+                     <p>Сборка любого железа само по себе интересное занятие. Особенно, если что-то делается не совсем как у других и для души. Взять, например, NAS - процессор x86 или ARM, конструктив, количество и тип дисков и т.д., каждый выбирает тот путь, который ему ближе и понятней. Причем часто хочется сделать не только мощно, но и компактно, и тихо. Поэтому, любое дополнительное внешнее устройство может свести на нет все старания. Так и с <strong>UPS</strong> (<strong>ИБП - Источник Бесперебойного Питания</strong>), который для NAS является очень нужным элементом, поддерживая его в рабочем состоянии во время кратковременных, а то и длительных перебоев питания, не всё так просто.</p>
+                     <p>Как известно, большинство UPS подключаются между розеткой <strong>220В</strong> и <strong>NAS</strong>. При этом ничто не мешает разместить UPS внутри корпуса NAS или хотя бы позаботиться об этом заранее. Даже известные компании редко интегрируют UPS внутрь корпуса, но при этом старательно проводят отбор среди лучших производителей и раздают <a href="https://www.wundertech.net/best-synology-nas-ups-devices/"><u>советы по поводу выбора UPS</u></a>.</p>
+                     <p>Рассмотрим вариант дизайна такого UPS, который можно разместить внутри корпуса и ограничимся теми NAS, которые для работы требуют только одного напряжения питания <strong>12В</strong>. Забегая вперед сразу отмечу, что можно зарезервировать даже стандартное ATX питание, но это несколько другая тема, больше относящаяся к разработке DC/DC преобразователей.</p>
+                     <p>Итак, пусть требуется обеспечить бесперебойным питанием NAS на основе ARM процессора, напряжением питания 12В, четырьмя-пятью дисками и временем работы не менее <strong>20</strong> <strong>минут</strong>.</p>
+                     <p>Если прикинуть потребляемую мощность такой системы, то это примерно 60Вт в полной нагрузке. Соответственно, для часа работа от батарей необходим источник с запасом 60Втч, а для 20 минут в три раза меньше, т.е. <strong>20Втч</strong>.</p>
+                     <p>В пересчете на хорошие промышленные Li-ion аккумуляторы, это примерно составляет два элемента <strong>18650</strong> ёмкостью <strong>2,6Ач</strong>:</p>
+                     <img class="formula" source="20Втч / 2.6Ач / 3.7В = 2" alt="20Втч / 2.6Ач / 3.7В = 2" src="https://habrastorage.org/getpro/habr/upload_files/e21/81a/b7d/e2181ab7d7bd9c0703a403fc2676acd7.svg" width="189" height="22">
+                     <p>Таким образом, возьмем за основу два элемента 18650 и разработаем на их основе простой UPS, который можно собрать только из готовых модулей и доступных деталей, легко поддающихся пайке в домашних условиях.</p>
+                     <p>Чтобы плавно перейти к основной схеме UPS, давайте сначала её представим в упрощенном виде и рассмотрим принцип работы.</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/f73/ca6/42c/f73ca642cf1b4794cc11f52a7747e90f.png" alt="Упрощенная структурная схема UPS" title="Упрощенная структурная схема UPS" width="822" height="279" data-src="https://habrastorage.org/getpro/habr/upload_files/f73/ca6/42c/f73ca642cf1b4794cc11f52a7747e90f.png">
+                      <div>
+                       <figcaption>
+                        Упрощенная структурная схема UPS
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Как можно видеть, есть два пути подачи питания на выход, которые коммутируются двумя диодами. Если входное напряжение есть, то оно поступает через верхний диод на выход - это обычный режим работы. При этом нижний диод закрыт и батарея заряжается. Далее при пропадании входного напряжения, нижний диод открывается, верхний диод закрыт и напряжение начинает поступать на выход с повышающего преобразователя.</p>
+                     <p>Напряжение на выходе повышающего преобразователя должно быть чуть меньше входного, чтобы нижний диод оставался в закрытом состоянии при наличии входного питания.</p>
+                     <p>Коммутация диодов происходит автоматически и для этого никаких дополнительных элементов не требуется. Однако, на открытых диодах возникает падение напряжения, которое при достаточно высоком токе вызывает нагрев диодов. К примеру, при мощности нагрузки 60Вт и напряжении питания 12В, диоду придется рассеивать мощность не менее 2Вт. Не смертельно, но и хорошего мало.</p>
+                     <p>Попробуем улучшить эффективность UPS, не особо усложняя дизайн за счет специализированных контроллеров O-Ring диодов и схем защиты от обратного тока. Для этого параллельно диодам подключим тройник реле, так чтобы при наличии входного напряжения реле было бы под током и напряжение поступало бы на выход через нормально разомкнутый контакт реле (NO), а при пропадании - через нормально замкнутый контакт (NC). При таком включении, контакты реле будут шунтировать открытые диоды, предотвращая их нагрев.</p>
+                     <p>Логика переключения реле может быть задана следующей диаграммой: </p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/8f3/7bc/4a5/8f37bc4a55e503c29e0aaf4524e099a4.png" alt="Логика переключения реле UPS" title="Логика переключения реле UPS" width="888" height="452" data-src="https://habrastorage.org/getpro/habr/upload_files/8f3/7bc/4a5/8f37bc4a55e503c29e0aaf4524e099a4.png">
+                      <div>
+                       <figcaption>
+                        Логика переключения реле UPS
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Включением реле управляет детектор пропадания входного напряжения, который включает реле при напряжении на входе свыше <strong>11.7В</strong> и выключает при снижении напряжения до <strong>11.4В</strong>. Гистерезис гарантирует стабильное включение и выключение реле, без него реле может включиться, а может и дребезжать начать (переходить из одного состояние в другое) вместо включения.</p>
+                     <h4>Полная структурная схема</h4>
+                     <p>Добавив блок управления реле, а также необходимый функционал согласно нашим желаниям, приходим к следующей структурной схеме: &nbsp;</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/b91/2ff/742/b912ff7428521bd80baf727548d72061.png" alt="Полная структурная схема UPS" title="Полная структурная схема UPS" width="849" height="639" data-src="https://habrastorage.org/getpro/habr/upload_files/b91/2ff/742/b912ff7428521bd80baf727548d72061.png">
+                      <div>
+                       <figcaption>
+                        Полная структурная схема UPS
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Как можно видеть, схема состоит из нескольких основных блоков:</p>
+                     <ul>
+                      <li><p><strong>модуль заряда батарей</strong> (Charger)</p></li>
+                      <li><p><strong>мощное реле</strong> (Relay)</p></li>
+                      <li><p><strong>повышающий преобразователь</strong> (Boost DCDC)</p></li>
+                      <li><p><strong>модуль балансировки батарей</strong> (BMS 2S)</p></li>
+                      <li><p><strong>модуль индикации заряда</strong> (Charge Status)</p></li>
+                      <li><p><strong>детектор пропадания напряжения</strong> (Off-Line Detector)</p></li>
+                      <li><p><strong>два диода</strong></p></li>
+                      <li><p><strong>кнопка сна</strong> (Sleep)</p></li>
+                     </ul>
+                     <p>Для того, чтобы соответствовать курсу на простоту сборки, найдем для каждого блока соответствующий готовый модуль. Я не занимаюсь рекламой, поэтому буду приводить лишь фото модулей и их описание, по которым очень просто найти их в многочисленных магазинах электроники или заказать у китайцев. Ещё я заметил, что очень часто часть функционала чипов в китайских модулях просто не задействована и даже соответствующие ноги никуда не выведены.</p>
+                     <h4>Модуль заряда батарей</h4>
+                     <p>Например, в модуле зарядки, который я использовал, установлен китайский контроллер <strong>TP5100</strong> в минимальном подключении. В результате без существенных доработок не подключить термистор для контроля температуры батарей, а также упущена возможность существенно упростить схему перехода на резервное питание. С одной стороны для большинства применений эти функции может быть и не так важны, но в случае с UPS очень пригодились бы. Дело за малым - сделать свой собственный модуль, но не сейчас, не для этого прототипа.</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/094/40e/0a8/09440e0a8b3c77b0f01d2083104a3553.png" alt="Модуль заряда" title="Модуль заряда" width="584" height="461" data-src="https://habrastorage.org/getpro/habr/upload_files/094/40e/0a8/09440e0a8b3c77b0f01d2083104a3553.png">
+                      <div>
+                       <figcaption>
+                        Модуль заряда
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>В итоге вся доработка зарядника свелась к двум вещам:</p>
+                     <p>– Была запаяна перемычка, которая устанавливает напряжение заряда <strong>8.4В</strong>, это как раз нужно для <strong>2S</strong> подключения батарей;</p>
+                     <p>– Выпаял один из двух резисторов-шунтов, которые задают ток заряда, чтобы снизить ток заряда с <strong>2А</strong> до <strong>1А</strong>. Можно сделать еще меньше, но для этого нужен шунт новый искать или монтировать резисторы “домиком” - последовательно. По опыту чип резисторы ужасно чувствительны к любым стрессам, что выливается в отслоение терминала, которое можно даже не заметить, поэтому, не рискуем.</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/9e7/d97/26b/9e7d9726b2676f9889c3d9959ea5221b.png" alt="Доработка модуля заряда" title="Доработка модуля заряда" width="721" height="277" data-src="https://habrastorage.org/getpro/habr/upload_files/9e7/d97/26b/9e7d9726b2676f9889c3d9959ea5221b.png">
+                      <div>
+                       <figcaption>
+                        Доработка модуля заряда
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <h4>Мощное реле</h4>
+                     <p>Следующим модулем на доработку идет модуль реле с выбираемым уровнем управления. Хотя достаточно было бы простого драйвера с транзистором, но плата оказалась очень удобной как в плане доработки, так и выборе нужного уровня управления.</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/3c2/aa6/054/3c2aa60548223e6038d5132b126e11d4.png" alt="Модуль реле" title="Модуль реле" width="730" height="531" data-src="https://habrastorage.org/getpro/habr/upload_files/3c2/aa6/054/3c2aa60548223e6038d5132b126e11d4.png">
+                      <div>
+                       <figcaption>
+                        Модуль реле
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Доработка модуля сводится к пайке сдвоенного диода с общим катодом снизу платы к площадкам тройника реле:</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/f53/957/8fa/f539578fa7c9abb6cc267e2ec2152dc1.png" alt="Доработка модуля реле" title="Доработка модуля реле" width="692" height="343" data-src="https://habrastorage.org/getpro/habr/upload_files/f53/957/8fa/f539578fa7c9abb6cc267e2ec2152dc1.png">
+                      <div>
+                       <figcaption>
+                        Доработка модуля реле
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Диод MBR20100CT был куплен в ближайшем магазине радиодеталей, видимо очень ходовой:</p>
+                     <figure class="">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/9a3/7a0/e7d/9a37a0e7df08eec6b3bb4eecc79c386e.png" alt="O-Ring диод" title="O-Ring диод" width="350" height="163" data-src="https://habrastorage.org/getpro/habr/upload_files/9a3/7a0/e7d/9a37a0e7df08eec6b3bb4eecc79c386e.png">
+                      <div>
+                       <figcaption>
+                        O-Ring диод
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Диоды нужны только для коммутации питания на выход в момент переключения реле. Это десятки миллисекунд, за это время они не успевают даже нагреться.</p>
+                     <p>Последнее, что надо будет сделать с модулем реле, это установить перемычку, которая задает уровень срабатывания реле, в положение <strong>L</strong>:</p>
+                     <figure class="">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/366/8c1/6d9/3668c16d9d0c9fcdd173f763170d31f4.png" alt="Джампер выбора уровня срабатывания реле" title="Джампер выбора уровня срабатывания реле" width="387" height="263" data-src="https://habrastorage.org/getpro/habr/upload_files/366/8c1/6d9/3668c16d9d0c9fcdd173f763170d31f4.png">
+                      <div>
+                       <figcaption>
+                        Джампер выбора уровня срабатывания реле
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <h4>Повышающий преобразователь</h4>
+                     <p>Напряжения на двух батареях недостаточно для стабильного питания NAS. Чтобы его увеличить до 12В необходим <strong>Boost DC/DC</strong> - повышающий преобразователь.</p>
+                     <p>Я нашел два модуля с подходящими габаритами и параметрами. Один из них построен на <strong>TPS61088</strong> - чип от TI, который я уже применял, а другой на <strong>LTC1871</strong>.</p>
+                     <p>Второй модуль на основе <strong>LTC1871</strong> удалось купить в тот же день:</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/a10/e7b/14b/a10e7b14b6650d816c2af4d47e676828.png" alt="Повышающий преобразователь Boost DC/DC" title="Повышающий преобразователь Boost DC/DC" width="1391" height="856" data-src="https://habrastorage.org/getpro/habr/upload_files/a10/e7b/14b/a10e7b14b6650d816c2af4d47e676828.png">
+                      <div>
+                       <figcaption>
+                        Повышающий преобразователь Boost DC/DC
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Судя по разводке - это точно Boost преобразователь, а по маркировке выходного диода (<strong>SD1040CS</strong> <strong>- 40В, 10А</strong>) и транзистора (<strong>MOSFET D4184 - 40В, 50А</strong>) становится понятно, что заявленный ток 7А ограничен фактически катушкой. Что я не могу понять до сих пор, это то, как китайцы умудряются делать копеечные модули на чипах, стоимость которых в несколько раз выше самого модуля.</p>
+                     <p>У модуля также есть встроенный вольтметр, который позволяет контролировать входное и выходное напряжение с помощью индикатора. Удобно крутить многооборотный резистор и выставлять напряжение. На всякий случай проконтролировал установку с помощью <strong>Fluke</strong>, как и ожидалось точность <strong>±0.1В</strong>, что вполне достаточно для данного UPS.</p>
+                     <p>Одно но - подписи к кнопкам не соответствуют действительности. <strong>IN</strong> - включение / выключение индикатора, а <strong>OUT</strong> - выбор измерения входного / выходного напряжения.</p>
+                     <p>Дорабатывать модуль нет необходимости, достаточно предварительно выставить напряжение <strong>11.7В</strong>.</p>
+                     <h4>Модуль балансировки батарей</h4>
+                     <p>Для балансировки <strong>Li-ion</strong> батарей существует огромное количество всевозможных модулей. Китайцы как правило делают их на своих собственных чипах и даже ставят правильные шунты. Так что просто нашел модуль типа <strong>2S</strong> - на два аккумулятора и запаял его как есть.</p>
+                     <figure class="">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/913/a84/2c0/913a842c04e7f2b303b2b34aac7b27de.png" alt="Модуль балансировки батарей" title="Модуль балансировки батарей" width="169" height="288" data-src="https://habrastorage.org/getpro/habr/upload_files/913/a84/2c0/913a842c04e7f2b303b2b34aac7b27de.png">
+                      <div>
+                       <figcaption>
+                        Модуль балансировки батарей
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>У модуля балансировки есть очень полезная функция - напряжение на выходе не появляется до тех пор, пока к нему не будет приложено напряжение заряда. Это позволяет хранить батарею с установленным модулем без опасения замкнуть входные клеммы, а также можно в любой момент обесточить батарею кратковременно отсоединив любой из терминалов <strong>B+ / B-</strong>.</p>
+                     <p>Кнопка <strong>Sleep</strong> на структурной схеме как раз и переводит батарею в неактивное состояние. При сборке NAS эта функция реально себя оправдает, так как не придется выполнять сборочные работы под напряжением.</p>
+                     <p>Самое главное - это:</p>
+                     <ul>
+                      <li><p>подключить аккумуляторы к <strong>B+ / B- / BM</strong></p></li>
+                      <li><p>подключить входное напряжение к <strong>P+ / P-</strong> терминалам</p></li>
+                     </ul>
+                     <h4>Модуль индикации заряда (напряжения)</h4>
+                     <p>Пожалуй самое сложное с точки зрения обслуживания батарей - это оценка их реальной ёмкости. Скажу сразу, я сделал все очень просто как в старых добрых мобилах. Ведь никого особо не напрягает тот факт, что индикатор уровня заряда батареи в мобиле / смартфоне отличается от реальности и со временем ситуация только ухудшается. Вот и я подумал, что для простого UPS достаточно будет измерить только напряжение на батареях.</p>
+                     <p>В качестве индикатора напряжения был выбран простой индикатор с четырьмя фиксированными уровнями:</p>
+                     <figure class="">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/4da/398/d20/4da398d208b6e3cae84aef43f8557094.png" alt="Модуль индикатора напряжения" title="Модуль индикатора напряжения" width="246" height="231" data-src="https://habrastorage.org/getpro/habr/upload_files/4da/398/d20/4da398d208b6e3cae84aef43f8557094.png">
+                      <div>
+                       <figcaption>
+                        Модуль индикатора напряжения
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Лучше всего постараться найти индикатор с диапазоном напряжений <strong>(6.6-8.4)В</strong>. Тогда нижний уровень <strong>6.6В</strong> - это суммарное напряжение двух практически разряженных аккумуляторов, а <strong>8.4В</strong> - уровень напряжения, которое используется для заряда и его можно использовать как индикатор наличия входного напряжения.</p>
+                     <p>Алгоритм работы системы питания NAS можно представить следующей диаграммой:</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/a63/e46/b83/a63e46b83b817a9b814688b6921c13f0.png" alt="Алгоритм работы системы питания NAS" title="Алгоритм работы системы питания NAS" width="1600" height="718" data-src="https://habrastorage.org/getpro/habr/upload_files/a63/e46/b83/a63e46b83b817a9b814688b6921c13f0.png">
+                      <div>
+                       <figcaption>
+                        Алгоритм работы системы питания NAS
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Сам по себе индикатор вещь не очень нужная, однако его можно использовать для сигнализации пропадания питания и работы от батарей. В этом случае верхний светодиод или <strong>100%</strong> показывает, что есть напряжение заряда <strong>8.4В</strong> или то, что батарея еще достаточно свежая. Нижний светодиод или <strong>25%</strong> показывает, что напряжение батареи <strong>еще достаточно</strong> для работы повышающего преобразователя, но уже пора запускать механизм выключения. Это позволит корректно завершить работу NAS перед тем как батарея полностью сядет.</p>
+                     <p>Дорабатывать модуль не надо, нужно только припаять провода к контактам питания <strong>(+/-</strong>) и к площадкам светодиодов, которые показывают нижний и верхний уровни напряжения:</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/ab0/6dc/5f1/ab06dc5f19ae2f68c34d7e9d6403c1c2.png" alt="" title="" width="551" height="459" data-src="https://habrastorage.org/getpro/habr/upload_files/ab0/6dc/5f1/ab06dc5f19ae2f68c34d7e9d6403c1c2.png">
+                     </figure>
+                     <div>
+                      <div class="table">
+                       <table>
+                        <tbody>
+                         <tr>
+                          <td data-colwidth="190" width="190"><p align="left"><strong><em>Название</em></strong></p></td>
+                          <td data-colwidth="210" width="210"><p align="left"><strong><em>Цвет провода</em></strong></p></td>
+                          <td><p align="left"><strong><em>Уровень напряжение, В</em></strong></p></td>
+                         </tr>
+                         <tr>
+                          <td data-colwidth="190" width="190"><p align="left">+</p></td>
+                          <td data-colwidth="210" width="210"><p align="left">красный</p></td>
+                          <td><p align="left">8.4</p></td>
+                         </tr>
+                         <tr>
+                          <td data-colwidth="190" width="190"><p align="left">-</p></td>
+                          <td data-colwidth="210" width="210"><p align="left">черный</p></td>
+                          <td><p align="left">GND</p></td>
+                         </tr>
+                         <tr>
+                          <td data-colwidth="190" width="190"><p align="left">25%</p></td>
+                          <td data-colwidth="210" width="210"><p align="left">зеленый</p></td>
+                          <td rowspan="2"><p align="left">0 - светодиод не горит</p><p align="left">2.7 - светодиод горит</p></td>
+                         </tr>
+                         <tr>
+                          <td data-colwidth="190" width="190"><p align="left">100%</p></td>
+                          <td data-colwidth="210" width="210"><p align="left">фиолетовый</p></td>
+                         </tr>
+                        </tbody>
+                       </table>
+                      </div>
+                     </div>
+                     <p>В теории, цепи <strong>25% и 100%</strong> можно подключить к <strong>GPIO</strong> контактам процессора напрямую, если они рассчитаны на <strong>3.3В</strong> логику. Но даже в этом случае существует вероятность “запитывания” процессора через контакты <strong>GPIO</strong>, если процессор находится в выключенном состоянии.</p>
+                     <p>Чтобы избежать любых негативных последствий, подключать цепи 25% и 100% к процессорным GPIO, лучше через схему согласования уровней:</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/71e/8fc/81f/71e8fc81f72b2d863bebb4523aedc30a.png" alt="Простая схема подключения индикатора к GPIO" title="Простая схема подключения индикатора к GPIO" width="606" height="276" data-src="https://habrastorage.org/getpro/habr/upload_files/71e/8fc/81f/71e8fc81f72b2d863bebb4523aedc30a.png">
+                      <div>
+                       <figcaption>
+                        Простая схема подключения индикатора к GPIO
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Искать в точности такой модуль или делать его самому может быть и не надо. Существует достаточно удобная плата согласования уровней, которую можно подключить следующим образом:</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/d12/ece/f7b/d12ecef7b207695c1b52cedc49a3e03e.png" alt="Схема подключения индикатора с помощью готовой платы" title="Схема подключения индикатора с помощью готовой платы" width="786" height="338" data-src="https://habrastorage.org/getpro/habr/upload_files/d12/ece/f7b/d12ecef7b207695c1b52cedc49a3e03e.png">
+                      <div>
+                       <figcaption>
+                        Схема подключения индикатора с помощью готовой платы
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Площадки <strong>GND</strong> справа и слева соединены на плате, достаточно только подключения со стороны платы процессора. Подключение к площадке <strong>HV</strong> также не требуется, так как нам не нужно двунаправленное согласование и используются только интегрированные диоды в транзисторах. Следует выпаять только резисторы подтяжки, обозначенные на рисунке.</p>
+                     <h4>Детектор пропадания напряжения</h4>
+                     <p>Для того, чтобы включить или выключить реле в зависимости от величины входного напряжения, необходимо установить соответствующий детектор.</p>
+                     <p>Такой детектор можно сделать, например, на модуле с <strong>LM393</strong>, у которого можно установить необходимый порог срабатывания. Однако, я не стал заказывать и ждать его с Али, а сделал сам на макетке, учитывая, что времени на это ушло порядка часа.</p>
+                     <p>В качестве компаратора с гистерезисом также можно использовать управляемый стабилитрон <strong>TLVH431</strong>:</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/947/244/dda/947244dda6ecec5a23eee4bbe341f5aa.png" alt="Схема детектора входного напряжения с гистерезисом" title="Схема детектора входного напряжения с гистерезисом" width="598" height="403" data-src="https://habrastorage.org/getpro/habr/upload_files/947/244/dda/947244dda6ecec5a23eee4bbe341f5aa.png">
+                      <div>
+                       <figcaption>
+                        Схема детектора входного напряжения с гистерезисом
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>На схеме резисторы <strong>R1</strong> и <strong>R2</strong> задают напряжение включения реле, в данном случае это:</p>
+                     <img class="formula" source="Uref/R2*(R1+R2)=1.24V/13k*(110k+13k)=11.7V" alt="Uref/R2*(R1+R2)=1.24V/13k*(110k+13k)=11.7V" src="https://habrastorage.org/getpro/habr/upload_files/0a9/db4/c59/0a9db4c5944a2d437451d00595c1a813.svg" width="496" height="22">
+                     <p>&nbsp;У открытого стабилитрона напряжение на катоде составляет порядка <strong>0.9В</strong>. Этого достаточно чтобы включить реле. Вместе с реле открывается транзистор и подключает резистор <strong>R4</strong> параллельно резистору <strong>R1</strong>. С учетом этого, стабилитрон теперь закроется только при входном напряжении существенно ниже <strong>11.7В</strong>:</p>
+                     <img class="formula" source="Uref/R2*(R1||R4+R2)=1.24V/13k*(110k||4.3M+13k)=11.45V" alt="Uref/R2*(R1||R4+R2)=1.24V/13k*(110k||4.3M+13k)=11.45V" src="https://habrastorage.org/getpro/habr/upload_files/ac0/470/c0c/ac0470c0cccbdb5188b449e096ebfd83.svg" width="596" height="22">
+                     <p>Схема детектора была смонтирована на макетке для SOIC-8 / MSOP-8:</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/05f/90e/a2a/05f90ea2a110aa9001b1c47a5135ecc4.png" alt="Мотаж схемы детектора напряжения на макетке" title="Мотаж схемы детектора напряжения на макетке" width="654" height="412" data-src="https://habrastorage.org/getpro/habr/upload_files/05f/90e/a2a/05f90ea2a110aa9001b1c47a5135ecc4.png">
+                      <div>
+                       <figcaption>
+                        Мотаж схемы детектора напряжения на макетке
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <h4>Сборка</h4>
+                     <p>После доработки всех модулей можно переходить к сборке всего в корпус. Каких то рекомендаций давать не буду, так как все зависит от того, что есть под рукой и желания сделать хорошо.</p>
+                     <p>За основу общей платы лучше взять текстолит без фольги, он не горит и обрабатывается легко. Сечение проводов минимум <strong>0.75мм^2</strong> для мощных цепей и <strong>0.35мм^2</strong> для остальных. На корпусе нужно будет разместить два разъема питания для входного и выходного напряжения, индикатор питания и кнопку Sleep. Кнопка может быть без фиксации на разъединение, хотя можно использовать и с фиксацией. Главное, чтобы контакты кнопки выдерживали ток не менее <strong>4-5А</strong>.</p>
+                     <p>Также следует уделить внимание тому, что модуль зарядки батарей может незначительно греться, особенно в самом начале. Поэтому, рекомендую его сразу приклеить обратной стороной платы на двусторонний термоскотч к небольшому радиатору.</p>
+                     <p>Я все разместил на фанерке (не лучший выбор), закрепил модули и все спаял по месту:</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/a0d/9ee/128/a0d9ee128bcd8886a3d3d2c54aed6622.png" alt="Нижняя сторона монтажа UPS" title="Нижняя сторона монтажа UPS" width="1160" height="929" data-src="https://habrastorage.org/getpro/habr/upload_files/a0d/9ee/128/a0d9ee128bcd8886a3d3d2c54aed6622.png">
+                      <div>
+                       <figcaption>
+                        Нижняя сторона монтажа UPS
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/995/7dc/9c5/9957dc9c5486800ba6fc3bb7f9f9a6b8.png" alt="Вид сверху на смонтированные модули UPS" title="Вид сверху на смонтированные модули UPS" width="1264" height="941" data-src="https://habrastorage.org/getpro/habr/upload_files/995/7dc/9c5/9957dc9c5486800ba6fc3bb7f9f9a6b8.png">
+                      <div>
+                       <figcaption>
+                        Вид сверху на смонтированные модули UPS
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/ebe/736/ccc/ebe736ccc5a947255cca9d234157f23a.png" alt="Вид спереди на корпус UPS" title="Вид спереди на корпус UPS" width="1366" height="665" data-src="https://habrastorage.org/getpro/habr/upload_files/ebe/736/ccc/ebe736ccc5a947255cca9d234157f23a.png">
+                      <div>
+                       <figcaption>
+                        Вид спереди на корпус UPS
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/9e9/f47/30a/9e9f4730a6509defbcf60487a244f030.png" alt="Вид сзади на корпус UPS" title="Вид сзади на корпус UPS" width="1439" height="752" data-src="https://habrastorage.org/getpro/habr/upload_files/9e9/f47/30a/9e9f4730a6509defbcf60487a244f030.png">
+                      <div>
+                       <figcaption>
+                        Вид сзади на корпус UPS
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <h4>Настройка и проверка</h4>
+                     <p>После того как все собрано можно переходить к первому включению. Но для начала я бы рекомендовал обязательно выполнить следующие операции:</p>
+                     <p>– Зарядить аккумуляторы&nbsp; внешним зарядником и только после этого вставить их в отсек. Напомню, что напряжение на выходе модуля балансировки не появится до тех пор пока не будет подано внешнее напряжение, поэтому можно спокойно работать дальше.</p>
+                     <p>– Далее следует выставить / проверить выходное напряжение повышающего преобразователя без нагрузки. Для этого нужно отсоединить провод от выходного терминала <strong>OUT+</strong> и подав внешнее питание, выставить триммером напряжение <strong>11.7В</strong>. Контроль можно проводить как встроенным индикатором, так и подключив тестер. Не забыть, что кнопка <strong>IN</strong> - включает / выключает индикатор, а кнопка <strong>OUT</strong> - выбирает напряжение для измерения - вход либо выход.</p>
+                     <p>– Также необходимо проверить, что реле включается при напряжении <strong>11.7В</strong> и выключается при <strong>11.4В</strong>, ну или хотя бы выключается. Если реле включается, но не выключается, то следует проверить монтаж и номиналы компонентов детектора.</p>
+                     <p>– Обязательно надо проверить не греются ли диоды при включенном и выключенном реле. Если греются, то это явно ошибка монтажа. <strong>Диоды греться не должны</strong>.</p>
+                     <p>Остальные проверки можно проводить уже по месту или выполнить их заранее до сборки. Тут каждый себе мастер и настройщик.</p>
+                     <h4>Тестирование</h4>
+                     <p>Лучше всего проводить тестирование не на боевом железе. Все таки NAS вещь дорогая и необходимо убедиться заранее, что все функционирует согласно ожиданиям.</p>
+                     <p>Основное, что надо проверить, это:</p>
+                     <p>– заряд аккумуляторов без нагрузки и под нагрузкой (на всякий случай);</p>
+                     <p>– переход на резервную батарею после пропадания входного напряжения;</p>
+                     <p>– время работы батарей под нагрузкой.</p>
+                     <p>Для тестирования обязательно понадобятся хорошие кабели питания. Проще всего их сделать из готовых компьютерных кабелей:</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/10a/190/07d/10a19007d6cc077366c965989bd2a5fe.png" alt="Пример кабеля питания для тестирования UPS" title="Пример кабеля питания для тестирования UPS" width="1493" height="927" data-src="https://habrastorage.org/getpro/habr/upload_files/10a/190/07d/10a19007d6cc077366c965989bd2a5fe.png">
+                      <div>
+                       <figcaption>
+                        Пример кабеля питания для тестирования UPS
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>В качестве нагрузки можно использовать электронную нагрузку (обычный такой домашний прибор). Также можно подключать мощные резисторы для проверки под нагрузкой, начиная с <strong>1А</strong> и далее <strong>по желанию</strong>.</p>
+                     <h4>Что можно улучшить</h4>
+                     <p>Несмотря на все достоинства и положительные эмоции, стоит сказать, что представленная конструкция блока UPS во многом нуждается в улучшении.</p>
+                     <p>В первую очередь, необходимо улучшить схему контроля ёмкости батарей и организовать более информативную связь с процессором.</p>
+                     <p>Возможно следует добавить универсальности в подключении различных типов соединения батарей, таких как <strong>2S2P</strong>, <strong>2S3P</strong>, <strong>3S1P</strong> и т.д.</p>
+                     <p>В случае с последовательным соединением трех и более батарей, потребуется замена повышающего преобразователя на преобразователь, который способен не только повышать напряжение, но и снижать его - <strong>SEPIC</strong> или <strong>Buck/Boost</strong>.</p>
+                     <p>В перспективе хочется добавить стандартный интерфейс связи UPS с материнской платой, такой как <strong>USB</strong> или <strong>UART</strong>. Для этого понадобится микроконтроллер, например, <strong>RP2040</strong>.</p>
+                     <h4>Подведение итогов</h4>
+                     <p>Честно говоря, просматривая текст, я понял, что решение то не очень простое оказалось. Вроде бы и модули готовые, а вот все равно много чего надо учесть и внимательно повторить.</p>
+                     <p>С другой стороны, голова боится, а руки делают. Так что не вижу проблем, почему бы не повторить конструкцию самостоятельно. На сборку и отладку уйдет не больше недели с учетом всех закупок и подготовки.</p>
+                     <p>Как результат сборки, получится довольно компактный UPS, который можно разместить практически в любом корпусе:</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w780q1/getpro/habr/upload_files/1c5/104/c47/1c5104c476a4f66d126f6e0bade891c8.jpg" alt="Рамка с защелками для крепления UPS" title="Рамка с защелками для крепления UPS" width="4513" height="2373" data-src="https://habrastorage.org/getpro/habr/upload_files/1c5/104/c47/1c5104c476a4f66d126f6e0bade891c8.jpg" data-blurred="true">
+                      <div>
+                       <figcaption>
+                        Рамка с защелками для крепления UPS
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w780q1/getpro/habr/upload_files/da9/67c/e7b/da967ce7bf2373c7776c10d6ce58c45d.jpg" alt="Размещение UPS внутри корпуса mini-ITX" title="Размещение UPS внутри корпуса mini-ITX" width="4369" height="2557" data-src="https://habrastorage.org/getpro/habr/upload_files/da9/67c/e7b/da967ce7bf2373c7776c10d6ce58c45d.jpg" data-blurred="true">
+                      <div>
+                       <figcaption>
+                        Размещение UPS внутри корпуса mini-ITX
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Стоит отметить, что для сборки были использованы только готовые модули, которые можно найти в большинстве радиолюбительских магазинов или заказать на Али. Даже то, что один из модулей все таки пришлось собрать практически на коленке, говорит о простоте и возможности повторения. Вместе с тем, UPS способен резервировать напряжение питания небольшого NAS с 4-5 дисками в течении минимум 20 минут, сигнализируя процессор в нужный момент о переходе на резервное питание и необходимости завершения работы при глубокой разрядке батарей.</p>
+                     <p>Отмечу, что данный UPS был разработан специально для проекта NAS, над которым мы работаем целой командой. Наша цель состоит в разработке такой конструкции, которая будет модульной и удобной в плане модернизации и улучшения, начиная с вычислительного модуля, заканчивая дизайном корпуса. Проект открытый и всей информацией о ходе разработки, включая этапы дизайна, тесты, любые детали конструкции и всё, что нам интересно, мы обсуждаем с подписчиками в нашем <a href="https://t.me/UberNasNews"><u>Telegram канале</u></a>.</p>
+                     <p>В данной статье была рассмотрена только одна часть задачи - это аппаратное решение. Понятно, что этого явно недостаточно, так как UPS необходимо интегрировать в NAS не только аппаратно, но и программно. Поэтому, в следующий раз будем исследовать вопрос, связанный с программными решениями подключения UPS к процессору и организацию их взаимодействия.</p>
+                     <p></p>
+                    </div>
+                   </div>
+                  </div> <!----> <!---->
+                 </div> <!----> <!---->
+                </div> <!----> 
+                <div class="tm-article-presenter__meta">
+                 <div class="tm-separated-list tm-article-presenter__meta-list">
+                  <span class="tm-separated-list__title">Теги:</span> 
+                  <ul class="tm-separated-list__list">
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5BUPS%5D" class="tm-tags-list__link">UPS</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5BNAS%5D" class="tm-tags-list__link">NAS</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5BDIY%5D" class="tm-tags-list__link">DIY</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5BBMS%5D" class="tm-tags-list__link">BMS</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5BCharger%5D" class="tm-tags-list__link">Charger</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bliion%5D" class="tm-tags-list__link">liion</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bsepic%5D" class="tm-tags-list__link">sepic</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Baliexpress%5D" class="tm-tags-list__link">aliexpress</a></li>
+                  </ul>
+                 </div> 
+                 <div class="tm-separated-list tm-article-presenter__meta-list">
+                  <span class="tm-separated-list__title">Хабы:</span> 
+                  <ul class="tm-separated-list__list">
+                   <li class="tm-separated-list__item"><a href="/ru/company/3rdman/blog/" class="tm-hubs-list__link router-link-active">Блог компании Third Man</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/hub/it-infrastructure/" class="tm-hubs-list__link">IT-инфраструктура</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/hub/data_warehouse/" class="tm-hubs-list__link">Хранилища данных</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/hub/energy/" class="tm-hubs-list__link">Энергия и элементы питания</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/hub/DIY/" class="tm-hubs-list__link">DIY или Сделай сам</a></li>
+                  </ul>
+                 </div>
+                </div>
+               </article>
+              </div> <!---->
+             </div> 
+             <div class="tm-article-sticky-panel">
+              <div class="tm-data-icons tm-article-sticky-panel__icons">
+               <div class="tm-article-rating tm-data-icons__item">
+                <div class="tm-votes-meter tm-article-rating__votes-switcher">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>Всего голосов 11: ↑11 и ↓0</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-rating"></use>
+                 </svg> <span title="Всего голосов 11: ↑11 и ↓0" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+11</span>
+                </div> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> <!----> <!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                 <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                  <title>Добавить в закладки</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-favorite"></use>
+                 </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 17 </span></button> 
+               <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                <a href="/ru/company/3rdman/blog/720524/comments/" class="tm-article-comments-counter-link__link">
+                 <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                  <title>Комментарии</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-comments"></use>
+                 </svg> <span class="tm-article-comments-counter-link__value"> 7 </span></a> <!---->
+               </div> 
+               <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                <button type="button" class="tm-sharing__button">
+                 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                  <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                 </svg></button> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> 
+               <div class="v-portal" style="display:none;"></div>
+              </div> 
+             </div>
+            </div> 
+            <div class="v-portal" style="display:none;"></div> 
+            <div class="tm-article-presenter__footer">
+             <div class="tm-article-blocks">
+              <!----> 
+              <div></div> 
+              <section class="tm-block tm-block tm-block_spacing-bottom">
+               <!----> 
+               <div class="tm-block__body tm-block__body tm-block__body_variant-balanced">
+                <div class="tm-article-author">
+                 <div class="tm-article-author__company">
+                  <div class="tm-article-author__company-card">
+                   <div class="tm-company-snippet">
+                    <a href="/ru/company/3rdman/profile/" class="tm-company-snippet__logo-link">
+                     <div class="tm-entity-image">
+                      <img alt="" height="40" src="//habrastorage.org/getpro/habr/company/e0a/f03/0cb/e0af030cbdb546123b097248bfefc3c9.png" width="40" class="tm-entity-image__pic">
+                     </div></a> 
+                    <div class="tm-company-snippet__info">
+                     <a href="/ru/company/3rdman/profile/" class="tm-company-snippet__title">Third Man</a> 
+                     <div class="tm-company-snippet__description">
+                      Компания
+                     </div>
+                    </div>
+                   </div> 
+                   <div class="tm-article-author__buttons">
+                    <!----> <!---->
+                   </div>
+                  </div> 
+                  <div class="tm-article-author__company-contacts">
+                   <a href="https://vk.com/3rdman" rel="noopener" target="_blank" class="tm-article-author__contact"> Сайт </a>
+                  </div> 
+                  <div class="tm-article-author__separator"></div>
+                 </div> 
+                 <div class="tm-user-card tm-article-author__user-card tm-user-card tm-user-card_variant-article">
+                  <div class="tm-user-card__info-container">
+                   <div class="tm-user-card__header">
+                    <div class="tm-user-card__header-data">
+                     <a href="/ru/users/sdy/" class="tm-user-card__userpic tm-user-card__userpic_size-40">
+                      <div class="tm-entity-image">
+                       <img alt="" src="//habrastorage.org/getpro/habr/avatars/668/7bc/ef5/6687bcef5f448b3278a18f177cb90519.jpg" class="tm-entity-image__pic">
+                      </div></a> 
+                     <div class="tm-user-card__meta">
+                      <div title=" 13 голосов " class="tm-counter-container tm-karma tm-karma">
+                       <div class="tm-counter-container__header">
+                        <div class="tm-karma__votes tm-karma__votes_positive">
+                          11 
+                        </div>
+                       </div> 
+                       <div class="tm-counter-container__footer">
+                        <div class="tm-karma__text">
+                          Карма 
+                        </div> 
+                        <div class="v-portal" style="display:none;"></div>
+                       </div>
+                      </div> 
+                      <div title="Рейтинг пользователя" class="tm-counter-container">
+                       <div class="tm-counter-container__header"> 
+                        <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating">
+                         <!----> 
+                         <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating">
+                          <span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating"> 8 </span>
+                         </div> <!---->
+                        </div>
+                       </div> 
+                       <div class="tm-counter-container__footer">
+                        <span class="tm-rating__text tm-rating__text"> Рейтинг </span>
+                       </div>
+                      </div>
+                     </div>
+                    </div>
+                   </div> 
+                   <div class="tm-user-card__info tm-user-card__info tm-user-card__info_variant-article">
+                    <div class="tm-user-card__title tm-user-card__title tm-user-card__title_variant-article">
+                     <span class="tm-user-card__name tm-user-card__name tm-user-card__name_variant-article">Дмитрий Сидорович</span> <a href="/ru/users/sdy/" class="tm-user-card__nickname tm-user-card__nickname tm-user-card__nickname_variant-article"> @sdy </a> <!---->
+                    </div> 
+                    <p class="tm-user-card__short-info tm-user-card__short-info tm-user-card__short-info_variant-article">Инженер</p>
+                   </div>
+                  </div> 
+                  <div class="tm-user-card__buttons tm-user-card__buttons tm-user-card__buttons_variant-article">
+                   <!----> <!----> <!----> <!----> <!---->
+                  </div>
+                 </div> <!---->
+                </div> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> <!---->
+              </section> <!----> 
+              <div class="tm-article-blocks__comments">
+               <div class="tm-article-page-comments">
+                <div class="tm-article-comments-counter-link tm-article-comments-counter-button">
+                 <a href="/ru/company/3rdman/blog/720524/comments/" class="tm-article-comments-counter-link__link tm-article-comments-counter-link__link_button-style">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon tm-article-comments-counter-link__icon_contrasted">
+                   <title>Комментарии</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-comments"></use>
+                  </svg> <span class="tm-article-comments-counter-link__value tm-article-comments-counter-link__value_contrasted"> Комментарии 7 </span></a> <!---->
+                </div>
+               </div>
+              </div> 
+              <section class="tm-block tm-block tm-block_spacing-bottom">
+               <header class="tm-block__header tm-block__header tm-block__header_variant-borderless">
+                <div class="tm-block__header-container">
+                 <h2 class="tm-block__title tm-block__title tm-block__title_variant-large">Публикации</h2> 
+                </div> <!---->
+               </header> 
+               <div class="tm-block__body tm-block__body tm-block__body_variant-condensed-slim">
+                <div class="tm-tabs tm-tabs">
+                 <div>
+                  <span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active tm-tabs__tab-link_slim"> Лучшие за сутки </button></span><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_slim"> Похожие </button></span>
+                 </div> <!---->
+                </div> 
+                <div class="similar-and-daily__tab-view">
+                 <div>
+                  <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+                  <div class="tm-placeholder-article-cards">
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                  </div> <!----> <!----> <!----> <!---->
+                 </div> <!---->
+                </div>
+               </div> <!---->
+              </section> 
+              <div>
+               <div>
+                <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+                <div class="tm-placeholder-promo">
+                 <div class="tm-placeholder-promo__header">
+                  <div class="tm-placeholder__line tm-placeholder__line_promo-title"></div>
+                 </div> 
+                 <div class="tm-placeholder-promo__body">
+                  <div class="tm-placeholder-promo__posts">
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div> 
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div> 
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div>
+                  </div> 
+                  <div class="tm-placeholder-promo__dots">
+                   <div class="tm-placeholder-promo__dot"></div> 
+                   <div class="tm-placeholder-promo__dot"></div> 
+                   <div class="tm-placeholder-promo__dot"></div>
+                  </div>
+                 </div>
+                </div> <!----> <!----> <!----> <!----> <!---->
+               </div>
+              </div> 
+              <div hubs="it-infrastructure,data_warehouse,energy,DIY">
+               <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+               <div class="tm-placeholder-inset tm-placeholder-questions">
+                <div class="tm-placeholder-inset__header">
+                 <div class="tm-placeholder__line tm-placeholder__line_inset-header loads"></div>
+                </div> 
+                <div class="tm-placeholder-inset__body">
+                 <ul class="tm-placeholder-list">
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                 </ul>
+                </div> 
+                <div class="tm-placeholder-inset__footer">
+                 <div class="tm-placeholder__line tm-placeholder__line_inset-footer loads"></div>
+                </div>
+               </div> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
+              </div> <!----> 
+             </div>
+            </div>
+           </div>
+          </div>
+         </div> 
+         <div class="tm-page__sidebar">
+          <div class="tm-layout-sidebar">
+           <div class="tm-layout-sidebar__ads tm-layout-sidebar__ads_initial">
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_top">
+             <!----> 
+             <div id="adfox_164725680533065327" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-half-page"></div>
+            </div>
+           </div> 
+           <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;">
+            <!----> 
+            <section class="tm-block tm-block tm-block_spacing-bottom">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Информация</h2> 
+              </div> <!---->
+             </header> 
+             <div class="tm-block__body tm-block__body">
+              <div class="tm-company-basic-info">
+               <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap">
+                <dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">
+                 Сайт
+                </dt> 
+                <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap">
+                 <a href="https://vk.com/3rdman" target="_blank" class="tm-company-basic-info__link"> vk.com </a>
+                </dd>
+               </dl> 
+               <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap">
+                <dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">
+                 Дата регистрации
+                </dt> 
+                <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap">
+                 <time datetime="2022-12-05T15:04:06.000Z" title="2022-12-05, 18:04">5 декабря 2022</time>
+                </dd>
+               </dl> 
+               <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap">
+                <dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">
+                 Дата основания
+                </dt> 
+                <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap">
+                 <time datetime="2022-06-08T21:00:00.000Z" title="2022-06-09, 00:00">9 июня 2022</time>
+                </dd>
+               </dl> 
+               <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap">
+                <dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">
+                 Численность
+                </dt> 
+                <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap">
+                  11–30 человек 
+                </dd>
+               </dl> 
+               <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap">
+                <dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">
+                 Местоположение
+                </dt> 
+                <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap">
+                  Россия 
+                </dd>
+               </dl> <!---->
+              </div>
+             </div> <!---->
+            </section> 
+            <div class="tm-company-widgets"></div> <!----> 
+            <section data-navigatable="" tabindex="0" data-async-called="true" class="tm-block tm-stories-block tm-block tm-block_spacing-around">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Истории</h2> 
+              </div> <!---->
+             </header> 
+             <div class="tm-block__body tm-block__body tm-block__body_variant-equal-small">
+              <div class="tm-stories-empty">
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+              </div> <!---->
+             </div> <!---->
+            </section> 
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_bottom">
+             <!----> 
+             <div id="adfox_164725691003361602" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-medium-rectangle"></div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </main> <!---->
+    </div> 
+    <div class="tm-footer-menu">
+     <div class="tm-page-width">
+      <div class="tm-footer-menu__container">
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Ваш аккаунт </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/ru/company/3rdman/blog/720524/&amp;hl=ru" rel="nofollow" target="_self"> Войти </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/ru/company/3rdman/blog/720524/&amp;hl=ru" rel="nofollow" target="_self"> Регистрация </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Разделы </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/" class="footer-menu__item-link router-link-active"> Публикации </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/news/" class="footer-menu__item-link"> Новости </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/hubs/" class="footer-menu__item-link"> Хабы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/companies/" class="footer-menu__item-link"> Компании </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/users/" class="footer-menu__item-link"> Авторы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/sandbox/" class="footer-menu__item-link"> Песочница </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Информация </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/help/" class="footer-menu__item-link"> Устройство сайта </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/authors/codex/" class="footer-menu__item-link"> Для авторов </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/companies/corpblogs/" class="footer-menu__item-link"> Для компаний </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/docs/transparency/" class="footer-menu__item-link"> Документы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement" target="_blank"> Соглашение </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/" target="_blank"> Конфиденциальность </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Услуги </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/corporate-blogs/" target="_blank"> Корпоративный блог </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/advertising/" target="_blank"> Медийная реклама </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/native-special/" target="_blank"> Нативные проекты </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/education-programs/" target="_blank"> Образовательные программы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/hello-startup/" target="_blank"> Стартапам </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/megaprojects/" class="footer-menu__item-link"> Мегапроекты </a></li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div> 
+    <div class="tm-footer">
+     <div class="tm-page-width">
+      <div class="tm-footer__container">
+       <!----> 
+       <div class="tm-footer__social">
+        <a href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Facebook</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-facebook"></use>
+         </svg></a><a href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Twitter</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-twitter"></use>
+         </svg></a><a href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>VK</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-vkontakte"></use>
+         </svg></a><a href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Telegram</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-telegram"></use>
+         </svg></a><a href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Youtube</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-youtube"></use>
+         </svg></a><a href="https://zen.yandex.ru/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Яндекс Дзен</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-zen"></use>
+         </svg></a>
+       </div> 
+       <div class="v-portal" style="display:none;"></div> <button class="tm-footer__link"><!----> Настройка языка </button> <a href="/ru/feedback/" class="tm-footer__link"> Техническая поддержка </a> <a href="/berserk-mode-nope" class="tm-footer__link"> Вернуться на старую версию </a> 
+       <div class="tm-footer-copyright">
+        <span class="tm-copyright"><span class="tm-copyright__years">© 2006–2023, </span> <span class="tm-copyright__name"><a href="https://company.habr.com/" rel="noopener" target="_blank" class="tm-copyright__link">Habr</a></span></span>
+       </div>
+      </div>
+     </div>
+    </div> <!----> <!---->
+   </div> 
+   <div class="vue-portal-target"></div>
+  </div> 
+  <script>window.__INITIAL_STATE__={"adblock":{"hasAcceptableAdsFilter":false,"hasAdblock":false},"articlesList":{"articlesList":{"720524":{"id":"720524","timePublished":"2023-03-05T14:14:33+00:00","isCorporative":true,"lang":"ru","titleHtml":"Как сделать простой UPS для NAS","leadData":{"textHtml":"\u003Cp\u003EКак известно, большинство UPS подключаются между розеткой \u003Cstrong\u003E220В\u003C\u002Fstrong\u003E и \u003Cstrong\u003ENAS\u003C\u002Fstrong\u003E. При этом ничто не мешает разместить UPS внутри корпуса NAS или хотя бы позаботиться об этом заранее.\u003C\u002Fp\u003E\u003Cp\u003EРассмотрим вариант дизайна такого UPS, который можно разместить внутри корпуса для тех NAS, которые для работы требуют только одного напряжения питания \u003Cstrong\u003E12В\u003C\u002Fstrong\u003E.\u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8db\u002F97a\u002Ff6b\u002F8db97af6bc0978ac0010bd230ccc525e.jpg","buttonTextHtml":"Всё ещё хочешь собрать UPS?","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8db\u002F97a\u002Ff6b\u002F8db97af6bc0978ac0010bd230ccc525e.jpg","fit":"cover","positionY":24,"positionX":3}},"editorVersion":"2.0","postType":"article","postLabels":[],"author":{"id":"494256","alias":"sdy","fullname":"Дмитрий Сидорович","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F668\u002F7bc\u002Fef5\u002F6687bcef5f448b3278a18f177cb90519.jpg","speciality":"Инженер","scoreStats":{"score":11,"votesCount":13},"rating":8,"relatedData":null,"contacts":[],"authorContacts":[],"paymentDetails":{"paymentYandexMoney":null,"paymentPayPalMe":null,"paymentWebmoney":null}},"statistics":{"commentsCount":7,"favoritesCount":17,"readingCount":1190,"score":11,"votesCount":11,"votesCountPlus":11,"votesCountMinus":0},"hubs":[{"id":"23064","alias":"3rdman","type":"corporative","title":"Блог компании Third Man","titleHtml":"Блог компании Third Man","isProfiled":false,"relatedData":null},{"id":"6398","alias":"it-infrastructure","type":"collective","title":"IT-инфраструктура","titleHtml":"IT-инфраструктура","isProfiled":true,"relatedData":null},{"id":"20116","alias":"data_warehouse","type":"collective","title":"Хранилища данных","titleHtml":"Хранилища данных","isProfiled":true,"relatedData":null},{"id":"21914","alias":"energy","type":"collective","title":"Энергия и элементы питания","titleHtml":"Энергия и элементы питания","isProfiled":false,"relatedData":null},{"id":"21976","alias":"DIY","type":"collective","title":"DIY или Сделай сам","titleHtml":"DIY или Сделай сам","isProfiled":false,"relatedData":null}],"flows":[{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"},{"id":"7","alias":"popsci","title":"Научпоп","titleHtml":"Научпоп"}],"relatedData":null,"textHtml":"\u003Cdiv xmlns=\"http:\u002F\u002Fwww.w3.org\u002F1999\u002Fxhtml\"\u003E\u003Cp\u003EСборка любого железа само по себе интересное занятие. Особенно, если что-то делается не совсем как у других и для души. Взять, например, NAS - процессор x86 или ARM, конструктив, количество и тип дисков и т.д., каждый выбирает тот путь, который ему ближе и понятней. Причем часто хочется сделать не только мощно, но и компактно, и тихо. Поэтому, любое дополнительное внешнее устройство может свести на нет все старания. Так и с \u003Cstrong\u003EUPS\u003C\u002Fstrong\u003E (\u003Cstrong\u003EИБП - Источник Бесперебойного Питания\u003C\u002Fstrong\u003E), который для NAS является очень нужным элементом, поддерживая его в рабочем состоянии во время кратковременных, а то и длительных перебоев питания, не всё так просто.\u003C\u002Fp\u003E\u003Cp\u003EКак известно, большинство UPS подключаются между розеткой \u003Cstrong\u003E220В\u003C\u002Fstrong\u003E и \u003Cstrong\u003ENAS\u003C\u002Fstrong\u003E. При этом ничто не мешает разместить UPS внутри корпуса NAS или хотя бы позаботиться об этом заранее. Даже известные компании редко интегрируют UPS внутрь корпуса, но при этом старательно проводят отбор среди лучших производителей и раздают \u003Ca href=\"https:\u002F\u002Fwww.wundertech.net\u002Fbest-synology-nas-ups-devices\u002F\"\u003E\u003Cu\u003Eсоветы по поводу выбора UPS\u003C\u002Fu\u003E\u003C\u002Fa\u003E.\u003C\u002Fp\u003E\u003Cp\u003EРассмотрим вариант дизайна такого UPS, который можно разместить внутри корпуса и ограничимся теми NAS, которые для работы требуют только одного напряжения питания \u003Cstrong\u003E12В\u003C\u002Fstrong\u003E. Забегая вперед сразу отмечу, что можно зарезервировать даже стандартное ATX питание, но это несколько другая тема, больше относящаяся к разработке DC\u002FDC преобразователей.\u003C\u002Fp\u003E\u003Cp\u003EИтак, пусть требуется обеспечить бесперебойным питанием NAS на основе ARM процессора, напряжением питания 12В, четырьмя-пятью дисками и временем работы не менее \u003Cstrong\u003E20\u003C\u002Fstrong\u003E \u003Cstrong\u003Eминут\u003C\u002Fstrong\u003E.\u003C\u002Fp\u003E\u003Cp\u003EЕсли прикинуть потребляемую мощность такой системы, то это примерно 60Вт в полной нагрузке. Соответственно, для часа работа от батарей необходим источник с запасом 60Втч, а для 20 минут в три раза меньше, т.е. \u003Cstrong\u003E20Втч\u003C\u002Fstrong\u003E.\u003C\u002Fp\u003E\u003Cp\u003EВ пересчете на хорошие промышленные Li-ion аккумуляторы, это примерно составляет два элемента \u003Cstrong\u003E18650\u003C\u002Fstrong\u003E ёмкостью \u003Cstrong\u003E2,6Ач\u003C\u002Fstrong\u003E:\u003C\u002Fp\u003E\u003Cimg class=\"formula\" source=\"20Втч \u002F 2.6Ач \u002F 3.7В = 2\" alt=\"20Втч \u002F 2.6Ач \u002F 3.7В = 2\" src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe21\u002F81a\u002Fb7d\u002Fe2181ab7d7bd9c0703a403fc2676acd7.svg\" width=\"189\" height=\"22\"\u002F\u003E\u003Cp\u003EТаким образом, возьмем за основу два элемента 18650 и разработаем на их основе простой UPS, который можно собрать только из готовых модулей и доступных деталей, легко поддающихся пайке в домашних условиях.\u003C\u002Fp\u003E\u003Cp\u003EЧтобы плавно перейти к основной схеме UPS, давайте сначала её представим в упрощенном виде и рассмотрим принцип работы.\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff73\u002Fca6\u002F42c\u002Ff73ca642cf1b4794cc11f52a7747e90f.png\" alt=\"Упрощенная структурная схема UPS\" title=\"Упрощенная структурная схема UPS\" width=\"822\" height=\"279\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff73\u002Fca6\u002F42c\u002Ff73ca642cf1b4794cc11f52a7747e90f.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EУпрощенная структурная схема UPS\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EКак можно видеть, есть два пути подачи питания на выход, которые коммутируются двумя диодами. Если входное напряжение есть, то оно поступает через верхний диод на выход - это обычный режим работы. При этом нижний диод закрыт и батарея заряжается. Далее при пропадании входного напряжения, нижний диод открывается, верхний диод закрыт и напряжение начинает поступать на выход с повышающего преобразователя.\u003C\u002Fp\u003E\u003Cp\u003EНапряжение на выходе повышающего преобразователя должно быть чуть меньше входного, чтобы нижний диод оставался в закрытом состоянии при наличии входного питания.\u003C\u002Fp\u003E\u003Cp\u003EКоммутация диодов происходит автоматически и для этого никаких дополнительных элементов не требуется. Однако, на открытых диодах возникает падение напряжения, которое при достаточно высоком токе вызывает нагрев диодов. К примеру, при мощности нагрузки 60Вт и напряжении питания 12В, диоду придется рассеивать мощность не менее 2Вт. Не смертельно, но и хорошего мало.\u003C\u002Fp\u003E\u003Cp\u003EПопробуем улучшить эффективность UPS, не особо усложняя дизайн за счет специализированных контроллеров O-Ring диодов и схем защиты от обратного тока. Для этого параллельно диодам подключим тройник реле, так чтобы при наличии входного напряжения реле было бы под током и напряжение поступало бы на выход через нормально разомкнутый контакт реле (NO), а при пропадании - через нормально замкнутый контакт (NC). При таком включении, контакты реле будут шунтировать открытые диоды, предотвращая их нагрев.\u003C\u002Fp\u003E\u003Cp\u003EЛогика переключения реле может быть задана следующей диаграммой:  \u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8f3\u002F7bc\u002F4a5\u002F8f37bc4a55e503c29e0aaf4524e099a4.png\" alt=\"Логика переключения реле UPS\" title=\"Логика переключения реле UPS\" width=\"888\" height=\"452\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8f3\u002F7bc\u002F4a5\u002F8f37bc4a55e503c29e0aaf4524e099a4.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EЛогика переключения реле UPS\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EВключением реле управляет детектор пропадания входного напряжения, который включает реле при напряжении на входе свыше \u003Cstrong\u003E11.7В\u003C\u002Fstrong\u003E и выключает при снижении напряжения до \u003Cstrong\u003E11.4В\u003C\u002Fstrong\u003E. Гистерезис гарантирует стабильное включение и выключение реле, без него реле может включиться, а может и дребезжать начать (переходить из одного состояние в другое) вместо включения.\u003C\u002Fp\u003E\u003Ch4\u003EПолная структурная схема\u003C\u002Fh4\u003E\u003Cp\u003EДобавив блок управления реле, а также необходимый функционал согласно нашим желаниям, приходим к следующей структурной схеме:  \u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fb91\u002F2ff\u002F742\u002Fb912ff7428521bd80baf727548d72061.png\" alt=\"Полная структурная схема UPS\" title=\"Полная структурная схема UPS\" width=\"849\" height=\"639\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fb91\u002F2ff\u002F742\u002Fb912ff7428521bd80baf727548d72061.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EПолная структурная схема UPS\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EКак можно видеть, схема состоит из нескольких основных блоков:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003E\u003Cstrong\u003Eмодуль заряда батарей\u003C\u002Fstrong\u003E (Charger)\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E\u003Cstrong\u003Eмощное реле\u003C\u002Fstrong\u003E (Relay)\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E\u003Cstrong\u003Eповышающий преобразователь\u003C\u002Fstrong\u003E (Boost DCDC)\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E\u003Cstrong\u003Eмодуль балансировки батарей\u003C\u002Fstrong\u003E (BMS 2S)\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E\u003Cstrong\u003Eмодуль индикации заряда\u003C\u002Fstrong\u003E (Charge Status)\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E\u003Cstrong\u003Eдетектор пропадания напряжения\u003C\u002Fstrong\u003E (Off-Line Detector)\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E\u003Cstrong\u003Eдва диода\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E\u003Cstrong\u003Eкнопка сна\u003C\u002Fstrong\u003E (Sleep)\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Ful\u003E\u003Cp\u003EДля того, чтобы соответствовать курсу на простоту сборки, найдем для каждого блока соответствующий готовый модуль. Я не занимаюсь рекламой, поэтому буду приводить лишь фото модулей и их описание, по которым очень просто найти их в многочисленных магазинах электроники или заказать у китайцев. Ещё я заметил, что очень часто часть функционала чипов в китайских модулях просто не задействована и даже соответствующие ноги никуда не выведены.\u003C\u002Fp\u003E\u003Ch4\u003EМодуль заряда батарей\u003C\u002Fh4\u003E\u003Cp\u003EНапример, в модуле зарядки, который я использовал, установлен китайский контроллер \u003Cstrong\u003ETP5100\u003C\u002Fstrong\u003E в минимальном подключении. В результате без существенных доработок не подключить термистор для контроля температуры батарей, а также упущена возможность существенно упростить схему перехода на резервное питание. С одной стороны для большинства применений эти функции может быть и не так важны, но в случае с UPS очень пригодились бы. Дело за малым - сделать свой собственный модуль, но не сейчас, не для этого прототипа.\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F094\u002F40e\u002F0a8\u002F09440e0a8b3c77b0f01d2083104a3553.png\" alt=\"Модуль заряда\" title=\"Модуль заряда\" width=\"584\" height=\"461\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F094\u002F40e\u002F0a8\u002F09440e0a8b3c77b0f01d2083104a3553.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EМодуль заряда\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EВ итоге вся доработка зарядника свелась к двум вещам:\u003C\u002Fp\u003E\u003Cp\u003E– Была запаяна перемычка, которая устанавливает напряжение заряда \u003Cstrong\u003E8.4В\u003C\u002Fstrong\u003E, это как раз нужно для \u003Cstrong\u003E2S\u003C\u002Fstrong\u003E подключения батарей;\u003C\u002Fp\u003E\u003Cp\u003E– Выпаял один из двух резисторов-шунтов, которые задают ток заряда, чтобы снизить ток заряда с \u003Cstrong\u003E2А\u003C\u002Fstrong\u003E до \u003Cstrong\u003E1А\u003C\u002Fstrong\u003E. Можно сделать еще меньше, но для этого нужен шунт новый искать или монтировать резисторы “домиком” - последовательно. По опыту чип резисторы ужасно чувствительны к любым стрессам, что выливается в отслоение терминала, которое можно даже не заметить, поэтому, не рискуем.\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9e7\u002Fd97\u002F26b\u002F9e7d9726b2676f9889c3d9959ea5221b.png\" alt=\"Доработка модуля заряда\" title=\"Доработка модуля заряда\" width=\"721\" height=\"277\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9e7\u002Fd97\u002F26b\u002F9e7d9726b2676f9889c3d9959ea5221b.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EДоработка модуля заряда\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Ch4\u003EМощное реле\u003C\u002Fh4\u003E\u003Cp\u003EСледующим модулем на доработку идет модуль реле с выбираемым уровнем управления. Хотя достаточно было бы простого драйвера с транзистором, но плата оказалась очень удобной как в плане доработки, так и выборе нужного уровня управления.\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F3c2\u002Faa6\u002F054\u002F3c2aa60548223e6038d5132b126e11d4.png\" alt=\"Модуль реле\" title=\"Модуль реле\" width=\"730\" height=\"531\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F3c2\u002Faa6\u002F054\u002F3c2aa60548223e6038d5132b126e11d4.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EМодуль реле\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EДоработка модуля сводится к пайке сдвоенного диода с общим катодом снизу платы к площадкам тройника реле:\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff53\u002F957\u002F8fa\u002Ff539578fa7c9abb6cc267e2ec2152dc1.png\" alt=\"Доработка модуля реле\" title=\"Доработка модуля реле\" width=\"692\" height=\"343\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff53\u002F957\u002F8fa\u002Ff539578fa7c9abb6cc267e2ec2152dc1.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EДоработка модуля реле\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EДиод MBR20100CT был куплен в ближайшем магазине радиодеталей, видимо очень ходовой:\u003C\u002Fp\u003E\u003Cfigure class=\"\"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9a3\u002F7a0\u002Fe7d\u002F9a37a0e7df08eec6b3bb4eecc79c386e.png\" alt=\"O-Ring диод\" title=\"O-Ring диод\" width=\"350\" height=\"163\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9a3\u002F7a0\u002Fe7d\u002F9a37a0e7df08eec6b3bb4eecc79c386e.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EO-Ring диод\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EДиоды нужны только для коммутации питания на выход в момент переключения реле. Это десятки миллисекунд, за это время они не успевают даже нагреться.\u003C\u002Fp\u003E\u003Cp\u003EПоследнее, что надо будет сделать с модулем реле, это установить перемычку, которая задает уровень срабатывания реле, в положение \u003Cstrong\u003EL\u003C\u002Fstrong\u003E:\u003C\u002Fp\u003E\u003Cfigure class=\"\"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F366\u002F8c1\u002F6d9\u002F3668c16d9d0c9fcdd173f763170d31f4.png\" alt=\"Джампер выбора уровня срабатывания реле\" title=\"Джампер выбора уровня срабатывания реле\" width=\"387\" height=\"263\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F366\u002F8c1\u002F6d9\u002F3668c16d9d0c9fcdd173f763170d31f4.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EДжампер выбора уровня срабатывания реле\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Ch4\u003EПовышающий преобразователь\u003C\u002Fh4\u003E\u003Cp\u003EНапряжения на двух батареях недостаточно для стабильного питания NAS. Чтобы его увеличить до 12В необходим \u003Cstrong\u003EBoost DC\u002FDC\u003C\u002Fstrong\u003E - повышающий преобразователь.\u003C\u002Fp\u003E\u003Cp\u003EЯ нашел два модуля с подходящими габаритами и параметрами. Один из них построен на \u003Cstrong\u003ETPS61088\u003C\u002Fstrong\u003E - чип от TI, который я уже применял, а другой на \u003Cstrong\u003ELTC1871\u003C\u002Fstrong\u003E.\u003C\u002Fp\u003E\u003Cp\u003EВторой модуль на основе \u003Cstrong\u003ELTC1871\u003C\u002Fstrong\u003E удалось купить в тот же день:\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa10\u002Fe7b\u002F14b\u002Fa10e7b14b6650d816c2af4d47e676828.png\" alt=\"Повышающий преобразователь Boost DC\u002FDC\" title=\"Повышающий преобразователь Boost DC\u002FDC\" width=\"1391\" height=\"856\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa10\u002Fe7b\u002F14b\u002Fa10e7b14b6650d816c2af4d47e676828.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EПовышающий преобразователь Boost DC\u002FDC\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EСудя по разводке - это точно Boost преобразователь, а по маркировке выходного диода (\u003Cstrong\u003ESD1040CS\u003C\u002Fstrong\u003E \u003Cstrong\u003E- 40В, 10А\u003C\u002Fstrong\u003E) и транзистора (\u003Cstrong\u003EMOSFET D4184 - 40В, 50А\u003C\u002Fstrong\u003E) становится понятно, что заявленный ток 7А ограничен фактически катушкой. Что я не могу понять до сих пор, это то, как китайцы умудряются делать копеечные модули на чипах, стоимость которых в несколько раз выше самого модуля.\u003C\u002Fp\u003E\u003Cp\u003EУ модуля также есть встроенный вольтметр, который позволяет контролировать входное и выходное напряжение с помощью индикатора. Удобно крутить многооборотный резистор и выставлять напряжение. На всякий случай проконтролировал установку с помощью \u003Cstrong\u003EFluke\u003C\u002Fstrong\u003E, как и ожидалось точность \u003Cstrong\u003E±0.1В\u003C\u002Fstrong\u003E, что вполне достаточно для данного UPS.\u003C\u002Fp\u003E\u003Cp\u003EОдно но - подписи к кнопкам не соответствуют действительности. \u003Cstrong\u003EIN\u003C\u002Fstrong\u003E - включение \u002F выключение индикатора, а \u003Cstrong\u003EOUT\u003C\u002Fstrong\u003E - выбор измерения входного \u002F выходного напряжения.\u003C\u002Fp\u003E\u003Cp\u003EДорабатывать модуль нет необходимости, достаточно предварительно выставить напряжение \u003Cstrong\u003E11.7В\u003C\u002Fstrong\u003E.\u003C\u002Fp\u003E\u003Ch4\u003EМодуль балансировки батарей\u003C\u002Fh4\u003E\u003Cp\u003EДля балансировки \u003Cstrong\u003ELi-ion\u003C\u002Fstrong\u003E батарей существует огромное количество всевозможных модулей. Китайцы как правило делают их на своих собственных чипах и даже ставят правильные шунты. Так что просто нашел модуль типа \u003Cstrong\u003E2S\u003C\u002Fstrong\u003E - на два аккумулятора и запаял его как есть.\u003C\u002Fp\u003E\u003Cfigure class=\"\"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F913\u002Fa84\u002F2c0\u002F913a842c04e7f2b303b2b34aac7b27de.png\" alt=\"Модуль балансировки батарей\" title=\"Модуль балансировки батарей\" width=\"169\" height=\"288\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F913\u002Fa84\u002F2c0\u002F913a842c04e7f2b303b2b34aac7b27de.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EМодуль балансировки батарей\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EУ модуля балансировки есть очень полезная функция - напряжение на выходе не появляется до тех пор, пока к нему не будет приложено напряжение заряда. Это позволяет хранить батарею с установленным модулем без опасения замкнуть входные клеммы, а также можно в любой момент обесточить батарею кратковременно отсоединив любой из терминалов \u003Cstrong\u003EB+ \u002F B-\u003C\u002Fstrong\u003E.\u003C\u002Fp\u003E\u003Cp\u003EКнопка \u003Cstrong\u003ESleep\u003C\u002Fstrong\u003E на структурной схеме как раз и переводит батарею в неактивное состояние. При сборке NAS эта функция реально себя оправдает, так как не придется выполнять сборочные работы под напряжением.\u003C\u002Fp\u003E\u003Cp\u003EСамое главное - это:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003Eподключить аккумуляторы к \u003Cstrong\u003EB+ \u002F B- \u002F BM\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003Eподключить входное напряжение к \u003Cstrong\u003EP+ \u002F P-\u003C\u002Fstrong\u003E терминалам\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Ful\u003E\u003Ch4\u003EМодуль индикации заряда (напряжения)\u003C\u002Fh4\u003E\u003Cp\u003EПожалуй самое сложное с точки зрения обслуживания батарей - это оценка их реальной ёмкости. Скажу сразу, я сделал все очень просто как в старых добрых мобилах. Ведь никого особо не напрягает тот факт, что индикатор уровня заряда батареи в мобиле \u002F смартфоне отличается от реальности и со временем ситуация только ухудшается. Вот и я подумал, что для простого UPS достаточно будет измерить только напряжение на батареях.\u003C\u002Fp\u003E\u003Cp\u003EВ качестве индикатора напряжения был выбран простой индикатор с четырьмя фиксированными уровнями:\u003C\u002Fp\u003E\u003Cfigure class=\"\"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4da\u002F398\u002Fd20\u002F4da398d208b6e3cae84aef43f8557094.png\" alt=\"Модуль индикатора напряжения\" title=\"Модуль индикатора напряжения\" width=\"246\" height=\"231\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4da\u002F398\u002Fd20\u002F4da398d208b6e3cae84aef43f8557094.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EМодуль индикатора напряжения\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EЛучше всего постараться найти индикатор с диапазоном напряжений \u003Cstrong\u003E(6.6-8.4)В\u003C\u002Fstrong\u003E. Тогда нижний уровень \u003Cstrong\u003E6.6В\u003C\u002Fstrong\u003E - это суммарное напряжение двух практически разряженных аккумуляторов, а \u003Cstrong\u003E8.4В\u003C\u002Fstrong\u003E - уровень напряжения, которое используется для заряда и его можно использовать как индикатор наличия входного напряжения.\u003C\u002Fp\u003E\u003Cp\u003EАлгоритм работы системы питания NAS можно представить следующей диаграммой:\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa63\u002Fe46\u002Fb83\u002Fa63e46b83b817a9b814688b6921c13f0.png\" alt=\"Алгоритм работы системы питания NAS\" title=\"Алгоритм работы системы питания NAS\" width=\"1600\" height=\"718\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa63\u002Fe46\u002Fb83\u002Fa63e46b83b817a9b814688b6921c13f0.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EАлгоритм работы системы питания NAS\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EСам по себе индикатор вещь не очень нужная, однако его можно использовать для сигнализации пропадания питания и работы от батарей. В этом случае верхний светодиод или \u003Cstrong\u003E100%\u003C\u002Fstrong\u003E показывает, что есть напряжение заряда \u003Cstrong\u003E8.4В\u003C\u002Fstrong\u003E или то, что батарея еще достаточно свежая. Нижний светодиод или \u003Cstrong\u003E25%\u003C\u002Fstrong\u003E показывает, что напряжение батареи \u003Cstrong\u003Eеще достаточно\u003C\u002Fstrong\u003E для работы повышающего преобразователя, но уже пора запускать механизм выключения. Это позволит корректно завершить работу NAS перед тем как батарея полностью сядет.\u003C\u002Fp\u003E\u003Cp\u003EДорабатывать модуль не надо, нужно только припаять провода к контактам питания \u003Cstrong\u003E(+\u002F-\u003C\u002Fstrong\u003E) и к площадкам светодиодов, которые показывают нижний и верхний уровни напряжения:\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fab0\u002F6dc\u002F5f1\u002Fab06dc5f19ae2f68c34d7e9d6403c1c2.png\" alt=\"\" title=\"\" width=\"551\" height=\"459\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fab0\u002F6dc\u002F5f1\u002Fab06dc5f19ae2f68c34d7e9d6403c1c2.png\"\u002F\u003E\u003C\u002Ffigure\u003E\u003Cdiv\u003E\u003Cdiv class=\"table\"\u003E\u003Ctable\u003E\u003Ctbody\u003E\u003Ctr\u003E\u003Ctd data-colwidth=\"190\" width=\"190\"\u003E\u003Cp align=\"left\"\u003E\u003Cstrong\u003E\u003Cem\u003EНазвание\u003C\u002Fem\u003E\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd data-colwidth=\"210\" width=\"210\"\u003E\u003Cp align=\"left\"\u003E\u003Cstrong\u003E\u003Cem\u003EЦвет провода\u003C\u002Fem\u003E\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003E\u003Cstrong\u003E\u003Cem\u003EУровень напряжение, В\u003C\u002Fem\u003E\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd data-colwidth=\"190\" width=\"190\"\u003E\u003Cp align=\"left\"\u003E+\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd data-colwidth=\"210\" width=\"210\"\u003E\u003Cp align=\"left\"\u003Eкрасный\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003E8.4\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd data-colwidth=\"190\" width=\"190\"\u003E\u003Cp align=\"left\"\u003E-\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd data-colwidth=\"210\" width=\"210\"\u003E\u003Cp align=\"left\"\u003Eчерный\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003EGND\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd data-colwidth=\"190\" width=\"190\"\u003E\u003Cp align=\"left\"\u003E25%\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd data-colwidth=\"210\" width=\"210\"\u003E\u003Cp align=\"left\"\u003Eзеленый\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd rowspan=\"2\"\u003E\u003Cp align=\"left\"\u003E0 - светодиод не горит\u003C\u002Fp\u003E\u003Cp align=\"left\"\u003E2.7 - светодиод горит\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd data-colwidth=\"190\" width=\"190\"\u003E\u003Cp align=\"left\"\u003E100%\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd data-colwidth=\"210\" width=\"210\"\u003E\u003Cp align=\"left\"\u003Eфиолетовый\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003C\u002Ftbody\u003E\u003C\u002Ftable\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003Cp\u003EВ теории, цепи \u003Cstrong\u003E25% и 100%\u003C\u002Fstrong\u003E можно подключить к \u003Cstrong\u003EGPIO\u003C\u002Fstrong\u003E контактам процессора напрямую, если они рассчитаны на \u003Cstrong\u003E3.3В\u003C\u002Fstrong\u003E логику. Но даже в этом случае существует вероятность “запитывания” процессора через контакты \u003Cstrong\u003EGPIO\u003C\u002Fstrong\u003E, если процессор находится в выключенном состоянии.\u003C\u002Fp\u003E\u003Cp\u003EЧтобы избежать любых негативных последствий, подключать цепи 25% и 100% к процессорным GPIO, лучше через схему согласования уровней:\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F71e\u002F8fc\u002F81f\u002F71e8fc81f72b2d863bebb4523aedc30a.png\" alt=\"Простая схема подключения индикатора к GPIO\" title=\"Простая схема подключения индикатора к GPIO\" width=\"606\" height=\"276\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F71e\u002F8fc\u002F81f\u002F71e8fc81f72b2d863bebb4523aedc30a.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EПростая схема подключения индикатора к GPIO\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EИскать в точности такой модуль или делать его самому может быть и не надо. Существует достаточно удобная плата согласования уровней, которую можно подключить следующим образом:\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd12\u002Fece\u002Ff7b\u002Fd12ecef7b207695c1b52cedc49a3e03e.png\" alt=\"Схема подключения индикатора с помощью готовой платы\" title=\"Схема подключения индикатора с помощью готовой платы\" width=\"786\" height=\"338\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd12\u002Fece\u002Ff7b\u002Fd12ecef7b207695c1b52cedc49a3e03e.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EСхема подключения индикатора с помощью готовой платы\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EПлощадки \u003Cstrong\u003EGND\u003C\u002Fstrong\u003E справа и слева соединены на плате, достаточно только подключения со стороны платы процессора. Подключение к площадке \u003Cstrong\u003EHV\u003C\u002Fstrong\u003E также не требуется, так как нам не нужно двунаправленное согласование и используются только интегрированные диоды в транзисторах. Следует выпаять только резисторы подтяжки, обозначенные на рисунке.\u003C\u002Fp\u003E\u003Ch4\u003EДетектор пропадания напряжения\u003C\u002Fh4\u003E\u003Cp\u003EДля того, чтобы включить или выключить реле в зависимости от величины входного напряжения, необходимо установить соответствующий детектор.\u003C\u002Fp\u003E\u003Cp\u003EТакой детектор можно сделать, например, на модуле с \u003Cstrong\u003ELM393\u003C\u002Fstrong\u003E, у которого можно установить необходимый порог срабатывания. Однако, я не стал заказывать и ждать его с Али, а сделал сам на макетке, учитывая, что времени на это ушло порядка часа.\u003C\u002Fp\u003E\u003Cp\u003EВ качестве компаратора с гистерезисом также можно использовать управляемый стабилитрон \u003Cstrong\u003ETLVH431\u003C\u002Fstrong\u003E:\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F947\u002F244\u002Fdda\u002F947244dda6ecec5a23eee4bbe341f5aa.png\" alt=\"Схема детектора входного напряжения с гистерезисом\" title=\"Схема детектора входного напряжения с гистерезисом\" width=\"598\" height=\"403\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F947\u002F244\u002Fdda\u002F947244dda6ecec5a23eee4bbe341f5aa.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EСхема детектора входного напряжения с гистерезисом\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EНа схеме резисторы \u003Cstrong\u003ER1\u003C\u002Fstrong\u003E и \u003Cstrong\u003ER2\u003C\u002Fstrong\u003E задают напряжение включения реле, в данном случае это:\u003C\u002Fp\u003E\u003Cimg class=\"formula\" source=\"Uref\u002FR2*(R1+R2)=1.24V\u002F13k*(110k+13k)=11.7V\" alt=\"Uref\u002FR2*(R1+R2)=1.24V\u002F13k*(110k+13k)=11.7V\" src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0a9\u002Fdb4\u002Fc59\u002F0a9db4c5944a2d437451d00595c1a813.svg\" width=\"496\" height=\"22\"\u002F\u003E\u003Cp\u003E У открытого стабилитрона напряжение на катоде составляет порядка \u003Cstrong\u003E0.9В\u003C\u002Fstrong\u003E. Этого достаточно чтобы включить реле. Вместе с реле открывается транзистор и подключает резистор \u003Cstrong\u003ER4\u003C\u002Fstrong\u003E параллельно резистору \u003Cstrong\u003ER1\u003C\u002Fstrong\u003E. С учетом этого, стабилитрон теперь закроется только при входном напряжении существенно ниже \u003Cstrong\u003E11.7В\u003C\u002Fstrong\u003E:\u003C\u002Fp\u003E\u003Cimg class=\"formula\" source=\"Uref\u002FR2*(R1||R4+R2)=1.24V\u002F13k*(110k||4.3M+13k)=11.45V\" alt=\"Uref\u002FR2*(R1||R4+R2)=1.24V\u002F13k*(110k||4.3M+13k)=11.45V\" src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fac0\u002F470\u002Fc0c\u002Fac0470c0cccbdb5188b449e096ebfd83.svg\" width=\"596\" height=\"22\"\u002F\u003E\u003Cp\u003EСхема детектора была смонтирована на макетке для SOIC-8 \u002F MSOP-8:\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F05f\u002F90e\u002Fa2a\u002F05f90ea2a110aa9001b1c47a5135ecc4.png\" alt=\"Мотаж схемы детектора напряжения на макетке\" title=\"Мотаж схемы детектора напряжения на макетке\" width=\"654\" height=\"412\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F05f\u002F90e\u002Fa2a\u002F05f90ea2a110aa9001b1c47a5135ecc4.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EМотаж схемы детектора напряжения на макетке\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Ch4\u003EСборка\u003C\u002Fh4\u003E\u003Cp\u003EПосле доработки всех модулей можно переходить к сборке всего в корпус. Каких то рекомендаций давать не буду, так как все зависит от того, что есть под рукой и желания сделать хорошо.\u003C\u002Fp\u003E\u003Cp\u003EЗа основу общей платы лучше взять текстолит без фольги, он не горит и обрабатывается легко. Сечение проводов минимум \u003Cstrong\u003E0.75мм^2\u003C\u002Fstrong\u003E для мощных цепей и \u003Cstrong\u003E0.35мм^2\u003C\u002Fstrong\u003E для остальных. На корпусе нужно будет разместить два разъема питания для входного и выходного напряжения, индикатор питания и кнопку Sleep. Кнопка может быть без фиксации на разъединение, хотя можно использовать и с фиксацией. Главное, чтобы контакты кнопки выдерживали ток не менее \u003Cstrong\u003E4-5А\u003C\u002Fstrong\u003E.\u003C\u002Fp\u003E\u003Cp\u003EТакже следует уделить внимание тому, что модуль зарядки батарей может незначительно греться, особенно в самом начале. Поэтому, рекомендую его сразу приклеить обратной стороной платы на двусторонний термоскотч к небольшому радиатору.\u003C\u002Fp\u003E\u003Cp\u003EЯ все разместил на фанерке (не лучший выбор), закрепил модули и все спаял по месту:\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa0d\u002F9ee\u002F128\u002Fa0d9ee128bcd8886a3d3d2c54aed6622.png\" alt=\"Нижняя сторона монтажа UPS\" title=\"Нижняя сторона монтажа UPS\" width=\"1160\" height=\"929\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa0d\u002F9ee\u002F128\u002Fa0d9ee128bcd8886a3d3d2c54aed6622.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EНижняя сторона монтажа UPS\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F995\u002F7dc\u002F9c5\u002F9957dc9c5486800ba6fc3bb7f9f9a6b8.png\" alt=\"Вид сверху на смонтированные модули UPS\" title=\"Вид сверху на смонтированные модули UPS\" width=\"1264\" height=\"941\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F995\u002F7dc\u002F9c5\u002F9957dc9c5486800ba6fc3bb7f9f9a6b8.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EВид сверху на смонтированные модули UPS\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Febe\u002F736\u002Fccc\u002Febe736ccc5a947255cca9d234157f23a.png\" alt=\"Вид спереди на корпус UPS\" title=\"Вид спереди на корпус UPS\" width=\"1366\" height=\"665\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Febe\u002F736\u002Fccc\u002Febe736ccc5a947255cca9d234157f23a.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EВид спереди на корпус UPS\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9e9\u002Ff47\u002F30a\u002F9e9f4730a6509defbcf60487a244f030.png\" alt=\"Вид сзади на корпус UPS\" title=\"Вид сзади на корпус UPS\" width=\"1439\" height=\"752\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9e9\u002Ff47\u002F30a\u002F9e9f4730a6509defbcf60487a244f030.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EВид сзади на корпус UPS\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Ch4\u003EНастройка и проверка\u003C\u002Fh4\u003E\u003Cp\u003EПосле того как все собрано можно переходить к первому включению. Но для начала я бы рекомендовал обязательно выполнить следующие операции:\u003C\u002Fp\u003E\u003Cp\u003E– Зарядить аккумуляторы  внешним зарядником и только после этого вставить их в отсек. Напомню, что напряжение на выходе модуля балансировки не появится до тех пор пока не будет подано внешнее напряжение, поэтому можно спокойно работать дальше.\u003C\u002Fp\u003E\u003Cp\u003E– Далее следует выставить \u002F проверить выходное напряжение повышающего преобразователя без нагрузки. Для этого нужно отсоединить провод от выходного терминала \u003Cstrong\u003EOUT+\u003C\u002Fstrong\u003E и подав внешнее питание, выставить триммером напряжение \u003Cstrong\u003E11.7В\u003C\u002Fstrong\u003E. Контроль можно проводить как встроенным индикатором, так и подключив тестер. Не забыть, что кнопка \u003Cstrong\u003EIN\u003C\u002Fstrong\u003E - включает \u002F выключает индикатор, а кнопка \u003Cstrong\u003EOUT\u003C\u002Fstrong\u003E - выбирает напряжение для измерения - вход либо выход.\u003C\u002Fp\u003E\u003Cp\u003E– Также необходимо проверить, что реле включается при напряжении \u003Cstrong\u003E11.7В\u003C\u002Fstrong\u003E и выключается при \u003Cstrong\u003E11.4В\u003C\u002Fstrong\u003E, ну или хотя бы выключается. Если реле включается, но не выключается, то следует проверить монтаж и номиналы компонентов детектора.\u003C\u002Fp\u003E\u003Cp\u003E– Обязательно надо проверить не греются ли диоды при включенном и выключенном реле. Если греются, то это явно ошибка монтажа. \u003Cstrong\u003EДиоды греться не должны\u003C\u002Fstrong\u003E.\u003C\u002Fp\u003E\u003Cp\u003EОстальные проверки можно проводить уже по месту или выполнить их заранее до сборки. Тут каждый себе мастер и настройщик.\u003C\u002Fp\u003E\u003Ch4\u003EТестирование\u003C\u002Fh4\u003E\u003Cp\u003EЛучше всего проводить тестирование не на боевом железе. Все таки NAS вещь дорогая и необходимо убедиться заранее, что все функционирует согласно ожиданиям.\u003C\u002Fp\u003E\u003Cp\u003EОсновное, что надо проверить, это:\u003C\u002Fp\u003E\u003Cp\u003E– заряд аккумуляторов без нагрузки и под нагрузкой (на всякий случай);\u003C\u002Fp\u003E\u003Cp\u003E– переход на резервную батарею после пропадания входного напряжения;\u003C\u002Fp\u003E\u003Cp\u003E– время работы батарей под нагрузкой.\u003C\u002Fp\u003E\u003Cp\u003EДля тестирования обязательно понадобятся хорошие кабели питания. Проще всего их сделать из готовых компьютерных кабелей:\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F10a\u002F190\u002F07d\u002F10a19007d6cc077366c965989bd2a5fe.png\" alt=\"Пример кабеля питания для тестирования UPS\" title=\"Пример кабеля питания для тестирования UPS\" width=\"1493\" height=\"927\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F10a\u002F190\u002F07d\u002F10a19007d6cc077366c965989bd2a5fe.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EПример кабеля питания для тестирования UPS\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EВ качестве нагрузки можно использовать электронную нагрузку (обычный такой домашний прибор). Также можно подключать мощные резисторы для проверки под нагрузкой, начиная с \u003Cstrong\u003E1А\u003C\u002Fstrong\u003E и далее \u003Cstrong\u003Eпо желанию\u003C\u002Fstrong\u003E.\u003C\u002Fp\u003E\u003Ch4\u003EЧто можно улучшить\u003C\u002Fh4\u003E\u003Cp\u003EНесмотря на все достоинства и положительные эмоции, стоит сказать, что представленная конструкция блока UPS во многом нуждается в улучшении.\u003C\u002Fp\u003E\u003Cp\u003EВ первую очередь, необходимо улучшить схему контроля ёмкости батарей и организовать более информативную связь с процессором.\u003C\u002Fp\u003E\u003Cp\u003EВозможно следует добавить универсальности в подключении различных типов соединения батарей, таких как \u003Cstrong\u003E2S2P\u003C\u002Fstrong\u003E, \u003Cstrong\u003E2S3P\u003C\u002Fstrong\u003E, \u003Cstrong\u003E3S1P\u003C\u002Fstrong\u003E и т.д.\u003C\u002Fp\u003E\u003Cp\u003EВ случае с последовательным соединением трех и более батарей, потребуется замена повышающего преобразователя на преобразователь, который способен не только повышать напряжение, но и снижать его - \u003Cstrong\u003ESEPIC\u003C\u002Fstrong\u003E или \u003Cstrong\u003EBuck\u002FBoost\u003C\u002Fstrong\u003E.\u003C\u002Fp\u003E\u003Cp\u003EВ перспективе хочется добавить стандартный интерфейс связи UPS с материнской платой, такой как \u003Cstrong\u003EUSB\u003C\u002Fstrong\u003E или \u003Cstrong\u003EUART\u003C\u002Fstrong\u003E. Для этого понадобится микроконтроллер, например, \u003Cstrong\u003ERP2040\u003C\u002Fstrong\u003E.\u003C\u002Fp\u003E\u003Ch4\u003EПодведение итогов\u003C\u002Fh4\u003E\u003Cp\u003EЧестно говоря, просматривая текст, я понял, что решение то не очень простое оказалось. Вроде бы и модули готовые, а вот все равно много чего надо учесть и внимательно повторить.\u003C\u002Fp\u003E\u003Cp\u003EС другой стороны, голова боится, а руки делают. Так что не вижу проблем, почему бы не повторить конструкцию самостоятельно. На сборку и отладку уйдет не больше недели с учетом всех закупок и подготовки.\u003C\u002Fp\u003E\u003Cp\u003EКак результат сборки, получится довольно компактный UPS, который можно разместить практически в любом корпусе:\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw780q1\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F1c5\u002F104\u002Fc47\u002F1c5104c476a4f66d126f6e0bade891c8.jpg\" alt=\"Рамка с защелками для крепления UPS\" title=\"Рамка с защелками для крепления UPS\" width=\"4513\" height=\"2373\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F1c5\u002F104\u002Fc47\u002F1c5104c476a4f66d126f6e0bade891c8.jpg\" data-blurred=\"true\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EРамка с защелками для крепления UPS\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw780q1\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fda9\u002F67c\u002Fe7b\u002Fda967ce7bf2373c7776c10d6ce58c45d.jpg\" alt=\"Размещение UPS внутри корпуса mini-ITX\" title=\"Размещение UPS внутри корпуса mini-ITX\" width=\"4369\" height=\"2557\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fda9\u002F67c\u002Fe7b\u002Fda967ce7bf2373c7776c10d6ce58c45d.jpg\" data-blurred=\"true\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EРазмещение UPS внутри корпуса mini-ITX\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EСтоит отметить, что для сборки были использованы только готовые модули, которые можно найти в большинстве радиолюбительских магазинов или заказать на Али. Даже то, что один из модулей все таки пришлось собрать практически на коленке, говорит о простоте и возможности повторения. Вместе с тем, UPS способен резервировать напряжение питания небольшого NAS с 4-5 дисками в течении минимум 20 минут, сигнализируя процессор в нужный момент о переходе на резервное питание и необходимости завершения работы при глубокой разрядке батарей.\u003C\u002Fp\u003E\u003Cp\u003EОтмечу, что данный UPS был разработан специально для проекта NAS, над которым мы работаем целой командой. Наша цель состоит в разработке такой конструкции, которая будет модульной и удобной в плане модернизации и улучшения, начиная с вычислительного модуля, заканчивая дизайном корпуса. Проект открытый и всей информацией о ходе разработки, включая этапы дизайна, тесты, любые детали конструкции и всё, что нам интересно, мы обсуждаем с подписчиками в нашем \u003Ca href=\"https:\u002F\u002Ft.me\u002FUberNasNews\"\u003E\u003Cu\u003ETelegram канале\u003C\u002Fu\u003E\u003C\u002Fa\u003E.\u003C\u002Fp\u003E\u003Cp\u003EВ данной статье была рассмотрена только одна часть задачи - это аппаратное решение. Понятно, что этого явно недостаточно, так как UPS необходимо интегрировать в NAS не только аппаратно, но и программно. Поэтому, в следующий раз будем исследовать вопрос, связанный с программными решениями подключения UPS к процессору и организацию их взаимодействия.\u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E\u003C\u002Fdiv\u003E","tags":[{"titleHtml":"UPS"},{"titleHtml":"NAS"},{"titleHtml":"DIY"},{"titleHtml":"BMS"},{"titleHtml":"Charger"},{"titleHtml":"liion"},{"titleHtml":"sepic"},{"titleHtml":"aliexpress"}],"metadata":{"stylesUrls":[],"scriptUrls":[],"shareImageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8db\u002F97a\u002Ff6b\u002F8db97af6bc0978ac0010bd230ccc525e.jpg","shareImageWidth":1200,"shareImageHeight":630,"vkShareImageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8db\u002F97a\u002Ff6b\u002F8db97af6bc0978ac0010bd230ccc525e.jpg","schemaJsonLd":"{\"@context\":\"http:\\\u002F\\\u002Fschema.org\",\"@type\":\"Article\",\"mainEntityOfPage\":{\"@type\":\"WebPage\",\"@id\":\"https:\\\u002F\\\u002Fhabr.com\\\u002Fru\\\u002Fcompany\\\u002F3rdman\\\u002Fblog\\\u002F720524\\\u002F\"},\"headline\":\"Как сделать простой UPS для NAS\",\"datePublished\":\"2023-03-05T17:14:33+03:00\",\"dateModified\":\"2023-03-05T17:14:33+03:00\",\"author\":{\"@type\":\"Person\",\"name\":\"Дмитрий Сидорович\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Habr\",\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fwebt\\\u002Fa_\\\u002Flk\\\u002F9m\\\u002Fa_lk9mjkccjox-zccjrpfolmkmq.png\"}},\"description\":\"Сборка любого железа само по себе интересное занятие. Особенно, если что-то делается не совсем как у других и для души. Взять, например, NAS - процессор x86 или...\",\"url\":\"https:\\\u002F\\\u002Fhabr.com\\\u002Fru\\\u002Fcompany\\\u002F3rdman\\\u002Fblog\\\u002F720524\\\u002F#post-content-body\",\"about\":[\"c_3rdman\",\"h_it-infrastructure\",\"h_data_warehouse\",\"h_energy\",\"h_DIY\",\"f_admin\",\"f_popsci\"],\"image\":[\"https:\\\u002F\\\u002Fhabr.com\\\u002Fshare\\\u002Fpublication\\\u002F720524\\\u002F7dfc516f23074a7cf9bdb6273267679b\\\u002F\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Fe21\\\u002F81a\\\u002Fb7d\\\u002Fe2181ab7d7bd9c0703a403fc2676acd7.svg\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Ff73\\\u002Fca6\\\u002F42c\\\u002Ff73ca642cf1b4794cc11f52a7747e90f.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F8f3\\\u002F7bc\\\u002F4a5\\\u002F8f37bc4a55e503c29e0aaf4524e099a4.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Fb91\\\u002F2ff\\\u002F742\\\u002Fb912ff7428521bd80baf727548d72061.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F094\\\u002F40e\\\u002F0a8\\\u002F09440e0a8b3c77b0f01d2083104a3553.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F9e7\\\u002Fd97\\\u002F26b\\\u002F9e7d9726b2676f9889c3d9959ea5221b.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F3c2\\\u002Faa6\\\u002F054\\\u002F3c2aa60548223e6038d5132b126e11d4.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Ff53\\\u002F957\\\u002F8fa\\\u002Ff539578fa7c9abb6cc267e2ec2152dc1.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F9a3\\\u002F7a0\\\u002Fe7d\\\u002F9a37a0e7df08eec6b3bb4eecc79c386e.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F366\\\u002F8c1\\\u002F6d9\\\u002F3668c16d9d0c9fcdd173f763170d31f4.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Fa10\\\u002Fe7b\\\u002F14b\\\u002Fa10e7b14b6650d816c2af4d47e676828.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F913\\\u002Fa84\\\u002F2c0\\\u002F913a842c04e7f2b303b2b34aac7b27de.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F4da\\\u002F398\\\u002Fd20\\\u002F4da398d208b6e3cae84aef43f8557094.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Fa63\\\u002Fe46\\\u002Fb83\\\u002Fa63e46b83b817a9b814688b6921c13f0.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Fab0\\\u002F6dc\\\u002F5f1\\\u002Fab06dc5f19ae2f68c34d7e9d6403c1c2.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F71e\\\u002F8fc\\\u002F81f\\\u002F71e8fc81f72b2d863bebb4523aedc30a.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Fd12\\\u002Fece\\\u002Ff7b\\\u002Fd12ecef7b207695c1b52cedc49a3e03e.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F947\\\u002F244\\\u002Fdda\\\u002F947244dda6ecec5a23eee4bbe341f5aa.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F0a9\\\u002Fdb4\\\u002Fc59\\\u002F0a9db4c5944a2d437451d00595c1a813.svg\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Fac0\\\u002F470\\\u002Fc0c\\\u002Fac0470c0cccbdb5188b449e096ebfd83.svg\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F05f\\\u002F90e\\\u002Fa2a\\\u002F05f90ea2a110aa9001b1c47a5135ecc4.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Fa0d\\\u002F9ee\\\u002F128\\\u002Fa0d9ee128bcd8886a3d3d2c54aed6622.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F995\\\u002F7dc\\\u002F9c5\\\u002F9957dc9c5486800ba6fc3bb7f9f9a6b8.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Febe\\\u002F736\\\u002Fccc\\\u002Febe736ccc5a947255cca9d234157f23a.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F9e9\\\u002Ff47\\\u002F30a\\\u002F9e9f4730a6509defbcf60487a244f030.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F10a\\\u002F190\\\u002F07d\\\u002F10a19007d6cc077366c965989bd2a5fe.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F1c5\\\u002F104\\\u002Fc47\\\u002F1c5104c476a4f66d126f6e0bade891c8.jpg\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Fda9\\\u002F67c\\\u002Fe7b\\\u002Fda967ce7bf2373c7776c10d6ce58c45d.jpg\"]}","metaDescription":"Сборка любого железа само по себе интересное занятие. Особенно, если что-то делается не совсем как у других и для души. Взять, например, NAS - процессор x86 или ARM, конструктив, количество и тип...","mainImageUrl":null,"amp":true,"customTrackerLinks":[]},"polls":[],"commentsEnabled":true,"rulesRemindEnabled":false,"votesEnabled":true,"status":"published","plannedPublishTime":null,"checked":null,"hasPinnedComments":false,"format":"tutorial","readingTime":11,"complexity":"medium","isEditorial":false}},"articlesIds":{},"isLoading":false,"pagesCount":{},"route":{},"reasonsList":null,"view":"cards","lastVisitedRoute":{},"ssrCommentsArticleIds":[""],"karma":{"userReasonsList":null}},"authorContribution":{"authors":{}},"betaTest":{"currentAnnouncement":null,"announcements":{},"announcementCards":null,"announcementComments":{},"announcementCommentThreads":{},"announcementCommentingStatuses":{},"archivedList":[]},"authorStatistics":{"articleRefs":{},"articleIds":{},"pagesCount":{},"route":{},"viewsCount":[],"maxStatsCount":{}},"career":{"seoLandings":[],"hubs":""},"comments":{"articleComments":{},"articlePinnedComments":{},"searchCommentsResults":null,"pagesCount":null,"commentAccess":{},"scrollParents":{},"pageArticleComments":{"lastViewedComment":0,"postId":null,"lastCommentTimestamp":"","moderated":[],"moderatedIds":[],"commentRoute":""}},"companies":{"companyRefs":{"3rdman":{"alias":"3rdman","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002Fe0a\u002Ff03\u002F0cb\u002Fe0af030cbdb546123b097248bfefc3c9.png","titleHtml":"Third Man","descriptionHtml":null,"relatedData":null,"statistics":{"subscribersCount":31,"rating":51.81,"invest":null,"postsCount":5,"newsCount":0,"vacanciesCount":0,"employeesCount":7,"careerRating":null},"foundationDate":{"year":"2022","month":"06","day":"09"},"location":{"city":{"id":"447733","title":"Санкт-Петербург"},"region":{"id":"1948","title":"Санкт-Петербург и область"},"country":{"id":"168","title":"Россия"}},"siteUrl":"https:\u002F\u002Fvk.com\u002F3rdman","staffNumber":"11–30 человек","registrationDate":"2022-12-05T15:04:06+00:00","representativeUser":null,"contacts":[{"title":"Сайт","url":"https:\u002F\u002Fvk.com\u002F3rdman","siteTitle":"THIRD MAN LLC | VK","favicon":"https:\u002F\u002Fm.vk.com\u002Fimages\u002Ficons\u002Ffavicons\u002Ffav_logo.ico?8"}],"settings":{"analyticsSettings":[],"branding":null,"status":"active","isStartup":true},"metadata":{"titleHtml":"Third Man, Санкт-Петербург -  с 9 июня 2022 г.","title":"Third Man, Санкт-Петербург -  с 9 июня 2022 г.","keywords":["Автомобильные гаджеты","Транспорт","Исследования и прогнозы в IT","Интернет вещей","IT-инфраструктура"],"descriptionHtml":"5 статей от авторов компании Third Man","description":"5 статей от авторов компании Third Man"},"aDeskSettings":null,"careerAlias":null}},"companyIds":{},"companyTopIds":{},"pagesCount":{},"companyProfiles":{},"companiesCategories":[],"companiesCategoriesTotalCount":0,"companiesWidgets":{},"companiesWorkers":{},"companiesFans":{},"route":{},"isLoading":false,"companyWorkersLoading":false,"companyFansLoading":false,"vacancies":{},"companiesGalleries":{},"companiesBanners":{},"companiesLandingVacancies":{},"companiesTechnologies":{},"workplaceInfo":null},"companyAdmin":{"companyInfo":null,"companyInfoLoading":false,"faqArticles":null,"brandingPreviewImageUrl":null,"jivoStatus":0,"adminNotifications":null},"companiesContribution":{"hubs":{},"flows":{},"companyRefs":{}},"companyHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"conversation":{"messages":[],"respondent":null,"isLoadMore":false},"conversations":{"conversations":[],"unreadCount":0,"pagesCount":0},"desktopState":{"desktopFl":null,"desktopHl":null,"isChecked":false,"isLoginDemanded":false},"docs":{"menu":{},"articles":{},"mainMenu":[],"loading":{"main":false,"dropdown":false,"article":false}},"feature":{"isProbablyVisible":true},"flows":{"updates":{"countNewPostsBySubscription":null,"countNewPostsAll":30,"countNewNewsAll":10},"flows":[{"alias":"develop","id":"1","route":{"name":"FLOW_PAGE","params":{"flowName":"develop"}}},{"alias":"admin","id":"6","route":{"name":"FLOW_PAGE","params":{"flowName":"admin"}}},{"alias":"design","id":"2","route":{"name":"FLOW_PAGE","params":{"flowName":"design"}}},{"alias":"management","id":"3","route":{"name":"FLOW_PAGE","params":{"flowName":"management"}}},{"alias":"marketing","id":"4","route":{"name":"FLOW_PAGE","params":{"flowName":"marketing"}}},{"alias":"popsci","id":"7","route":{"name":"FLOW_PAGE","params":{"flowName":"popsci"}}}]},"global":{"isPwa":false,"device":"desktop","isHabrCom":true},"hubs":{"hubRefs":{},"hubIds":{},"pagesCount":{},"isLoading":false,"route":{}},"hubsBlock":{"hubRefs":{},"hubIds":{}},"i18n":{"fl":"ru","hl":"ru"},"info":{"infoPage":{},"isLoading":true},"location":{"urlStruct":{"protocol":null,"slashes":null,"auth":null,"host":null,"port":null,"hostname":null,"hash":null,"search":null,"query":{},"pathname":null,"path":null,"href":""}},"me":{"user":null,"uuid":null,"ppgDemanded":false,"karmaResetInfo":{"canReincarnate":null,"wasReincarnated":null,"currentScore":null},"notes":null},"modal":{"modals":[]},"mostReadingList":{"mostReadingListIds":[],"mostReadingListRefs":null,"promoPost":null},"ppa":{"articles":{},"card":null,"transactions":null,"totalTransactions":null,"isAccessible":null},"projectsBlocks":{"activeBlocks":{"questions":"project-block-company-article"}},"promoData":{"isLoading":false,"hasLoaded":false,"featurer":null,"megaposts":null,"promoLinks":null,"promoPosts":null},"pullRefresh":{"shouldRefresh":false},"sandbox":{"articleIds":[],"articleRefs":{},"pagesCount":null,"route":{},"lastVisitedRoute":{},"isLoading":false},"search":{"searchQueryError":null},"settingsOther":{"inputs":{"uiLang":{"errors":[],"ref":null,"value":""},"articlesLangEnglish":{"errors":[],"ref":null,"value":false},"articlesLangRussian":{"errors":[],"ref":null,"value":false},"agreement":{"errors":[],"ref":null,"value":false},"email":{"errors":[],"ref":null,"value":true},"digest":{"errors":[],"ref":null,"value":true}}},"similarList":{"similarListIds":[],"similarListRefs":null},"ssr":{"error":null,"isDataLoaded":false,"isDataLoading":false,"isHydrationFailed":false,"isServer":false},"stories":{"stories":[{"id":"story-274","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F386\u002F1a0\u002F577\u002F3861a057738e4cf78f3fc173d952c827.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Топ-7 годноты из блогов компаний","lang":"ru","startTime":"2023-03-02T11:00:00+03:00","finishTime":"2023-03-07T10:15:00+03:00","slides":[{"id":"story-274_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F52c\u002F81a\u002Fe91\u002F52c81ae913532c5df7e90245845ce07c.png","button":null},{"id":"story-274_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff9b\u002Fc65\u002Ff9a\u002Ff9bc65f9a46ebd95a3babce143e6770a.jpg","button":{"title":"Клавиатурный зоопарк","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fcloud4y\u002Fblog\u002F716934\u002F","colorType":"light"}},{"id":"story-274_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa77\u002F2d7\u002Fb4e\u002Fa772d7b4e782a580cf72c5c996514a1f.jpg","button":{"title":"Три приёмника","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fruvds\u002Fblog\u002F716988\u002F","colorType":"light"}},{"id":"story-274_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F78c\u002Fb59\u002F01c\u002F78cb5901c06e97ec94f07bfd6ca12a68.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fruvds\u002Fblog\u002F716058\u002F","colorType":"dark"}},{"id":"story-274_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbe2\u002Fa46\u002F500\u002Fbe2a4650077735388744eb7d2e1ef7dd.jpg","button":{"title":"Очумелые ручки","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fselectel\u002Fblog\u002F718134\u002F","colorType":"dark"}},{"id":"story-274_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7f1\u002F18d\u002F8e3\u002F7f118d8e3f6fc09179c73dde840dd425.jpg","button":{"title":"Узнать причины","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Ftimeweb\u002Fblog\u002F713220\u002F","colorType":"light"}},{"id":"story-274_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F028\u002F038\u002F9f5\u002F0280389f5fb85f9f821fa45ccbaa8803.jpg","button":{"title":"Как это сделать","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fcloud4y\u002Fblog\u002F717342\u002F","colorType":"light"}},{"id":"story-274_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcb0\u002F02d\u002F7c4\u002Fcb002d7c42c03e59d7f124f10cbe4b4d.jpg","button":{"title":"Нырнуть в сеть","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fsouthbridge\u002Fblog\u002F717634\u002F","colorType":"dark"}}]},{"id":"story-272","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F82b\u002Fdd7\u002F7d8\u002F82bdd77d8ef7304d3b1b599191c2bb1c.png","title":"Сезоны Хабра","link":"https:\u002F\u002Fu.habr.com\u002F5P6i7"},"title":"Открыт сезон ML","lang":"ru","startTime":"2023-03-02T09:00:41+03:00","finishTime":"2023-03-31T20:53:00+03:00","slides":[{"id":"story-272_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F27f\u002Fd3a\u002Fddf\u002F27fd3addfe06da09592bdcf61db15795.jpg","button":null},{"id":"story-272_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F935\u002F582\u002F992\u002F935582992e378add33c898451b2a0d9f.jpg","button":null},{"id":"story-272_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe13\u002Feb8\u002Fa24\u002Fe13eb8a24b60622d3da72fd6e7ed3fda.jpg","button":null},{"id":"story-272_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa85\u002F83f\u002F5cc\u002Fa8583f5ccfae747135343f0e68c84112.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002F5P6i7","colorType":"light"}},{"id":"story-272_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F60d\u002F1cb\u002F98c\u002F60d1cb98cdd42d2696ebc0ec54740a23.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002F5P6i7","colorType":"light"}}]},{"id":"story-118","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fjh\u002F3n\u002Fhy\u002Fjh3nhyovspbtyqndibvbttgsprc.png","title":"Хабр Новости","link":"https:\u002F\u002Fu.habr.com\u002FcvdBy"},"title":"Лучшие фотографии «Джеймса Уэбба» за год","lang":"ru","startTime":"2023-03-01T11:00:00+03:00","finishTime":"2023-03-05T23:59:00+03:00","slides":[{"id":"story-118_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fml\u002Fcn\u002Fqx\u002Fmlcnqxuawiz09l-viwmfzybgesw.png","button":null},{"id":"story-118_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fvn\u002F7g\u002Fqt\u002Fvn7gqtssznilh0-zkjmgyq25vpo.png","button":null},{"id":"story-118_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fzg\u002Fi-\u002F1y\u002Fzgi-1ysesbd_givgtouinc97tby.png","button":null},{"id":"story-118_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fvm\u002Frz\u002F_v\u002Fvmrz_vbuvvaj8gsheuhwscrlt8c.png","button":null},{"id":"story-118_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fmq\u002Fs5\u002Fgk\u002Fmqs5gkpfk-iijv2gnlud3huxgpo.png","button":null},{"id":"story-118_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002F93\u002Fuv\u002Fxb\u002F93uvxboezmintyjwjgb5vrf1zcm.png","button":null},{"id":"story-118_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fu4\u002Fdy\u002Fcd\u002Fu4dycdmg1jiinbfztn3zkpocne0.png","button":null},{"id":"story-118_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Ffy\u002Fqr\u002Flg\u002Ffyqrlgev36v3pa3-zy8maak8ipe.png","button":null},{"id":"story-118_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fx7\u002Fx8\u002Ftf\u002Fx7x8tfe8l1ahi_zmusdmtp0b_sy.png","button":{"title":"Подробности","link":"https:\u002F\u002Fu.habr.com\u002FcvdBy","colorType":"light"}}]},{"id":"story-264","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcbd\u002Fe44\u002F753\u002Fcbde44753048ff6655f9f33752fd816a.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FnTaXn"},"title":"Cколько тратят в IT: сеньор бэкендер","lang":"ru","startTime":"2023-02-28T15:50:00+03:00","finishTime":"2023-03-07T23:59:00+03:00","slides":[{"id":"story-264_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd99\u002Ff45\u002Ff14\u002Fd99f45f14dc03b2394a86f50f76844f4.png","button":null},{"id":"story-264_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0e3\u002F529\u002F607\u002F0e3529607bca82d7b8214d422f20ab67.png","button":null},{"id":"story-264_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8ae\u002F39e\u002Fa4f\u002F8ae39ea4fd82c27289b24594adf3c0c0.png","button":null},{"id":"story-264_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F971\u002F361\u002Fd57\u002F971361d574204d51ffe35d8c9cfef943.png","button":null},{"id":"story-264_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F342\u002F5c0\u002Fee7\u002F3425c0ee73301cff942e3d9276ce4a79.png","button":{"title":"Подробности","link":"https:\u002F\u002Fu.habr.com\u002FnTaXn","colorType":"dark"}}]},{"id":"story-262","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2fa\u002Fc8a\u002Fba8\u002F2fac8aba82b995297abea595da7990d1.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Наука сна","lang":"ru","startTime":"2023-02-28T12:15:00+03:00","finishTime":"2023-03-15T23:59:00+03:00","slides":[{"id":"story-262_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa90\u002F725\u002F61c\u002Fa9072561c280c46933ff54fd8702cade.jpg","button":null},{"id":"story-262_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffd7\u002F658\u002F956\u002Ffd7658956ea825b1c317c7f688c48058.jpg","button":{"title":"Читать лекцию","link":"https:\u002F\u002Fu.habr.com\u002Fson01","colorType":"light"}},{"id":"story-262_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F366\u002Fd2e\u002F707\u002F366d2e70725209177fa82a4119139c86.jpg","button":{"title":"При чём же?","link":"https:\u002F\u002Fu.habr.com\u002Fson02","colorType":"light"}},{"id":"story-262_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4bd\u002F40f\u002F731\u002F4bd40f731bfbf571a709dd2f357f06b4.jpg","button":{"title":"Заглянуть в дневник","link":"https:\u002F\u002Fu.habr.com\u002Fson03","colorType":"light"}},{"id":"story-262_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F944\u002F7ad\u002Fe2f\u002F9447ade2f38c3c36790be75bf4462047.jpg","button":{"title":"Последствия","link":"https:\u002F\u002Fu.habr.com\u002Fson04","colorType":"light"}},{"id":"story-262_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F74c\u002Fce1\u002F4dc\u002F74cce14dc903b245dca90df3f2747abb.jpg","button":{"title":"Смотреть список","link":"https:\u002F\u002Fu.habr.com\u002Fson05","colorType":"light"}},{"id":"story-262_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbc9\u002Fa62\u002F9f0\u002Fbc9a629f0c5ef2027cf7796749a06914.jpg","button":{"title":"Следы в истории","link":"https:\u002F\u002Fu.habr.com\u002Fson06","colorType":"light"}},{"id":"story-262_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F085\u002F0ee\u002F868\u002F0850ee868132e1ec4ec3b24caf7e719a.jpg","button":{"title":"Что придумали?","link":"https:\u002F\u002Fu.habr.com\u002Fson07","colorType":"light"}}]},{"id":"story-252","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff19\u002F48d\u002Fd15\u002Ff1948dd155701f88d36e11387c1660ef.png","title":"Geek Travel","link":"https:\u002F\u002Fu.habr.com\u002F9TZjL"},"title":"Где искать северное сияние в России","lang":"ru","startTime":"2023-02-21T11:35:00+03:00","finishTime":"2023-03-12T11:22:00+03:00","slides":[{"id":"story-252_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F506\u002F188\u002F83b\u002F50618883bc97ce517531018d3290d961.jpg","button":{"title":"К посту","link":"https:\u002F\u002Fu.habr.com\u002F9TZjL","colorType":"light"}},{"id":"story-252_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe42\u002Fa71\u002Fe8e\u002Fe42a71e8eb5583814647f5ad55f9e0ae.jpg","button":null},{"id":"story-252_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F685\u002Fdbe\u002F4ff\u002F685dbe4ffe3940eca28ede7406898846.jpg","button":null},{"id":"story-252_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F383\u002F63b\u002F1f4\u002F38363b1f459d5daace0e4502f0780737.jpg","button":null},{"id":"story-252_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F32b\u002F665\u002F0c4\u002F32b6650c448d698b9ca4dba128afb56e.jpg","button":null},{"id":"story-252_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F95e\u002F0b2\u002F5be\u002F95e0b25be55ae919dbebbac6142e670d.jpg","button":null},{"id":"story-252_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F616\u002F1d4\u002Ff84\u002F6161d4f849be8d4e4aeee88ea2e3d572.jpg","button":null}]},{"id":"story-246","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fc41\u002F8cc\u002Fca9\u002Fc418ccca924faf05c11530c5071e627b.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-new"},"title":"Зарплаты в IT во второй половине 2022","lang":"ru","startTime":"2023-02-20T11:05:00+03:00","finishTime":"2023-03-05T23:59:00+03:00","slides":[{"id":"story-246_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbe2\u002F07d\u002F19f\u002Fbe207d19f3cdc4b89e3618025c071ea0.png","button":null},{"id":"story-246_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcda\u002F93e\u002Fed7\u002Fcda93eed762714814ddfc51c4712f4ed.png","button":null},{"id":"story-246_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fb8a\u002Fde4\u002F87f\u002Fb8ade487fa6556af459e032adebf852d.png","button":null},{"id":"story-246_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8f6\u002Fb32\u002F844\u002F8f6b328448ed968a18a60a0cd745bd34.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-new","colorType":"dark"}}]},{"id":"story-152","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa49\u002F0d3\u002F609\u002Fa490d3609f29b6dfc53a7b88ab47ca64.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa"},"title":"Сеньоры — очень странные люди","lang":"ru","startTime":"2023-01-23T11:00:00+03:00","finishTime":"2023-03-31T23:59:00+03:00","slides":[{"id":"story-152_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbbb\u002F901\u002F063\u002Fbbb9010630ae483ed1f41ec4e2572c13.png","button":null},{"id":"story-152_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4f8\u002F66c\u002F14f\u002F4f866c14f0ca8999334438d7f17c0e3a.png","button":null},{"id":"story-152_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F6b9\u002Fa07\u002Fa61\u002F6b9a07a612df213ac3a1c179301828df.png","button":null},{"id":"story-152_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff6b\u002Fadb\u002Fb99\u002Ff6badbb9969d7e34ef4f7492767c6a77.png","button":null},{"id":"story-152_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd9c\u002F9ac\u002F878\u002Fd9c9ac878bec5b494699e0080dd2e813.png","button":null},{"id":"story-152_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fdb1\u002Faf9\u002Fc3b\u002Fdb1af9c3bb557f6cee698cf67610f977.png","button":null},{"id":"story-152_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5cf\u002Fbed\u002F65b\u002F5cfbed65bd20b7051b1aac2b9d6e807e.png","button":null},{"id":"story-152_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffa8\u002F251\u002F4a9\u002Ffa82514a9471cd455339e97178d8c021.png","button":null},{"id":"story-152_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbd5\u002F901\u002Fe95\u002Fbd5901e952d9cf638355a3cc8b0c0911.png","button":{"title":"Хочу помочь джуну","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa","colorType":"light"}}]}]},"technotext":{"years":[],"technotextDocForNominees":null,"technotextDocForWinners":null,"technotextInfo":{},"technotextInfoLoading":false,"technotextWinners":{},"technotextWinnersLoading":false},"userHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"userInvites":{"availableInvites":0,"usedInvitesIds":[],"usedInvitesRefs":{},"usedInvitesPagesCount":0,"unusedInvitesIds":[],"unusedInvitesRefs":{},"unusedInvitesPagesCount":0},"userVotes":{"karmaVotesList":[],"karmaVotesPagesCount":null,"karmaVotesListLoading":false,"commentsVotesList":[],"commentsVotesPagesCount":null,"commentsVotesListLoading":false,"postsVotesList":[],"postsVotesPagesCount":null,"postsVotesListLoading":false,"userVotesList":[],"userVotesPagesCount":null,"userVotesListLoading":false},"users":{"authorRefs":{},"authorIds":{},"pagesCount":{},"authorProfiles":{},"userHubs":{},"userInvitations":{},"authorFollowers":{},"authorFollowed":{},"userSpecialization":{},"karmaStats":[],"statistics":null,"isLoading":false,"authorFollowersLoading":false,"authorFollowedLoading":false,"userHubsLoading":false,"userInvitationsLoading":false,"route":{}},"viewport":{"prevScrollY":{},"scrollY":0,"width":0},"tracker":{"items":{},"pagesCache":{},"markedViewedSilently":{},"markedRead":{},"unreadCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null},"unviewedCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null}}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script> 
+  <script src="https://assets.habr.com/habr-web/js/chunk-vendors.129fcbcb.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/app.8a380906.js" defer></script> 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-726094-1"></script> 
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script> 
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(24049213, "init", {
+      defer:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:false,
+    });
+  </script> 
+  <noscript> 
+   <div> 
+    <img src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;" alt=""> 
+   </div> 
+  </noscript> 
+  <script type="text/javascript">
+      window.addEventListener('load', function () {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = 'https://vk.com/rtrg?p=VK-RTRG-421343-57vKE';
+        }, 0);
+      });
+    </script> 
+  <script src="/js/ads.js" onload="window['zhY4i4nJ9K'] = true"></script>  
+ </body>
+</html>

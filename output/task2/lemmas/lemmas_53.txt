@@ -1,0 +1,589 @@
+extent: extent
+extens: extensive
+govern: government
+year: year years
+potenti: potential
+safer: safer
+addit: addition additional
+complet: complete completely completeness
+bai: bay
+laptop: laptops
+offer: offered offerings
+fit: fitting
+describ: describing
+mathemat: mathematics mathematically mathematical
+permiss: permission
+bitmap: bitmap
+draft: draft
+visual: visual
+sproull: sproull
+jump: jumped
+grow: growing
+serv: serve
+zier: zier
+version: version
+garger: garger
+size: sizes
+left: left
+juli: july
+detail: details
+placement: placement
+descript: description descriptions
+wine: wine
+organ: organization
+annal: annals
+turn: turning
+corpor: corporation
+result: result
+search: search
+releas: release released releases
+blvd: blvd
+aspect: aspects
+measur: measured
+term: terms
+quiet: quiet
+surfac: surface
+close: close
+connect: connect
+hand: hand
+sep: sep
+lampson: lampson
+set: set
+learn: learn learning
+quicker: quicker
+column: columns
+right: rights
+doug: doug
+photograph: photograph
+sale: sales
+influenti: influential
+overwhelm: overwhelming
+meet: meet
+newel: newell
+imag: image imaging images
+facet: facets
+wrap: wraps
+interview: interviews
+philosoph: philosophical
+discuss: discussions discussion discussed discusses
+font: fonts font
+standard: standard
+jul: jul
+venu: venue
+reserv: reservations
+movabl: movable
+featur: features
+correct: correct
+reader: readers
+contribut: contributions
+payrol: payroll
+shorelin: shoreline
+parti: party
+convinc: convinced
+startup: startup
+exceed: exceeded
+contact: contact
+legal: legally
+implement: implemented
+finish: finished
+digit: digital
+info: info
+area: areas
+deduct: deductible
+practic: practices
+initi: initial
+static: static
+admiss: admission
+need: needed
+typefac: typefaces typeface
+chm: chm
+carri: carried
+profound: profound
+vision: vision
+evan: evans
+resolut: resolution resolutions
+ey: eyes
+month: months
+success: success successful
+geschk: geschke
+http: http https
+lisa: lisa
+publicli: publicly
+chuck: chuck
+compat: compatible
+delai: delay
+semiconductor: semiconductors
+origin: origins
+compani: company
+famili: families
+univers: universities university
+consequ: consequences
+desktop: desktop
+interoper: interoperability
+determin: determine
+softwar: software
+laser: laser
+skill: skillful
+root: roots
+combin: combined combination
+human: human
+pixel: pixel
+internation: internationally
+contend: contend
+settl: settling
+sit: sits
+stabl: stable
+volunt: volunteers
+brilliant: brilliant
+societi: society
+ticket: tickets
+manufactur: manufacturers
+custom: customize
+asia: asia
+portabl: portable
+linda: linda
+print: printed printing print
+pdf: pdfs pdf
+publish: publishing published
+macdonald: macdonald
+numer: numerous
+interpret: interpreter
+permit: permitted
+nanci: nancy
+grant: granted
+fresh: fresh
+smartwatch: smartwatches
+big: big
+career: careers career
+donat: donation donate
+xerox: xerox
+challeng: challenged challenge
+catalog: catalog
+focus: focused focuses
+american: american
+timelin: timelines
+jerri: jerry
+hope: hopes
+bit: bits
+approach: approach approaches
+assembl: assembled
+output: output
+number: numbers number
+defect: defects
+experiment: experimental
+identifi: identify
+hypergrowth: hypergrowth
+action: actions
+decemb: december
+join: joining joined join
+adob: adobe
+text: text
+rightmost: rightmost
+write: writing
+rapidli: rapidly
+creat: creating create created
+oct: oct
+period: period
+colleagu: colleagues
+partnership: partnerships partnership
+meld: melded
+proceed: proceedings
+shape: shape shapes
+director: director
+printer: printers printer
+imageri: imagery
+metal: metal
+abil: abilities
+decid: deciding decided
+bell: bell
+typesett: typesetters
+system: systems
+experi: experience
+contrast: contrast
+john: john
+characterist: characteristic
+issu: issue
+champion: championing championed
+doi: doi
+paragraph: paragraphs
+librari: libraries library
+optim: optimize
+retain: retaining retains
+sutherland: sutherland
+institut: institutional
+irregular: irregularities
+matter: matter
+articl: articles
+pictur: picture
+world: worlds
+tom: tom
+steve: steve
+share: share
+andi: andy
+independ: independent independence
+centuri: century
+product: production products
+creator: creators
+jstor: jstor
+knew: knew
+asian: asian
+historian: historian
+menu: menu
+notic: noticed
+charact: characters character
+oral: oral
+inconsist: inconsistencies
+brotz: brotz
+francisco: francisco
+cheaper: cheaper
+fuel: fueling
+sign: sign
+screen: screens
+motiv: motivations
+lab: lab
+spur: spurred
+rear: rear
+high: high
+rejoin: rejoin
+earlier: earlier
+lai: lay
+menuez: menuez
+function: functions
+boynton: boynton
+logo: logo
+commun: community
+brian: brian
+literaci: literacy
+administr: administrative
+new: news
+read: reading
+law: law
+level: level
+fidel: fidelity
+author: author
+todai: today
+essai: essay
+vallei: valley
+interpress: interpress
+failur: failure
+establish: established establishing
+tool: tool
+welcom: welcomed
+expand: expanded expand
+professor: professors
+bob: bob
+background: background
+updat: updated
+produc: produce
+mahc: mahc
+collect: collections collection
+harvard: harvard
+code: code
+student: students student
+busi: business
+revolut: revolution
+lectur: lecture
+computerhistori: computerhistory
+head: head
+dcbrock: dcbrock
+transform: transformed transforming
+oil: oil
+fundament: fundamentally
+playlist: playlists
+hour: hours
+mesa: mesa
+leadership: leadership
+design: designed design
+row: rows
+make: making
+render: rendering
+foremost: foremost
+highli: highly
+equip: equipment
+conduct: conducted
+martin: martin
+offici: official
+incorpor: incorporated
+ph: ph
+easier: easier
+cultur: cultural
+depend: depending
+disclos: disclosed
+commit: commitment
+led: led
+enhanc: enhancing
+concern: concerned concern
+scene: scenes
+environ: environment
+firm: firm
+compon: component
+mountain: mountain
+decad: decades
+jam: jam
+friend: friends
+curv: curves
+butler: butler
+jar: jarring
+courtesi: courtesy
+exhibit: exhibits
+press: press presses pressing
+eventu: eventually
+element: elements
+undergradu: undergraduate
+invent: invented
+ivan: ivan
+demand: demand
+evolv: evolve
+benefit: benefits
+putman: putman
+javascript: javascript
+rotat: rotated
+input: input
+includ: included including
+refocus: refocused
+highest: highest
+stanford: stanford
+creativ: creative
+privaci: privacy
+anim: animations
+programm: programmers
+qualiti: quality
+access: accessed access
+fact: fact
+cut: cutting
+appl: apple
+document: documents document
+languag: languages language
+facto: facto
+global: global
+hing: hinged
+predecessor: predecessor
+experienc: experienced
+kei: key
+democrat: democratized
+found: founding
+rewritten: rewritten
+defin: define defining
+broader: broader
+graphic: graphics graphical
+trillion: trillions
+advantag: advantage
+creation: creation
+email: emails
+latest: latest
+devic: device
+art: arts art
+star: star
+maker: makers
+librarian: librarian
+geometri: geometry
+launch: launched
+team: teams team
+gordon: gordon
+tour: tours
+entrepreneur: entrepreneurs
+fulli: fully
+stori: stories story
+commerc: commerce
+emerg: emerged
+call: called
+appear: appeared appearance
+leftmost: leftmost
+bui: buy
+assist: assistant
+reliabl: reliably
+open: opening
+packard: packard
+stai: stayed
+disqu: disqus
+treat: treating
+definit: definitions
+lie: lie
+refin: refined refinement
+ieee: ieee
+research: researchers researcher
+carolyn: carolyn
+technolog: technologies technology
+view: view
+late: late
+acknowledg: acknowledgements
+subsequ: subsequently subsequent
+marva: marva
+laboratori: laboratory
+ital: italic
+solut: solution
+develop: developed development develop
+bold: bold
+mendelson: mendelson
+museum: museum
+hint: hinting
+name: named
+reid: reid
+support: support
+minicomput: minicomputers
+allow: allowing
+workstat: workstations
+hire: hired
+breakthrough: breakthrough
+reli: rely
+scientist: scientist
+idea: ideas
+mass: mass
+book: books
+commerci: commercialized
+effort: effort
+focu: focus
+life: life
+comput: computing computers
+cofound: cofounder cofounders
+common: common
+smartphon: smartphones
+trademark: trademark
+wai: ways
+enabl: enable
+overview: overview
+middl: middle
+accustom: accustomed
+europ: europe
+licens: licensed
+org: org
+recognit: recognition
+center: centers center
+start: start starting
+shore: shore
+graduat: graduate
+grew: grew
+earli: early
+curatori: curatorial
+chanc: chance
+silicon: silicon
+chang: changing changed
+comment: comments
+time: time
+basi: basis
+excit: excited
+base: based
+palo: palo
+leader: leader leaders
+sourc: sources source
+individu: individual
+denot: denote
+compris: comprise
+realiz: realize
+program: programming programs
+type: type
+revolution: revolutionized
+put: puts
+techniqu: technique techniques
+cast: casting
+twitter: twitter
+critic: critical
+problem: problem
+envis: envisioned
+displai: displays displaying display
+plan: plan plans
+greater: greater
+profession: professional
+work: working work worked
+revolutionari: revolutionary
+modul: modules
+push: push
+wors: worse
+utah: utah
+insight: insights
+typographi: typography
+studi: studies
+mellon: mellon
+futur: future
+moor: moore
+explos: explosive
+style: styles
+explor: explore exploring
+regist: registered
+engin: engineer engine
+educ: educations educators
+januari: january
+postscript: postscript
+architect: architect
+direct: directions direction
+secret: secrets secret
+requir: require
+compil: compilers
+impress: impressed
+eas: ease
+power: powerful powered power
+event: events
+leav: leave
+brock: brock
+regular: regular
+subscrib: subscribe
+lead: leading lead
+help: helped helpful
+hewlett: hewlett
+advanc: advanced advances
+date: dating
+craft: crafted
+broadli: broadly
+blog: blog blogs
+dan: dan
+protocol: protocol
+major: major
+simpl: simple
+talent: talented
+affair: affairs
+embrac: embraced
+group: groups group
+upcom: upcoming
+carnegi: carnegie
+employe: employees employee
+kind: kind kinds
+format: format formation
+edg: edge
+tax: tax
+geometr: geometric geometrically geometrical
+colleg: colleges
+market: market marketing
+person: personal
+keep: keeping
+histori: histories history
+fame: famed
+job: job
+scienc: science
+procedur: procedural procedures
+sail: sailing
+arrai: array
+line: lines
+crucial: crucial
+scale: scaled
+distinct: distinctive
+remark: remarkable
+alto: alto
+taft: taft
+gaffnei: gaffney
+point: point
+east: east
+donor: donor
+public: public publications
+warnock: warnock
+paper: paper
+parc: parc
+februari: february
+david: david
+provid: providing
+greatest: greatest
+paxton: paxton
+san: san
+move: moving moved
+sept: sept
+built: built
+tremend: tremendous tremendously
+rush: rushed
+trade: trade
+earn: earned
+clarif: clarification
+growth: growth
+visit: visit
+kickstart: kickstarted
+intend: intended
+rival: rival
+slightest: slightest

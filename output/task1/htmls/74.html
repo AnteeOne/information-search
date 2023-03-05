@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="ru" data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0"> 
+  <meta name="referrer" content="unsafe-url"> 
+  <title>Что не так с ChatGPT? / Хабр</title> 
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSxf6TF0.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveQhf6TF0.woff2) format('woff2');
+      unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSBf6TF0.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveRhf6.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* non-breaking hyphen */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmEU9vBh0_IsHAlmrO6g&skey=ee881451c540fdec&v=v29) format('woff2');
+      unicode-range: U+02011;
+    }
+  </style> 
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/chunk-vendors.b6238726.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/chunk-vendors.129fcbcb.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/app.2dc3dce9.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/app.8a380906.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" as="script"> 
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/chunk-vendors.b6238726.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/app.2dc3dce9.css"> 
+  <script>window.i18nFetch = new Promise((res, rej) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', '/js/i18n/ru-compiled.99fdff73029c662d76a25e7927355795.json');
+          xhr.responseType = 'json';
+          xhr.onload = function(e) {
+            if (this.status === 200) {
+              res({ru: xhr.response});
+            } else {
+              rej(e);
+            }
+          };
+          xhr.send();
+        });</script> 
+  <script data-vue-meta="ssr" type="application/ld+json" data-vmid="ldjson-schema">{"@context":"http:\/\/schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/habr.com\/ru\/post\/717750\/"},"headline":"Что не так с ChatGPT?","datePublished":"2023-03-05T11:43:42+03:00","dateModified":"2023-03-05T17:35:40+03:00","author":{"@type":"Person","name":"Денис Кильчичаков"},"publisher":{"@type":"Organization","name":"Habr","logo":{"@type":"ImageObject","url":"https:\/\/habrastorage.org\/webt\/a_\/lk\/9m\/a_lk9mjkccjox-zccjrpfolmkmq.png"}},"description":"Картинка для привлечения вниманияChatGPT (и примкнувший к нему New Bing) сейчас у всех на слуху. Пользовательская база первого перевалила за 100 млн за пару меся...","url":"https:\/\/habr.com\/ru\/post\/717750\/#post-content-body","about":["h_research","h_artificial_intelligence","f_management","f_popsci"],"image":["https:\/\/habr.com\/share\/publication\/717750\/35664ee6d055426347c0b8e0beb67046\/","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/0b1\/695\/653\/0b16956536f89e1b7bef30a6655dd9f4.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/013\/bb6\/051\/013bb6051d4e654b967fd690aec9bf52.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/1c9\/87c\/970\/1c987c970125b1b4528f8e49d11370e9.jpeg","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/519\/377\/c63\/519377c634f72ae6d18dfe43684e8d0b.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/0a4\/7b0\/536\/0a47b0536eee26d6691d1da28b060203.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/069\/9b4\/1ac\/0699b41acfb4bd8d1f394fc873ed7b1c.png"]}</script> 
+  <script src="//www.googletagservices.com/tag/js/gpt.js" async></script> 
+  <style>.grecaptcha-badge{visibility: hidden;}</style> 
+  <meta name="habr-version" content="2.114.0"> 
+  <meta data-vue-meta="ssr" property="fb:app_id" content="444736788986613">
+  <meta data-vue-meta="ssr" property="fb:pages" content="472597926099084">
+  <meta data-vue-meta="ssr" name="twitter:card" content="summary_large_image">
+  <meta data-vue-meta="ssr" name="twitter:site" content="@habr_com">
+  <meta data-vue-meta="ssr" property="og:site_name" content="Хабр" data-vmid="og:site_name">
+  <meta data-vue-meta="ssr" property="og:title" content="Что не так с ChatGPT?" data-vmid="og:title">
+  <meta data-vue-meta="ssr" name="twitter:title" content="Что не так с ChatGPT?" data-vmid="twitter:title">
+  <meta data-vue-meta="ssr" name="aiturec:title" content="Что не так с ChatGPT?" data-vmid="aiturec:title">
+  <meta data-vue-meta="ssr" name="description" content="Картинка для привлечения внимания ChatGPT (и примкнувший к нему New Bing) сейчас у всех на слуху. Пользовательская база первого перевалила за 100 млн за пару месяцев. В сети о нём циркулирет..." data-vmid="description">
+  <meta data-vue-meta="ssr" itemprop="description" content="Картинка для привлечения внимания ChatGPT (и примкнувший к нему New Bing) сейчас у всех на слуху. Пользовательская база первого перевалила за 100 млн за пару месяцев. В сети о нём циркулирет..." data-vmid="description:itemprop">
+  <meta data-vue-meta="ssr" property="og:description" content="Картинка для привлечения внимания ChatGPT (и примкнувший к нему New Bing) сейчас у всех на слуху. Пользовательская база первого перевалила за 100 млн за пару месяцев. В сети о нём циркулирет..." data-vmid="og:description">
+  <meta data-vue-meta="ssr" name="twitter:description" content="Картинка для привлечения внимания ChatGPT (и примкнувший к нему New Bing) сейчас у всех на слуху. Пользовательская база первого перевалила за 100 млн за пару месяцев. В сети о нём циркулирет..." data-vmid="twitter:description">
+  <meta data-vue-meta="ssr" property="aiturec:description" content="Картинка для привлечения внимания ChatGPT (и примкнувший к нему New Bing) сейчас у всех на слуху. Пользовательская база первого перевалила за 100 млн за пару месяцев. В сети о нём циркулирет..." data-vmid="aiturec:description">
+  <meta data-vue-meta="ssr" itemprop="image" content="https://habrastorage.org/getpro/habr/upload_files/693/2b5/dd6/6932b5dd611efa12fc0345e79582840c.png" data-vmid="image:itemprop">
+  <meta data-vue-meta="ssr" property="og:image" content="https://habrastorage.org/getpro/habr/upload_files/693/2b5/dd6/6932b5dd611efa12fc0345e79582840c.png" data-vmid="og:image">
+  <meta data-vue-meta="ssr" property="og:image:width" content="1200" data-vmid="og:image:width">
+  <meta data-vue-meta="ssr" property="og:image:height" content="630" data-vmid="og:image:height">
+  <meta data-vue-meta="ssr" property="aiturec:image" content="https://habrastorage.org/getpro/habr/upload_files/693/2b5/dd6/6932b5dd611efa12fc0345e79582840c.png" data-vmid="aiturec:image">
+  <meta data-vue-meta="ssr" name="twitter:image" content="https://habrastorage.org/getpro/habr/upload_files/693/2b5/dd6/6932b5dd611efa12fc0345e79582840c.png" data-vmid="twitter:image">
+  <meta data-vue-meta="ssr" property="vk:image" content="https://habrastorage.org/getpro/habr/upload_files/693/2b5/dd6/6932b5dd611efa12fc0345e79582840c.png?format=vk" data-vmid="vk:image">
+  <meta data-vue-meta="ssr" property="aiturec:item_id" content="717750" data-vmid="aiturec:item_id">
+  <meta data-vue-meta="ssr" property="aiturec:datetime" content="2023-03-05T08:43:42.000Z" data-vmid="aiturec:datetime">
+  <meta data-vue-meta="ssr" content="https://habr.com/ru/post/717750/" property="og:url" data-vmid="og:url">
+  <meta data-vue-meta="ssr" property="og:type" content="article" data-vmid="og:type">
+  <meta data-vue-meta="ssr" property="og:locale" content="ru_RU" data-vmid="og:locale">
+  <meta data-vue-meta="ssr" name="keywords" content="chatgpt, ai"> 
+  <link data-vue-meta="ssr" href="https://habr.com/ru/rss/post/717750/?fl=ru" type="application/rss+xml" title="" rel="alternate" name="rss">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/post/717750/" rel="canonical" data-vmid="canonical">
+  <link data-vue-meta="ssr" rel="image_src" href="https://habrastorage.org/getpro/habr/upload_files/693/2b5/dd6/6932b5dd611efa12fc0345e79582840c.png" data-vmid="image:href">
+  <link data-vue-meta="ssr" rel="amphtml" href="https://habr.com/ru/amp/post/717750/"> 
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303b44"> 
+  <meta name="msapplication-TileColor" content="#629FBC"> 
+  <meta name="apple-mobile-web-app-capable" content="yes"> 
+  <meta name="mobile-web-app-capable" content="yes"> 
+  <link rel="shortcut icon" type="image/png" sizes="16x16" href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png"> 
+  <link rel="shortcut icon" type="image/png" sizes="32x32" href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-152.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-180.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-256.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1136x640.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2436x1125.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1792x828.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_828x1792.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1334x750.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2208x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1125x2436.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2208.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2732x2048.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2688x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2224x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_750x1334.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x2732.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2388x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2224.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_640x1136.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2388.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x1536.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1536x2048.png"> 
+  <link rel="mask-icon" color="#77a2b6" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.svg"> 
+  <link crossorigin="use-credentials" href="/manifest.webmanifest" rel="manifest"> 
+  <script async src="https://unpkg.com/pwacompat" crossorigin="anonymous"></script> 
+  <script>window.yaContextCb = window.yaContextCb || []</script> 
+  <script src="https://yandex.ru/ads/system/context.js" async></script> 
+ </head> 
+ <body> 
+  <div id="app" data-server-rendered="true" data-async-called="true">
+   <div class="tm-layout__wrapper">
+    <!----> 
+    <div></div> <!----> 
+    <header class="tm-header">
+     <div class="tm-page-width">
+      <div class="tm-header__container">
+       <!----> <span class="tm-header__logo-wrap"><a href="/ru/" class="tm-header__logo tm-header__logo_ru">
+         <svg height="16" width="16" class="tm-svg-img tm-header__icon">
+          <title>Хабр</title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use>
+         </svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span> 
+       <div class="tm-dropdown tm-header__projects">
+        <div class="tm-dropdown__head">
+         <button class="tm-header__dropdown-toggle">
+          <svg height="16" width="16" class="tm-svg-img tm-header__icon tm-header__icon_dropdown">
+           <title>Открыть список</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#arrow-down"></use>
+          </svg></button>
+        </div> <!---->
+       </div> <a href="/ru/sandbox/start/" class="tm-header__become-author-btn"> Как стать автором </a> 
+       <div class="tm-feature tm-header__feature tm-feature tm-feature_variant-inline">
+        <!---->
+       </div> <!----> <!---->
+      </div>
+     </div>
+    </header> 
+    <div class="tm-layout">
+     <div class="tm-page-progress-bar"></div> 
+     <div data-menu-sticky="true" class="tm-base-layout__header tm-base-layout__header_is-sticky">
+      <div class="tm-page-width">
+       <div class="tm-base-layout__header-wrapper">
+        <div class="tm-main-menu">
+         <div class="tm-main-menu__section">
+          <nav class="tm-main-menu__section-content">
+           <!----> <a href="/ru/all/" class="tm-main-menu__item"> Все потоки </a> <a href="/ru/flows/develop/" class="tm-main-menu__item"> Разработка </a><a href="/ru/flows/admin/" class="tm-main-menu__item"> Администрирование </a><a href="/ru/flows/design/" class="tm-main-menu__item"> Дизайн </a><a href="/ru/flows/management/" class="tm-main-menu__item"> Менеджмент </a><a href="/ru/flows/marketing/" class="tm-main-menu__item"> Маркетинг </a><a href="/ru/flows/popsci/" class="tm-main-menu__item"> Научпоп </a>
+          </nav>
+         </div>
+        </div> 
+        <div class="tm-header-user-menu tm-base-layout__user-menu">
+         <a href="/ru/search/" class="tm-header-user-menu__item tm-header-user-menu__search">
+          <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark">
+           <title>Поиск</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#search"></use>
+          </svg></a> <!----> <!----> <!----> 
+         <div class="tm-header-user-menu__item tm-header-user-menu__user_desktop">
+          <div class="tm-dropdown">
+           <div class="tm-dropdown__head">
+            <svg height="24" width="24" data-test-id="menu-toggle-guest" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_dark">
+             <title>Профиль</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#header-user"></use>
+            </svg> <!---->
+           </div> <!---->
+          </div> <!---->
+         </div> <!---->
+        </div>
+       </div>
+      </div>
+     </div> <!----> 
+     <div class="tm-page-width"></div> 
+     <main class="tm-layout__container">
+      <div hl="ru" data-async-called="true" class="tm-page">
+       <div class="tm-page-width">
+        <!----> 
+        <div class="tm-page__wrapper">
+         <div class="tm-page__main tm-page__main_has-sidebar">
+          <div class="pull-down">
+           <!----> 
+           <div class="pull-down__header" style="height:0px;">
+            <div class="pull-down__content" style="bottom:10px;">
+             <svg height="24" width="24" class="tm-svg-img pull-down__arrow">
+              <title>Обновить</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#pull-arrow"></use>
+             </svg>
+            </div>
+           </div> 
+           <div class="tm-article-presenter"> 
+            <div class="tm-article-presenter__body">
+             <div class="tm-misprint-area">
+              <div class="tm-misprint-area__wrapper">
+               <article class="tm-article-presenter__content tm-article-presenter__content_narrow">
+                <div class="tm-article-presenter__header"> 
+                 <div class="tm-article-snippet tm-article-presenter__snippet tm-article-snippet">
+                  <div class="tm-article-snippet__meta-container">
+                   <div class="tm-article-snippet__meta">
+                    <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/augur/" title="augur" class="tm-user-info__userpic">
+                      <div class="tm-entity-image">
+                       <img alt="" height="24" src="//habrastorage.org/r/w32/getpro/habr/avatars/e3c/155/e71/e3c155e71df8c9b15b05efc5b4f696b6.png" width="24" class="tm-entity-image__pic">
+                      </div></a> <span class="tm-user-info__user"><a href="/ru/users/augur/" class="tm-user-info__username"> augur <!----></a> <span class="tm-article-datetime-published"><time datetime="2023-03-05T08:43:42.000Z" title="2023-03-05, 11:43">7 часов назад</time></span></span></span>
+                   </div> <!---->
+                  </div> 
+                  <h1 lang="ru" class="tm-article-snippet__title tm-article-snippet__title_h1"><span>Что не так с ChatGPT?</span></h1> 
+                  <div class="tm-article-snippet__stats">
+                   <div class="tm-article-complexity tm-article-complexity_complexity-low">
+                    <span class="tm-svg-icon__wrapper tm-article-complexity__icon">
+                     <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                      <title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#complexity-low"></use>
+                     </svg></span> <span class="tm-article-complexity__label"> Простой </span>
+                   </div> 
+                   <div class="tm-article-reading-time">
+                    <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                     <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                      <title>Время на прочтение</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#clock"></use>
+                     </svg></span> <span class="tm-article-reading-time__label"> 6 мин </span>
+                   </div> <span class="tm-icon-counter tm-data-icons__item">
+                    <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                     <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-views"></use>
+                    </svg> <span class="tm-icon-counter__value">6.6K</span></span>
+                  </div> 
+                  <div class="tm-article-snippet__hubs-container">
+                   <div class="tm-article-snippet__hubs">
+                    <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/research/" class="tm-article-snippet__hubs-item-link"><span>Исследования и прогнозы в IT</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/artificial_intelligence/" class="tm-article-snippet__hubs-item-link"><span>Искусственный интеллект</span> <!----></a></span>
+                   </div>
+                  </div> 
+                  <div class="tm-article-snippet__labels-container">
+                   <div class="tm-article-snippet__labels">
+                    <div class="tm-article-snippet__label tm-article-snippet__label_variant-opinion">
+                     <span> Мнение </span>
+                    </div> 
+                   </div>
+                  </div> <!----> <!---->
+                 </div>
+                </div> <!----> 
+                <div data-gallery-root="" lang="ru" class="tm-article-body">
+                 <div></div> 
+                 <div id="post-content-body">
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                    <div xmlns="http://www.w3.org/1999/xhtml">
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/0b1/695/653/0b16956536f89e1b7bef30a6655dd9f4.png" alt="Картинка для привлечения внимания" title="Картинка для привлечения внимания" width="1582" height="888" data-src="https://habrastorage.org/getpro/habr/upload_files/0b1/695/653/0b16956536f89e1b7bef30a6655dd9f4.png">
+                      <div>
+                       <figcaption>
+                        Картинка для привлечения внимания
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>ChatGPT (и примкнувший к нему New Bing) сейчас у всех на слуху. Пользовательская база первого перевалила за 100 млн за пару месяцев. В сети о нём циркулирет широчайший спектр мнений - от полного восторга надвигающейся технологической сингулярности, до панических предсказаний скорого порабощения человечества роботами. А многие занимают и жестко скептическую позицию. Вновь активизировались неолуддиты, их мишенью стали Copilot (побратим ChatGPT), и семейства AI тулзов для генерации графики (Stable Diffusion, Midjourney). </p>
+                     <p>Я получил доступ к ChatGPT в первую неделю его запуска ("повезло" с наличием иностранного мобильного номера), и с тех пор пользуюсь им, если и не каждый день, то уж 4-5 раз в неделю точно. В данной статье хочу высказать свои личные наблюдения, подкрепленные мнениями из сети.</p>
+                     <p>Про достоинства ChatGPT сказано уже очень многое, поэтому предлагаю более пристально посмотреть на обратную сторону монеты.</p>
+                     <h2>ChatGPT и системные требования</h2>
+                     <p>Сам ChatGPT, как и его создатели - компания OpenAI - туманно высказываются о системных требованиях, по-видимому, не строя пока планов о ChatGPT в виде коробочного оффлайн продукта.</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/013/bb6/051/013bb6051d4e654b967fd690aec9bf52.png" width="1472" height="428" data-src="https://habrastorage.org/getpro/habr/upload_files/013/bb6/051/013bb6051d4e654b967fd690aec9bf52.png">
+                     </figure>
+                     <p>Однако, известно что GPT-3, на которой базируется ChatGPT требует около 800 ГБ места под саму модель. ChatGPT также заявляет, что работает на кластерах специализированных GPU и TPU, за пределами возможностей современных домашних ПК.</p>
+                     <p>Возможно, <em>урезанные</em> версии модели могли бы работать в реалтайме на современных домашних high-end компьютерах типа Mac Pro, но мобильные устройства сразу пролетают мимо - как из-за объема хранилища, так и энергопотребления при трудоемких вычислениях.</p>
+                     <p>Увы, но закон Мура давно не работает ни для объемов памяти, ни для вычислений, так что пройдёт не один десяток лет, прежде чем требуемая мощь для работы таких моделей как ChatGPT окажется под рукой рядового пользователя.</p>
+                     <p>UPD: Хотя автор <a href="https://habr.com/ru/post/718996/" rel="noopener noreferrer nofollow">https://habr.com/ru/post/718996/</a> утверждает, что закон Мура технически продолжает работать, я замечу, что на обывательском уровне понимания (исходя не из увеличения числа транзисторов, а прироста производительности) закон мертв. Сам Гордон Мур описывал это так: "если бы авиационные технологии развивались с такой же скоростью, как компьютерные, самолеты стоили бы 500 долларов и облетали землю за 20 минут на 20 литрах топлива". Столь экспоненциальный рост базы электронных компонентов остался в прошлом.</p>
+                     <h2>ChatGPT и предвзятость</h2>
+                     <p>Эта особенность ChatGPT строится на основании предыдущего факта, что он в обозримом будущем остается проприетарным онлайн-сервисом. Непрозрачность и централизация, отсутствие общественных регуляций, позволяет ему целенаправленно выдавать opinionated контент.</p>
+                     <p>ChatGPT может (и уже следует) определенным повесткам, заложенным в него теми, кто его контролирует. Он делает различия между отношениям к различным расам, национальностям и полам (были примеры, как он отказывался придумывать шутки про гендерные стереотипы о женщинах, но соглашался делать то же самое про мужчин).</p>
+                     <p>По свидетельствам, раньше ChatGPT был более жёсток<strong> </strong>и менее тактичен в своих высказываниях, наиболее безобидный пример:</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w780q1/getpro/habr/upload_files/1c9/87c/970/1c987c970125b1b4528f8e49d11370e9.jpeg" alt="Выдача из 2022" title="Выдача из 2022" width="639" height="383" data-src="https://habrastorage.org/getpro/habr/upload_files/1c9/87c/970/1c987c970125b1b4528f8e49d11370e9.jpeg" data-blurred="true">
+                      <div>
+                       <figcaption>
+                        Выдача из 2022
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Сейчас, от него подобного ответа будет не добиться, так как добавлены всевозможные фильтры и веса для следования современным трендам политкорректности.</p>
+                     <p>Много где в интернете сейчас прослеживается такая тенденция, однако сам интернет гораздо слабее контролируется, тут есть многополярность мнений, и пространство для дискуссий.</p>
+                     <p>ChatGPT же как инструмент (наряду со многими современным видеоиграми, сериалами и кино) будет оружием только одной силы. Предвзятость - это недостаток, какой бы она ни была.</p>
+                     <h2>ChatGPT и экспертность</h2>
+                     <p>Не так давно прошумевшие новости о том, что ChatGPT, дескать, написал сайт, написал Android-приложение, и тп, не должны вводить нас в заблуждение. В нынешнем виде ChatGPT не способ самостоятельно эффективно решать хоть сколько-нибудь сложные задачи. Ему необходим эксперт, который на каждом шагу может оценить и подкорректировать результаты его работы.</p>
+                     <p>Если вы не смогли бы написать Android-приложение самостоятельно - ChatGPT не сделает этого за вас. Если вы не сможете написать сайт на Vue.js - ChatGPT не сделает это за вас.</p>
+                     <p>ChatGPT плавает во многих узкоспециализированных областях. На конкретные вопросы о, например, нюансах эксплуатации определенных марок автомобилей или огнестрельного оружия, вы получите очень обобщенные ответы, часто наполненные водой. Это позволяет разве что заполнить очевидные пробелы в знаниях, но не углубиться в тему.</p>
+                     <p>Хотя, в целом, помощь ChatGPT может быть весома, если вы умеете задавать <strong>правильные вопросы </strong>(истинна поговорка, что в правильно заданном вопросе содержится половина ответа). Так как ChatGPT организует и упрощает доступ к информации, то сокращает, по моим оценкам, время на ее поиск в ~2-10 раз.</p>
+                     <p>Даже обладая нулевыми знаниями в определенной области, вы можете обучаться с его помощью. Но только при условии обладания дисциплиной и грамотного подхода к обучению.</p>
+                     <h2>ChatGPT и ответственность</h2>
+                     <p>Еще одна проблема с ChatGPT - не стоит ожидать от него принятия ответственности за свои действия. Человек, даже низкооплачиваемый оператор колл-центра способен взвешенно принимать решения, совершать какие-нибудь операции по вашему обращению, и тд. </p>
+                     <p>Всё потому, что человек, как индивид, способен брать ответственность, ИИ - нет. За ним всегда стоят его создатели/владельцы, огражденные более (или менее) эффективными юридическими стенами ограничения/отказа от ответственности за последствия (кто будет отвечать за ДТП со смертельным исходом по вине ИИ автопилота Tesla?).</p>
+                     <p>Беседы о здоровье/медицине ChatGPT ведет с жирным дисклеймером об ограниченности применения его советов, и чуть ли не через каждое предложение рекомендует проконсультироваться с квалифицированным специалистом. С одной стороны - это честный, почти безопасный подход, с другой стороны - тогда не хватает подобных дисклеймеров и обо всех других предметных областях, где он может ошибиться.</p>
+                     <p>Так что и авторитетность - это не про ChatGPT. Не забываем, что он способен (и регулярно так и делает) галлюцинировать - выдумывать несуществующие личности, выдавать фантазии за реальность, максимально серьезно и правдоподобно о них рассказывая.</p>
+                     <p>Однако, надо признать, что ситуация с откровенно ошибочными выдачей постоянно улучшается. Многие промпты с нелепыми результатами теперь пофикшены.</p>
+                     <h2>СhatGPT и осознанность</h2>
+                     <p>Понимаю, что здесь моя аргументация вступает на зыбкую полемическую почву, где регулярно ломаются копья. Верно то, что мы до сих пор не можем полно и достоверно объяснить, что же такое вообще "сознание", прежде чем решать, может ли оно быть у ИИ.</p>
+                     <p>С другой стороны, теорема Гёделя о неполноте не мешает нам пожинать щедрые плоды математики. Нассим Талѐб в своей книге "Антихрупкость" доходчиво объяснет, почему для того, чтобы испытывать любовь, чувство справедливости и тп, необязательно владеть всеобъемлющей формулировкой этих понятий. Поэтому будем считать, что мы на интуинтивном уровне (как носители сознания) понимаем, что же это такое.</p>
+                     <p>ChatGPT часто "выглядит" (ведет себя) очень умно, по-человечески. И всё же, нельзя забывать, что у него нет осознания как самого себя, так и выдаваемых им результатов.</p>
+                     <figure class="">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/519/377/c63/519377c634f72ae6d18dfe43684e8d0b.png" alt="Готовы ли мы свести всё вокруг к работе цепочек стимул->действие?" title="Готовы ли мы свести всё вокруг к работе цепочек стимул->действие?" width="300" height="394" data-src="https://habrastorage.org/getpro/habr/upload_files/519/377/c63/519377c634f72ae6d18dfe43684e8d0b.png">
+                      <div>
+                       <figcaption>
+                        Готовы ли мы свести всё вокруг к работе цепочек стимул-&gt;действие?
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Так же как Stable Diffusion не обладает пониманием концепции человеческих пальцев, а лишь старается (и успешно в большинстве случаев) подражать примерам художников, так и ChatGPT крайне интеллектуально компилирует и отдает запомненные данные в ответ на ключевые слова.</p>
+                     <p>ChatGPT может запнуться на простейших когнитивных задачах, на которых человек бы вряд ли ошибся:</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/0a4/7b0/536/0a47b0536eee26d6691d1da28b060203.png" alt="ChatGPT запутан наличием blue box" title="ChatGPT запутан наличием blue box" width="1600" height="532" data-src="https://habrastorage.org/getpro/habr/upload_files/0a4/7b0/536/0a47b0536eee26d6691d1da28b060203.png">
+                      <div>
+                       <figcaption>
+                        ChatGPT запутан наличием blue box
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Правда, как мы знаем, и людям свойственны различные когнитивные искажения, но человек способен <strong>осознать</strong> свою ошибку и исправиться, ChatGPT же может быть только подкручен/исправлен извне.</p>
+                     <h2>Вместо заключения</h2>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/069/9b4/1ac/0699b41acfb4bd8d1f394fc873ed7b1c.png" width="1606" height="400" data-src="https://habrastorage.org/getpro/habr/upload_files/069/9b4/1ac/0699b41acfb4bd8d1f394fc873ed7b1c.png">
+                     </figure>
+                     <p>Что же получается? ChatGPT это инструмент для гораздо более интеллектуального поиска информации, чем существовавшие до него - этакий StackOverflow на стероидах / Google-поиск здорового человека.</p>
+                     <p>Также ChatGPT способен выступать как ассистент в задачах, которые мы давно имели возможность (и которые пришла пора) автоматизировать. Например, настоящий победитель бойлерплейт кода (не уровня геттеров/сеттеров, а заметно более комплексных задач, остающихся, тем не менее, тривиальными).</p>
+                     <p>И всё же ChatGPT это просто еще один шаг технологического прогресса, вместо прыжка в сингулярность. Большому потенциалу пока препятствуют вышеописанные сдерживающие факторы - ресурсоемкость, предвзятость и контролируемость, отсутствие экспертности, ответственности и настоящей осознанности. Но это всё равно добротный, уверенный шаг по дороге, которая через один-другой десяток лет перекроит наш мир, возможно, сильнее, чем это сделало появление интернета. Потому нам всем стоит оставаться бдительными и непрерывно адаптирующимися к изменяющейся реальности.</p>
+                     <p></p>
+                    </div>
+                   </div>
+                  </div> <!----> <!---->
+                 </div> <!----> <!---->
+                </div> <!----> 
+                <div class="tm-article-presenter__meta">
+                 <div class="tm-separated-list tm-article-presenter__meta-list">
+                  <span class="tm-separated-list__title">Теги:</span> 
+                  <ul class="tm-separated-list__list">
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bchatgpt%5D" class="tm-tags-list__link">chatgpt</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bai%5D" class="tm-tags-list__link">ai</a></li>
+                  </ul>
+                 </div> 
+                 <div class="tm-separated-list tm-article-presenter__meta-list">
+                  <span class="tm-separated-list__title">Хабы:</span> 
+                  <ul class="tm-separated-list__list">
+                   <li class="tm-separated-list__item"><a href="/ru/hub/research/" class="tm-hubs-list__link">Исследования и прогнозы в IT</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/hub/artificial_intelligence/" class="tm-hubs-list__link">Искусственный интеллект</a></li>
+                  </ul>
+                 </div>
+                </div>
+               </article>
+              </div> <!---->
+             </div> 
+             <div class="tm-article-sticky-panel">
+              <div class="tm-data-icons tm-article-sticky-panel__icons">
+               <div class="tm-article-rating tm-data-icons__item">
+                <div class="tm-votes-meter tm-article-rating__votes-switcher">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>Всего голосов 24: ↑22 и ↓2</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-rating"></use>
+                 </svg> <span title="Всего голосов 24: ↑22 и ↓2" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+20</span>
+                </div> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> <!----> <!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                 <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                  <title>Добавить в закладки</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-favorite"></use>
+                 </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 15 </span></button> 
+               <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                <a href="/ru/post/717750/comments/" class="tm-article-comments-counter-link__link">
+                 <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                  <title>Комментарии</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-comments"></use>
+                 </svg> <span class="tm-article-comments-counter-link__value"> 39 </span></a> <!---->
+               </div> 
+               <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                <button type="button" class="tm-sharing__button">
+                 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                  <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                 </svg></button> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> 
+               <div class="v-portal" style="display:none;"></div>
+              </div> 
+             </div>
+            </div> 
+            <div class="v-portal" style="display:none;"></div> 
+            <div class="tm-article-presenter__footer">
+             <div class="tm-article-blocks">
+              <!----> 
+              <div></div> 
+              <section class="tm-block tm-block tm-block_spacing-bottom">
+               <!----> 
+               <div class="tm-block__body tm-block__body tm-block__body_variant-balanced">
+                <div class="tm-article-author"> 
+                 <div class="tm-user-card tm-article-author__user-card tm-user-card tm-user-card_variant-article">
+                  <div class="tm-user-card__info-container">
+                   <div class="tm-user-card__header">
+                    <div class="tm-user-card__header-data">
+                     <a href="/ru/users/augur/" class="tm-user-card__userpic tm-user-card__userpic_size-40">
+                      <div class="tm-entity-image">
+                       <img alt="" src="//habrastorage.org/getpro/habr/avatars/e3c/155/e71/e3c155e71df8c9b15b05efc5b4f696b6.png" class="tm-entity-image__pic">
+                      </div></a> 
+                     <div class="tm-user-card__meta">
+                      <div title=" 67 голосов " class="tm-counter-container tm-karma tm-karma">
+                       <div class="tm-counter-container__header">
+                        <div class="tm-karma__votes tm-karma__votes_positive">
+                          61 
+                        </div>
+                       </div> 
+                       <div class="tm-counter-container__footer">
+                        <div class="tm-karma__text">
+                          Карма 
+                        </div> 
+                        <div class="v-portal" style="display:none;"></div>
+                       </div>
+                      </div> 
+                      <div title="Рейтинг пользователя" class="tm-counter-container">
+                       <div class="tm-counter-container__header"> 
+                        <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating">
+                         <!----> 
+                         <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating">
+                          <span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating"> 20 </span>
+                         </div> <!---->
+                        </div>
+                       </div> 
+                       <div class="tm-counter-container__footer">
+                        <span class="tm-rating__text tm-rating__text"> Рейтинг </span>
+                       </div>
+                      </div>
+                     </div>
+                    </div>
+                   </div> 
+                   <div class="tm-user-card__info tm-user-card__info tm-user-card__info_variant-article">
+                    <div class="tm-user-card__title tm-user-card__title tm-user-card__title_variant-article">
+                     <span class="tm-user-card__name tm-user-card__name tm-user-card__name_variant-article">Денис Кильчичаков</span> <a href="/ru/users/augur/" class="tm-user-card__nickname tm-user-card__nickname tm-user-card__nickname_variant-article"> @augur </a> <!---->
+                    </div> 
+                    <p class="tm-user-card__short-info tm-user-card__short-info tm-user-card__short-info_variant-article">Пользователь</p>
+                   </div>
+                  </div> 
+                  <div class="tm-user-card__buttons tm-user-card__buttons tm-user-card__buttons_variant-article">
+                   <!----> <!----> <!----> <!----> <!---->
+                  </div>
+                 </div> <!---->
+                </div> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> <!---->
+              </section> 
+              <div class="tm-adfox-banner__container tm-page-article__banner">
+               <!----> 
+               <div id="adfox_164725660339535756" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-leaderboard"></div>
+              </div> 
+              <div class="tm-article-blocks__comments">
+               <div class="tm-article-page-comments">
+                <div class="tm-article-comments-counter-link tm-article-comments-counter-button">
+                 <a href="/ru/post/717750/comments/" class="tm-article-comments-counter-link__link tm-article-comments-counter-link__link_button-style">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon tm-article-comments-counter-link__icon_contrasted">
+                   <title>Комментарии</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-comments"></use>
+                  </svg> <span class="tm-article-comments-counter-link__value tm-article-comments-counter-link__value_contrasted"> Комментарии 39 </span></a> <!---->
+                </div>
+               </div>
+              </div> 
+              <section class="tm-block tm-block tm-block_spacing-bottom">
+               <header class="tm-block__header tm-block__header tm-block__header_variant-borderless">
+                <div class="tm-block__header-container">
+                 <h2 class="tm-block__title tm-block__title tm-block__title_variant-large">Публикации</h2> 
+                </div> <!---->
+               </header> 
+               <div class="tm-block__body tm-block__body tm-block__body_variant-condensed-slim">
+                <div class="tm-tabs tm-tabs">
+                 <div>
+                  <span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active tm-tabs__tab-link_slim"> Лучшие за сутки </button></span><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_slim"> Похожие </button></span>
+                 </div> <!---->
+                </div> 
+                <div class="similar-and-daily__tab-view">
+                 <div>
+                  <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+                  <div class="tm-placeholder-article-cards">
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                  </div> <!----> <!----> <!----> <!---->
+                 </div> <!---->
+                </div>
+               </div> <!---->
+              </section> 
+              <div>
+               <div>
+                <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+                <div class="tm-placeholder-promo">
+                 <div class="tm-placeholder-promo__header">
+                  <div class="tm-placeholder__line tm-placeholder__line_promo-title"></div>
+                 </div> 
+                 <div class="tm-placeholder-promo__body">
+                  <div class="tm-placeholder-promo__posts">
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div> 
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div> 
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div>
+                  </div> 
+                  <div class="tm-placeholder-promo__dots">
+                   <div class="tm-placeholder-promo__dot"></div> 
+                   <div class="tm-placeholder-promo__dot"></div> 
+                   <div class="tm-placeholder-promo__dot"></div>
+                  </div>
+                 </div>
+                </div> <!----> <!----> <!----> <!----> <!---->
+               </div>
+              </div> 
+              <div>
+               <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+               <div class="tm-placeholder-inset tm-placeholder-vacancies">
+                <div class="tm-placeholder-inset__header">
+                 <div class="tm-placeholder__line tm-placeholder__line_inset-header loads"></div>
+                </div> 
+                <div class="tm-placeholder-inset__body">
+                 <ul class="tm-placeholder-list">
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                 </ul>
+                </div> 
+                <div class="tm-placeholder-inset__footer">
+                 <div class="tm-placeholder__line tm-placeholder__line_inset-footer loads"></div>
+                </div>
+               </div> <!----> <!----> <!----> <!----> <!----> <!---->
+              </div> <!----> 
+             </div>
+            </div>
+           </div>
+          </div>
+         </div> 
+         <div class="tm-page__sidebar">
+          <div class="tm-layout-sidebar">
+           <div class="tm-layout-sidebar__ads tm-layout-sidebar__ads_initial">
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_top">
+             <!----> 
+             <div id="adfox_164725680533065327" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-half-page"></div>
+            </div>
+           </div> 
+           <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;">
+            <!----> 
+            <section data-navigatable="" tabindex="0" data-async-called="true" class="tm-block tm-stories-block tm-block tm-block_spacing-around">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Истории</h2> 
+              </div> <!---->
+             </header> 
+             <div class="tm-block__body tm-block__body tm-block__body_variant-equal-small">
+              <div class="tm-stories-empty">
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+              </div> <!---->
+             </div> <!---->
+            </section> <!----> 
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_bottom">
+             <!----> 
+             <div id="adfox_164725691003361602" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-medium-rectangle"></div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </main> <!---->
+    </div> 
+    <div class="tm-footer-menu">
+     <div class="tm-page-width">
+      <div class="tm-footer-menu__container">
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Ваш аккаунт </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/ru/post/717750/&amp;hl=ru" rel="nofollow" target="_self"> Войти </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/ru/post/717750/&amp;hl=ru" rel="nofollow" target="_self"> Регистрация </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Разделы </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/" class="footer-menu__item-link router-link-active"> Публикации </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/news/" class="footer-menu__item-link"> Новости </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/hubs/" class="footer-menu__item-link"> Хабы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/companies/" class="footer-menu__item-link"> Компании </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/users/" class="footer-menu__item-link"> Авторы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/sandbox/" class="footer-menu__item-link"> Песочница </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Информация </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/help/" class="footer-menu__item-link"> Устройство сайта </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/authors/codex/" class="footer-menu__item-link"> Для авторов </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/companies/corpblogs/" class="footer-menu__item-link"> Для компаний </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/docs/transparency/" class="footer-menu__item-link"> Документы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement" target="_blank"> Соглашение </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/" target="_blank"> Конфиденциальность </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Услуги </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/corporate-blogs/" target="_blank"> Корпоративный блог </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/advertising/" target="_blank"> Медийная реклама </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/native-special/" target="_blank"> Нативные проекты </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/education-programs/" target="_blank"> Образовательные программы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/hello-startup/" target="_blank"> Стартапам </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/megaprojects/" class="footer-menu__item-link"> Мегапроекты </a></li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div> 
+    <div class="tm-footer">
+     <div class="tm-page-width">
+      <div class="tm-footer__container">
+       <!----> 
+       <div class="tm-footer__social">
+        <a href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Facebook</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-facebook"></use>
+         </svg></a><a href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Twitter</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-twitter"></use>
+         </svg></a><a href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>VK</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-vkontakte"></use>
+         </svg></a><a href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Telegram</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-telegram"></use>
+         </svg></a><a href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Youtube</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-youtube"></use>
+         </svg></a><a href="https://zen.yandex.ru/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Яндекс Дзен</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-zen"></use>
+         </svg></a>
+       </div> 
+       <div class="v-portal" style="display:none;"></div> <button class="tm-footer__link"><!----> Настройка языка </button> <a href="/ru/feedback/" class="tm-footer__link"> Техническая поддержка </a> <a href="/berserk-mode-nope" class="tm-footer__link"> Вернуться на старую версию </a> 
+       <div class="tm-footer-copyright">
+        <span class="tm-copyright"><span class="tm-copyright__years">© 2006–2023, </span> <span class="tm-copyright__name"><a href="https://company.habr.com/" rel="noopener" target="_blank" class="tm-copyright__link">Habr</a></span></span>
+       </div>
+      </div>
+     </div>
+    </div> <!----> <!---->
+   </div> 
+   <div class="vue-portal-target"></div>
+  </div> 
+  <script>window.__INITIAL_STATE__={"adblock":{"hasAcceptableAdsFilter":false,"hasAdblock":false},"articlesList":{"articlesList":{"717750":{"id":"717750","timePublished":"2023-03-05T08:43:42+00:00","isCorporative":false,"lang":"ru","titleHtml":"Что не так с ChatGPT?","leadData":{"textHtml":"\u003Cp\u003EChatGPT (и примкнувший к нему New Bing) сейчас у всех на слуху. Пользовательская база первого перевалила за 100 млн за пару месяцев. В сети о нём циркулирет широчайший спектр мнений - от полного восторга надвигающейся технологической сингулярности, до панических предсказаний скорого порабощения человечества роботами. А многие занимают и жестко скептическую позицию. Вновь активизировались неолуддиты, их мишенью стали Copilot (побратим ChatGPT), и семейства AI тулзов для генерации графики (Stable Diffusion, Midjourney). \u003C\u002Fp\u003E\u003Cp\u003EЯ получил доступ к ChatGPT в первую неделю его запуска (\"повезло\" с наличием иностранного мобильного номера), и с тех пор пользуюсь им, если и не каждый день, то уж 4-5 раз в неделю точно. В данной статье хочу высказать свои личные наблюдения, подкрепленные мнениями из сети.\u003C\u002Fp\u003E\u003Cp\u003EПро достоинства ChatGPT сказано уже очень многое, поэтому предлагаю более пристально посмотреть на обратную сторону монеты.\u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F693\u002F2b5\u002Fdd6\u002F6932b5dd611efa12fc0345e79582840c.png","buttonTextHtml":"Посмотреть пристально","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F693\u002F2b5\u002Fdd6\u002F6932b5dd611efa12fc0345e79582840c.png","fit":"cover","positionY":6,"positionX":0}},"editorVersion":"2.0","postType":"article","postLabels":[],"author":{"id":"148724","alias":"augur","fullname":"Денис Кильчичаков","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fe3c\u002F155\u002Fe71\u002Fe3c155e71df8c9b15b05efc5b4f696b6.png","speciality":null,"scoreStats":{"score":61,"votesCount":67},"rating":20,"relatedData":null,"contacts":[],"authorContacts":[],"paymentDetails":{"paymentYandexMoney":null,"paymentPayPalMe":null,"paymentWebmoney":null}},"statistics":{"commentsCount":39,"favoritesCount":15,"readingCount":6550,"score":20,"votesCount":24,"votesCountPlus":22,"votesCountMinus":2},"hubs":[{"id":"20688","alias":"research","type":"collective","title":"Исследования и прогнозы в IT","titleHtml":"Исследования и прогнозы в IT","isProfiled":true,"relatedData":null},{"id":"21922","alias":"artificial_intelligence","type":"collective","title":"Искусственный интеллект","titleHtml":"Искусственный интеллект","isProfiled":false,"relatedData":null}],"flows":[{"id":"3","alias":"management","title":"Менеджмент","titleHtml":"Менеджмент"},{"id":"7","alias":"popsci","title":"Научпоп","titleHtml":"Научпоп"}],"relatedData":null,"textHtml":"\u003Cdiv xmlns=\"http:\u002F\u002Fwww.w3.org\u002F1999\u002Fxhtml\"\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0b1\u002F695\u002F653\u002F0b16956536f89e1b7bef30a6655dd9f4.png\" alt=\"Картинка для привлечения внимания\" title=\"Картинка для привлечения внимания\" width=\"1582\" height=\"888\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0b1\u002F695\u002F653\u002F0b16956536f89e1b7bef30a6655dd9f4.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EКартинка для привлечения внимания\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EChatGPT (и примкнувший к нему New Bing) сейчас у всех на слуху. Пользовательская база первого перевалила за 100 млн за пару месяцев. В сети о нём циркулирет широчайший спектр мнений - от полного восторга надвигающейся технологической сингулярности, до панических предсказаний скорого порабощения человечества роботами. А многие занимают и жестко скептическую позицию. Вновь активизировались неолуддиты, их мишенью стали Copilot (побратим ChatGPT), и семейства AI тулзов для генерации графики (Stable Diffusion, Midjourney). \u003C\u002Fp\u003E\u003Cp\u003EЯ получил доступ к ChatGPT в первую неделю его запуска (\"повезло\" с наличием иностранного мобильного номера), и с тех пор пользуюсь им, если и не каждый день, то уж 4-5 раз в неделю точно. В данной статье хочу высказать свои личные наблюдения, подкрепленные мнениями из сети.\u003C\u002Fp\u003E\u003Cp\u003EПро достоинства ChatGPT сказано уже очень многое, поэтому предлагаю более пристально посмотреть на обратную сторону монеты.\u003C\u002Fp\u003E\u003Ch2\u003EChatGPT и системные требования\u003C\u002Fh2\u003E\u003Cp\u003EСам ChatGPT, как и его создатели - компания OpenAI - туманно высказываются о системных требованиях, по-видимому, не строя пока планов о ChatGPT в виде коробочного оффлайн продукта.\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F013\u002Fbb6\u002F051\u002F013bb6051d4e654b967fd690aec9bf52.png\" width=\"1472\" height=\"428\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F013\u002Fbb6\u002F051\u002F013bb6051d4e654b967fd690aec9bf52.png\"\u002F\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EОднако, известно что GPT-3, на которой базируется ChatGPT требует около 800 ГБ места под саму модель. ChatGPT также заявляет, что работает на кластерах специализированных GPU и TPU, за пределами возможностей современных домашних ПК.\u003C\u002Fp\u003E\u003Cp\u003EВозможно, \u003Cem\u003Eурезанные\u003C\u002Fem\u003E версии модели могли бы работать в реалтайме на современных домашних high-end компьютерах типа Mac Pro, но мобильные устройства сразу пролетают мимо - как из-за объема хранилища, так и энергопотребления при трудоемких вычислениях.\u003C\u002Fp\u003E\u003Cp\u003EУвы, но закон Мура давно не работает ни для объемов памяти, ни для вычислений, так что пройдёт не один десяток лет, прежде чем требуемая мощь для работы таких моделей как ChatGPT окажется под рукой рядового пользователя.\u003C\u002Fp\u003E\u003Cp\u003EUPD: Хотя автор \u003Ca href=\"https:\u002F\u002Fhabr.com\u002Fru\u002Fpost\u002F718996\u002F\" rel=\"noopener noreferrer nofollow\"\u003Ehttps:\u002F\u002Fhabr.com\u002Fru\u002Fpost\u002F718996\u002F\u003C\u002Fa\u003E утверждает, что закон Мура технически продолжает работать, я замечу, что на обывательском уровне понимания (исходя не из увеличения числа транзисторов, а прироста производительности) закон мертв. Сам Гордон Мур описывал это так: \"если бы авиационные технологии развивались с такой же скоростью, как компьютерные, самолеты стоили бы 500 долларов и облетали землю за 20 минут на 20 литрах топлива\". Столь экспоненциальный рост базы электронных компонентов остался в прошлом.\u003C\u002Fp\u003E\u003Ch2\u003EChatGPT и предвзятость\u003C\u002Fh2\u003E\u003Cp\u003EЭта особенность ChatGPT строится на основании предыдущего факта, что он в обозримом будущем остается проприетарным онлайн-сервисом. Непрозрачность и централизация, отсутствие общественных регуляций, позволяет ему целенаправленно выдавать opinionated контент.\u003C\u002Fp\u003E\u003Cp\u003EChatGPT может (и уже следует) определенным повесткам, заложенным в него теми, кто его контролирует. Он делает различия между отношениям к различным расам, национальностям и полам (были примеры, как он отказывался придумывать шутки про гендерные стереотипы о женщинах, но соглашался делать то же самое про мужчин).\u003C\u002Fp\u003E\u003Cp\u003EПо свидетельствам, раньше ChatGPT был более жёсток\u003Cstrong\u003E \u003C\u002Fstrong\u003Eи менее тактичен в своих высказываниях, наиболее безобидный пример:\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw780q1\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F1c9\u002F87c\u002F970\u002F1c987c970125b1b4528f8e49d11370e9.jpeg\" alt=\"Выдача из 2022\" title=\"Выдача из 2022\" width=\"639\" height=\"383\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F1c9\u002F87c\u002F970\u002F1c987c970125b1b4528f8e49d11370e9.jpeg\" data-blurred=\"true\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EВыдача из 2022\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EСейчас, от него подобного ответа будет не добиться, так как добавлены всевозможные фильтры и веса для следования современным трендам политкорректности.\u003C\u002Fp\u003E\u003Cp\u003EМного где в интернете сейчас прослеживается такая тенденция, однако сам интернет гораздо слабее контролируется, тут есть многополярность мнений, и пространство для дискуссий.\u003C\u002Fp\u003E\u003Cp\u003EChatGPT же как инструмент (наряду со многими современным видеоиграми, сериалами и кино) будет оружием только одной силы. Предвзятость - это недостаток, какой бы она ни была.\u003C\u002Fp\u003E\u003Ch2\u003EChatGPT и экспертность\u003C\u002Fh2\u003E\u003Cp\u003EНе так давно прошумевшие новости о том, что ChatGPT, дескать, написал сайт, написал Android-приложение, и тп, не должны вводить нас в заблуждение. В нынешнем виде ChatGPT не способ самостоятельно эффективно решать хоть сколько-нибудь сложные задачи. Ему необходим эксперт, который на каждом шагу может оценить и подкорректировать результаты его работы.\u003C\u002Fp\u003E\u003Cp\u003EЕсли вы не смогли бы написать Android-приложение самостоятельно - ChatGPT не сделает этого за вас. Если вы не сможете написать сайт на Vue.js - ChatGPT не сделает это за вас.\u003C\u002Fp\u003E\u003Cp\u003EChatGPT плавает во многих узкоспециализированных областях. На конкретные вопросы о, например, нюансах эксплуатации определенных марок автомобилей или огнестрельного оружия, вы получите очень обобщенные ответы, часто наполненные водой. Это позволяет разве что заполнить очевидные пробелы в знаниях, но не углубиться в тему.\u003C\u002Fp\u003E\u003Cp\u003EХотя, в целом, помощь ChatGPT может быть весома, если вы умеете задавать \u003Cstrong\u003Eправильные вопросы \u003C\u002Fstrong\u003E(истинна поговорка, что в правильно заданном вопросе содержится половина ответа). Так как ChatGPT организует и упрощает доступ к информации, то сокращает, по моим оценкам, время на ее поиск в ~2-10 раз.\u003C\u002Fp\u003E\u003Cp\u003EДаже обладая нулевыми знаниями в определенной области, вы можете обучаться с его помощью. Но только при условии обладания дисциплиной и грамотного подхода к обучению.\u003C\u002Fp\u003E\u003Ch2\u003EChatGPT и ответственность\u003C\u002Fh2\u003E\u003Cp\u003EЕще одна проблема с ChatGPT - не стоит ожидать от него принятия ответственности за свои действия. Человек, даже низкооплачиваемый оператор колл-центра способен взвешенно принимать решения, совершать какие-нибудь операции по вашему обращению, и тд. \u003C\u002Fp\u003E\u003Cp\u003EВсё потому, что человек, как индивид, способен брать ответственность, ИИ - нет. За ним всегда стоят его создатели\u002Fвладельцы, огражденные более (или менее) эффективными юридическими стенами ограничения\u002Fотказа от ответственности за последствия (кто будет отвечать за ДТП со смертельным исходом по вине ИИ автопилота Tesla?).\u003C\u002Fp\u003E\u003Cp\u003EБеседы о здоровье\u002Fмедицине ChatGPT ведет с жирным дисклеймером об ограниченности применения его советов, и чуть ли не через каждое предложение рекомендует проконсультироваться с квалифицированным специалистом. С одной стороны - это честный, почти безопасный подход, с другой стороны - тогда не хватает подобных дисклеймеров и обо всех других предметных областях, где он может ошибиться.\u003C\u002Fp\u003E\u003Cp\u003EТак что и авторитетность - это не про ChatGPT. Не забываем, что он способен (и регулярно так и делает) галлюцинировать - выдумывать несуществующие личности, выдавать фантазии за реальность, максимально серьезно и правдоподобно о них рассказывая.\u003C\u002Fp\u003E\u003Cp\u003EОднако, надо признать, что ситуация с откровенно ошибочными выдачей постоянно улучшается. Многие промпты с нелепыми результатами теперь пофикшены.\u003C\u002Fp\u003E\u003Ch2\u003EСhatGPT и осознанность\u003C\u002Fh2\u003E\u003Cp\u003EПонимаю, что здесь моя аргументация вступает на зыбкую полемическую почву, где регулярно ломаются копья. Верно то, что мы до сих пор не можем полно и достоверно объяснить, что же такое вообще \"сознание\", прежде чем решать, может ли оно быть у ИИ.\u003C\u002Fp\u003E\u003Cp\u003EС другой стороны, теорема Гёделя о неполноте не мешает нам пожинать щедрые плоды математики. Нассим Талѐб в своей книге \"Антихрупкость\" доходчиво объяснет, почему для того, чтобы испытывать любовь, чувство справедливости и тп, необязательно владеть всеобъемлющей формулировкой этих понятий. Поэтому будем считать, что мы на интуинтивном уровне (как носители сознания) понимаем, что же это такое.\u003C\u002Fp\u003E\u003Cp\u003EChatGPT часто \"выглядит\" (ведет себя) очень умно, по-человечески. И всё же, нельзя забывать, что у него нет осознания как самого себя, так и выдаваемых им результатов.\u003C\u002Fp\u003E\u003Cfigure class=\"\"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F519\u002F377\u002Fc63\u002F519377c634f72ae6d18dfe43684e8d0b.png\" alt=\"Готовы ли мы свести всё вокруг к работе цепочек стимул-\u003Eдействие?\" title=\"Готовы ли мы свести всё вокруг к работе цепочек стимул-\u003Eдействие?\" width=\"300\" height=\"394\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F519\u002F377\u002Fc63\u002F519377c634f72ae6d18dfe43684e8d0b.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EГотовы ли мы свести всё вокруг к работе цепочек стимул-\u003Eдействие?\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EТак же как Stable Diffusion не обладает пониманием концепции человеческих пальцев, а лишь старается (и успешно в большинстве случаев) подражать примерам художников, так и ChatGPT крайне интеллектуально компилирует и отдает запомненные данные в ответ на ключевые слова.\u003C\u002Fp\u003E\u003Cp\u003EChatGPT может запнуться на простейших когнитивных задачах, на которых человек бы вряд ли ошибся:\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0a4\u002F7b0\u002F536\u002F0a47b0536eee26d6691d1da28b060203.png\" alt=\"ChatGPT запутан наличием blue box\" title=\"ChatGPT запутан наличием blue box\" width=\"1600\" height=\"532\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0a4\u002F7b0\u002F536\u002F0a47b0536eee26d6691d1da28b060203.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EChatGPT запутан наличием blue box\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EПравда, как мы знаем, и людям свойственны различные когнитивные искажения, но человек способен \u003Cstrong\u003Eосознать\u003C\u002Fstrong\u003E свою ошибку и исправиться, ChatGPT же может быть только подкручен\u002Fисправлен извне.\u003C\u002Fp\u003E\u003Ch2\u003EВместо заключения\u003C\u002Fh2\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F069\u002F9b4\u002F1ac\u002F0699b41acfb4bd8d1f394fc873ed7b1c.png\" width=\"1606\" height=\"400\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F069\u002F9b4\u002F1ac\u002F0699b41acfb4bd8d1f394fc873ed7b1c.png\"\u002F\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EЧто же получается? ChatGPT это инструмент для гораздо более интеллектуального поиска информации, чем существовавшие до него - этакий StackOverflow на стероидах \u002F Google-поиск здорового человека.\u003C\u002Fp\u003E\u003Cp\u003EТакже ChatGPT способен выступать как ассистент в задачах, которые мы давно имели возможность (и которые пришла пора) автоматизировать. Например, настоящий победитель бойлерплейт кода (не уровня геттеров\u002Fсеттеров, а заметно более комплексных задач, остающихся, тем не менее, тривиальными).\u003C\u002Fp\u003E\u003Cp\u003EИ всё же ChatGPT это просто еще один шаг технологического прогресса, вместо прыжка в сингулярность. Большому потенциалу пока препятствуют вышеописанные сдерживающие факторы - ресурсоемкость, предвзятость и контролируемость, отсутствие экспертности, ответственности и настоящей осознанности. Но это всё  равно добротный, уверенный шаг по дороге, которая через один-другой десяток лет перекроит наш мир, возможно, сильнее, чем это сделало появление интернета. Потому нам всем стоит оставаться бдительными и непрерывно адаптирующимися к изменяющейся реальности.\u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E\u003C\u002Fdiv\u003E","tags":[{"titleHtml":"chatgpt"},{"titleHtml":"ai"}],"metadata":{"stylesUrls":[],"scriptUrls":[],"shareImageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F693\u002F2b5\u002Fdd6\u002F6932b5dd611efa12fc0345e79582840c.png","shareImageWidth":1200,"shareImageHeight":630,"vkShareImageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F693\u002F2b5\u002Fdd6\u002F6932b5dd611efa12fc0345e79582840c.png","schemaJsonLd":"{\"@context\":\"http:\\\u002F\\\u002Fschema.org\",\"@type\":\"Article\",\"mainEntityOfPage\":{\"@type\":\"WebPage\",\"@id\":\"https:\\\u002F\\\u002Fhabr.com\\\u002Fru\\\u002Fpost\\\u002F717750\\\u002F\"},\"headline\":\"Что не так с ChatGPT?\",\"datePublished\":\"2023-03-05T11:43:42+03:00\",\"dateModified\":\"2023-03-05T17:35:40+03:00\",\"author\":{\"@type\":\"Person\",\"name\":\"Денис Кильчичаков\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Habr\",\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fwebt\\\u002Fa_\\\u002Flk\\\u002F9m\\\u002Fa_lk9mjkccjox-zccjrpfolmkmq.png\"}},\"description\":\"Картинка для привлечения вниманияChatGPT (и примкнувший к нему New Bing) сейчас у всех на слуху. Пользовательская база первого перевалила за 100 млн за пару меся...\",\"url\":\"https:\\\u002F\\\u002Fhabr.com\\\u002Fru\\\u002Fpost\\\u002F717750\\\u002F#post-content-body\",\"about\":[\"h_research\",\"h_artificial_intelligence\",\"f_management\",\"f_popsci\"],\"image\":[\"https:\\\u002F\\\u002Fhabr.com\\\u002Fshare\\\u002Fpublication\\\u002F717750\\\u002F35664ee6d055426347c0b8e0beb67046\\\u002F\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F0b1\\\u002F695\\\u002F653\\\u002F0b16956536f89e1b7bef30a6655dd9f4.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F013\\\u002Fbb6\\\u002F051\\\u002F013bb6051d4e654b967fd690aec9bf52.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F1c9\\\u002F87c\\\u002F970\\\u002F1c987c970125b1b4528f8e49d11370e9.jpeg\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F519\\\u002F377\\\u002Fc63\\\u002F519377c634f72ae6d18dfe43684e8d0b.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F0a4\\\u002F7b0\\\u002F536\\\u002F0a47b0536eee26d6691d1da28b060203.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F069\\\u002F9b4\\\u002F1ac\\\u002F0699b41acfb4bd8d1f394fc873ed7b1c.png\"]}","metaDescription":"Картинка для привлечения внимания ChatGPT (и примкнувший к нему New Bing) сейчас у всех на слуху. Пользовательская база первого перевалила за 100 млн за пару месяцев. В сети о нём циркулирет...","mainImageUrl":null,"amp":true,"customTrackerLinks":[]},"polls":[],"commentsEnabled":true,"rulesRemindEnabled":false,"votesEnabled":true,"status":"published","plannedPublishTime":null,"checked":null,"hasPinnedComments":false,"format":"opinion","readingTime":6,"complexity":"low","isEditorial":false}},"articlesIds":{},"isLoading":false,"pagesCount":{},"route":{},"reasonsList":null,"view":"cards","lastVisitedRoute":{},"ssrCommentsArticleIds":[""],"karma":{"userReasonsList":null}},"authorContribution":{"authors":{}},"betaTest":{"currentAnnouncement":null,"announcements":{},"announcementCards":null,"announcementComments":{},"announcementCommentThreads":{},"announcementCommentingStatuses":{},"archivedList":[]},"authorStatistics":{"articleRefs":{},"articleIds":{},"pagesCount":{},"route":{},"viewsCount":[],"maxStatsCount":{}},"career":{"seoLandings":[],"hubs":"research,artificial_intelligence"},"comments":{"articleComments":{},"articlePinnedComments":{},"searchCommentsResults":null,"pagesCount":null,"commentAccess":{},"scrollParents":{},"pageArticleComments":{"lastViewedComment":0,"postId":null,"lastCommentTimestamp":"","moderated":[],"moderatedIds":[],"commentRoute":""}},"companies":{"companyRefs":{},"companyIds":{},"companyTopIds":{},"pagesCount":{},"companyProfiles":{},"companiesCategories":[],"companiesCategoriesTotalCount":0,"companiesWidgets":{},"companiesWorkers":{},"companiesFans":{},"route":{},"isLoading":false,"companyWorkersLoading":false,"companyFansLoading":false,"vacancies":{},"companiesGalleries":{},"companiesBanners":{},"companiesLandingVacancies":{},"companiesTechnologies":{},"workplaceInfo":null},"companyAdmin":{"companyInfo":null,"companyInfoLoading":false,"faqArticles":null,"brandingPreviewImageUrl":null,"jivoStatus":0,"adminNotifications":null},"companiesContribution":{"hubs":{},"flows":{},"companyRefs":{}},"companyHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"conversation":{"messages":[],"respondent":null,"isLoadMore":false},"conversations":{"conversations":[],"unreadCount":0,"pagesCount":0},"desktopState":{"desktopFl":null,"desktopHl":null,"isChecked":false,"isLoginDemanded":false},"docs":{"menu":{},"articles":{},"mainMenu":[],"loading":{"main":false,"dropdown":false,"article":false}},"feature":{"isProbablyVisible":true},"flows":{"updates":{"countNewPostsBySubscription":null,"countNewPostsAll":30,"countNewNewsAll":10},"flows":[{"alias":"develop","id":"1","route":{"name":"FLOW_PAGE","params":{"flowName":"develop"}}},{"alias":"admin","id":"6","route":{"name":"FLOW_PAGE","params":{"flowName":"admin"}}},{"alias":"design","id":"2","route":{"name":"FLOW_PAGE","params":{"flowName":"design"}}},{"alias":"management","id":"3","route":{"name":"FLOW_PAGE","params":{"flowName":"management"}}},{"alias":"marketing","id":"4","route":{"name":"FLOW_PAGE","params":{"flowName":"marketing"}}},{"alias":"popsci","id":"7","route":{"name":"FLOW_PAGE","params":{"flowName":"popsci"}}}]},"global":{"isPwa":false,"device":"desktop","isHabrCom":true},"hubs":{"hubRefs":{},"hubIds":{},"pagesCount":{},"isLoading":false,"route":{}},"hubsBlock":{"hubRefs":{},"hubIds":{}},"i18n":{"fl":"ru","hl":"ru"},"info":{"infoPage":{},"isLoading":true},"location":{"urlStruct":{"protocol":null,"slashes":null,"auth":null,"host":null,"port":null,"hostname":null,"hash":null,"search":null,"query":{},"pathname":null,"path":null,"href":""}},"me":{"user":null,"uuid":null,"ppgDemanded":false,"karmaResetInfo":{"canReincarnate":null,"wasReincarnated":null,"currentScore":null},"notes":null},"modal":{"modals":[]},"mostReadingList":{"mostReadingListIds":[],"mostReadingListRefs":null,"promoPost":null},"ppa":{"articles":{},"card":null,"transactions":null,"totalTransactions":null,"isAccessible":null},"projectsBlocks":{"activeBlocks":{"vacancies":"project-block-article"}},"promoData":{"isLoading":false,"hasLoaded":false,"featurer":null,"megaposts":null,"promoLinks":null,"promoPosts":null},"pullRefresh":{"shouldRefresh":false},"sandbox":{"articleIds":[],"articleRefs":{},"pagesCount":null,"route":{},"lastVisitedRoute":{},"isLoading":false},"search":{"searchQueryError":null},"settingsOther":{"inputs":{"uiLang":{"errors":[],"ref":null,"value":""},"articlesLangEnglish":{"errors":[],"ref":null,"value":false},"articlesLangRussian":{"errors":[],"ref":null,"value":false},"agreement":{"errors":[],"ref":null,"value":false},"email":{"errors":[],"ref":null,"value":true},"digest":{"errors":[],"ref":null,"value":true}}},"similarList":{"similarListIds":[],"similarListRefs":null},"ssr":{"error":null,"isDataLoaded":false,"isDataLoading":false,"isHydrationFailed":false,"isServer":false},"stories":{"stories":[{"id":"story-274","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F386\u002F1a0\u002F577\u002F3861a057738e4cf78f3fc173d952c827.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Топ-7 годноты из блогов компаний","lang":"ru","startTime":"2023-03-02T11:00:00+03:00","finishTime":"2023-03-07T10:15:00+03:00","slides":[{"id":"story-274_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F52c\u002F81a\u002Fe91\u002F52c81ae913532c5df7e90245845ce07c.png","button":null},{"id":"story-274_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff9b\u002Fc65\u002Ff9a\u002Ff9bc65f9a46ebd95a3babce143e6770a.jpg","button":{"title":"Клавиатурный зоопарк","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fcloud4y\u002Fblog\u002F716934\u002F","colorType":"light"}},{"id":"story-274_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa77\u002F2d7\u002Fb4e\u002Fa772d7b4e782a580cf72c5c996514a1f.jpg","button":{"title":"Три приёмника","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fruvds\u002Fblog\u002F716988\u002F","colorType":"light"}},{"id":"story-274_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F78c\u002Fb59\u002F01c\u002F78cb5901c06e97ec94f07bfd6ca12a68.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fruvds\u002Fblog\u002F716058\u002F","colorType":"dark"}},{"id":"story-274_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbe2\u002Fa46\u002F500\u002Fbe2a4650077735388744eb7d2e1ef7dd.jpg","button":{"title":"Очумелые ручки","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fselectel\u002Fblog\u002F718134\u002F","colorType":"dark"}},{"id":"story-274_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7f1\u002F18d\u002F8e3\u002F7f118d8e3f6fc09179c73dde840dd425.jpg","button":{"title":"Узнать причины","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Ftimeweb\u002Fblog\u002F713220\u002F","colorType":"light"}},{"id":"story-274_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F028\u002F038\u002F9f5\u002F0280389f5fb85f9f821fa45ccbaa8803.jpg","button":{"title":"Как это сделать","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fcloud4y\u002Fblog\u002F717342\u002F","colorType":"light"}},{"id":"story-274_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcb0\u002F02d\u002F7c4\u002Fcb002d7c42c03e59d7f124f10cbe4b4d.jpg","button":{"title":"Нырнуть в сеть","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fsouthbridge\u002Fblog\u002F717634\u002F","colorType":"dark"}}]},{"id":"story-272","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F82b\u002Fdd7\u002F7d8\u002F82bdd77d8ef7304d3b1b599191c2bb1c.png","title":"Сезоны Хабра","link":"https:\u002F\u002Fu.habr.com\u002F5P6i7"},"title":"Открыт сезон ML","lang":"ru","startTime":"2023-03-02T09:00:41+03:00","finishTime":"2023-03-31T20:53:00+03:00","slides":[{"id":"story-272_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F27f\u002Fd3a\u002Fddf\u002F27fd3addfe06da09592bdcf61db15795.jpg","button":null},{"id":"story-272_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F935\u002F582\u002F992\u002F935582992e378add33c898451b2a0d9f.jpg","button":null},{"id":"story-272_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe13\u002Feb8\u002Fa24\u002Fe13eb8a24b60622d3da72fd6e7ed3fda.jpg","button":null},{"id":"story-272_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa85\u002F83f\u002F5cc\u002Fa8583f5ccfae747135343f0e68c84112.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002F5P6i7","colorType":"light"}},{"id":"story-272_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F60d\u002F1cb\u002F98c\u002F60d1cb98cdd42d2696ebc0ec54740a23.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002F5P6i7","colorType":"light"}}]},{"id":"story-118","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fjh\u002F3n\u002Fhy\u002Fjh3nhyovspbtyqndibvbttgsprc.png","title":"Хабр Новости","link":"https:\u002F\u002Fu.habr.com\u002FcvdBy"},"title":"Лучшие фотографии «Джеймса Уэбба» за год","lang":"ru","startTime":"2023-03-01T11:00:00+03:00","finishTime":"2023-03-05T23:59:00+03:00","slides":[{"id":"story-118_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fml\u002Fcn\u002Fqx\u002Fmlcnqxuawiz09l-viwmfzybgesw.png","button":null},{"id":"story-118_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fvn\u002F7g\u002Fqt\u002Fvn7gqtssznilh0-zkjmgyq25vpo.png","button":null},{"id":"story-118_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fzg\u002Fi-\u002F1y\u002Fzgi-1ysesbd_givgtouinc97tby.png","button":null},{"id":"story-118_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fvm\u002Frz\u002F_v\u002Fvmrz_vbuvvaj8gsheuhwscrlt8c.png","button":null},{"id":"story-118_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fmq\u002Fs5\u002Fgk\u002Fmqs5gkpfk-iijv2gnlud3huxgpo.png","button":null},{"id":"story-118_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002F93\u002Fuv\u002Fxb\u002F93uvxboezmintyjwjgb5vrf1zcm.png","button":null},{"id":"story-118_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fu4\u002Fdy\u002Fcd\u002Fu4dycdmg1jiinbfztn3zkpocne0.png","button":null},{"id":"story-118_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Ffy\u002Fqr\u002Flg\u002Ffyqrlgev36v3pa3-zy8maak8ipe.png","button":null},{"id":"story-118_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fx7\u002Fx8\u002Ftf\u002Fx7x8tfe8l1ahi_zmusdmtp0b_sy.png","button":{"title":"Подробности","link":"https:\u002F\u002Fu.habr.com\u002FcvdBy","colorType":"light"}}]},{"id":"story-264","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcbd\u002Fe44\u002F753\u002Fcbde44753048ff6655f9f33752fd816a.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FnTaXn"},"title":"Cколько тратят в IT: сеньор бэкендер","lang":"ru","startTime":"2023-02-28T15:50:00+03:00","finishTime":"2023-03-07T23:59:00+03:00","slides":[{"id":"story-264_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd99\u002Ff45\u002Ff14\u002Fd99f45f14dc03b2394a86f50f76844f4.png","button":null},{"id":"story-264_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0e3\u002F529\u002F607\u002F0e3529607bca82d7b8214d422f20ab67.png","button":null},{"id":"story-264_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8ae\u002F39e\u002Fa4f\u002F8ae39ea4fd82c27289b24594adf3c0c0.png","button":null},{"id":"story-264_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F971\u002F361\u002Fd57\u002F971361d574204d51ffe35d8c9cfef943.png","button":null},{"id":"story-264_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F342\u002F5c0\u002Fee7\u002F3425c0ee73301cff942e3d9276ce4a79.png","button":{"title":"Подробности","link":"https:\u002F\u002Fu.habr.com\u002FnTaXn","colorType":"dark"}}]},{"id":"story-262","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2fa\u002Fc8a\u002Fba8\u002F2fac8aba82b995297abea595da7990d1.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Наука сна","lang":"ru","startTime":"2023-02-28T12:15:00+03:00","finishTime":"2023-03-15T23:59:00+03:00","slides":[{"id":"story-262_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa90\u002F725\u002F61c\u002Fa9072561c280c46933ff54fd8702cade.jpg","button":null},{"id":"story-262_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffd7\u002F658\u002F956\u002Ffd7658956ea825b1c317c7f688c48058.jpg","button":{"title":"Читать лекцию","link":"https:\u002F\u002Fu.habr.com\u002Fson01","colorType":"light"}},{"id":"story-262_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F366\u002Fd2e\u002F707\u002F366d2e70725209177fa82a4119139c86.jpg","button":{"title":"При чём же?","link":"https:\u002F\u002Fu.habr.com\u002Fson02","colorType":"light"}},{"id":"story-262_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4bd\u002F40f\u002F731\u002F4bd40f731bfbf571a709dd2f357f06b4.jpg","button":{"title":"Заглянуть в дневник","link":"https:\u002F\u002Fu.habr.com\u002Fson03","colorType":"light"}},{"id":"story-262_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F944\u002F7ad\u002Fe2f\u002F9447ade2f38c3c36790be75bf4462047.jpg","button":{"title":"Последствия","link":"https:\u002F\u002Fu.habr.com\u002Fson04","colorType":"light"}},{"id":"story-262_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F74c\u002Fce1\u002F4dc\u002F74cce14dc903b245dca90df3f2747abb.jpg","button":{"title":"Смотреть список","link":"https:\u002F\u002Fu.habr.com\u002Fson05","colorType":"light"}},{"id":"story-262_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbc9\u002Fa62\u002F9f0\u002Fbc9a629f0c5ef2027cf7796749a06914.jpg","button":{"title":"Следы в истории","link":"https:\u002F\u002Fu.habr.com\u002Fson06","colorType":"light"}},{"id":"story-262_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F085\u002F0ee\u002F868\u002F0850ee868132e1ec4ec3b24caf7e719a.jpg","button":{"title":"Что придумали?","link":"https:\u002F\u002Fu.habr.com\u002Fson07","colorType":"light"}}]},{"id":"story-252","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff19\u002F48d\u002Fd15\u002Ff1948dd155701f88d36e11387c1660ef.png","title":"Geek Travel","link":"https:\u002F\u002Fu.habr.com\u002F9TZjL"},"title":"Где искать северное сияние в России","lang":"ru","startTime":"2023-02-21T11:35:00+03:00","finishTime":"2023-03-12T11:22:00+03:00","slides":[{"id":"story-252_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F506\u002F188\u002F83b\u002F50618883bc97ce517531018d3290d961.jpg","button":{"title":"К посту","link":"https:\u002F\u002Fu.habr.com\u002F9TZjL","colorType":"light"}},{"id":"story-252_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe42\u002Fa71\u002Fe8e\u002Fe42a71e8eb5583814647f5ad55f9e0ae.jpg","button":null},{"id":"story-252_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F685\u002Fdbe\u002F4ff\u002F685dbe4ffe3940eca28ede7406898846.jpg","button":null},{"id":"story-252_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F383\u002F63b\u002F1f4\u002F38363b1f459d5daace0e4502f0780737.jpg","button":null},{"id":"story-252_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F32b\u002F665\u002F0c4\u002F32b6650c448d698b9ca4dba128afb56e.jpg","button":null},{"id":"story-252_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F95e\u002F0b2\u002F5be\u002F95e0b25be55ae919dbebbac6142e670d.jpg","button":null},{"id":"story-252_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F616\u002F1d4\u002Ff84\u002F6161d4f849be8d4e4aeee88ea2e3d572.jpg","button":null}]},{"id":"story-246","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fc41\u002F8cc\u002Fca9\u002Fc418ccca924faf05c11530c5071e627b.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-new"},"title":"Зарплаты в IT во второй половине 2022","lang":"ru","startTime":"2023-02-20T11:05:00+03:00","finishTime":"2023-03-05T23:59:00+03:00","slides":[{"id":"story-246_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbe2\u002F07d\u002F19f\u002Fbe207d19f3cdc4b89e3618025c071ea0.png","button":null},{"id":"story-246_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcda\u002F93e\u002Fed7\u002Fcda93eed762714814ddfc51c4712f4ed.png","button":null},{"id":"story-246_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fb8a\u002Fde4\u002F87f\u002Fb8ade487fa6556af459e032adebf852d.png","button":null},{"id":"story-246_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8f6\u002Fb32\u002F844\u002F8f6b328448ed968a18a60a0cd745bd34.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-new","colorType":"dark"}}]},{"id":"story-152","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa49\u002F0d3\u002F609\u002Fa490d3609f29b6dfc53a7b88ab47ca64.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa"},"title":"Сеньоры — очень странные люди","lang":"ru","startTime":"2023-01-23T11:00:00+03:00","finishTime":"2023-03-31T23:59:00+03:00","slides":[{"id":"story-152_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbbb\u002F901\u002F063\u002Fbbb9010630ae483ed1f41ec4e2572c13.png","button":null},{"id":"story-152_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4f8\u002F66c\u002F14f\u002F4f866c14f0ca8999334438d7f17c0e3a.png","button":null},{"id":"story-152_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F6b9\u002Fa07\u002Fa61\u002F6b9a07a612df213ac3a1c179301828df.png","button":null},{"id":"story-152_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff6b\u002Fadb\u002Fb99\u002Ff6badbb9969d7e34ef4f7492767c6a77.png","button":null},{"id":"story-152_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd9c\u002F9ac\u002F878\u002Fd9c9ac878bec5b494699e0080dd2e813.png","button":null},{"id":"story-152_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fdb1\u002Faf9\u002Fc3b\u002Fdb1af9c3bb557f6cee698cf67610f977.png","button":null},{"id":"story-152_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5cf\u002Fbed\u002F65b\u002F5cfbed65bd20b7051b1aac2b9d6e807e.png","button":null},{"id":"story-152_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffa8\u002F251\u002F4a9\u002Ffa82514a9471cd455339e97178d8c021.png","button":null},{"id":"story-152_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbd5\u002F901\u002Fe95\u002Fbd5901e952d9cf638355a3cc8b0c0911.png","button":{"title":"Хочу помочь джуну","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa","colorType":"light"}}]}]},"technotext":{"years":[],"technotextDocForNominees":null,"technotextDocForWinners":null,"technotextInfo":{},"technotextInfoLoading":false,"technotextWinners":{},"technotextWinnersLoading":false},"userHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"userInvites":{"availableInvites":0,"usedInvitesIds":[],"usedInvitesRefs":{},"usedInvitesPagesCount":0,"unusedInvitesIds":[],"unusedInvitesRefs":{},"unusedInvitesPagesCount":0},"userVotes":{"karmaVotesList":[],"karmaVotesPagesCount":null,"karmaVotesListLoading":false,"commentsVotesList":[],"commentsVotesPagesCount":null,"commentsVotesListLoading":false,"postsVotesList":[],"postsVotesPagesCount":null,"postsVotesListLoading":false,"userVotesList":[],"userVotesPagesCount":null,"userVotesListLoading":false},"users":{"authorRefs":{},"authorIds":{},"pagesCount":{},"authorProfiles":{},"userHubs":{},"userInvitations":{},"authorFollowers":{},"authorFollowed":{},"userSpecialization":{},"karmaStats":[],"statistics":null,"isLoading":false,"authorFollowersLoading":false,"authorFollowedLoading":false,"userHubsLoading":false,"userInvitationsLoading":false,"route":{}},"viewport":{"prevScrollY":{},"scrollY":0,"width":0},"tracker":{"items":{},"pagesCache":{},"markedViewedSilently":{},"markedRead":{},"unreadCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null},"unviewedCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null}}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script> 
+  <script src="https://assets.habr.com/habr-web/js/chunk-vendors.129fcbcb.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/app.8a380906.js" defer></script> 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-726094-1"></script> 
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script> 
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(24049213, "init", {
+      defer:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:false,
+    });
+  </script> 
+  <noscript> 
+   <div> 
+    <img src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;" alt=""> 
+   </div> 
+  </noscript> 
+  <script type="text/javascript">
+      window.addEventListener('load', function () {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = 'https://vk.com/rtrg?p=VK-RTRG-421343-57vKE';
+        }, 0);
+      });
+    </script> 
+  <script src="/js/ads.js" onload="window['zhY4i4nJ9K'] = true"></script>  
+ </body>
+</html>

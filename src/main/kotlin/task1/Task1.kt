@@ -8,7 +8,7 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 @OptIn(ExperimentalTime::class)
-fun task1(url: String) = with(TaskSettings) {
+fun task1(url: String) = with(TaskFirstSettings) {
     val crawlingDuration = measureTime {
         crawle(url)
     }
@@ -16,20 +16,20 @@ fun task1(url: String) = with(TaskSettings) {
 }
 
 private fun crawle(url: String) {
-    val outputDirectory = File(OutputSettings.PATH_NAME + "/" + TaskSettings.FOLDER_NAME).apply {
+    val outputDirectory = File(OutputSettings.PATH_NAME + "/" + TaskFirstSettings.FOLDER_NAME).apply {
         mkdirs()
         listFiles()?.forEach { it.deleteRecursively() }
     }
-    val indexFile = File(outputDirectory, TaskSettings.INDEX_FILE_NAME).apply { createNewFile() }
-    val textFilesDirectory = File(outputDirectory, TaskSettings.FOLDER_FILES_NAME).apply { mkdirs() }
+    val indexFile = File(outputDirectory, TaskFirstSettings.INDEX_FILE_NAME).apply { createNewFile() }
+    val textFilesDirectory = File(outputDirectory, TaskFirstSettings.FOLDER_FILES_NAME).apply { mkdirs() }
     val predicate = { doc: Document -> doc.body().text().split(' ').size >= 1000 }
 
-    WebCrawler(TaskSettings.PAGES_COUNT, predicate).apply {
+    WebCrawler(TaskFirstSettings.PAGES_COUNT, predicate).apply {
         startCrawl(url)
         getPages().forEachIndexed { index, page ->
             FileOutputStream(indexFile, true).bufferedWriter()
                 .use { it.append("$index - ${page.first}\n") }
-            File(textFilesDirectory, "$index.txt").apply {
+            File(textFilesDirectory, "$index.html").apply {
                 createNewFile()
                 val docText = page.second
                 writeText(docText)
@@ -38,7 +38,7 @@ private fun crawle(url: String) {
     }
 }
 
-private object TaskSettings {
+object TaskFirstSettings {
     const val FOLDER_NAME = "task1"
     const val FOLDER_FILES_NAME = "htmls"
     const val INDEX_FILE_NAME = "index.txt"

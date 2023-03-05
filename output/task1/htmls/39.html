@@ -1,0 +1,1151 @@
+<!doctype html>
+<html lang="ru" data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0"> 
+  <meta name="referrer" content="unsafe-url"> 
+  <title>Тайные каналы связи или как централизованные сервисы способны разлагаться изнутри / Хабр</title> 
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSxf6TF0.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveQhf6TF0.woff2) format('woff2');
+      unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSBf6TF0.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveRhf6.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* non-breaking hyphen */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmEU9vBh0_IsHAlmrO6g&skey=ee881451c540fdec&v=v29) format('woff2');
+      unicode-range: U+02011;
+    }
+  </style> 
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/chunk-vendors.b6238726.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/chunk-vendors.129fcbcb.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/app.2dc3dce9.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/app.8a380906.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" as="script"> 
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/chunk-vendors.b6238726.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/app.2dc3dce9.css"> 
+  <script>window.i18nFetch = new Promise((res, rej) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', '/js/i18n/ru-compiled.99fdff73029c662d76a25e7927355795.json');
+          xhr.responseType = 'json';
+          xhr.onload = function(e) {
+            if (this.status === 200) {
+              res({ru: xhr.response});
+            } else {
+              rej(e);
+            }
+          };
+          xhr.send();
+        });</script> 
+  <script data-vue-meta="ssr" type="application/ld+json" data-vmid="ldjson-schema">{"@context":"http:\/\/schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/habr.com\/ru\/post\/720544\/"},"headline":"Тайные каналы связи или как централизованные сервисы способны разлагаться изнутри","datePublished":"2023-03-05T17:30:42+03:00","dateModified":"2023-03-05T18:56:01+03:00","author":{"@type":"Person","name":"Коваленко Геннадий"},"publisher":{"@type":"Organization","name":"Habr","logo":{"@type":"ImageObject","url":"https:\/\/habrastorage.org\/webt\/a_\/lk\/9m\/a_lk9mjkccjox-zccjrpfolmkmq.png"}},"description":"ВведениеСовременный мир нельзя представить без сервисов связи, таких как социальные сети, мессенджеры, электронная почта, файловые хранилища и т.п. Мы пользуемся...","url":"https:\/\/habr.com\/ru\/post\/720544\/#post-content-body","about":["h_programming","h_go","h_crypto","h_infosecurity","h_p2p","f_develop","f_admin"],"image":["https:\/\/habr.com\/share\/publication\/720544\/3d3e97f5183164e19844f2301b894fc3\/","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/5ca\/9b6\/f31\/5ca9b6f3198b82eda2e52ca9fa88c45d.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/f3f\/0cc\/529\/f3f0cc5293344c542094b9087abea5bb.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/2ea\/b1c\/714\/2eab1c7143c6fa86f6fdd31c7c2d128d.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/4da\/db2\/34a\/4dadb234af89e94346588d798a819776.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/672\/d67\/820\/672d67820ff5625f950351b6ab95f7ce.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/715\/a55\/2b3\/715a552b31e7c00859e6b0d57278d843.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/e1b\/031\/7bb\/e1b0317bb6cb1a6e6ed0774e7144600c.png","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/781\/a73\/724\/781a737247c0ebf8db7465d67d9e7e97.png"]}</script> 
+  <script src="//www.googletagservices.com/tag/js/gpt.js" async></script> 
+  <style>.grecaptcha-badge{visibility: hidden;}</style> 
+  <meta name="habr-version" content="2.114.0"> 
+  <meta data-vue-meta="ssr" property="fb:app_id" content="444736788986613">
+  <meta data-vue-meta="ssr" property="fb:pages" content="472597926099084">
+  <meta data-vue-meta="ssr" name="twitter:card" content="summary_large_image">
+  <meta data-vue-meta="ssr" name="twitter:site" content="@habr_com">
+  <meta data-vue-meta="ssr" property="og:site_name" content="Хабр" data-vmid="og:site_name">
+  <meta data-vue-meta="ssr" property="og:title" content="Тайные каналы связи или как централизованные сервисы способны разлагаться изнутри" data-vmid="og:title">
+  <meta data-vue-meta="ssr" name="twitter:title" content="Тайные каналы связи или как централизованные сервисы способны разлагаться изнутри" data-vmid="twitter:title">
+  <meta data-vue-meta="ssr" name="aiturec:title" content="Тайные каналы связи или как централизованные сервисы способны разлагаться изнутри" data-vmid="aiturec:title">
+  <meta data-vue-meta="ssr" name="description" content="Введение Современный мир нельзя представить без сервисов связи, таких как социальные сети, мессенджеры, электронная почта, файловые хранилища и т.п. Мы пользуемся данными сервисами постоянно, ровно..." data-vmid="description">
+  <meta data-vue-meta="ssr" itemprop="description" content="Введение Современный мир нельзя представить без сервисов связи, таких как социальные сети, мессенджеры, электронная почта, файловые хранилища и т.п. Мы пользуемся данными сервисами постоянно, ровно..." data-vmid="description:itemprop">
+  <meta data-vue-meta="ssr" property="og:description" content="Введение Современный мир нельзя представить без сервисов связи, таких как социальные сети, мессенджеры, электронная почта, файловые хранилища и т.п. Мы пользуемся данными сервисами постоянно, ровно..." data-vmid="og:description">
+  <meta data-vue-meta="ssr" name="twitter:description" content="Введение Современный мир нельзя представить без сервисов связи, таких как социальные сети, мессенджеры, электронная почта, файловые хранилища и т.п. Мы пользуемся данными сервисами постоянно, ровно..." data-vmid="twitter:description">
+  <meta data-vue-meta="ssr" property="aiturec:description" content="Введение Современный мир нельзя представить без сервисов связи, таких как социальные сети, мессенджеры, электронная почта, файловые хранилища и т.п. Мы пользуемся данными сервисами постоянно, ровно..." data-vmid="aiturec:description">
+  <meta data-vue-meta="ssr" itemprop="image" content="https://habrastorage.org/getpro/habr/upload_files/fd9/245/e15/fd9245e1507bf63d6464668622bffc82.png" data-vmid="image:itemprop">
+  <meta data-vue-meta="ssr" property="og:image" content="https://habrastorage.org/getpro/habr/upload_files/fd9/245/e15/fd9245e1507bf63d6464668622bffc82.png" data-vmid="og:image">
+  <meta data-vue-meta="ssr" property="og:image:width" content="1200" data-vmid="og:image:width">
+  <meta data-vue-meta="ssr" property="og:image:height" content="630" data-vmid="og:image:height">
+  <meta data-vue-meta="ssr" property="aiturec:image" content="https://habrastorage.org/getpro/habr/upload_files/fd9/245/e15/fd9245e1507bf63d6464668622bffc82.png" data-vmid="aiturec:image">
+  <meta data-vue-meta="ssr" name="twitter:image" content="https://habrastorage.org/getpro/habr/upload_files/fd9/245/e15/fd9245e1507bf63d6464668622bffc82.png" data-vmid="twitter:image">
+  <meta data-vue-meta="ssr" property="vk:image" content="https://habrastorage.org/getpro/habr/upload_files/fd9/245/e15/fd9245e1507bf63d6464668622bffc82.png?format=vk" data-vmid="vk:image">
+  <meta data-vue-meta="ssr" property="aiturec:item_id" content="720544" data-vmid="aiturec:item_id">
+  <meta data-vue-meta="ssr" property="aiturec:datetime" content="2023-03-05T14:30:42.000Z" data-vmid="aiturec:datetime">
+  <meta data-vue-meta="ssr" content="https://habr.com/ru/post/720544/" property="og:url" data-vmid="og:url">
+  <meta data-vue-meta="ssr" property="og:type" content="article" data-vmid="og:type">
+  <meta data-vue-meta="ssr" property="og:locale" content="ru_RU" data-vmid="og:locale">
+  <meta data-vue-meta="ssr" name="keywords" content="информационная безопасность, криптография, программирование, go, децентрализованные сети, анонимность, анонимные сети, централизация"> 
+  <link data-vue-meta="ssr" href="https://habr.com/ru/rss/post/720544/?fl=ru" type="application/rss+xml" title="" rel="alternate" name="rss">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/post/720544/" rel="canonical" data-vmid="canonical">
+  <link data-vue-meta="ssr" rel="image_src" href="https://habrastorage.org/getpro/habr/upload_files/fd9/245/e15/fd9245e1507bf63d6464668622bffc82.png" data-vmid="image:href">
+  <link data-vue-meta="ssr" rel="amphtml" href="https://habr.com/ru/amp/post/720544/"> 
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303b44"> 
+  <meta name="msapplication-TileColor" content="#629FBC"> 
+  <meta name="apple-mobile-web-app-capable" content="yes"> 
+  <meta name="mobile-web-app-capable" content="yes"> 
+  <link rel="shortcut icon" type="image/png" sizes="16x16" href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png"> 
+  <link rel="shortcut icon" type="image/png" sizes="32x32" href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-152.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-180.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-256.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1136x640.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2436x1125.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1792x828.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_828x1792.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1334x750.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2208x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1125x2436.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2208.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2732x2048.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2688x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2224x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_750x1334.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x2732.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2388x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2224.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_640x1136.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2388.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x1536.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1536x2048.png"> 
+  <link rel="mask-icon" color="#77a2b6" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.svg"> 
+  <link crossorigin="use-credentials" href="/manifest.webmanifest" rel="manifest"> 
+  <script async src="https://unpkg.com/pwacompat" crossorigin="anonymous"></script> 
+  <script>window.yaContextCb = window.yaContextCb || []</script> 
+  <script src="https://yandex.ru/ads/system/context.js" async></script> 
+ </head> 
+ <body> 
+  <div id="app" data-server-rendered="true" data-async-called="true">
+   <div class="tm-layout__wrapper">
+    <!----> 
+    <div></div> <!----> 
+    <header class="tm-header">
+     <div class="tm-page-width">
+      <div class="tm-header__container">
+       <!----> <span class="tm-header__logo-wrap"><a href="/ru/" class="tm-header__logo tm-header__logo_ru">
+         <svg height="16" width="16" class="tm-svg-img tm-header__icon">
+          <title>Хабр</title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use>
+         </svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span> 
+       <div class="tm-dropdown tm-header__projects">
+        <div class="tm-dropdown__head">
+         <button class="tm-header__dropdown-toggle">
+          <svg height="16" width="16" class="tm-svg-img tm-header__icon tm-header__icon_dropdown">
+           <title>Открыть список</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#arrow-down"></use>
+          </svg></button>
+        </div> <!---->
+       </div> <a href="/ru/sandbox/start/" class="tm-header__become-author-btn"> Как стать автором </a> 
+       <div class="tm-feature tm-header__feature tm-feature tm-feature_variant-inline">
+        <!---->
+       </div> <!----> <!---->
+      </div>
+     </div>
+    </header> 
+    <div class="tm-layout">
+     <div class="tm-page-progress-bar"></div> 
+     <div data-menu-sticky="true" class="tm-base-layout__header tm-base-layout__header_is-sticky">
+      <div class="tm-page-width">
+       <div class="tm-base-layout__header-wrapper">
+        <div class="tm-main-menu">
+         <div class="tm-main-menu__section">
+          <nav class="tm-main-menu__section-content">
+           <!----> <a href="/ru/all/" class="tm-main-menu__item"> Все потоки </a> <a href="/ru/flows/develop/" class="tm-main-menu__item"> Разработка </a><a href="/ru/flows/admin/" class="tm-main-menu__item"> Администрирование </a><a href="/ru/flows/design/" class="tm-main-menu__item"> Дизайн </a><a href="/ru/flows/management/" class="tm-main-menu__item"> Менеджмент </a><a href="/ru/flows/marketing/" class="tm-main-menu__item"> Маркетинг </a><a href="/ru/flows/popsci/" class="tm-main-menu__item"> Научпоп </a>
+          </nav>
+         </div>
+        </div> 
+        <div class="tm-header-user-menu tm-base-layout__user-menu">
+         <a href="/ru/search/" class="tm-header-user-menu__item tm-header-user-menu__search">
+          <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark">
+           <title>Поиск</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#search"></use>
+          </svg></a> <!----> <!----> <!----> 
+         <div class="tm-header-user-menu__item tm-header-user-menu__user_desktop">
+          <div class="tm-dropdown">
+           <div class="tm-dropdown__head">
+            <svg height="24" width="24" data-test-id="menu-toggle-guest" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_dark">
+             <title>Профиль</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#header-user"></use>
+            </svg> <!---->
+           </div> <!---->
+          </div> <!---->
+         </div> <!---->
+        </div>
+       </div>
+      </div>
+     </div> <!----> 
+     <div class="tm-page-width"></div> 
+     <main class="tm-layout__container">
+      <div hl="ru" data-async-called="true" class="tm-page">
+       <div class="tm-page-width">
+        <!----> 
+        <div class="tm-page__wrapper">
+         <div class="tm-page__main tm-page__main_has-sidebar">
+          <div class="pull-down">
+           <!----> 
+           <div class="pull-down__header" style="height:0px;">
+            <div class="pull-down__content" style="bottom:10px;">
+             <svg height="24" width="24" class="tm-svg-img pull-down__arrow">
+              <title>Обновить</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#pull-arrow"></use>
+             </svg>
+            </div>
+           </div> 
+           <div class="tm-article-presenter"> 
+            <div class="tm-article-presenter__body">
+             <div class="tm-misprint-area">
+              <div class="tm-misprint-area__wrapper">
+               <article class="tm-article-presenter__content tm-article-presenter__content_narrow">
+                <div class="tm-article-presenter__header"> 
+                 <div class="tm-article-snippet tm-article-presenter__snippet tm-article-snippet">
+                  <div class="tm-article-snippet__meta-container">
+                   <div class="tm-article-snippet__meta">
+                    <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/Number571/" title="Number571" class="tm-user-info__userpic">
+                      <div class="tm-entity-image">
+                       <img alt="" height="24" src="//habrastorage.org/r/w32/getpro/habr/avatars/3a7/b29/0f7/3a7b290f7401111b35722db2d1380907.png" width="24" class="tm-entity-image__pic">
+                      </div></a> <span class="tm-user-info__user"><a href="/ru/users/Number571/" class="tm-user-info__username"> Number571 <!----></a> <span class="tm-article-datetime-published"><time datetime="2023-03-05T14:30:42.000Z" title="2023-03-05, 17:30">1 час назад</time></span></span></span>
+                   </div> <!---->
+                  </div> 
+                  <h1 lang="ru" class="tm-article-snippet__title tm-article-snippet__title_h1"><span>Тайные каналы связи или как централизованные сервисы способны разлагаться изнутри</span></h1> 
+                  <div class="tm-article-snippet__stats">
+                   <div class="tm-article-complexity tm-article-complexity_complexity-high">
+                    <span class="tm-svg-icon__wrapper tm-article-complexity__icon">
+                     <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                      <title>Уровень сложности</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#complexity-high"></use>
+                     </svg></span> <span class="tm-article-complexity__label"> Сложный </span>
+                   </div> 
+                   <div class="tm-article-reading-time">
+                    <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                     <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                      <title>Время на прочтение</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#clock"></use>
+                     </svg></span> <span class="tm-article-reading-time__label"> 17 мин </span>
+                   </div> <span class="tm-icon-counter tm-data-icons__item">
+                    <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                     <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-views"></use>
+                    </svg> <span class="tm-icon-counter__value">441</span></span>
+                  </div> 
+                  <div class="tm-article-snippet__hubs-container">
+                   <div class="tm-article-snippet__hubs">
+                    <span class="tm-article-snippet__hubs-item"><a href="/ru/hub/programming/" class="tm-article-snippet__hubs-item-link"><span>Программирование</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/go/" class="tm-article-snippet__hubs-item-link"><span>Go</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/crypto/" class="tm-article-snippet__hubs-item-link"><span>Криптография</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/infosecurity/" class="tm-article-snippet__hubs-item-link"><span>Информационная безопасность</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/p2p/" class="tm-article-snippet__hubs-item-link"><span>Децентрализованные сети</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                   </div>
+                  </div> 
+                  <div class="tm-article-snippet__labels-container">
+                   <div class="tm-article-snippet__labels">
+                    <div class="tm-article-snippet__label tm-article-snippet__label_variant-case">
+                     <span> Кейс </span>
+                    </div> 
+                   </div>
+                  </div> <!----> <!---->
+                 </div>
+                </div> <!----> 
+                <div data-gallery-root="" lang="ru" class="tm-article-body">
+                 <div></div> 
+                 <div id="post-content-body">
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                    <div xmlns="http://www.w3.org/1999/xhtml">
+                     <h2>Введение</h2>
+                     <p>Современный мир нельзя представить без сервисов связи, таких как социальные сети, мессенджеры, электронная почта, файловые хранилища и т.п. Мы пользуемся данными сервисами постоянно, ровно как и они планомерно пользуются нами. Конфиденциальная информация становится для сервисов связи святым граалем в задачах таргетированной рекламы. А для нас граалем становится их лёгкость использования, производительность и большие размеры хранилищ.</p>
+                     <p>На первый взгляд кажется, что такой специфичный способ взаимодействия клиентов с сервисами представляет собой некий синтез, когда мы друг друга дополняем и оберегаем (относительно собственных интересов). Но всё же, если смотреть более углубленно на данный вид коммуникаций, то может появиться дополнительный вопрос: есть ли место в подобной парадигме паразитическим отношениям?</p>
+                     <p>Вопрос только ставится в том, кто действительно является в такой парадигме паразитом — мы или же сервисы? Изначально можно предположить, что мы сами являемся паразитами сервисов, и на это есть вполне логичные утверждения. Так например, если кто-либо создаст новый сервис общения между людьми, а людям данный сервис очень понравится, то на начальном этапе существования сервиса мы действительно будем представлять собой некую форму паразитизма, когда сервис постоянно и постепенно будет тратить свои собственные ресурсы. </p>
+                     <p>Но, так или иначе, ситуация в современном мире полностью перевернула концепцию первичного представления паразитизма, когда сервисы связи стали жить и существовать не ради предоставления самого факта сервиса, а ради экономической прибыли за счёт существования массы клиентов. На данном этапе, сервисы становятся окупаемыми с излишком, а сама централизация сервисов становится некой чёрной дырой, затягивающей в себя всё больше и больше пользователей с целью всё большей и большей выгоды. На этом сервисы не останавливают своё праздное шествие, а продолжают образовывать новый вид коммуникации между одним сервисом связи и другим благодаря рекламным сервисам. За счёт данного явления, когда клиенты начинают пользоваться определённым сервисом A, их данные начинают автоматически передаваться на рекламный сервис C, а после и на сервис назначения B. </p>
+                     <p>Такое явление можно видеть постоянно: 1) когда мы разговарием с кем-либо вживую, а потом на определённом сервисе обнаруживаем те самые темы о которых шла речь в оффлайне; 2) когда мы пишем сообщения определённому человеку в социальной сети о каком-либо товаре, а потом рекламы такого товара обнаруживаем на другом сервисе; и т.д. Коммуникации сервисов между собой настолько хорошо становятся налаженными, что это больше напоминает некий картель, целью которого является максимизация прибыли любыми доступными методами и способами.</p>
+                     <p>Помимо экономической выгоды, централизованные сервисы, переходя из конкурентной в монополистическую формацию, начинают постепенно и планомерно обретать также и политические интересы. За счёт этого они более успешно могут подавлять конкурентов, расширять рынок, срастаться с государственным аппаратом и т.д. В общей такой форме, накопленный излишек экономических и политических выгод начинает куда сильнее превосходить тот самый первичный паразитизм со стороны клиентов какого-либо сервиса, и за счёт этого можно с уверенностью сказать, что в современной мире сами сервисы становятся истинными паразитами на теле клиентов.</p>
+                     <p>Проблемой такого исхода событий становится глобальное наблюдение за всем трафиком сети, за всеми переписками, распространяемыми файлами, мнениями, политическими убеждениями, списками друзей, родственников, знакомых и т.д. В конечном итоге, любая оставляемая информация в Интернете начинает самостоятельную жизнь, начинает своё турне, путешествие от одного сервиса к другому, вплоть до бесконечности, лишь с той единственной целью, чтобы вы купили *нейм-товар*, чтобы вы согласились с *правильным-мнением*, чтобы вы оставались покупать и соглашаться.</p>
+                     <h2>Альтернативы?</h2>
+                     <p>Их нет, в буквальном смысле нет альтернатив, которые являлись бы настолько хорошими, чтобы большая часть людей перешла от централизованных сервисов к безопасным аналогам. Тем не менее, существует ряд решений, который способен ограничить отслеживаемую, со стороны государств, и собираемую, со стороны сервисов связи, информацию. К такому ряду решений относятся:</p>
+                     <ol>
+                      <li><p>Клиент-безопасные приложения. Отличительной особенностью данного вида приложений, в сравнении со множеством других, является доказуемая безопасность сетевых коммуникаций исключительно клиентской стороной. Иными словами, это говорит о том, что даже если информация будет передаваться серверной стороне или храниться на ней, то сервисы всё равно не смогут проанализировать или видоизменить такого рода данные, т.к. они находятся в зашифрованном или аутентифицированном виде. Частным случаем такого вида коммуникаций является сквозное (end-to-end) шифрование. К такому виду приложений, как пример, относятся RetroShare, Freenet, Bitmessage и т.д.</p></li>
+                      <li><p>Анонимные (скрытые) сети. Отличительной особенностью данного вида приложений становится либо сокрытие факта передачи информации от точки A до точки B, либо сокрытие связи между точками A и B. В отличие от клиент-безопасных приложений, анонимные сети представляют собой исключительно способ маршрутизации между абонентами системы. Это говорит о том, что принимающая сторона, в виде точки B может являться централизованным сервисом связи, и как следствие, нарушать конфиденциальность информации. В следствие этого, необходимо объединять клиент-безопасные приложения с анонимными сетями, чтобы достигнуть и безопасности передаваемой информации и анонимность её субъектов. К тому виду приложений, как пример, относятся Tor, I2P, Mixminion и т.д.</p></li>
+                      <li><p>Тайные каналы связи. Не являются сугубо монолитными решениями, а скорее представляют собой некую оболочку либо над клиент-безопасными приложениями, либо над анонимными сетями. Исключительной особенностью тайных связи является их теоретическая способность внедряться в любые уже выстроенные виды коммуникаций, вследствие которых итоговая связь между субъектами становится безопаснее изначальной. За счёт такого критерия, тайные каналы связи становится возможным применять в централизованных сервисах, не выделяя при этом собственные сервера и память для хранения всей поступаемой информации. Комбинация "тайный канал связи + клиент-безопасное приложение" может быть реализовано при помощи PGP/GPG программ, когда информация зашифровывается локально и передаётся принимающему абоненту через централизованный сервис связи. Комбинация же "тайный канал связи + анонимные сети" куда более интересна и нигде ранее в литературе не рассматривалась, а поэтому данная статья большую часть внимания будет уделять именно такой концепции.</p></li>
+                     </ol>
+                     <h2>Абстрактные анонимные сети</h2>
+                     <p>Если тайные каналы связи представляют собой возможность внедряться в уже готовые сетевые коммуникации (централизованные или децентрализованные), увеличивая при этом безопасность передаваемой информации, то встаёт логичный вопрос возможно ли сохранить такое же свойство, но со стороны анонимизации трафика?</p>
+                     <p>Чтобы ответить на данный вопрос, нам необходимо спроектировать такую анонимную сеть, для которой были бы незначимы следующие явления как: 1) высокий уровень централизации; 2) открытость и известность IP-адресов; 3) отсутствие маршрутизации; 4) количество узлов в сети; 5) отключение узлов от сети; 6) замедление или ускорение трафика. На первый взгляд кажется, что такого рода комбинацию невозможно спроектировать и тем более реализовать. </p>
+                     <p>Сначала гипотетически предположим, что такие сети действительно существуют. Назовём их абстрактными анонимными сетями. За счёт своей абстрактности, они становятся способны применяться не только в обычных сетевых коммуникациях, но и в тайных каналах связи. Это свойство позволяет им без труда видоизменять способ сетевого взаимодействия. Иными словами, они становятся способными воссоздавать связь в любой среде, где просто присуствует возможность отправления и получения информации. Такого свойства просто не существует у современных анонимных сетей, по крайней мере по умолчанию и без модификаций. </p>
+                     <h2>Проектирование абстрактных сетей</h2>
+                     <p>На самом деле спроектировать такую сеть не является сильно сложной задачей, ровно как и её реализация. Так например, можно реализовать абстрактную анонимность на базе уже готовых анонимных сетей, но лишь с одним условием - чтобы их анонимность была теоретически доказуемой. К такому виду анонимных сетей относятся DC-сети на базе проблемы "обедающих криптографов". Помимо прочего, существуют ещё более "элегантные" проблемы, как например задача "на базе очередей".</p>
+                     <details class="spoiler">
+                      <summary>Теоретически доказуемая анонимность</summary>
+                      <div class="spoiler__content">
+                       <p>Скрытыми сетями с теоретически доказуемой анонимностью принято считать замкнутые, полностью прослушиваемые&nbsp;системы, в которых становится невозможным осуществление любых пассивных атак (в том числе и при существовании глобального наблюдателя) направленных на деанонимизацию факта отправления и/или получения информации, или на деанонимизацию связи между отправителем и получателем с минимальными условностями по количеству узлов неподчинённых сговору. Говоря иначе, с точки зрения пассивного атакующего, апостериорные знания, полученные вследствие наблюдений, должны оставаться равными априорным, до наблюдений, тем самым сохраняя равновероятность деанонимизации по <em>N</em>-ому множеству субъектов сети.</p>
+                      </div>
+                     </details>
+                     <p><strong>Проблема обедающих криптографов</strong></p>
+                     <p>Выглядит она так (не буду пересказывать о том, как криптографы обедают и о том, что существует некий АНБ, раскажу вкратце): существует три участника сети {A, B, C}. Один участник хочет послать 1 бит информации по сети (либо 1, либо 0 соответственно), но таким образом, чтобы другие субъекты не узнали кто отправил данную информацию. Предполагается, что таковые участники соединены между собой, тем самым имеют безопасный канал связи, а также имеют расписание по которому в каждый момент времени T генерируется новый бит.</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/5ca/9b6/f31/5ca9b6f3198b82eda2e52ca9fa88c45d.png" alt="Проблема обедающих криптографов" title="Проблема обедающих криптографов" width="1200" height="600" data-src="https://habrastorage.org/getpro/habr/upload_files/5ca/9b6/f31/5ca9b6f3198b82eda2e52ca9fa88c45d.png">
+                      <div>
+                       <figcaption>
+                        Проблема обедающих криптографов
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Предположим, что участник A хочет отправить информацию по сети так, чтобы {B, C} эту информацию получили, но не смогли узнать, кто действительно является отправителем. Иными словами, для B это может быть {A, C}, а для C это {A, B} с вероятностью 50/50. Все участники начинают согласовывать общий бит со своими соседями (в момент времени T, конечно же). Предположим, что участники {A, B} согласовали бит = 1, {B, C} = 0, {C, A} = 1.</p>
+                     <p>Далее каждый участник сети XOR'ит (операция исключающее ИЛИ) биты со всех своих соединений: A = 1 xor 1 = 0; B = 1 xor 0 = 1; C = 0 xor 1 = 1. Данные результаты обмениваются по всей сети и XOR'ятся каждым её участником: 0 xor 1 xor 1 = 0. Это говорит о том, что участник A передал бит информации = 0. Чтобы субъект A мог передать бит = 1, ему необходимо добавить операцию НЕ в своём вычислении, то есть A = НЕ(1 xor 1) = 1. В итоге, все вычисления прийдут к такому результату: 1 xor 1 xor 1 = 1.Таким образом, можно передать 1 бит информации полностью анонимно (конечно же со стороны определения теоретически доказуемой анонимности). </p>
+                     <p>Предположим, что один из участников, либо B, либо C захочет деанонимизировать либо {A, C}, либо {B, C} соответственно (то есть узнать, кто является отправителем информации). Тогда ему потребуется узнать согласованный секрет со стороны другой линии связи, что является сложной задачей (если конечно не был произведён сговор нескольких участников). Таким образом, атака со стороны внутреннего пассивного наблюдателя становится безрезультатной. Со стороны внешнего глобального наблюдателя такая же ситуация, потому как он видит лишь переадресацию зашифрованных битов (потому как используется безопасный канал связи) в один момент времени T всеми участниками сети.</p>
+                     <p>Сами по себе DC-сети не являются абстрактными анонимными сетями, но при этом наиболее приближены к ним. Так например, для анонимизации трафика им безразличны такие условности как: 1) открытость и известность IP-адресов; 2) отсутствие маршрутизации; 3) количество узлов в сети; 4) отключение узлов от сети; 5) замедление или ускорение трафика. Единственное, что отделяет DC-сети от абстрактных сетей, является критерий высокого уровня централизации. Проблема обедающих криптографов предполагает, что все субъекты будут соединены между собой при помощи связи "один-к-одному". Если же изменить вид связи на "все-к-одному", то последний, кто будет содержать все коммуникации воедино и будет являться деанонимизирующим узлом. Чтобы избавиться от такого явления, нужно исключить необходимость в связи "один-к-одному". Это можно сделать следующим образом: каждый субъект заранее согласовывает свои ключи со всеми остальными субъектами, но использует централизованный узел исключительно в качестве ретранслирующей функции. Таким образом, нарушается прямолинейная связь "один-к-одному", но образуется свойство абстрактности. Чтобы облегчить передачу ключей между всеми участниками сети, можно воспользоваться асимметричной криптографией.</p>
+                     <p><strong>Задача на базе очередей</strong></p>
+                     <p>В некоторой степени у данной задачи имеются схожие моменты с DC-сетями, тем не менее алгоритм принициально отличается, как минимум из-за того, что таковой находится на более прикладном уровне со стороны криптографических протоколов и строит не широковещательную связь между субъектами. Иными словами задача на базе очередей содержит в себе имплементацию E2E (сквозного) шифрования. </p>
+                     <p>Вкратце суть задачи на базе очередей сводится к следующему: предположим, что существует три участника {A, B, C}. Каждый из них соединён друг к другу (не является обязательным критерием, но данный случай я привёл исключительно для упрощения). Каждый субъект устанавливает время генерации информации = T. У каждого участника имеется своё внутренее хранилище по типу FIFO (первый пришёл - первый ушёл), можно сказать имеется структура "очередь". </p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/f3f/0cc/529/f3f0cc5293344c542094b9087abea5bb.png" alt="Задача на базе очередей" title="Задача на базе очередей" width="768" height="500" data-src="https://habrastorage.org/getpro/habr/upload_files/f3f/0cc/529/f3f0cc5293344c542094b9087abea5bb.png">
+                      <div>
+                       <figcaption>
+                        Задача на базе очередей
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Предположим, что участник A хочет отправить некую информацию одному из участников {B, C}, так, чтобы другой участник (или внешний наблюдатель не знали, что существует какой-либо факт отправления. Каждый участник в определённый период T генерирует сообщение. Такое сообщение может быть либо ложным (не имеющее никакого фактического содержания и никому по факту не отправляется, заполняясь случайными битами), либо истинным (запрос или ответ). Отправить раньше или позже положенного времени T никакой участник не может. Если скопилось несколько запросов одному и тому же участнику, тогда он их будет ложить в свою очередь сообщений и после периода T достанет из очереди и отправит в сеть. Таким образом, сама структура задачи на базе очередей есть множество последовательно выстроенных очередей, в отличие от единственной очереди в DC-сетях. </p>
+                     <p>Таким образом, внешний глобальный наблюдатель будет видеть лишь картину, при которой каждый участник в определённо заданный период времени T отправляет некое сообщение всем остальным узлам сети, что не даёт никакой информации о факте отправления, либо получения. Внутренние пассивные участники также неспособны узнать коммуниицирует ли один из участников в данный период времени с каким-либо другим, т.к. предполагается, что шифрованная информация не выдаёт никаких данных об отправителе и получателе непосредственно.</p>
+                     <p>За основу всех последующих рассуждений мы возьмём задачу на базе очередей. Данная задача уже имеет свои готовые реализации, о которых вы также можете почитать на хабре и которые будут использоваться в данной статье:</p>
+                     <ol>
+                      <li><p><a href="https://habr.com/ru/post/696504/" rel="noopener noreferrer nofollow">HLS</a> — ядро анонимной сети с теоретически доказуемой анонимностью на базе очередей.</p></li>
+                      <li><p><a href="https://habr.com/ru/post/701488/" rel="noopener noreferrer nofollow">HLM</a> — анонимный мессенджер построенный на базе ядра HLS.</p></li>
+                      <li><p><a href="https://habr.com/ru/post/717184/" rel="noopener noreferrer nofollow">HLT</a> — приложение сохраняющее и перераспределяющее трафик HLS.</p></li>
+                     </ol>
+                     <h2>Возврат клиентского паразитизма</h2>
+                     <p>С учётом всего вышеописанного, становится возможным использовать комбинацию "тайный канал связи + абстрактная анонимная сеть". Основная суть задачи будет заключаться в сохранении анонимизирующего трафика, но таким образом, чтобы использовать сторонние ресурсы — централизованные сервисы, в качестве основного способа сохранения и перераспределения информации. Иными словами, мы будем являться некого рода паразитами, использующими вычислительные ресурсы совершенно по иному назначению, чем это изначально предполагалось создателями подобных сервисов. </p>
+                     <p>За счёт такого способа коммуникации нам становится излишен факт создания и существования "чистых" узлов, исполняющих исключительно функцию анонимизации трафика. Плюс к этому, т.к. абстрактные анонимные сети, как чаще всего бывает, ограничены в количестве узлов (нагрузка линейно зависима) и достаточно редки в использовании (из-за низкой производительности), то наиболее рациональным для выживания подобного рода сетей становится их способность внедряться в уже готовые системы. Поэтому не просто так я утверждаю, что такие системы являются паразитическими, потому как само их существование начинает прямо пропорционально зависеть от состояния централизованных сервисов.</p>
+                     <p>В реализации подобного тайного канала связи мы будем использовать композицию Hidden Lake приложений, а именно — HLS (service), HLM (messenger) и HLT (traffic). Вкратце, всю архитектуру можно представить в виде следующей схемы.</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/2ea/b1c/714/2eab1c7143c6fa86f6fdd31c7c2d128d.png" alt="Архитектура тайного канала связи при использовании HLS, HLM и HLT" title="Архитектура тайного канала связи при использовании HLS, HLM и HLT" width="942" height="172" data-src="https://habrastorage.org/getpro/habr/upload_files/2ea/b1c/714/2eab1c7143c6fa86f6fdd31c7c2d128d.png">
+                      <div>
+                       <figcaption>
+                        Архитектура тайного канала связи при использовании HLS, HLM и HLT
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>На данной схеме есть несколько ключевых моментов и терминологий. </p>
+                     <ol>
+                      <li><p>Payload - это информация в открытом, незашифрованном виде, в то время как Message - это информация в закрытом, зашифрованном виде.</p></li>
+                      <li><p>HLS работает с TCP протоколом во внешней сети и с HTTP протоколом во внутренней сети. Данный сервис хранит на своей стороне исключительно хеш-значения получаемых или отправляемых сообщений типа Message.</p></li>
+                      <li><p>HLM представляет собой исключительно графический интерфейс с БД, хранящей открытую информацию — отправляемые и получаемые сообщения типа Payload.</p></li>
+                      <li><p>HLT является сервисом необходимым для перераспределения трафика от HLS. Можно сказать, что HLT лишь эмулирует поведение HLS с целью получения сырых сообщений типа Message.</p></li>
+                      <li><p>HLT перенаправляет сообщения типа Message на сервис Sender. Sender представлен в роли потребителя (consumer) информации для HLT, суть которого сводится к преобразованию сырой информации типа Message в оболочку F(Message) таким образом, чтобы Service смог успешно сохранить полученную им информацию. Иными словами, оболочку F можно также назвать интерфейсов конечного сервиса.</p></li>
+                      <li><p>HLT принимает сообщения типа Message от сервиса Receiver. Receiver представлен в роли производителя (producer) информации, суть которого сводится к постоянным проверкам обновления списка сообщения со стороны субъекта Service. Можно сказать, что Receiver выполняет обратные операции в сравнении с Sender, то-есть F(Message) -&gt; Message. </p></li>
+                     </ol>
+                     <p>Данную схему можно также сравнить с первоначальной архитектурой, в которой анонимизирующий трафик базируется исключительно на "чистых" соединениях, без участия сервисов связи и использования тайных каналов.</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/4da/db2/34a/4dadb234af89e94346588d798a819776.png" alt="Архитектура анонимизации трафика при использовании HLS и HLM" title="Архитектура анонимизации трафика при использовании HLS и HLM" width="791" height="271" data-src="https://habrastorage.org/getpro/habr/upload_files/4da/db2/34a/4dadb234af89e94346588d798a819776.png">
+                      <div>
+                       <figcaption>
+                        Архитектура анонимизации трафика при использовании HLS и HLM
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Как видно из этого схема получается достаточно простой, но и более абстрактной, потому как Network можно представить в виде суммы (HLT + Sender + Receiver + Service). За счёт такой абстрагируемости мы можем легко переключаться между Network и комбинацией с участием HLT. Также можно сказать, что Sender и Receiver представляют собой адаптеры, которые переводят один тип сообщения в другой.</p>
+                     <p>При этом, если посмотреть на данные схемы более внимательно, то можно с уверенностью сказать, что и само приложение HLM является легкозаменяемым. Иными словами, если у нас будет два приложения, где одно представляет мессенджер, а другое какой-либо файловый сервис, то на общую архитектуру анонимизации трафика и тайного канала связи это никак не повлияет.</p>
+                     <h2>Реализация тайного канала связи</h2>
+                     <p>Предположим, что существует некий централизованный сервис у которого присутствуют функции push (загрузки сообщений), load (выгрузки сообщений) и size (количество сообщений). Этого будет вполне достаточно для последующей реализации адаптеров Sender и Receiver.</p>
+                     <p>Начнём с адаптера Sender, т.к. он является наиболее лёгким. В моей реализации это будет выглядить примерно следующим образом.</p>
+                     <pre><code class="go">func trafficPage(hostService string, portService int) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+        // HLT отправляет POST запросы потребителям
+		if r.Method != http.MethodPost {
+			api.Response(w, 2, "failed: incorrect method")
+			return
+		}
+
+        // Получаем Message от HLT
+		res, err := io.ReadAll(r.Body)
+		if err != nil {
+			api.Response(w, 3, "failed: read body")
+			return
+		}
+
+		// Конвертируем Message в формат сервиса 
+		_, err = api.Request(
+			http.MethodPost,
+			fmt.Sprintf("%s:%d/push", hostService, portService),
+			F(res),
+		)
+		if err != nil {
+			api.Response(w, 4, "failed: bad response")
+			return
+		}
+
+		api.Response(w, 1, "success: push to service")
+	}
+}
+</code></pre>
+                     <p>Продолжим кодом Receiver'a. Данный код более сложный, потому как должен: 1) сохранять номер сообщений со стороны сервиса; 2) должен постоянно прослушивать новые сообщения поступаемые на сервис.</p>
+                     <pre><code class="go">for {
+        // Задержка должна быть меньше периода генерации сообщений
+        // в HLS, но и не сильно низкой, чтобы сервис не начал
+        // блокировать.
+		time.Sleep(time.Second)
+
+        // Пытаемся узнать у сервиса количество сообщений.
+		strCount, err := api.Request(
+			http.MethodGet,
+			fmt.Sprintf("%s:%d/size", hostService, portService),
+			nil,
+		)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+
+		countService, err := strconv.ParseUint(strCount, 10, 64)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+
+        // Получаем последнее количество сообщений которое мы смогли прочитать.
+		countDB, err := countOfDataInDB()
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+
+        // Получаем новые сообщения с сервиса.
+		for i := countDB; i &lt; countService; i++ {
+			data, err := api.Request(
+				http.MethodGet,
+				fmt.Sprintf("%s:%d/load?data_id=%d", common.HostService, portService, i),
+				nil,
+			)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+
+            // Получаем сообщение и сервиса и преобразуем его
+            // вид для сервиса HLT
+			msg := message.LoadMessage(
+				iF(data),
+				message.NewParams(
+					hls_settings.CMessageSize,
+					hls_settings.CWorkSize,
+				),
+			)
+			if err := hltClient.PutMessage(msg); err != nil {
+				fmt.Println(err)
+				continue
+			}
+
+            // Повышаем количество загруженных сообщений на единицу.
+			incrementCountInDB()
+		}
+	}</code></pre>
+                     <p>Хоть данный пример и является в некой степени лабораторным, на нём очень легко рассмотреть основные особенности. Во-первых, такой пример более детерминирован для последующих тестирований, нам не надо полагаться на сторонний сервис, который может со временем изменить структуру своих запросов и ответов. Во-вторых, для реализации адаптеров нам нет надобности знать исходный код самого сервиса, нужно лишь знать основные запросы 1) на получение количества новых или всех сообщений; 2) на отправление одного или множества новых сообщений; 3) на получение одного или множества существующих сообщений. Всё это можно посмотреть буквально в браузере, выкачав нужные cURL запросы с заголовками и куками. В-третьих, если централизованный сервис легко позволяет регистрироваться и авторизироваться без привязки к номеру телефона (или чего подобного), то один и тот же аккаунт может использовать группа клиентов, что будет проще для коммуникации.</p>
+                     <p>Теперь давайте проверим, будет ли работать и функционировать прикладное приложение HLM, при котором множество HLS не связываются напрямую, а проходят сквозь централизованный сервис связи посредством HLT и адаптеров. Все исходные коды приложений находятся полностью в открытом доступе: <a href="https://github.com/number571/go-peer/tree/master/cmd/hidden_lake/service" rel="noopener noreferrer nofollow">HLS</a>, <a href="https://github.com/number571/go-peer/tree/master/cmd/hidden_lake/messenger" rel="noopener noreferrer nofollow">HLM</a>, <a href="https://github.com/number571/go-peer/tree/master/cmd/hidden_lake/traffic" rel="noopener noreferrer nofollow">HLT</a>. Вы также можете проверить их работоспособность в директории <a href="https://github.com/number571/go-peer/tree/master/examples/_cmd" rel="noopener noreferrer nofollow">examples/_cmd</a>. </p>
+                     <p>Переходим в директорию <code>examples/_cmd/anon_messenger/secret_channel</code> и запускаем <code>make</code>. Запустится два узла с комбинациями HLS+HLM+HLT, у каждого из которых будут одинаковые адаптеры Sender и Receive. Также запустится централизованный сервис, через который будет проходить весь анонимизирующий трафик.</p>
+                     <p>Открываем <code>localhost:8080</code> и <code>localhost:7070</code>. Это те самые два узла, которые были запущены.</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/672/d67/820/672d67820ff5625f950351b6ab95f7ce.png" alt="Начальная страница HLM" title="Начальная страница HLM" width="1268" height="530" data-src="https://habrastorage.org/getpro/habr/upload_files/672/d67/820/672d67820ff5625f950351b6ab95f7ce.png">
+                      <div>
+                       <figcaption>
+                        Начальная страница HLM
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Переходим в <code>Sign in</code> и авторизируемся как <code>user/password.</code> Данные записи уже были созданы для тестов, в которых также хранится список друзей. Т.к. пользователей всего два, то они хранят публичные ключи друг друга. Переходим в список друзей и пишем друг другу сообщения.</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/715/a55/2b3/715a552b31e7c00859e6b0d57278d843.png" alt="Отправление и получение сообщений в HLM" title="Отправление и получение сообщений в HLM" width="1268" height="530" data-src="https://habrastorage.org/getpro/habr/upload_files/715/a55/2b3/715a552b31e7c00859e6b0d57278d843.png">
+                      <div>
+                       <figcaption>
+                        Отправление и получение сообщений в HLM
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>Таким образом, всё работает и функционирует, мы буквально воспользовались централизованным сервисом связи для хранения и транспортирования анонимизирующего трафика. </p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/e1b/031/7bb/e1b0317bb6cb1a6e6ed0774e7144600c.png" alt="Логи от сервисов HLS и HLT со стороны одного узла" title="Логи от сервисов HLS и HLT со стороны одного узла" width="1161" height="683" data-src="https://habrastorage.org/getpro/habr/upload_files/e1b/031/7bb/e1b0317bb6cb1a6e6ed0774e7144600c.png">
+                      <div>
+                       <figcaption>
+                        Логи от сервисов HLS и HLT со стороны одного узла
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <p>По логам мы также можем увидеть, что каждый период времени = T (в контексте HLS это 5 секунд) генерируются сообщения. Это основной механизм работы задачи на базе очередей. </p>
+                     <p>Вышеописанный пример может быть достаточно тяжеловесным для изучения, потому как содержит в себе ещё и использование HLM, который, как я ранее упоминал, не является ключевым механизмом. Поэтому для более лёгкой реализации можно продемонстрировать <code>echo_service</code>, который находится на одном из узлов. Для этого примера нам необходимо перейти в директорию <code>examples/_cmd/echo_service/secret_channel</code> и запустить <code>make</code>. Также запустятся два узла HLS+HLT, на них адаптеры Sender+Receiver и отдельно запустится сервис связи. </p>
+                     <p>Для проверки перейдём в директорию ниже, в <code>examples/_cmd/echo_service</code> и запустим скрипт <code>request.sh</code>. Получим ответ return=1 (что является кодом без ошибки) и полученный ответ в result в hex кодировке. Если декодируем, то получим сообщение <code>{"echo":"hello, world!","return":1}</code>, что является ответом от сервиса в HLS.</p>
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/781/a73/724/781a737247c0ebf8db7465d67d9e7e97.png" alt="Полученный результат скрипта обращающегося к echo-сервису на одном из узлов" title="Полученный результат скрипта обращающегося к echo-сервису на одном из узлов" width="1100" height="113" data-src="https://habrastorage.org/getpro/habr/upload_files/781/a73/724/781a737247c0ebf8db7465d67d9e7e97.png">
+                      <div>
+                       <figcaption>
+                        Полученный результат скрипта обращающегося к echo-сервису на одном из узлов
+                       </figcaption>
+                      </div>
+                     </figure>
+                     <details class="spoiler">
+                      <summary>Скрипт request.sh</summary>
+                      <div class="spoiler__content">
+                       <pre><code class="bash">#!/bin/bash
+
+str2hex() {
+    local str=${1:-""}
+    local fmt="%02X"
+    local chr
+    local -i i
+    for i in `seq 0 $((${#str}-1))`; do
+        chr=${str:i:1}
+        printf "${fmt}" "'${chr}"
+    done
+}
+
+JSON_DATA='{
+        "method":"POST",
+        "host":"hidden-echo-service",
+        "path":"/echo",
+        "head":{
+            "Accept": "application/json"
+        },
+        "body":"aGVsbG8sIHdvcmxkIQ=="
+}';
+
+PUSH_FORMAT='{
+        "receiver":"PubKey(go-peer/rsa){3082020A0282020100B752D35E81F4AEEC1A9C42EDED16E8924DD4D359663611DE2DCCE1A9611704A697B26254DD2AFA974A61A2CF94FAD016450FEF22F218CA970BFE41E6340CE3ABCBEE123E35A9DCDA6D23738DAC46AF8AC57902DDE7F41A03EB00A4818137E1BF4DFAE1EEDF8BB9E4363C15FD1C2278D86F2535BC3F395BE9A6CD690A5C852E6C35D6184BE7B9062AEE2AFC1A5AC81E7D21B7252A56C62BB5AC0BBAD36C7A4907C868704985E1754BAA3E8315E775A51B7BDC7ACB0D0675D29513D78CB05AB6119D3CA0A810A41F78150E3C5D9ACAFBE1533FC3533DECEC14387BF7478F6E229EB4CC312DC22436F4DB0D4CC308FB6EEA612F2F9E00239DE7902DE15889EE71370147C9696A5E7B022947ABB8AFBBC64F7840BED4CE69592CAF4085A1074475E365ED015048C89AE717BC259C42510F15F31DA3F9302EAD8F263B43D14886B2335A245C00871C041CBB683F1F047573F789673F9B11B6E6714C2A3360244757BB220C7952C6D3D9D65AA47511A63E2A59706B7A70846C930DCFB3D8CAFB3BD6F687CACF5A708692C26B363C80C460F54E59912D41D9BB359698051ABC049A0D0CFD7F23DC97DA940B1EDEAC6B84B194C8F8A56A46CE69EE7A0AEAA11C99508A368E64D27756AD0BA7146A6ADA3D5FA237B3B4EDDC84B71C27DE3A9F26A42197791C7DC09E2D7C4A7D8FCDC8F9A5D4983BB278FCE9513B1486D18F8560C3F31CC70203010001}",
+        "hex_data":"'$(str2hex "$JSON_DATA")'"
+}';
+
+d="$(date +%s)";
+curl -i -X POST -H 'Accept: application/json' http://localhost:7572/api/network/request --data "${PUSH_FORMAT}";
+echo "Request took $(($(date +%s)-d)) seconds";
+</code></pre>
+                       <p></p>
+                      </div>
+                     </details>
+                     <h2>Заключение</h2>
+                     <p>На основе всего вышесказанного мы смогли воспользоваться (и сможем пользоваться) централизованными сервисами связи с целью безопасного и анонимного общения посредством тайных каналов связи. За счёт хорошей абстрагируемости сервисов HLS, HLM и HLT между собой, нам оставалось лишь реализовывать адаптеры (сервисы) типа Sender и Receiver для конечного сервиса. </p>
+                     <p>Вся данная статья не могла быть быть написана без теоретической базы, которой являются такие статьи как <a href="https://github.com/number571/go-peer/blob/master/docs/theory_of_the_structure_of_hidden_systems.pdf" rel="noopener noreferrer nofollow">Теория строения скрытых систем</a>, <a href="https://github.com/number571/go-peer/blob/master/docs/monolithic_cryptographic_protocol.pdf" rel="noopener noreferrer nofollow">Монолитный криптографический протокол</a> и <a href="https://github.com/number571/go-peer/blob/master/docs/abstract_anonymous_networks.pdf" rel="noopener noreferrer nofollow">Абстрактные анонимные сети</a>. Данные работы также находятся полностью в открытом доступе на github репозитории.</p>
+                     <p></p>
+                    </div>
+                   </div>
+                  </div> <!----> <!---->
+                 </div> <!----> <!---->
+                </div> <!----> 
+                <div class="tm-article-presenter__meta">
+                 <div class="tm-separated-list tm-article-presenter__meta-list">
+                  <span class="tm-separated-list__title">Теги:</span> 
+                  <ul class="tm-separated-list__list">
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D0%B0%D1%8F%20%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C%5D" class="tm-tags-list__link">информационная безопасность</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D0%BA%D1%80%D0%B8%D0%BF%D1%82%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%8F%5D" class="tm-tags-list__link">криптография</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%5D" class="tm-tags-list__link">программирование</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bgo%5D" class="tm-tags-list__link">go</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D0%B4%D0%B5%D1%86%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%B5%D1%82%D0%B8%5D" class="tm-tags-list__link">децентрализованные сети</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D0%B0%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D0%BD%D0%BE%D1%81%D1%82%D1%8C%5D" class="tm-tags-list__link">анонимность</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D0%B0%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D0%BD%D1%8B%D0%B5%20%D1%81%D0%B5%D1%82%D0%B8%5D" class="tm-tags-list__link">анонимные сети</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D1%86%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%5D" class="tm-tags-list__link">централизация</a></li>
+                  </ul>
+                 </div> 
+                 <div class="tm-separated-list tm-article-presenter__meta-list">
+                  <span class="tm-separated-list__title">Хабы:</span> 
+                  <ul class="tm-separated-list__list">
+                   <li class="tm-separated-list__item"><a href="/ru/hub/programming/" class="tm-hubs-list__link">Программирование</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/hub/go/" class="tm-hubs-list__link">Go</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/hub/crypto/" class="tm-hubs-list__link">Криптография</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/hub/infosecurity/" class="tm-hubs-list__link">Информационная безопасность</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/hub/p2p/" class="tm-hubs-list__link">Децентрализованные сети</a></li>
+                  </ul>
+                 </div>
+                </div>
+               </article>
+              </div> <!---->
+             </div> 
+             <div class="tm-article-sticky-panel">
+              <div class="tm-data-icons tm-article-sticky-panel__icons">
+               <div class="tm-article-rating tm-data-icons__item">
+                <div class="tm-votes-meter tm-article-rating__votes-switcher">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>Всего голосов 1: ↑1 и ↓0</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-rating"></use>
+                 </svg> <span title="Всего голосов 1: ↑1 и ↓0" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+1</span>
+                </div> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> <!----> <!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                 <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                  <title>Добавить в закладки</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-favorite"></use>
+                 </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 6 </span></button> 
+               <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                <a href="/ru/post/720544/comments/" class="tm-article-comments-counter-link__link">
+                 <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                  <title>Комментарии</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-comments"></use>
+                 </svg> <span class="tm-article-comments-counter-link__value"> 0 </span></a> <!---->
+               </div> 
+               <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                <button type="button" class="tm-sharing__button">
+                 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                  <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                 </svg></button> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> 
+               <div class="v-portal" style="display:none;"></div>
+              </div> 
+             </div>
+            </div> 
+            <div class="v-portal" style="display:none;"></div> 
+            <div class="tm-article-presenter__footer">
+             <div class="tm-article-blocks">
+              <!----> 
+              <div></div> 
+              <section class="tm-block tm-block tm-block_spacing-bottom">
+               <!----> 
+               <div class="tm-block__body tm-block__body tm-block__body_variant-balanced">
+                <div class="tm-article-author"> 
+                 <div class="tm-user-card tm-article-author__user-card tm-user-card tm-user-card_variant-article">
+                  <div class="tm-user-card__info-container">
+                   <div class="tm-user-card__header">
+                    <div class="tm-user-card__header-data">
+                     <a href="/ru/users/Number571/" class="tm-user-card__userpic tm-user-card__userpic_size-40">
+                      <div class="tm-entity-image">
+                       <img alt="" src="//habrastorage.org/getpro/habr/avatars/3a7/b29/0f7/3a7b290f7401111b35722db2d1380907.png" class="tm-entity-image__pic">
+                      </div></a> 
+                     <div class="tm-user-card__meta">
+                      <div title=" 39 голосов " class="tm-counter-container tm-karma tm-karma">
+                       <div class="tm-counter-container__header">
+                        <div class="tm-karma__votes tm-karma__votes_positive">
+                          25 
+                        </div>
+                       </div> 
+                       <div class="tm-counter-container__footer">
+                        <div class="tm-karma__text">
+                          Карма 
+                        </div> 
+                        <div class="v-portal" style="display:none;"></div>
+                       </div>
+                      </div> 
+                      <div title="Рейтинг пользователя" class="tm-counter-container">
+                       <div class="tm-counter-container__header"> 
+                        <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating">
+                         <!----> 
+                         <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating">
+                          <span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating"> 24 </span>
+                         </div> <!---->
+                        </div>
+                       </div> 
+                       <div class="tm-counter-container__footer">
+                        <span class="tm-rating__text tm-rating__text"> Рейтинг </span>
+                       </div>
+                      </div>
+                     </div>
+                    </div>
+                   </div> 
+                   <div class="tm-user-card__info tm-user-card__info tm-user-card__info_variant-article">
+                    <div class="tm-user-card__title tm-user-card__title tm-user-card__title_variant-article">
+                     <span class="tm-user-card__name tm-user-card__name tm-user-card__name_variant-article">Коваленко Геннадий</span> <a href="/ru/users/Number571/" class="tm-user-card__nickname tm-user-card__nickname tm-user-card__nickname_variant-article"> @Number571 </a> <!---->
+                    </div> 
+                    <p class="tm-user-card__short-info tm-user-card__short-info tm-user-card__short-info_variant-article">Криптограф, Программист</p>
+                   </div>
+                  </div> 
+                  <div class="tm-user-card__buttons tm-user-card__buttons tm-user-card__buttons_variant-article">
+                   <!----> <!----> <!----> <!----> <!---->
+                  </div>
+                 </div> <!---->
+                </div> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> <!---->
+              </section> 
+              <div class="tm-adfox-banner__container tm-page-article__banner">
+               <!----> 
+               <div id="adfox_164725660339535756" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-leaderboard"></div>
+              </div> 
+              <div class="tm-article-blocks__comments">
+               <div class="tm-article-page-comments">
+                <div class="tm-article-comments-counter-link tm-article-comments-counter-button">
+                 <a href="/ru/post/720544/comments/" class="tm-article-comments-counter-link__link tm-article-comments-counter-link__link_button-style">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon tm-article-comments-counter-link__icon_contrasted">
+                   <title>Комментарии</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-comments"></use>
+                  </svg> <span class="tm-article-comments-counter-link__value tm-article-comments-counter-link__value_contrasted"> Комментировать </span></a> <!---->
+                </div>
+               </div>
+              </div> 
+              <section class="tm-block tm-block tm-block_spacing-bottom">
+               <header class="tm-block__header tm-block__header tm-block__header_variant-borderless">
+                <div class="tm-block__header-container">
+                 <h2 class="tm-block__title tm-block__title tm-block__title_variant-large">Публикации</h2> 
+                </div> <!---->
+               </header> 
+               <div class="tm-block__body tm-block__body tm-block__body_variant-condensed-slim">
+                <div class="tm-tabs tm-tabs">
+                 <div>
+                  <span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active tm-tabs__tab-link_slim"> Лучшие за сутки </button></span><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_slim"> Похожие </button></span>
+                 </div> <!---->
+                </div> 
+                <div class="similar-and-daily__tab-view">
+                 <div>
+                  <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+                  <div class="tm-placeholder-article-cards">
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                  </div> <!----> <!----> <!----> <!---->
+                 </div> <!---->
+                </div>
+               </div> <!---->
+              </section> 
+              <div>
+               <div>
+                <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+                <div class="tm-placeholder-promo">
+                 <div class="tm-placeholder-promo__header">
+                  <div class="tm-placeholder__line tm-placeholder__line_promo-title"></div>
+                 </div> 
+                 <div class="tm-placeholder-promo__body">
+                  <div class="tm-placeholder-promo__posts">
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div> 
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div> 
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div>
+                  </div> 
+                  <div class="tm-placeholder-promo__dots">
+                   <div class="tm-placeholder-promo__dot"></div> 
+                   <div class="tm-placeholder-promo__dot"></div> 
+                   <div class="tm-placeholder-promo__dot"></div>
+                  </div>
+                 </div>
+                </div> <!----> <!----> <!----> <!----> <!---->
+               </div>
+              </div> 
+              <div hubs="programming,go,crypto,infosecurity,p2p">
+               <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+               <div class="tm-placeholder-inset tm-placeholder-questions">
+                <div class="tm-placeholder-inset__header">
+                 <div class="tm-placeholder__line tm-placeholder__line_inset-header loads"></div>
+                </div> 
+                <div class="tm-placeholder-inset__body">
+                 <ul class="tm-placeholder-list">
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                 </ul>
+                </div> 
+                <div class="tm-placeholder-inset__footer">
+                 <div class="tm-placeholder__line tm-placeholder__line_inset-footer loads"></div>
+                </div>
+               </div> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
+              </div> <!----> 
+             </div>
+            </div>
+           </div>
+          </div>
+         </div> 
+         <div class="tm-page__sidebar">
+          <div class="tm-layout-sidebar">
+           <div class="tm-layout-sidebar__ads tm-layout-sidebar__ads_initial">
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_top">
+             <!----> 
+             <div id="adfox_164725680533065327" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-half-page"></div>
+            </div>
+           </div> 
+           <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;">
+            <!----> 
+            <section data-navigatable="" tabindex="0" data-async-called="true" class="tm-block tm-stories-block tm-block tm-block_spacing-around">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Истории</h2> 
+              </div> <!---->
+             </header> 
+             <div class="tm-block__body tm-block__body tm-block__body_variant-equal-small">
+              <div class="tm-stories-empty">
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+              </div> <!---->
+             </div> <!---->
+            </section> 
+            <section data-async-called="true" class="tm-block tm-block tm-block_spacing-around">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Работа</h2> 
+              </div> <!---->
+             </header> 
+             <div class="tm-block__body tm-block__body">
+              <div class="tm-vacancies-block__item">
+               <a href="https://career.habr.com/vacancies/specialist_po_informacionnoj_bezopasnosti" target="_blank" class="tm-vacancies-block__vacancy-title"> Специалист по информационной безопасности </a> 
+               <div class="tm-vacancies-block__vacancies-count">
+                 101 вакансия 
+               </div>
+              </div>
+              <div class="tm-vacancies-block__item">
+               <a href="https://career.habr.com/vacancies/go_razrabotchik" target="_blank" class="tm-vacancies-block__vacancy-title"> Go разработчик </a> 
+               <div class="tm-vacancies-block__vacancies-count">
+                 96 вакансий 
+               </div>
+              </div>
+             </div> 
+             <footer class="tm-block__footer">
+              <a href="https://career.habr.com/catalog" class="tm-block-extralink"> Все вакансии </a>
+             </footer>
+            </section> 
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_bottom">
+             <!----> 
+             <div id="adfox_164725691003361602" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-medium-rectangle"></div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </main> <!---->
+    </div> 
+    <div class="tm-footer-menu">
+     <div class="tm-page-width">
+      <div class="tm-footer-menu__container">
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Ваш аккаунт </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/ru/post/720544/&amp;hl=ru" rel="nofollow" target="_self"> Войти </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/ru/post/720544/&amp;hl=ru" rel="nofollow" target="_self"> Регистрация </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Разделы </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/" class="footer-menu__item-link router-link-active"> Публикации </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/news/" class="footer-menu__item-link"> Новости </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/hubs/" class="footer-menu__item-link"> Хабы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/companies/" class="footer-menu__item-link"> Компании </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/users/" class="footer-menu__item-link"> Авторы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/sandbox/" class="footer-menu__item-link"> Песочница </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Информация </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/help/" class="footer-menu__item-link"> Устройство сайта </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/authors/codex/" class="footer-menu__item-link"> Для авторов </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/companies/corpblogs/" class="footer-menu__item-link"> Для компаний </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/docs/transparency/" class="footer-menu__item-link"> Документы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement" target="_blank"> Соглашение </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/" target="_blank"> Конфиденциальность </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Услуги </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/corporate-blogs/" target="_blank"> Корпоративный блог </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/advertising/" target="_blank"> Медийная реклама </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/native-special/" target="_blank"> Нативные проекты </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/education-programs/" target="_blank"> Образовательные программы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/hello-startup/" target="_blank"> Стартапам </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/megaprojects/" class="footer-menu__item-link"> Мегапроекты </a></li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div> 
+    <div class="tm-footer">
+     <div class="tm-page-width">
+      <div class="tm-footer__container">
+       <!----> 
+       <div class="tm-footer__social">
+        <a href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Facebook</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-facebook"></use>
+         </svg></a><a href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Twitter</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-twitter"></use>
+         </svg></a><a href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>VK</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-vkontakte"></use>
+         </svg></a><a href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Telegram</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-telegram"></use>
+         </svg></a><a href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Youtube</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-youtube"></use>
+         </svg></a><a href="https://zen.yandex.ru/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Яндекс Дзен</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-zen"></use>
+         </svg></a>
+       </div> 
+       <div class="v-portal" style="display:none;"></div> <button class="tm-footer__link"><!----> Настройка языка </button> <a href="/ru/feedback/" class="tm-footer__link"> Техническая поддержка </a> <a href="/berserk-mode-nope" class="tm-footer__link"> Вернуться на старую версию </a> 
+       <div class="tm-footer-copyright">
+        <span class="tm-copyright"><span class="tm-copyright__years">© 2006–2023, </span> <span class="tm-copyright__name"><a href="https://company.habr.com/" rel="noopener" target="_blank" class="tm-copyright__link">Habr</a></span></span>
+       </div>
+      </div>
+     </div>
+    </div> <!----> <!---->
+   </div> 
+   <div class="vue-portal-target"></div>
+  </div> 
+  <script>window.__INITIAL_STATE__={"adblock":{"hasAcceptableAdsFilter":false,"hasAdblock":false},"articlesList":{"articlesList":{"720544":{"id":"720544","timePublished":"2023-03-05T14:30:42+00:00","isCorporative":false,"lang":"ru","titleHtml":"Тайные каналы связи или как централизованные сервисы способны разлагаться изнутри","leadData":{"textHtml":"\u003Cp\u003EСовременный мир нельзя представить без сервисов связи, таких как социальные сети, мессенджеры, электронная почта, файловые хранилища и т.п. Мы пользуемся данными сервисами постоянно, ровно как и они планомерно пользуются нами. Конфиденциальная информация становится для сервисов связи святым граалем в задачах таргетированной рекламы. А для нас граалем становится их лёгкость использования, производительность и большие размеры хранилищ.\u003C\u002Fp\u003E\u003Cp\u003EНа первый взгляд кажется, что такой специфичный способ взаимодействия клиентов с сервисами представляет собой некий синтез, когда мы друг друга дополняем и оберегаем (относительно собственных интересов). Но всё же, если смотреть более углубленно на данный вид коммуникаций, то может появиться дополнительный вопрос: есть ли место в подобной парадигме паразитическим отношениям?\u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffd9\u002F245\u002Fe15\u002Ffd9245e1507bf63d6464668622bffc82.png","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffd9\u002F245\u002Fe15\u002Ffd9245e1507bf63d6464668622bffc82.png","fit":"cover","positionY":0,"positionX":49}},"editorVersion":"2.0","postType":"article","postLabels":[],"author":{"id":"2639099","alias":"Number571","fullname":"Коваленко Геннадий","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F3a7\u002Fb29\u002F0f7\u002F3a7b290f7401111b35722db2d1380907.png","speciality":"Криптограф, Программист","scoreStats":{"score":25,"votesCount":39},"rating":24,"relatedData":null,"contacts":[],"authorContacts":[],"paymentDetails":{"paymentYandexMoney":null,"paymentPayPalMe":null,"paymentWebmoney":null}},"statistics":{"commentsCount":0,"favoritesCount":6,"readingCount":441,"score":1,"votesCount":1,"votesCountPlus":1,"votesCountMinus":0},"hubs":[{"id":"359","alias":"programming","type":"collective","title":"Программирование","titleHtml":"Программирование","isProfiled":true,"relatedData":null},{"id":"17748","alias":"go","type":"collective","title":"Go","titleHtml":"Go","isProfiled":true,"relatedData":null},{"id":"118","alias":"crypto","type":"collective","title":"Криптография","titleHtml":"Криптография","isProfiled":true,"relatedData":null},{"id":"50","alias":"infosecurity","type":"collective","title":"Информационная безопасность","titleHtml":"Информационная безопасность","isProfiled":true,"relatedData":null},{"id":"33","alias":"p2p","type":"collective","title":"Децентрализованные сети","titleHtml":"Децентрализованные сети","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"},{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"}],"relatedData":null,"textHtml":"\u003Cdiv xmlns=\"http:\u002F\u002Fwww.w3.org\u002F1999\u002Fxhtml\"\u003E\u003Ch2\u003EВведение\u003C\u002Fh2\u003E\u003Cp\u003EСовременный мир нельзя представить без сервисов связи, таких как социальные сети, мессенджеры, электронная почта, файловые хранилища и т.п. Мы пользуемся данными сервисами постоянно, ровно как и они планомерно пользуются нами. Конфиденциальная информация становится для сервисов связи святым граалем в задачах таргетированной рекламы. А для нас граалем становится их лёгкость использования, производительность и большие размеры хранилищ.\u003C\u002Fp\u003E\u003Cp\u003EНа первый взгляд кажется, что такой специфичный способ взаимодействия клиентов с сервисами представляет собой некий синтез, когда мы друг друга дополняем и оберегаем (относительно собственных интересов). Но всё же, если смотреть более углубленно на данный вид коммуникаций, то может появиться дополнительный вопрос: есть ли место в подобной парадигме паразитическим отношениям?\u003C\u002Fp\u003E\u003Cp\u003EВопрос только ставится в том, кто действительно является в такой парадигме паразитом — мы или же сервисы? Изначально можно предположить, что мы сами являемся паразитами сервисов, и на это есть вполне логичные утверждения. Так например, если кто-либо создаст новый сервис общения между людьми, а людям данный сервис очень понравится, то на начальном этапе существования сервиса мы действительно будем представлять собой некую форму паразитизма, когда сервис постоянно и постепенно будет тратить свои собственные ресурсы. \u003C\u002Fp\u003E\u003Cp\u003EНо, так или иначе, ситуация в современном мире полностью перевернула концепцию первичного представления паразитизма, когда сервисы связи стали жить и существовать не ради предоставления самого факта сервиса, а ради экономической прибыли за счёт  существования массы клиентов. На данном этапе, сервисы становятся окупаемыми с излишком, а сама централизация сервисов становится некой чёрной дырой, затягивающей в себя всё больше и больше пользователей с целью всё большей и большей выгоды. На этом сервисы не останавливают своё праздное шествие, а продолжают образовывать новый вид коммуникации между одним сервисом связи и другим благодаря рекламным сервисам. За счёт данного явления, когда клиенты начинают пользоваться определённым сервисом A, их данные начинают автоматически передаваться на рекламный сервис C, а после и на сервис назначения B. \u003C\u002Fp\u003E\u003Cp\u003EТакое явление можно видеть постоянно: 1) когда мы разговарием с кем-либо вживую, а потом на определённом сервисе обнаруживаем те самые темы о которых шла речь в оффлайне; 2) когда мы пишем сообщения определённому человеку в социальной сети о каком-либо товаре, а потом рекламы такого товара обнаруживаем на другом сервисе; и т.д. Коммуникации сервисов между собой настолько хорошо становятся налаженными, что это больше напоминает некий картель, целью которого является максимизация прибыли любыми доступными методами и способами.\u003C\u002Fp\u003E\u003Cp\u003EПомимо экономической выгоды, централизованные сервисы, переходя из конкурентной в монополистическую формацию, начинают постепенно и планомерно обретать также и политические интересы. За счёт этого они более успешно могут подавлять конкурентов, расширять рынок, срастаться с государственным аппаратом и т.д. В общей такой форме, накопленный излишек экономических и политических выгод начинает куда сильнее превосходить тот самый первичный паразитизм со стороны клиентов какого-либо сервиса, и за счёт этого можно с уверенностью сказать, что в современной мире сами сервисы становятся истинными паразитами на теле клиентов.\u003C\u002Fp\u003E\u003Cp\u003EПроблемой такого исхода событий становится глобальное наблюдение за всем трафиком сети, за всеми переписками, распространяемыми файлами, мнениями, политическими убеждениями, списками друзей, родственников, знакомых и т.д. В конечном итоге, любая оставляемая информация в Интернете начинает самостоятельную жизнь, начинает своё турне, путешествие от одного сервиса к другому, вплоть до бесконечности, лишь с той единственной целью, чтобы вы купили *нейм-товар*, чтобы вы согласились с *правильным-мнением*, чтобы вы оставались покупать и соглашаться.\u003C\u002Fp\u003E\u003Ch2\u003EАльтернативы?\u003C\u002Fh2\u003E\u003Cp\u003EИх нет, в буквальном смысле нет альтернатив, которые являлись бы настолько хорошими, чтобы большая часть людей перешла от централизованных сервисов к безопасным аналогам. Тем не менее, существует ряд решений, который способен ограничить отслеживаемую, со стороны государств, и собираемую, со стороны сервисов связи, информацию. К такому ряду решений относятся:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003E\u003Cp\u003EКлиент-безопасные приложения. Отличительной особенностью данного вида приложений, в сравнении со множеством других, является доказуемая безопасность сетевых коммуникаций исключительно клиентской стороной. Иными словами, это говорит о том, что даже если информация будет передаваться серверной стороне или храниться на ней, то сервисы всё равно не смогут проанализировать или видоизменить такого рода данные, т.к. они находятся в зашифрованном или аутентифицированном виде. Частным случаем такого вида коммуникаций является сквозное (end-to-end) шифрование. К такому виду приложений, как пример, относятся RetroShare, Freenet, Bitmessage и т.д.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EАнонимные (скрытые) сети. Отличительной особенностью данного вида приложений становится либо сокрытие факта передачи информации от точки A до точки B, либо сокрытие связи между точками A и B. В отличие от клиент-безопасных приложений, анонимные сети представляют собой исключительно способ маршрутизации между абонентами системы. Это говорит о том, что принимающая сторона, в виде точки B может являться централизованным сервисом связи, и как следствие, нарушать конфиденциальность информации. В следствие этого, необходимо объединять клиент-безопасные приложения с анонимными сетями, чтобы достигнуть и безопасности передаваемой информации и анонимность её субъектов. К тому виду приложений, как пример, относятся Tor, I2P, Mixminion и т.д.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EТайные каналы связи. Не являются сугубо монолитными решениями, а скорее представляют собой некую оболочку либо над клиент-безопасными приложениями, либо над анонимными сетями. Исключительной особенностью тайных связи является их теоретическая способность внедряться в любые уже выстроенные виды коммуникаций, вследствие которых итоговая связь между субъектами становится безопаснее изначальной. За счёт такого критерия, тайные каналы связи становится возможным применять в централизованных сервисах, не выделяя при этом собственные сервера и память для хранения всей поступаемой информации. Комбинация \"тайный канал связи + клиент-безопасное приложение\" может быть реализовано при помощи PGP\u002FGPG программ, когда информация зашифровывается локально и передаётся принимающему абоненту через централизованный сервис связи. Комбинация же \"тайный канал связи + анонимные сети\" куда более интересна и нигде ранее в литературе не рассматривалась, а поэтому данная статья большую часть внимания будет уделять именно такой концепции.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Fol\u003E\u003Ch2\u003EАбстрактные анонимные сети\u003C\u002Fh2\u003E\u003Cp\u003EЕсли тайные каналы связи представляют собой возможность внедряться в уже готовые сетевые коммуникации (централизованные или децентрализованные), увеличивая при этом безопасность передаваемой информации, то встаёт логичный вопрос возможно ли сохранить такое же свойство, но со стороны анонимизации трафика?\u003C\u002Fp\u003E\u003Cp\u003EЧтобы ответить на данный вопрос, нам необходимо спроектировать такую анонимную сеть, для которой были бы незначимы следующие явления как: 1) высокий уровень централизации; 2) открытость и известность IP-адресов; 3) отсутствие маршрутизации; 4) количество узлов в сети; 5) отключение узлов от сети; 6) замедление или ускорение трафика. На первый взгляд кажется, что такого рода комбинацию невозможно спроектировать и тем более реализовать. \u003C\u002Fp\u003E\u003Cp\u003EСначала гипотетически предположим, что такие сети действительно существуют. Назовём их абстрактными анонимными сетями. За счёт своей абстрактности, они становятся способны применяться не только в обычных сетевых коммуникациях, но и в тайных каналах связи. Это свойство позволяет им без труда видоизменять способ сетевого взаимодействия. Иными словами, они становятся способными воссоздавать связь в любой среде, где просто присуствует возможность отправления и получения информации. Такого свойства просто не существует у современных анонимных сетей, по крайней мере по умолчанию и без модификаций. \u003C\u002Fp\u003E\u003Ch2\u003EПроектирование абстрактных сетей\u003C\u002Fh2\u003E\u003Cp\u003EНа самом деле спроектировать такую сеть не является сильно сложной задачей, ровно как и её реализация. Так например, можно реализовать абстрактную анонимность на базе уже готовых анонимных сетей, но лишь с одним условием - чтобы их анонимность была теоретически доказуемой. К такому виду анонимных сетей относятся DC-сети на базе проблемы \"обедающих криптографов\". Помимо прочего, существуют ещё более \"элегантные\" проблемы, как например задача \"на базе очередей\".\u003C\u002Fp\u003E\u003Cdetails class=\"spoiler\"\u003E\u003Csummary\u003EТеоретически доказуемая анонимность\u003C\u002Fsummary\u003E\u003Cdiv class=\"spoiler__content\"\u003E\u003Cp\u003EСкрытыми сетями с теоретически доказуемой анонимностью принято считать замкнутые, полностью прослушиваемые системы, в которых становится невозможным осуществление любых пассивных атак (в том числе и при существовании глобального наблюдателя) направленных на деанонимизацию факта отправления и\u002Fили получения информации, или на деанонимизацию связи между отправителем и получателем с минимальными условностями по количеству узлов неподчинённых сговору. Говоря иначе, с точки зрения пассивного атакующего, апостериорные знания, полученные вследствие наблюдений, должны оставаться равными априорным, до наблюдений, тем самым сохраняя равновероятность деанонимизации по \u003Cem\u003EN\u003C\u002Fem\u003E-ому множеству субъектов сети.\u003C\u002Fp\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdetails\u003E\u003Cp\u003E\u003Cstrong\u003EПроблема обедающих криптографов\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003EВыглядит она так (не буду пересказывать о том, как криптографы обедают и о том, что существует некий АНБ, раскажу вкратце): существует три участника сети {A, B, C}. Один участник хочет послать 1 бит информации по сети (либо 1, либо 0 соответственно), но таким образом, чтобы другие субъекты не узнали кто отправил данную информацию. Предполагается, что таковые участники соединены между собой, тем самым имеют безопасный канал связи, а также имеют расписание по которому в каждый момент времени T генерируется новый бит.\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5ca\u002F9b6\u002Ff31\u002F5ca9b6f3198b82eda2e52ca9fa88c45d.png\" alt=\"Проблема обедающих криптографов\" title=\"Проблема обедающих криптографов\" width=\"1200\" height=\"600\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5ca\u002F9b6\u002Ff31\u002F5ca9b6f3198b82eda2e52ca9fa88c45d.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EПроблема обедающих криптографов\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EПредположим, что участник A хочет отправить информацию по сети так, чтобы {B, C} эту информацию получили, но не смогли узнать, кто действительно является отправителем. Иными словами, для B это может быть {A, C}, а для C это {A, B} с вероятностью 50\u002F50. Все участники начинают согласовывать общий бит со своими соседями (в момент времени T, конечно же). Предположим, что участники {A, B} согласовали бит = 1, {B, C} = 0, {C, A} = 1.\u003C\u002Fp\u003E\u003Cp\u003EДалее каждый участник сети XOR'ит (операция исключающее ИЛИ) биты со всех своих соединений: A = 1 xor 1 = 0; B = 1 xor 0 = 1; C = 0 xor 1 = 1. Данные результаты обмениваются по всей сети и XOR'ятся каждым её участником: 0 xor 1 xor 1 = 0. Это говорит о том, что участник A передал бит информации = 0. Чтобы субъект A мог передать бит = 1, ему необходимо добавить операцию НЕ в своём вычислении, то есть A = НЕ(1 xor 1) = 1. В итоге, все вычисления прийдут к такому результату: 1 xor 1 xor 1 = 1.Таким образом, можно передать 1 бит информации полностью анонимно (конечно же со стороны определения теоретически доказуемой анонимности). \u003C\u002Fp\u003E\u003Cp\u003EПредположим, что один из участников, либо B, либо C захочет деанонимизировать либо {A, C}, либо {B, C} соответственно (то есть узнать, кто является отправителем информации). Тогда ему потребуется узнать согласованный секрет со стороны другой линии связи, что является сложной задачей (если конечно не был произведён сговор нескольких участников). Таким образом, атака со стороны внутреннего пассивного наблюдателя становится безрезультатной. Со стороны внешнего глобального наблюдателя такая же ситуация, потому как он видит лишь переадресацию зашифрованных битов (потому как используется безопасный канал связи) в один момент времени T всеми участниками сети.\u003C\u002Fp\u003E\u003Cp\u003EСами по себе DC-сети не являются абстрактными анонимными сетями, но при этом наиболее приближены к ним. Так например, для анонимизации трафика им безразличны такие условности как: 1) открытость и известность IP-адресов; 2) отсутствие маршрутизации; 3) количество узлов в сети; 4) отключение узлов от сети; 5) замедление или ускорение трафика. Единственное, что отделяет DC-сети от абстрактных сетей, является критерий высокого уровня централизации. Проблема обедающих криптографов предполагает, что все субъекты будут соединены между собой при помощи связи \"один-к-одному\". Если же изменить вид связи на \"все-к-одному\", то последний, кто будет содержать все коммуникации воедино и будет являться деанонимизирующим узлом. Чтобы избавиться от такого явления, нужно исключить необходимость в связи \"один-к-одному\". Это можно сделать следующим образом: каждый субъект заранее согласовывает свои ключи со всеми остальными субъектами, но использует централизованный узел исключительно в качестве ретранслирующей функции. Таким образом, нарушается прямолинейная связь  \"один-к-одному\", но образуется свойство абстрактности. Чтобы облегчить передачу ключей между всеми участниками сети, можно воспользоваться асимметричной криптографией.\u003C\u002Fp\u003E\u003Cp\u003E\u003Cstrong\u003EЗадача на базе очередей\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\u003Cp\u003EВ некоторой степени у данной задачи имеются схожие моменты с DC-сетями, тем не менее алгоритм принициально отличается, как минимум из-за того, что таковой находится на более прикладном уровне со стороны криптографических протоколов и строит не широковещательную связь между субъектами. Иными словами задача на базе очередей содержит в себе имплементацию E2E (сквозного) шифрования. \u003C\u002Fp\u003E\u003Cp\u003EВкратце суть задачи на базе очередей сводится к следующему: предположим, что существует три участника {A, B, C}. Каждый из них соединён друг к другу (не является обязательным критерием, но данный случай я привёл исключительно для упрощения). Каждый субъект устанавливает время генерации информации = T. У каждого участника имеется своё внутренее хранилище по типу FIFO (первый пришёл - первый ушёл), можно сказать имеется структура \"очередь\". \u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff3f\u002F0cc\u002F529\u002Ff3f0cc5293344c542094b9087abea5bb.png\" alt=\"Задача на базе очередей\" title=\"Задача на базе очередей\" width=\"768\" height=\"500\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff3f\u002F0cc\u002F529\u002Ff3f0cc5293344c542094b9087abea5bb.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EЗадача на базе очередей\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EПредположим, что участник A хочет отправить некую информацию одному из участников {B, C}, так, чтобы другой участник (или внешний наблюдатель не знали, что существует какой-либо факт отправления. Каждый участник в определённый период T генерирует сообщение. Такое сообщение может быть либо ложным (не имеющее никакого фактического содержания и никому по факту не отправляется, заполняясь случайными битами), либо истинным (запрос или ответ). Отправить раньше или позже положенного времени T никакой участник не может. Если скопилось несколько запросов одному и тому же участнику, тогда он их будет ложить в свою очередь сообщений и после периода T достанет из очереди и отправит в сеть. Таким образом, сама структура задачи на базе очередей есть множество последовательно выстроенных очередей, в отличие от единственной очереди в DC-сетях. \u003C\u002Fp\u003E\u003Cp\u003EТаким образом, внешний глобальный наблюдатель будет видеть лишь картину, при которой каждый участник в определённо заданный период времени T отправляет некое сообщение всем остальным узлам сети, что не даёт никакой информации о факте отправления, либо получения. Внутренние пассивные участники также неспособны узнать коммуниицирует ли один из участников в данный период времени с каким-либо другим, т.к. предполагается, что шифрованная информация не выдаёт никаких данных об отправителе и получателе непосредственно.\u003C\u002Fp\u003E\u003Cp\u003EЗа основу всех последующих рассуждений мы возьмём задачу на базе очередей. Данная задача уже имеет свои готовые реализации, о которых вы также можете почитать на хабре и которые будут использоваться в данной статье:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003E\u003Cp\u003E\u003Ca href=\"https:\u002F\u002Fhabr.com\u002Fru\u002Fpost\u002F696504\u002F\" rel=\"noopener noreferrer nofollow\"\u003EHLS\u003C\u002Fa\u003E — ядро анонимной сети с теоретически доказуемой анонимностью на базе очередей.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E\u003Ca href=\"https:\u002F\u002Fhabr.com\u002Fru\u002Fpost\u002F701488\u002F\" rel=\"noopener noreferrer nofollow\"\u003EHLM\u003C\u002Fa\u003E — анонимный мессенджер построенный на базе ядра HLS.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003E\u003Ca href=\"https:\u002F\u002Fhabr.com\u002Fru\u002Fpost\u002F717184\u002F\" rel=\"noopener noreferrer nofollow\"\u003EHLT\u003C\u002Fa\u003E — приложение сохраняющее и перераспределяющее трафик HLS.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Fol\u003E\u003Ch2\u003EВозврат клиентского паразитизма\u003C\u002Fh2\u003E\u003Cp\u003EС учётом всего вышеописанного, становится возможным использовать комбинацию \"тайный канал связи + абстрактная анонимная сеть\". Основная суть задачи будет заключаться в сохранении анонимизирующего трафика, но таким образом, чтобы использовать сторонние ресурсы — централизованные сервисы, в качестве основного способа сохранения и перераспределения информации. Иными словами, мы будем являться некого рода паразитами, использующими вычислительные ресурсы совершенно по иному назначению, чем это изначально предполагалось создателями подобных сервисов. \u003C\u002Fp\u003E\u003Cp\u003EЗа счёт такого способа коммуникации нам становится излишен факт создания и существования \"чистых\" узлов, исполняющих исключительно функцию анонимизации трафика. Плюс к этому, т.к. абстрактные анонимные сети, как чаще всего бывает, ограничены в количестве узлов (нагрузка линейно зависима) и достаточно редки в использовании (из-за низкой производительности), то наиболее рациональным для выживания подобного рода сетей становится их способность внедряться в уже готовые системы. Поэтому не просто так я утверждаю, что такие системы являются паразитическими, потому как само их существование начинает прямо пропорционально зависеть от состояния централизованных сервисов.\u003C\u002Fp\u003E\u003Cp\u003EВ реализации подобного тайного канала связи мы будем использовать композицию Hidden Lake приложений, а именно — HLS (service), HLM (messenger) и HLT (traffic). Вкратце, всю архитектуру можно представить в виде следующей схемы.\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2ea\u002Fb1c\u002F714\u002F2eab1c7143c6fa86f6fdd31c7c2d128d.png\" alt=\"Архитектура тайного канала связи при использовании HLS, HLM и HLT\" title=\"Архитектура тайного канала связи при использовании HLS, HLM и HLT\" width=\"942\" height=\"172\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2ea\u002Fb1c\u002F714\u002F2eab1c7143c6fa86f6fdd31c7c2d128d.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EАрхитектура тайного канала связи при использовании HLS, HLM и HLT\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EНа данной схеме есть несколько ключевых моментов и терминологий. \u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003E\u003Cp\u003EPayload - это информация в открытом, незашифрованном виде, в то время как Message - это информация в закрытом, зашифрованном виде.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EHLS работает с TCP протоколом во внешней сети и с HTTP протоколом во внутренней сети. Данный сервис хранит на своей стороне исключительно хеш-значения получаемых или отправляемых сообщений типа Message.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EHLM представляет собой исключительно графический интерфейс с БД, хранящей открытую информацию — отправляемые и получаемые сообщения типа Payload.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EHLT является сервисом необходимым для перераспределения трафика от HLS. Можно сказать, что HLT лишь эмулирует поведение HLS с целью получения сырых сообщений типа Message.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EHLT перенаправляет сообщения типа Message на сервис Sender. Sender представлен в роли потребителя (consumer) информации для HLT, суть которого сводится к преобразованию сырой информации типа Message в оболочку F(Message) таким образом, чтобы Service смог успешно сохранить полученную им информацию. Иными словами, оболочку F можно также назвать интерфейсов конечного сервиса.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EHLT принимает сообщения типа Message от сервиса Receiver. Receiver представлен в роли производителя (producer) информации, суть которого сводится к постоянным проверкам обновления списка сообщения со стороны субъекта Service. Можно сказать, что Receiver выполняет обратные операции в сравнении с Sender, то-есть F(Message) -\u003E Message. \u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Fol\u003E\u003Cp\u003EДанную схему можно также сравнить с первоначальной архитектурой, в которой анонимизирующий трафик базируется исключительно на \"чистых\" соединениях, без участия сервисов связи и использования тайных каналов.\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4da\u002Fdb2\u002F34a\u002F4dadb234af89e94346588d798a819776.png\" alt=\"Архитектура анонимизации трафика при использовании HLS и HLM\" title=\"Архитектура анонимизации трафика при использовании HLS и HLM\" width=\"791\" height=\"271\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4da\u002Fdb2\u002F34a\u002F4dadb234af89e94346588d798a819776.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EАрхитектура анонимизации трафика при использовании HLS и HLM\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EКак видно из этого схема получается достаточно простой, но и более абстрактной, потому как Network можно представить в виде суммы (HLT + Sender + Receiver + Service). За счёт такой абстрагируемости мы можем легко переключаться между Network и комбинацией с участием HLT. Также можно сказать, что Sender и Receiver представляют собой адаптеры, которые переводят один тип сообщения в другой.\u003C\u002Fp\u003E\u003Cp\u003EПри этом, если посмотреть на данные схемы более внимательно, то можно с уверенностью сказать, что и само приложение HLM является легкозаменяемым. Иными словами, если у нас будет два приложения, где одно представляет мессенджер, а другое какой-либо файловый сервис, то на общую архитектуру анонимизации трафика и тайного канала связи это никак не повлияет.\u003C\u002Fp\u003E\u003Ch2\u003EРеализация тайного канала связи\u003C\u002Fh2\u003E\u003Cp\u003EПредположим, что существует некий централизованный сервис у которого присутствуют функции push (загрузки сообщений), load (выгрузки сообщений) и size (количество сообщений). Этого будет вполне достаточно для последующей реализации адаптеров Sender и Receiver.\u003C\u002Fp\u003E\u003Cp\u003EНачнём с адаптера Sender, т.к. он является наиболее лёгким. В моей реализации это будет выглядить примерно следующим образом.\u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode class=\"go\"\u003Efunc trafficPage(hostService string, portService int) func(w http.ResponseWriter, r *http.Request) {\n\treturn func(w http.ResponseWriter, r *http.Request) {\n        \u002F\u002F HLT отправляет POST запросы потребителям\n\t\tif r.Method != http.MethodPost {\n\t\t\tapi.Response(w, 2, \"failed: incorrect method\")\n\t\t\treturn\n\t\t}\n\n        \u002F\u002F Получаем Message от HLT\n\t\tres, err := io.ReadAll(r.Body)\n\t\tif err != nil {\n\t\t\tapi.Response(w, 3, \"failed: read body\")\n\t\t\treturn\n\t\t}\n\n\t\t\u002F\u002F Конвертируем Message в формат сервиса \n\t\t_, err = api.Request(\n\t\t\thttp.MethodPost,\n\t\t\tfmt.Sprintf(\"%s:%d\u002Fpush\", hostService, portService),\n\t\t\tF(res),\n\t\t)\n\t\tif err != nil {\n\t\t\tapi.Response(w, 4, \"failed: bad response\")\n\t\t\treturn\n\t\t}\n\n\t\tapi.Response(w, 1, \"success: push to service\")\n\t}\n}\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003EПродолжим кодом Receiver'a. Данный код более сложный, потому как должен: 1) сохранять номер сообщений со стороны сервиса; 2) должен постоянно прослушивать новые сообщения поступаемые на сервис.\u003C\u002Fp\u003E\u003Cpre\u003E\u003Ccode class=\"go\"\u003Efor {\n        \u002F\u002F Задержка должна быть меньше периода генерации сообщений\n        \u002F\u002F в HLS, но и не сильно низкой, чтобы сервис не начал\n        \u002F\u002F блокировать.\n\t\ttime.Sleep(time.Second)\n\n        \u002F\u002F Пытаемся узнать у сервиса количество сообщений.\n\t\tstrCount, err := api.Request(\n\t\t\thttp.MethodGet,\n\t\t\tfmt.Sprintf(\"%s:%d\u002Fsize\", hostService, portService),\n\t\t\tnil,\n\t\t)\n\t\tif err != nil {\n\t\t\tfmt.Println(err)\n\t\t\tcontinue\n\t\t}\n\n\t\tcountService, err := strconv.ParseUint(strCount, 10, 64)\n\t\tif err != nil {\n\t\t\tfmt.Println(err)\n\t\t\tcontinue\n\t\t}\n\n        \u002F\u002F Получаем последнее количество сообщений которое мы смогли прочитать.\n\t\tcountDB, err := countOfDataInDB()\n\t\tif err != nil {\n\t\t\tfmt.Println(err)\n\t\t\tcontinue\n\t\t}\n\n        \u002F\u002F Получаем новые сообщения с сервиса.\n\t\tfor i := countDB; i &lt; countService; i++ {\n\t\t\tdata, err := api.Request(\n\t\t\t\thttp.MethodGet,\n\t\t\t\tfmt.Sprintf(\"%s:%d\u002Fload?data_id=%d\", common.HostService, portService, i),\n\t\t\t\tnil,\n\t\t\t)\n\t\t\tif err != nil {\n\t\t\t\tfmt.Println(err)\n\t\t\t\tcontinue\n\t\t\t}\n\n            \u002F\u002F Получаем сообщение и сервиса и преобразуем его\n            \u002F\u002F вид для сервиса HLT\n\t\t\tmsg := message.LoadMessage(\n\t\t\t\tiF(data),\n\t\t\t\tmessage.NewParams(\n\t\t\t\t\thls_settings.CMessageSize,\n\t\t\t\t\thls_settings.CWorkSize,\n\t\t\t\t),\n\t\t\t)\n\t\t\tif err := hltClient.PutMessage(msg); err != nil {\n\t\t\t\tfmt.Println(err)\n\t\t\t\tcontinue\n\t\t\t}\n\n            \u002F\u002F Повышаем количество загруженных сообщений на единицу.\n\t\t\tincrementCountInDB()\n\t\t}\n\t}\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003EХоть данный пример и является в некой степени лабораторным, на нём очень легко рассмотреть основные особенности. Во-первых, такой пример более детерминирован для последующих тестирований, нам не надо полагаться на сторонний сервис, который может со временем изменить структуру своих запросов и ответов. Во-вторых, для реализации адаптеров нам нет надобности знать исходный код самого сервиса, нужно лишь знать основные запросы 1) на получение количества новых или всех сообщений; 2) на отправление одного или множества новых сообщений; 3) на получение одного или множества существующих сообщений. Всё это можно посмотреть буквально в браузере, выкачав нужные cURL запросы с заголовками и куками.  В-третьих, если централизованный сервис легко позволяет регистрироваться и авторизироваться без привязки к номеру телефона (или чего подобного), то один и тот же аккаунт может использовать группа клиентов, что будет проще для коммуникации.\u003C\u002Fp\u003E\u003Cp\u003EТеперь давайте проверим, будет ли работать и функционировать прикладное приложение HLM, при котором множество HLS не связываются напрямую, а проходят сквозь централизованный сервис связи посредством HLT и адаптеров. Все исходные коды приложений находятся полностью в открытом доступе: \u003Ca href=\"https:\u002F\u002Fgithub.com\u002Fnumber571\u002Fgo-peer\u002Ftree\u002Fmaster\u002Fcmd\u002Fhidden_lake\u002Fservice\" rel=\"noopener noreferrer nofollow\"\u003EHLS\u003C\u002Fa\u003E, \u003Ca href=\"https:\u002F\u002Fgithub.com\u002Fnumber571\u002Fgo-peer\u002Ftree\u002Fmaster\u002Fcmd\u002Fhidden_lake\u002Fmessenger\" rel=\"noopener noreferrer nofollow\"\u003EHLM\u003C\u002Fa\u003E, \u003Ca href=\"https:\u002F\u002Fgithub.com\u002Fnumber571\u002Fgo-peer\u002Ftree\u002Fmaster\u002Fcmd\u002Fhidden_lake\u002Ftraffic\" rel=\"noopener noreferrer nofollow\"\u003EHLT\u003C\u002Fa\u003E. Вы также можете проверить их работоспособность в директории \u003Ca href=\"https:\u002F\u002Fgithub.com\u002Fnumber571\u002Fgo-peer\u002Ftree\u002Fmaster\u002Fexamples\u002F_cmd\" rel=\"noopener noreferrer nofollow\"\u003Eexamples\u002F_cmd\u003C\u002Fa\u003E. \u003C\u002Fp\u003E\u003Cp\u003EПереходим в директорию \u003Ccode\u003Eexamples\u002F_cmd\u002Fanon_messenger\u002Fsecret_channel\u003C\u002Fcode\u003E и запускаем \u003Ccode\u003Emake\u003C\u002Fcode\u003E. Запустится два узла с комбинациями HLS+HLM+HLT, у каждого из которых будут одинаковые адаптеры Sender и Receive. Также запустится централизованный сервис, через который будет проходить весь анонимизирующий трафик.\u003C\u002Fp\u003E\u003Cp\u003EОткрываем \u003Ccode\u003Elocalhost:8080\u003C\u002Fcode\u003E и \u003Ccode\u003Elocalhost:7070\u003C\u002Fcode\u003E. Это те самые два узла, которые были запущены.\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F672\u002Fd67\u002F820\u002F672d67820ff5625f950351b6ab95f7ce.png\" alt=\"Начальная страница HLM\" title=\"Начальная страница HLM\" width=\"1268\" height=\"530\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F672\u002Fd67\u002F820\u002F672d67820ff5625f950351b6ab95f7ce.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EНачальная страница HLM\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EПереходим в \u003Ccode\u003ESign in\u003C\u002Fcode\u003E и авторизируемся как \u003Ccode\u003Euser\u002Fpassword.\u003C\u002Fcode\u003E Данные записи уже были созданы для тестов, в которых также хранится список друзей. Т.к. пользователей всего два, то они хранят публичные ключи друг друга. Переходим в список друзей и пишем друг другу сообщения.\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F715\u002Fa55\u002F2b3\u002F715a552b31e7c00859e6b0d57278d843.png\" alt=\"Отправление и получение сообщений в HLM\" title=\"Отправление и получение сообщений в HLM\" width=\"1268\" height=\"530\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F715\u002Fa55\u002F2b3\u002F715a552b31e7c00859e6b0d57278d843.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EОтправление и получение сообщений в HLM\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EТаким образом, всё работает и функционирует, мы буквально воспользовались централизованным сервисом связи для хранения и транспортирования анонимизирующего трафика. \u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe1b\u002F031\u002F7bb\u002Fe1b0317bb6cb1a6e6ed0774e7144600c.png\" alt=\"Логи от сервисов HLS и HLT со стороны одного узла\" title=\"Логи от сервисов HLS и HLT со стороны одного узла\" width=\"1161\" height=\"683\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe1b\u002F031\u002F7bb\u002Fe1b0317bb6cb1a6e6ed0774e7144600c.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EЛоги от сервисов HLS и HLT со стороны одного узла\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EПо логам мы также можем увидеть, что каждый период времени = T (в контексте HLS это 5 секунд) генерируются сообщения. Это основной механизм работы задачи на базе очередей. \u003C\u002Fp\u003E\u003Cp\u003EВышеописанный пример может быть достаточно тяжеловесным для изучения, потому как содержит в себе ещё и использование HLM, который, как я ранее упоминал, не является ключевым механизмом. Поэтому для более лёгкой реализации можно продемонстрировать \u003Ccode\u003Eecho_service\u003C\u002Fcode\u003E, который находится на одном из узлов. Для этого примера нам необходимо перейти в директорию \u003Ccode\u003Eexamples\u002F_cmd\u002Fecho_service\u002Fsecret_channel\u003C\u002Fcode\u003E и запустить \u003Ccode\u003Emake\u003C\u002Fcode\u003E. Также запустятся два узла HLS+HLT, на них адаптеры Sender+Receiver и отдельно запустится сервис связи. \u003C\u002Fp\u003E\u003Cp\u003EДля проверки перейдём в директорию ниже, в \u003Ccode\u003Eexamples\u002F_cmd\u002Fecho_service\u003C\u002Fcode\u003E и запустим скрипт \u003Ccode\u003Erequest.sh\u003C\u002Fcode\u003E. Получим ответ return=1 (что является кодом без ошибки) и полученный ответ в result в hex кодировке. Если декодируем, то получим сообщение \u003Ccode\u003E{\"echo\":\"hello, world!\",\"return\":1}\u003C\u002Fcode\u003E, что является ответом от сервиса в HLS.\u003C\u002Fp\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F781\u002Fa73\u002F724\u002F781a737247c0ebf8db7465d67d9e7e97.png\" alt=\"Полученный результат скрипта обращающегося к echo-сервису на одном из узлов\" title=\"Полученный результат скрипта обращающегося к echo-сервису на одном из узлов\" width=\"1100\" height=\"113\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F781\u002Fa73\u002F724\u002F781a737247c0ebf8db7465d67d9e7e97.png\"\u002F\u003E\u003Cdiv\u003E\u003Cfigcaption\u003EПолученный результат скрипта обращающегося к echo-сервису на одном из узлов\u003C\u002Ffigcaption\u003E\u003C\u002Fdiv\u003E\u003C\u002Ffigure\u003E\u003Cdetails class=\"spoiler\"\u003E\u003Csummary\u003EСкрипт request.sh\u003C\u002Fsummary\u003E\u003Cdiv class=\"spoiler__content\"\u003E\u003Cpre\u003E\u003Ccode class=\"bash\"\u003E#!\u002Fbin\u002Fbash\n\nstr2hex() {\n    local str=${1:-\"\"}\n    local fmt=\"%02X\"\n    local chr\n    local -i i\n    for i in `seq 0 $((${#str}-1))`; do\n        chr=${str:i:1}\n        printf \"${fmt}\" \"'${chr}\"\n    done\n}\n\nJSON_DATA='{\n        \"method\":\"POST\",\n        \"host\":\"hidden-echo-service\",\n        \"path\":\"\u002Fecho\",\n        \"head\":{\n            \"Accept\": \"application\u002Fjson\"\n        },\n        \"body\":\"aGVsbG8sIHdvcmxkIQ==\"\n}';\n\nPUSH_FORMAT='{\n        \"receiver\":\"PubKey(go-peer\u002Frsa){3082020A0282020100B752D35E81F4AEEC1A9C42EDED16E8924DD4D359663611DE2DCCE1A9611704A697B26254DD2AFA974A61A2CF94FAD016450FEF22F218CA970BFE41E6340CE3ABCBEE123E35A9DCDA6D23738DAC46AF8AC57902DDE7F41A03EB00A4818137E1BF4DFAE1EEDF8BB9E4363C15FD1C2278D86F2535BC3F395BE9A6CD690A5C852E6C35D6184BE7B9062AEE2AFC1A5AC81E7D21B7252A56C62BB5AC0BBAD36C7A4907C868704985E1754BAA3E8315E775A51B7BDC7ACB0D0675D29513D78CB05AB6119D3CA0A810A41F78150E3C5D9ACAFBE1533FC3533DECEC14387BF7478F6E229EB4CC312DC22436F4DB0D4CC308FB6EEA612F2F9E00239DE7902DE15889EE71370147C9696A5E7B022947ABB8AFBBC64F7840BED4CE69592CAF4085A1074475E365ED015048C89AE717BC259C42510F15F31DA3F9302EAD8F263B43D14886B2335A245C00871C041CBB683F1F047573F789673F9B11B6E6714C2A3360244757BB220C7952C6D3D9D65AA47511A63E2A59706B7A70846C930DCFB3D8CAFB3BD6F687CACF5A708692C26B363C80C460F54E59912D41D9BB359698051ABC049A0D0CFD7F23DC97DA940B1EDEAC6B84B194C8F8A56A46CE69EE7A0AEAA11C99508A368E64D27756AD0BA7146A6ADA3D5FA237B3B4EDDC84B71C27DE3A9F26A42197791C7DC09E2D7C4A7D8FCDC8F9A5D4983BB278FCE9513B1486D18F8560C3F31CC70203010001}\",\n        \"hex_data\":\"'$(str2hex \"$JSON_DATA\")'\"\n}';\n\nd=\"$(date +%s)\";\ncurl -i -X POST -H 'Accept: application\u002Fjson' http:\u002F\u002Flocalhost:7572\u002Fapi\u002Fnetwork\u002Frequest --data \"${PUSH_FORMAT}\";\necho \"Request took $(($(date +%s)-d)) seconds\";\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\u003Cp\u003E\u003C\u002Fp\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdetails\u003E\u003Ch2\u003EЗаключение\u003C\u002Fh2\u003E\u003Cp\u003EНа основе всего вышесказанного мы смогли воспользоваться (и сможем пользоваться) централизованными сервисами связи с целью безопасного и анонимного общения посредством тайных каналов связи. За счёт хорошей абстрагируемости сервисов HLS, HLM и HLT между собой, нам оставалось лишь реализовывать адаптеры (сервисы) типа Sender и Receiver для конечного сервиса. \u003C\u002Fp\u003E\u003Cp\u003EВся данная статья не могла быть быть написана без теоретической базы, которой являются такие статьи как \u003Ca href=\"https:\u002F\u002Fgithub.com\u002Fnumber571\u002Fgo-peer\u002Fblob\u002Fmaster\u002Fdocs\u002Ftheory_of_the_structure_of_hidden_systems.pdf\" rel=\"noopener noreferrer nofollow\"\u003EТеория строения скрытых систем\u003C\u002Fa\u003E, \u003Ca href=\"https:\u002F\u002Fgithub.com\u002Fnumber571\u002Fgo-peer\u002Fblob\u002Fmaster\u002Fdocs\u002Fmonolithic_cryptographic_protocol.pdf\" rel=\"noopener noreferrer nofollow\"\u003EМонолитный криптографический протокол\u003C\u002Fa\u003E и \u003Ca href=\"https:\u002F\u002Fgithub.com\u002Fnumber571\u002Fgo-peer\u002Fblob\u002Fmaster\u002Fdocs\u002Fabstract_anonymous_networks.pdf\" rel=\"noopener noreferrer nofollow\"\u003EАбстрактные анонимные сети\u003C\u002Fa\u003E. Данные работы также находятся полностью в открытом доступе на github репозитории.\u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E\u003C\u002Fdiv\u003E","tags":[{"titleHtml":"информационная безопасность"},{"titleHtml":"криптография"},{"titleHtml":"программирование"},{"titleHtml":"go"},{"titleHtml":"децентрализованные сети"},{"titleHtml":"анонимность"},{"titleHtml":"анонимные сети"},{"titleHtml":"централизация"}],"metadata":{"stylesUrls":[],"scriptUrls":[],"shareImageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffd9\u002F245\u002Fe15\u002Ffd9245e1507bf63d6464668622bffc82.png","shareImageWidth":1200,"shareImageHeight":630,"vkShareImageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffd9\u002F245\u002Fe15\u002Ffd9245e1507bf63d6464668622bffc82.png","schemaJsonLd":"{\"@context\":\"http:\\\u002F\\\u002Fschema.org\",\"@type\":\"Article\",\"mainEntityOfPage\":{\"@type\":\"WebPage\",\"@id\":\"https:\\\u002F\\\u002Fhabr.com\\\u002Fru\\\u002Fpost\\\u002F720544\\\u002F\"},\"headline\":\"Тайные каналы связи или как централизованные сервисы способны разлагаться изнутри\",\"datePublished\":\"2023-03-05T17:30:42+03:00\",\"dateModified\":\"2023-03-05T18:56:01+03:00\",\"author\":{\"@type\":\"Person\",\"name\":\"Коваленко Геннадий\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Habr\",\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fwebt\\\u002Fa_\\\u002Flk\\\u002F9m\\\u002Fa_lk9mjkccjox-zccjrpfolmkmq.png\"}},\"description\":\"ВведениеСовременный мир нельзя представить без сервисов связи, таких как социальные сети, мессенджеры, электронная почта, файловые хранилища и т.п. Мы пользуемся...\",\"url\":\"https:\\\u002F\\\u002Fhabr.com\\\u002Fru\\\u002Fpost\\\u002F720544\\\u002F#post-content-body\",\"about\":[\"h_programming\",\"h_go\",\"h_crypto\",\"h_infosecurity\",\"h_p2p\",\"f_develop\",\"f_admin\"],\"image\":[\"https:\\\u002F\\\u002Fhabr.com\\\u002Fshare\\\u002Fpublication\\\u002F720544\\\u002F3d3e97f5183164e19844f2301b894fc3\\\u002F\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F5ca\\\u002F9b6\\\u002Ff31\\\u002F5ca9b6f3198b82eda2e52ca9fa88c45d.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Ff3f\\\u002F0cc\\\u002F529\\\u002Ff3f0cc5293344c542094b9087abea5bb.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F2ea\\\u002Fb1c\\\u002F714\\\u002F2eab1c7143c6fa86f6fdd31c7c2d128d.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F4da\\\u002Fdb2\\\u002F34a\\\u002F4dadb234af89e94346588d798a819776.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F672\\\u002Fd67\\\u002F820\\\u002F672d67820ff5625f950351b6ab95f7ce.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F715\\\u002Fa55\\\u002F2b3\\\u002F715a552b31e7c00859e6b0d57278d843.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Fe1b\\\u002F031\\\u002F7bb\\\u002Fe1b0317bb6cb1a6e6ed0774e7144600c.png\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002F781\\\u002Fa73\\\u002F724\\\u002F781a737247c0ebf8db7465d67d9e7e97.png\"]}","metaDescription":"Введение Современный мир нельзя представить без сервисов связи, таких как социальные сети, мессенджеры, электронная почта, файловые хранилища и т.п. Мы пользуемся данными сервисами постоянно, ровно...","mainImageUrl":null,"amp":true,"customTrackerLinks":[]},"polls":[],"commentsEnabled":true,"rulesRemindEnabled":false,"votesEnabled":true,"status":"published","plannedPublishTime":null,"checked":null,"hasPinnedComments":false,"format":"case","readingTime":17,"complexity":"high","isEditorial":false}},"articlesIds":{},"isLoading":false,"pagesCount":{},"route":{},"reasonsList":null,"view":"cards","lastVisitedRoute":{},"ssrCommentsArticleIds":[""],"karma":{"userReasonsList":null}},"authorContribution":{"authors":{}},"betaTest":{"currentAnnouncement":null,"announcements":{},"announcementCards":null,"announcementComments":{},"announcementCommentThreads":{},"announcementCommentingStatuses":{},"archivedList":[]},"authorStatistics":{"articleRefs":{},"articleIds":{},"pagesCount":{},"route":{},"viewsCount":[],"maxStatsCount":{}},"career":{"seoLandings":[{"title":"Специалист по информационной безопасности","vacanciesCount":101,"itemUrl":"https:\u002F\u002Fcareer.habr.com\u002Fvacancies\u002Fspecialist_po_informacionnoj_bezopasnosti","itemHubs":["infosecurity"]},{"title":"Go разработчик","vacanciesCount":96,"itemUrl":"https:\u002F\u002Fcareer.habr.com\u002Fvacancies\u002Fgo_razrabotchik","itemHubs":["go"]}],"hubs":"programming,go,crypto,infosecurity,p2p"},"comments":{"articleComments":{},"articlePinnedComments":{},"searchCommentsResults":null,"pagesCount":null,"commentAccess":{},"scrollParents":{},"pageArticleComments":{"lastViewedComment":0,"postId":null,"lastCommentTimestamp":"","moderated":[],"moderatedIds":[],"commentRoute":""}},"companies":{"companyRefs":{},"companyIds":{},"companyTopIds":{},"pagesCount":{},"companyProfiles":{},"companiesCategories":[],"companiesCategoriesTotalCount":0,"companiesWidgets":{},"companiesWorkers":{},"companiesFans":{},"route":{},"isLoading":false,"companyWorkersLoading":false,"companyFansLoading":false,"vacancies":{},"companiesGalleries":{},"companiesBanners":{},"companiesLandingVacancies":{},"companiesTechnologies":{},"workplaceInfo":null},"companyAdmin":{"companyInfo":null,"companyInfoLoading":false,"faqArticles":null,"brandingPreviewImageUrl":null,"jivoStatus":0,"adminNotifications":null},"companiesContribution":{"hubs":{},"flows":{},"companyRefs":{}},"companyHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"conversation":{"messages":[],"respondent":null,"isLoadMore":false},"conversations":{"conversations":[],"unreadCount":0,"pagesCount":0},"desktopState":{"desktopFl":null,"desktopHl":null,"isChecked":false,"isLoginDemanded":false},"docs":{"menu":{},"articles":{},"mainMenu":[],"loading":{"main":false,"dropdown":false,"article":false}},"feature":{"isProbablyVisible":true},"flows":{"updates":{"countNewPostsBySubscription":null,"countNewPostsAll":30,"countNewNewsAll":10},"flows":[{"alias":"develop","id":"1","route":{"name":"FLOW_PAGE","params":{"flowName":"develop"}}},{"alias":"admin","id":"6","route":{"name":"FLOW_PAGE","params":{"flowName":"admin"}}},{"alias":"design","id":"2","route":{"name":"FLOW_PAGE","params":{"flowName":"design"}}},{"alias":"management","id":"3","route":{"name":"FLOW_PAGE","params":{"flowName":"management"}}},{"alias":"marketing","id":"4","route":{"name":"FLOW_PAGE","params":{"flowName":"marketing"}}},{"alias":"popsci","id":"7","route":{"name":"FLOW_PAGE","params":{"flowName":"popsci"}}}]},"global":{"isPwa":false,"device":"desktop","isHabrCom":true},"hubs":{"hubRefs":{},"hubIds":{},"pagesCount":{},"isLoading":false,"route":{}},"hubsBlock":{"hubRefs":{},"hubIds":{}},"i18n":{"fl":"ru","hl":"ru"},"info":{"infoPage":{},"isLoading":true},"location":{"urlStruct":{"protocol":null,"slashes":null,"auth":null,"host":null,"port":null,"hostname":null,"hash":null,"search":null,"query":{},"pathname":null,"path":null,"href":""}},"me":{"user":null,"uuid":null,"ppgDemanded":false,"karmaResetInfo":{"canReincarnate":null,"wasReincarnated":null,"currentScore":null},"notes":null},"modal":{"modals":[]},"mostReadingList":{"mostReadingListIds":[],"mostReadingListRefs":null,"promoPost":null},"ppa":{"articles":{},"card":null,"transactions":null,"totalTransactions":null,"isAccessible":null},"projectsBlocks":{"activeBlocks":{"questions":"project-block-article"}},"promoData":{"isLoading":false,"hasLoaded":false,"featurer":null,"megaposts":null,"promoLinks":null,"promoPosts":null},"pullRefresh":{"shouldRefresh":false},"sandbox":{"articleIds":[],"articleRefs":{},"pagesCount":null,"route":{},"lastVisitedRoute":{},"isLoading":false},"search":{"searchQueryError":null},"settingsOther":{"inputs":{"uiLang":{"errors":[],"ref":null,"value":""},"articlesLangEnglish":{"errors":[],"ref":null,"value":false},"articlesLangRussian":{"errors":[],"ref":null,"value":false},"agreement":{"errors":[],"ref":null,"value":false},"email":{"errors":[],"ref":null,"value":true},"digest":{"errors":[],"ref":null,"value":true}}},"similarList":{"similarListIds":[],"similarListRefs":null},"ssr":{"error":null,"isDataLoaded":false,"isDataLoading":false,"isHydrationFailed":false,"isServer":false},"stories":{"stories":[{"id":"story-274","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F386\u002F1a0\u002F577\u002F3861a057738e4cf78f3fc173d952c827.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Топ-7 годноты из блогов компаний","lang":"ru","startTime":"2023-03-02T11:00:00+03:00","finishTime":"2023-03-07T10:15:00+03:00","slides":[{"id":"story-274_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F52c\u002F81a\u002Fe91\u002F52c81ae913532c5df7e90245845ce07c.png","button":null},{"id":"story-274_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff9b\u002Fc65\u002Ff9a\u002Ff9bc65f9a46ebd95a3babce143e6770a.jpg","button":{"title":"Клавиатурный зоопарк","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fcloud4y\u002Fblog\u002F716934\u002F","colorType":"light"}},{"id":"story-274_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa77\u002F2d7\u002Fb4e\u002Fa772d7b4e782a580cf72c5c996514a1f.jpg","button":{"title":"Три приёмника","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fruvds\u002Fblog\u002F716988\u002F","colorType":"light"}},{"id":"story-274_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F78c\u002Fb59\u002F01c\u002F78cb5901c06e97ec94f07bfd6ca12a68.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fruvds\u002Fblog\u002F716058\u002F","colorType":"dark"}},{"id":"story-274_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbe2\u002Fa46\u002F500\u002Fbe2a4650077735388744eb7d2e1ef7dd.jpg","button":{"title":"Очумелые ручки","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fselectel\u002Fblog\u002F718134\u002F","colorType":"dark"}},{"id":"story-274_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7f1\u002F18d\u002F8e3\u002F7f118d8e3f6fc09179c73dde840dd425.jpg","button":{"title":"Узнать причины","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Ftimeweb\u002Fblog\u002F713220\u002F","colorType":"light"}},{"id":"story-274_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F028\u002F038\u002F9f5\u002F0280389f5fb85f9f821fa45ccbaa8803.jpg","button":{"title":"Как это сделать","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fcloud4y\u002Fblog\u002F717342\u002F","colorType":"light"}},{"id":"story-274_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcb0\u002F02d\u002F7c4\u002Fcb002d7c42c03e59d7f124f10cbe4b4d.jpg","button":{"title":"Нырнуть в сеть","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fsouthbridge\u002Fblog\u002F717634\u002F","colorType":"dark"}}]},{"id":"story-272","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F82b\u002Fdd7\u002F7d8\u002F82bdd77d8ef7304d3b1b599191c2bb1c.png","title":"Сезоны Хабра","link":"https:\u002F\u002Fu.habr.com\u002F5P6i7"},"title":"Открыт сезон ML","lang":"ru","startTime":"2023-03-02T09:00:41+03:00","finishTime":"2023-03-31T20:53:00+03:00","slides":[{"id":"story-272_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F27f\u002Fd3a\u002Fddf\u002F27fd3addfe06da09592bdcf61db15795.jpg","button":null},{"id":"story-272_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F935\u002F582\u002F992\u002F935582992e378add33c898451b2a0d9f.jpg","button":null},{"id":"story-272_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe13\u002Feb8\u002Fa24\u002Fe13eb8a24b60622d3da72fd6e7ed3fda.jpg","button":null},{"id":"story-272_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa85\u002F83f\u002F5cc\u002Fa8583f5ccfae747135343f0e68c84112.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002F5P6i7","colorType":"light"}},{"id":"story-272_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F60d\u002F1cb\u002F98c\u002F60d1cb98cdd42d2696ebc0ec54740a23.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002F5P6i7","colorType":"light"}}]},{"id":"story-118","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fjh\u002F3n\u002Fhy\u002Fjh3nhyovspbtyqndibvbttgsprc.png","title":"Хабр Новости","link":"https:\u002F\u002Fu.habr.com\u002FcvdBy"},"title":"Лучшие фотографии «Джеймса Уэбба» за год","lang":"ru","startTime":"2023-03-01T11:00:00+03:00","finishTime":"2023-03-05T23:59:00+03:00","slides":[{"id":"story-118_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fml\u002Fcn\u002Fqx\u002Fmlcnqxuawiz09l-viwmfzybgesw.png","button":null},{"id":"story-118_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fvn\u002F7g\u002Fqt\u002Fvn7gqtssznilh0-zkjmgyq25vpo.png","button":null},{"id":"story-118_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fzg\u002Fi-\u002F1y\u002Fzgi-1ysesbd_givgtouinc97tby.png","button":null},{"id":"story-118_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fvm\u002Frz\u002F_v\u002Fvmrz_vbuvvaj8gsheuhwscrlt8c.png","button":null},{"id":"story-118_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fmq\u002Fs5\u002Fgk\u002Fmqs5gkpfk-iijv2gnlud3huxgpo.png","button":null},{"id":"story-118_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002F93\u002Fuv\u002Fxb\u002F93uvxboezmintyjwjgb5vrf1zcm.png","button":null},{"id":"story-118_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fu4\u002Fdy\u002Fcd\u002Fu4dycdmg1jiinbfztn3zkpocne0.png","button":null},{"id":"story-118_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Ffy\u002Fqr\u002Flg\u002Ffyqrlgev36v3pa3-zy8maak8ipe.png","button":null},{"id":"story-118_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fx7\u002Fx8\u002Ftf\u002Fx7x8tfe8l1ahi_zmusdmtp0b_sy.png","button":{"title":"Подробности","link":"https:\u002F\u002Fu.habr.com\u002FcvdBy","colorType":"light"}}]},{"id":"story-264","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcbd\u002Fe44\u002F753\u002Fcbde44753048ff6655f9f33752fd816a.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FnTaXn"},"title":"Cколько тратят в IT: сеньор бэкендер","lang":"ru","startTime":"2023-02-28T15:50:00+03:00","finishTime":"2023-03-07T23:59:00+03:00","slides":[{"id":"story-264_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd99\u002Ff45\u002Ff14\u002Fd99f45f14dc03b2394a86f50f76844f4.png","button":null},{"id":"story-264_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0e3\u002F529\u002F607\u002F0e3529607bca82d7b8214d422f20ab67.png","button":null},{"id":"story-264_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8ae\u002F39e\u002Fa4f\u002F8ae39ea4fd82c27289b24594adf3c0c0.png","button":null},{"id":"story-264_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F971\u002F361\u002Fd57\u002F971361d574204d51ffe35d8c9cfef943.png","button":null},{"id":"story-264_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F342\u002F5c0\u002Fee7\u002F3425c0ee73301cff942e3d9276ce4a79.png","button":{"title":"Подробности","link":"https:\u002F\u002Fu.habr.com\u002FnTaXn","colorType":"dark"}}]},{"id":"story-262","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2fa\u002Fc8a\u002Fba8\u002F2fac8aba82b995297abea595da7990d1.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Наука сна","lang":"ru","startTime":"2023-02-28T12:15:00+03:00","finishTime":"2023-03-15T23:59:00+03:00","slides":[{"id":"story-262_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa90\u002F725\u002F61c\u002Fa9072561c280c46933ff54fd8702cade.jpg","button":null},{"id":"story-262_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffd7\u002F658\u002F956\u002Ffd7658956ea825b1c317c7f688c48058.jpg","button":{"title":"Читать лекцию","link":"https:\u002F\u002Fu.habr.com\u002Fson01","colorType":"light"}},{"id":"story-262_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F366\u002Fd2e\u002F707\u002F366d2e70725209177fa82a4119139c86.jpg","button":{"title":"При чём же?","link":"https:\u002F\u002Fu.habr.com\u002Fson02","colorType":"light"}},{"id":"story-262_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4bd\u002F40f\u002F731\u002F4bd40f731bfbf571a709dd2f357f06b4.jpg","button":{"title":"Заглянуть в дневник","link":"https:\u002F\u002Fu.habr.com\u002Fson03","colorType":"light"}},{"id":"story-262_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F944\u002F7ad\u002Fe2f\u002F9447ade2f38c3c36790be75bf4462047.jpg","button":{"title":"Последствия","link":"https:\u002F\u002Fu.habr.com\u002Fson04","colorType":"light"}},{"id":"story-262_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F74c\u002Fce1\u002F4dc\u002F74cce14dc903b245dca90df3f2747abb.jpg","button":{"title":"Смотреть список","link":"https:\u002F\u002Fu.habr.com\u002Fson05","colorType":"light"}},{"id":"story-262_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbc9\u002Fa62\u002F9f0\u002Fbc9a629f0c5ef2027cf7796749a06914.jpg","button":{"title":"Следы в истории","link":"https:\u002F\u002Fu.habr.com\u002Fson06","colorType":"light"}},{"id":"story-262_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F085\u002F0ee\u002F868\u002F0850ee868132e1ec4ec3b24caf7e719a.jpg","button":{"title":"Что придумали?","link":"https:\u002F\u002Fu.habr.com\u002Fson07","colorType":"light"}}]},{"id":"story-252","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff19\u002F48d\u002Fd15\u002Ff1948dd155701f88d36e11387c1660ef.png","title":"Geek Travel","link":"https:\u002F\u002Fu.habr.com\u002F9TZjL"},"title":"Где искать северное сияние в России","lang":"ru","startTime":"2023-02-21T11:35:00+03:00","finishTime":"2023-03-12T11:22:00+03:00","slides":[{"id":"story-252_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F506\u002F188\u002F83b\u002F50618883bc97ce517531018d3290d961.jpg","button":{"title":"К посту","link":"https:\u002F\u002Fu.habr.com\u002F9TZjL","colorType":"light"}},{"id":"story-252_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe42\u002Fa71\u002Fe8e\u002Fe42a71e8eb5583814647f5ad55f9e0ae.jpg","button":null},{"id":"story-252_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F685\u002Fdbe\u002F4ff\u002F685dbe4ffe3940eca28ede7406898846.jpg","button":null},{"id":"story-252_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F383\u002F63b\u002F1f4\u002F38363b1f459d5daace0e4502f0780737.jpg","button":null},{"id":"story-252_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F32b\u002F665\u002F0c4\u002F32b6650c448d698b9ca4dba128afb56e.jpg","button":null},{"id":"story-252_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F95e\u002F0b2\u002F5be\u002F95e0b25be55ae919dbebbac6142e670d.jpg","button":null},{"id":"story-252_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F616\u002F1d4\u002Ff84\u002F6161d4f849be8d4e4aeee88ea2e3d572.jpg","button":null}]},{"id":"story-246","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fc41\u002F8cc\u002Fca9\u002Fc418ccca924faf05c11530c5071e627b.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-new"},"title":"Зарплаты в IT во второй половине 2022","lang":"ru","startTime":"2023-02-20T11:05:00+03:00","finishTime":"2023-03-05T23:59:00+03:00","slides":[{"id":"story-246_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbe2\u002F07d\u002F19f\u002Fbe207d19f3cdc4b89e3618025c071ea0.png","button":null},{"id":"story-246_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcda\u002F93e\u002Fed7\u002Fcda93eed762714814ddfc51c4712f4ed.png","button":null},{"id":"story-246_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fb8a\u002Fde4\u002F87f\u002Fb8ade487fa6556af459e032adebf852d.png","button":null},{"id":"story-246_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8f6\u002Fb32\u002F844\u002F8f6b328448ed968a18a60a0cd745bd34.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-new","colorType":"dark"}}]},{"id":"story-152","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa49\u002F0d3\u002F609\u002Fa490d3609f29b6dfc53a7b88ab47ca64.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa"},"title":"Сеньоры — очень странные люди","lang":"ru","startTime":"2023-01-23T11:00:00+03:00","finishTime":"2023-03-31T23:59:00+03:00","slides":[{"id":"story-152_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbbb\u002F901\u002F063\u002Fbbb9010630ae483ed1f41ec4e2572c13.png","button":null},{"id":"story-152_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4f8\u002F66c\u002F14f\u002F4f866c14f0ca8999334438d7f17c0e3a.png","button":null},{"id":"story-152_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F6b9\u002Fa07\u002Fa61\u002F6b9a07a612df213ac3a1c179301828df.png","button":null},{"id":"story-152_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff6b\u002Fadb\u002Fb99\u002Ff6badbb9969d7e34ef4f7492767c6a77.png","button":null},{"id":"story-152_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd9c\u002F9ac\u002F878\u002Fd9c9ac878bec5b494699e0080dd2e813.png","button":null},{"id":"story-152_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fdb1\u002Faf9\u002Fc3b\u002Fdb1af9c3bb557f6cee698cf67610f977.png","button":null},{"id":"story-152_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5cf\u002Fbed\u002F65b\u002F5cfbed65bd20b7051b1aac2b9d6e807e.png","button":null},{"id":"story-152_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffa8\u002F251\u002F4a9\u002Ffa82514a9471cd455339e97178d8c021.png","button":null},{"id":"story-152_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbd5\u002F901\u002Fe95\u002Fbd5901e952d9cf638355a3cc8b0c0911.png","button":{"title":"Хочу помочь джуну","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa","colorType":"light"}}]}]},"technotext":{"years":[],"technotextDocForNominees":null,"technotextDocForWinners":null,"technotextInfo":{},"technotextInfoLoading":false,"technotextWinners":{},"technotextWinnersLoading":false},"userHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"userInvites":{"availableInvites":0,"usedInvitesIds":[],"usedInvitesRefs":{},"usedInvitesPagesCount":0,"unusedInvitesIds":[],"unusedInvitesRefs":{},"unusedInvitesPagesCount":0},"userVotes":{"karmaVotesList":[],"karmaVotesPagesCount":null,"karmaVotesListLoading":false,"commentsVotesList":[],"commentsVotesPagesCount":null,"commentsVotesListLoading":false,"postsVotesList":[],"postsVotesPagesCount":null,"postsVotesListLoading":false,"userVotesList":[],"userVotesPagesCount":null,"userVotesListLoading":false},"users":{"authorRefs":{},"authorIds":{},"pagesCount":{},"authorProfiles":{},"userHubs":{},"userInvitations":{},"authorFollowers":{},"authorFollowed":{},"userSpecialization":{},"karmaStats":[],"statistics":null,"isLoading":false,"authorFollowersLoading":false,"authorFollowedLoading":false,"userHubsLoading":false,"userInvitationsLoading":false,"route":{}},"viewport":{"prevScrollY":{},"scrollY":0,"width":0},"tracker":{"items":{},"pagesCache":{},"markedViewedSilently":{},"markedRead":{},"unreadCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null},"unviewedCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null}}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script> 
+  <script src="https://assets.habr.com/habr-web/js/chunk-vendors.129fcbcb.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/app.8a380906.js" defer></script> 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-726094-1"></script> 
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script> 
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(24049213, "init", {
+      defer:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:false,
+    });
+  </script> 
+  <noscript> 
+   <div> 
+    <img src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;" alt=""> 
+   </div> 
+  </noscript> 
+  <script type="text/javascript">
+      window.addEventListener('load', function () {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = 'https://vk.com/rtrg?p=VK-RTRG-421343-57vKE';
+        }, 0);
+      });
+    </script> 
+  <script src="/js/ads.js" onload="window['zhY4i4nJ9K'] = true"></script>  
+ </body>
+</html>

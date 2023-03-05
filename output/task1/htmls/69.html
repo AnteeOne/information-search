@@ -1,0 +1,1105 @@
+<!doctype html>
+<html lang="ru" data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0"> 
+  <meta name="referrer" content="unsafe-url"> 
+  <title>Сравнительный анализ стандартов связи для сетей IoT / Хабр</title> 
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSxf6TF0.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveQhf6TF0.woff2) format('woff2');
+      unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSBf6TF0.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveRhf6.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* non-breaking hyphen */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmEU9vBh0_IsHAlmrO6g&skey=ee881451c540fdec&v=v29) format('woff2');
+      unicode-range: U+02011;
+    }
+  </style> 
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/chunk-vendors.b6238726.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/chunk-vendors.129fcbcb.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/app.2dc3dce9.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/app.8a380906.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" as="script"> 
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/chunk-vendors.b6238726.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/app.2dc3dce9.css"> 
+  <script>window.i18nFetch = new Promise((res, rej) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', '/js/i18n/ru-compiled.99fdff73029c662d76a25e7927355795.json');
+          xhr.responseType = 'json';
+          xhr.onload = function(e) {
+            if (this.status === 200) {
+              res({ru: xhr.response});
+            } else {
+              rej(e);
+            }
+          };
+          xhr.send();
+        });</script> 
+  <script data-vue-meta="ssr" type="application/ld+json" data-vmid="ldjson-schema">{"@context":"http:\/\/schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/habr.com\/ru\/company\/msw\/blog\/720518\/"},"headline":"Сравнительный анализ стандартов связи для сетей IoT","datePublished":"2023-03-05T12:36:16+03:00","dateModified":"2023-03-05T12:36:16+03:00","author":{"@type":"Person","name":"andgenn"},"publisher":{"@type":"Organization","name":"Habr","logo":{"@type":"ImageObject","url":"https:\/\/habrastorage.org\/webt\/a_\/lk\/9m\/a_lk9mjkccjox-zccjrpfolmkmq.png"}},"description":"Интернет вещей (Internet of Things, IoT) &mdash; это одно из самых актуальных направлений современных технологий. Сети IoT позволяют подключать к сети интернет физичес...","url":"https:\/\/habr.com\/ru\/company\/msw\/blog\/720518\/#post-content-body","about":["c_msw","h_home_automation","h_internet_of_things","f_popsci"],"image":["https:\/\/habr.com\/share\/publication\/720518\/e48d08e9803dbf77d5d1779dd474005f\/","https:\/\/habrastorage.org\/getpro\/habr\/upload_files\/f67\/c90\/74c\/f67c9074c1bdd5f84661a1602e8d536b.png"]}</script> 
+  <script src="//www.googletagservices.com/tag/js/gpt.js" async></script> 
+  <style>.grecaptcha-badge{visibility: hidden;}</style> 
+  <meta name="habr-version" content="2.114.0"> 
+  <meta data-vue-meta="ssr" property="fb:app_id" content="444736788986613">
+  <meta data-vue-meta="ssr" property="fb:pages" content="472597926099084">
+  <meta data-vue-meta="ssr" name="twitter:card" content="summary_large_image">
+  <meta data-vue-meta="ssr" name="twitter:site" content="@habr_com">
+  <meta data-vue-meta="ssr" property="og:site_name" content="Хабр" data-vmid="og:site_name">
+  <meta data-vue-meta="ssr" property="og:title" content="Сравнительный анализ стандартов связи для сетей IoT" data-vmid="og:title">
+  <meta data-vue-meta="ssr" name="twitter:title" content="Сравнительный анализ стандартов связи для сетей IoT" data-vmid="twitter:title">
+  <meta data-vue-meta="ssr" name="aiturec:title" content="Сравнительный анализ стандартов связи для сетей IoT" data-vmid="aiturec:title">
+  <meta data-vue-meta="ssr" name="description" content="Интернет вещей (Internet of Things, IoT) — это одно из самых актуальных направлений современных технологий. Сети IoT позволяют подключать к сети интернет физические устройства, такие как датчики,..." data-vmid="description">
+  <meta data-vue-meta="ssr" itemprop="description" content="Интернет вещей (Internet of Things, IoT) — это одно из самых актуальных направлений современных технологий. Сети IoT позволяют подключать к сети интернет физические устройства, такие как датчики,..." data-vmid="description:itemprop">
+  <meta data-vue-meta="ssr" property="og:description" content="Интернет вещей (Internet of Things, IoT) — это одно из самых актуальных направлений современных технологий. Сети IoT позволяют подключать к сети интернет физические устройства, такие как датчики,..." data-vmid="og:description">
+  <meta data-vue-meta="ssr" name="twitter:description" content="Интернет вещей (Internet of Things, IoT) — это одно из самых актуальных направлений современных технологий. Сети IoT позволяют подключать к сети интернет физические устройства, такие как датчики,..." data-vmid="twitter:description">
+  <meta data-vue-meta="ssr" property="aiturec:description" content="Интернет вещей (Internet of Things, IoT) — это одно из самых актуальных направлений современных технологий. Сети IoT позволяют подключать к сети интернет физические устройства, такие как датчики,..." data-vmid="aiturec:description">
+  <meta data-vue-meta="ssr" itemprop="image" content="https://habrastorage.org/getpro/habr/upload_files/670/f9c/07a/670f9c07ae255d8a012aad0200d91252.png" data-vmid="image:itemprop">
+  <meta data-vue-meta="ssr" property="og:image" content="https://habrastorage.org/getpro/habr/upload_files/670/f9c/07a/670f9c07ae255d8a012aad0200d91252.png" data-vmid="og:image">
+  <meta data-vue-meta="ssr" property="og:image:width" content="1200" data-vmid="og:image:width">
+  <meta data-vue-meta="ssr" property="og:image:height" content="630" data-vmid="og:image:height">
+  <meta data-vue-meta="ssr" property="aiturec:image" content="https://habrastorage.org/getpro/habr/upload_files/670/f9c/07a/670f9c07ae255d8a012aad0200d91252.png" data-vmid="aiturec:image">
+  <meta data-vue-meta="ssr" name="twitter:image" content="https://habrastorage.org/getpro/habr/upload_files/670/f9c/07a/670f9c07ae255d8a012aad0200d91252.png" data-vmid="twitter:image">
+  <meta data-vue-meta="ssr" property="vk:image" content="https://habrastorage.org/getpro/habr/upload_files/670/f9c/07a/670f9c07ae255d8a012aad0200d91252.png?format=vk" data-vmid="vk:image">
+  <meta data-vue-meta="ssr" property="aiturec:item_id" content="720518" data-vmid="aiturec:item_id">
+  <meta data-vue-meta="ssr" property="aiturec:datetime" content="2023-03-05T09:36:16.000Z" data-vmid="aiturec:datetime">
+  <meta data-vue-meta="ssr" content="https://habr.com/ru/company/msw/blog/720518/" property="og:url" data-vmid="og:url">
+  <meta data-vue-meta="ssr" property="og:type" content="article" data-vmid="og:type">
+  <meta data-vue-meta="ssr" property="og:locale" content="ru_RU" data-vmid="og:locale">
+  <meta data-vue-meta="ssr" name="keywords" content="интернет-вещей, lorawan, zwave, zigbee"> 
+  <link data-vue-meta="ssr" href="https://habr.com/ru/rss/post/720518/?fl=ru" type="application/rss+xml" title="" rel="alternate" name="rss">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/company/msw/blog/720518/" rel="canonical" data-vmid="canonical">
+  <link data-vue-meta="ssr" rel="image_src" href="https://habrastorage.org/getpro/habr/upload_files/670/f9c/07a/670f9c07ae255d8a012aad0200d91252.png" data-vmid="image:href">
+  <link data-vue-meta="ssr" rel="amphtml" href="https://habr.com/ru/amp/post/720518/"> 
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303b44"> 
+  <meta name="msapplication-TileColor" content="#629FBC"> 
+  <meta name="apple-mobile-web-app-capable" content="yes"> 
+  <meta name="mobile-web-app-capable" content="yes"> 
+  <link rel="shortcut icon" type="image/png" sizes="16x16" href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png"> 
+  <link rel="shortcut icon" type="image/png" sizes="32x32" href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-152.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-180.png"> 
+  <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-256.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1136x640.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2436x1125.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1792x828.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_828x1792.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1334x750.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2208x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1125x2436.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2208.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2732x2048.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2688x1242.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2224x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_750x1334.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x2732.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2388x1668.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2224.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_640x1136.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2388.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x1536.png"> 
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1536x2048.png"> 
+  <link rel="mask-icon" color="#77a2b6" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.svg"> 
+  <link crossorigin="use-credentials" href="/manifest.webmanifest" rel="manifest"> 
+  <script async src="https://unpkg.com/pwacompat" crossorigin="anonymous"></script> 
+  <script>window.yaContextCb = window.yaContextCb || []</script> 
+  <script src="https://yandex.ru/ads/system/context.js" async></script> 
+ </head> 
+ <body> 
+  <div id="app" data-server-rendered="true" data-async-called="true">
+   <div class="tm-layout__wrapper">
+    <!----> 
+    <div></div> <!----> 
+    <header class="tm-header">
+     <div class="tm-page-width">
+      <div class="tm-header__container">
+       <!----> <span class="tm-header__logo-wrap"><a href="/ru/" class="tm-header__logo tm-header__logo_ru">
+         <svg height="16" width="16" class="tm-svg-img tm-header__icon">
+          <title>Хабр</title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use>
+         </svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span> 
+       <div class="tm-dropdown tm-header__projects">
+        <div class="tm-dropdown__head">
+         <button class="tm-header__dropdown-toggle">
+          <svg height="16" width="16" class="tm-svg-img tm-header__icon tm-header__icon_dropdown">
+           <title>Открыть список</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#arrow-down"></use>
+          </svg></button>
+        </div> <!---->
+       </div> <a href="/ru/sandbox/start/" class="tm-header__become-author-btn"> Как стать автором </a> 
+       <div class="tm-feature tm-header__feature tm-feature tm-feature_variant-inline">
+        <!---->
+       </div> <!----> <!---->
+      </div>
+     </div>
+    </header> 
+    <div class="tm-layout">
+     <div class="tm-page-progress-bar"></div> 
+     <div data-menu-sticky="true" class="tm-base-layout__header tm-base-layout__header_is-sticky">
+      <div class="tm-page-width">
+       <div class="tm-base-layout__header-wrapper">
+        <div class="tm-main-menu">
+         <div class="tm-main-menu__section">
+          <nav class="tm-main-menu__section-content">
+           <!----> <a href="/ru/all/" class="tm-main-menu__item"> Все потоки </a> <a href="/ru/flows/develop/" class="tm-main-menu__item"> Разработка </a><a href="/ru/flows/admin/" class="tm-main-menu__item"> Администрирование </a><a href="/ru/flows/design/" class="tm-main-menu__item"> Дизайн </a><a href="/ru/flows/management/" class="tm-main-menu__item"> Менеджмент </a><a href="/ru/flows/marketing/" class="tm-main-menu__item"> Маркетинг </a><a href="/ru/flows/popsci/" class="tm-main-menu__item"> Научпоп </a>
+          </nav>
+         </div>
+        </div> 
+        <div class="tm-header-user-menu tm-base-layout__user-menu">
+         <a href="/ru/search/" class="tm-header-user-menu__item tm-header-user-menu__search">
+          <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark">
+           <title>Поиск</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#search"></use>
+          </svg></a> <!----> <!----> <!----> 
+         <div class="tm-header-user-menu__item tm-header-user-menu__user_desktop">
+          <div class="tm-dropdown">
+           <div class="tm-dropdown__head">
+            <svg height="24" width="24" data-test-id="menu-toggle-guest" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_dark">
+             <title>Профиль</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#header-user"></use>
+            </svg> <!---->
+           </div> <!---->
+          </div> <!---->
+         </div> <!---->
+        </div>
+       </div>
+      </div>
+     </div> <!----> 
+     <div class="tm-page-width"></div> 
+     <main class="tm-layout__container">
+      <div hl="ru" companyname="msw" data-async-called="true" class="tm-page">
+       <div class="tm-page-width">
+        <div class="tm-page__header">
+         <!---->
+        </div> 
+        <div class="tm-page__wrapper">
+         <div class="tm-page__main tm-page__main_has-sidebar">
+          <div class="pull-down">
+           <!----> 
+           <div class="pull-down__header" style="height:0px;">
+            <div class="pull-down__content" style="bottom:10px;">
+             <svg height="24" width="24" class="tm-svg-img pull-down__arrow">
+              <title>Обновить</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#pull-arrow"></use>
+             </svg>
+            </div>
+           </div> 
+           <div class="tm-article-presenter">
+            <div class="tm-company-profile-card tm-company-article__profile-card">
+             <div class="tm-company-card tm-company-profile-card__info">
+              <div class="tm-company-card__header">
+               <a href="/ru/company/msw/profile/" class="tm-company-card__avatar">
+                <div class="tm-entity-image">
+                 <svg height="48" width="48" class="tm-svg-img tm-image-placeholder tm-image-placeholder_green">
+                  <!----> <use xlink:href="/img/megazord-v28.2b11c25e..svg#placeholder-company"></use>
+                 </svg>
+                </div></a> <!----> 
+               <div class="tm-counter-container tm-company-card__rating">
+                <div class="tm-counter-container__header"> 
+                 <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating">
+                  <!----> 
+                  <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating">
+                   <span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating"> 24.32 </span>
+                  </div> <!---->
+                 </div>
+                </div> 
+                <div class="tm-counter-container__footer">
+                 <span class="tm-rating__text tm-rating__text"> Рейтинг </span>
+                </div>
+               </div> <!---->
+              </div> 
+              <div class="tm-company-card__info">
+               <a href="/ru/company/msw/profile/" class="tm-company-card__name">Прогнозирование полигонов ТКО</a> 
+               <div class="tm-company-card__description"></div>
+              </div>
+             </div> <!---->
+            </div> 
+            <div class="tm-article-presenter__body">
+             <div class="tm-misprint-area">
+              <div class="tm-misprint-area__wrapper">
+               <article class="tm-article-presenter__content tm-article-presenter__content_narrow">
+                <div class="tm-article-presenter__header"> 
+                 <div class="tm-article-snippet tm-article-presenter__snippet tm-article-snippet">
+                  <div class="tm-article-snippet__meta-container">
+                   <div class="tm-article-snippet__meta">
+                    <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/andgenn/" title="andgenn" class="tm-user-info__userpic">
+                      <div class="tm-entity-image">
+                       <img alt="" height="24" src="//habrastorage.org/r/w32/getpro/habr/avatars/b43/f9e/ccf/b43f9eccff0515f83f2c582f385b3ca9.png" width="24" class="tm-entity-image__pic">
+                      </div></a> <span class="tm-user-info__user"><a href="/ru/users/andgenn/" class="tm-user-info__username"> andgenn <!----></a> <span class="tm-article-datetime-published"><time datetime="2023-03-05T09:36:16.000Z" title="2023-03-05, 12:36">6 часов назад</time></span></span></span>
+                   </div> <!---->
+                  </div> 
+                  <h1 lang="ru" class="tm-article-snippet__title tm-article-snippet__title_h1"><span>Сравнительный анализ стандартов связи для сетей IoT</span></h1> 
+                  <div class="tm-article-snippet__stats">
+                   <!----> 
+                   <div class="tm-article-reading-time">
+                    <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                     <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                      <title>Время на прочтение</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#clock"></use>
+                     </svg></span> <span class="tm-article-reading-time__label"> 13 мин </span>
+                   </div> <span class="tm-icon-counter tm-data-icons__item">
+                    <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                     <title>Количество просмотров</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-views"></use>
+                    </svg> <span class="tm-icon-counter__value">854</span></span>
+                  </div> 
+                  <div class="tm-article-snippet__hubs-container">
+                   <div class="tm-article-snippet__hubs">
+                    <span class="tm-article-snippet__hubs-item"><a href="/ru/company/msw/blog/" class="tm-article-snippet__hubs-item-link router-link-active"><span>Блог компании Прогнозирование полигонов ТКО</span> <!----></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/home_automation/" class="tm-article-snippet__hubs-item-link"><span>Умный дом</span> <!----></a></span><span class="tm-article-snippet__hubs-item"><a href="/ru/hub/internet_of_things/" class="tm-article-snippet__hubs-item-link"><span>Интернет вещей</span> <!----></a></span>
+                   </div>
+                  </div> <!----> <!----> <!---->
+                 </div>
+                </div> <!----> 
+                <div data-gallery-root="" lang="ru" class="tm-article-body">
+                 <div></div> 
+                 <div id="post-content-body">
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-2">
+                    <div xmlns="http://www.w3.org/1999/xhtml">
+                     <figure class="full-width ">
+                      <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/f67/c90/74c/f67c9074c1bdd5f84661a1602e8d536b.png" width="1712" height="1100" data-src="https://habrastorage.org/getpro/habr/upload_files/f67/c90/74c/f67c9074c1bdd5f84661a1602e8d536b.png">
+                     </figure>
+                     <p>Интернет вещей (Internet of Things, IoT) — это одно из самых актуальных направлений современных технологий. Сети IoT позволяют подключать к сети интернет физические устройства, такие как датчики, устройства управления, электронные приборы и другие предметы быта, которые могут обмениваться данными и управляться удаленно. Это открывает безграничные возможности для создания интеллектуальных систем, которые могут автоматизировать процессы и управлять ресурсами на основе данных и аналитики.<br>В настоящее время сети IoT используются во многих областях, включая умный дом, смарт-города, здравоохранение, индустрию 4.0 и транспорт. Однако, вместе с большими преимуществами сетей IoT появляются и сложности, такие как проблемы безопасности, сложность управления и стандартизации. Поэтому, для того чтобы успешно использовать сети IoT, необходимо понимать их основы, архитектуру, протоколы и вызовы.<br>Рассматриваемые сети имеют множество причин использования, включая возможность автоматизации процессов и оптимизации времени и затрат, улучшение управления ресурсами для экономии денег и ресурсов, обеспечение безопасности людей и имущества с помощью камер видеонаблюдения, датчиков дыма и утечек газа, а также создание новых возможностей для бизнеса путем сбора и анализа данных.</p>
+                     <h3>Основы сетей IoT</h3>
+                     <p>Существует множество протоколов и стандартов для сетей интернет-вещей, которые используются для обеспечения совместимости и синхронизации между устройствами, сетями и приложениями. Рассмотрим некоторые из протоколов, которые можно рассмотреть для построения системы мониторинга окружающей среды полигона твердотельных отходов:</p>
+                     <p><strong>Z-Wave</strong> - это проприетарный радиопротокол беспроводной связи, который используется в устройствах для управления умным домом и создания сетей IoT. Этот протокол был разработан компанией Z-Wave Alliance и поддерживает связь между устройствами на расстоянии до 100 метров в помещении и до 400 метров на открытом воздухе. Z-Wave работает на частотах 800-900 МГц в Северной Америке и 868,42 МГц в Европе, что обеспечивает более широкий диапазон покрытия и лучшую проникающую способность стен и других препятствий. Z-Wave также обеспечивает высокую степень безопасности и конфиденциальности данных, используя аппаратное шифрование AES-128.</p>
+                     <p>Протокол Z-Wave используется во многих проектах для управления умным домом и умными городами, а также для обеспечения безопасности и комфорта жильцов. Некоторые примеры проектов, где используется Z-Wave:</p>
+                     <ol>
+                      <li><p>Fibaro Home Center: Fibaro - это система умного дома, которая использует протокол Z-Wave для связи между устройствами. Home Center - это центральный контроллер, который позволяет управлять всеми устройствами Fibaro в доме.</p></li>
+                      <li><p>ADT Pulse: ADT Pulse - это система безопасности для дома, которая также использует протокол Z-Wave. Она позволяет жильцам контролировать доступ, освещение и температуру в доме через интернет.</p></li>
+                      <li><p>Heatit Z-TRM3: Heatit Z-TRM3 - это термостат на основе технологии Z-wave, предназначенный для управления теплым полом и отоплением в помещениях. Он позволяет управлять нагревательными системами с помощью смартфона или планшета через приложение и поддерживает функцию программирования температуры на разное время суток.</p></li>
+                      <li><p>SmartThings: SmartThings - это платформа умного дома, которая также использует протокол Z-Wave. Она позволяет жильцам управлять своим умным домом через мобильное приложение и автоматизировать задачи с помощью «умных» сценариев.</p></li>
+                      <li><p>Zipato: Zipato - это еще одна система умного дома, которая использует протокол Z-Wave. Она позволяет жильцам управлять освещением, температурой, системами безопасности и другими устройствами в доме с помощью одного центрального контроллера.</p></li>
+                     </ol>
+                     <p><strong>Sigfox</strong> - это сеть беспроводной связи, предназначенная для подключения устройств IoT, которые передают небольшие объемы данных на большие расстояния. Она использует уникальный протокол связи, работающий на нелицензируемых частотах, что позволяет достичь широкого охвата и низкой стоимости.<br>Основная идея сети Sigfox заключается в том, что устройства отправляют короткие сообщения (до 12 байт) в облако Sigfox, которое затем передает их на сервер приложений, где они обрабатываются и отображаются в интерфейсе пользователя. Таким образом, сеть позволяет передавать информацию от множества устройств, размещенных на больших расстояниях друг от друга, на центральный сервер приложений для дальнейшей обработки.<br>Сеть Sigfox была разработана с учетом требований промышленности, где часто требуется беспроводная связь на большие расстояния с низким энергопотреблением и надежностью. Сеть Sigfox используется в различных отраслях, включая сельское хозяйство, транспорт, логистику, здравоохранение, оборону и безопасность.<br>Примеры использования сети Sigfox включают отслеживание перемещения активов, мониторинг окружающей среды, управление энергопотреблением, контроль качества воздуха, датчики уровня и температуры, мониторинг состояния оборудования и прочее. Благодаря своей простоте и надежности, сеть Sigfox позволяет развивать новые решения IoT и использовать их в различных отраслях.<br>Некоторые из реальных проектов, использующих сеть Sigfox:</p>
+                     <ol>
+                      <li><p>Автоматизация учета потребления воды - компания «Birds» использует сеть Sigfox для передачи данных о потреблении воды от датчиков, установленных на водопроводных счетчиках, на сервера управления потреблением воды.</p></li>
+                      <li><p>Мониторинг температуры в промышленности - компания «Axible Technologies» использует сеть Sigfox для передачи данных о температуре и влажности внутри производственных помещений. Эти данные используются для оптимизации условий производства и предотвращения повреждения оборудования.</p></li>
+                      <li><p>Система безопасности для дома - компания «Avidsen» использует сеть Sigfox для передачи данных от датчиков движения, дверей и окон, установленных в домах пользователей. Эти данные используются для мониторинга безопасности и оповещения владельцев домов в случае обнаружения незаконного проникновения.</p></li>
+                      <li><p>Мониторинг состояния грузовиков - компания «OCEASOFT» использует сеть Sigfox для передачи данных о температуре и влажности в грузовиках, перевозящих чувствительные грузы, такие как медицинские препараты или пищевые продукты. Эти данные используются для обеспечения качества груза и предотвращения повреждения товаров.</p></li>
+                      <li><p>Система Ubigreen одноименной компании - французский редактор облачной платформы, предоставляющий решения для управления энергопотреблением и рабочими местами для повышения производительности коммерческих зданий, промышленного оборудования и общественных зданий.</p></li>
+                     </ol>
+                     <p><strong>LTE-M</strong> (Long-Term Evolution for Machines) - это стандарт сотовой связи, предназначенный для подключения устройств интернета вещей (IoT). Он работает на основе сетей LTE (Long-Term Evolution), которые используются для мобильной связи.<br>Сеть LTE-M (LTE-MTC или LTE Cat-M1) используется во многих проектах IoT, где требуется передача данных с низким энергопотреблением и низкой задержкой. Некоторые примеры проектов, использующих сеть LTE-M:</p>
+                     <ol>
+                      <li><p>Мониторинг состояния автомобилей: с помощью устройств, работающих на базе сети LTE-M, можно собирать и передавать данные о состоянии автомобилей, такие как расход топлива, уровень масла, давление в шинах, и т.д.</p></li>
+                      <li><p>Умный дом: сеть LTE-M может использоваться для подключения устройств умного дома, таких как датчики движения, дверные замки, термостаты, освещение и т.д. Это позволяет контролировать и управлять устройствами из любой точки мира.</p></li>
+                      <li><p>Трекинг грузов: с помощью устройств на базе LTE-M можно отслеживать перемещение грузов и получать данные о их местонахождении, температуре, влажности и других параметрах. Это позволяет повысить эффективность логистических операций и уменьшить риски потери грузов.</p></li>
+                      <li><p>Умные сельские хозяйства: сеть LTE-M может использоваться для мониторинга погоды, почвы, влажности и других параметров, которые влияют на производство сельскохозяйственных культур. Это позволяет повысить урожайность и оптимизировать использование ресурсов.</p></li>
+                      <li><p>Медицинские устройства: с помощью устройств, работающих на базе сети LTE-M, можно передавать медицинские данные, такие как пульс, кровяное давление, уровень кислорода в крови и т.д. Это позволяет мониторить состояние пациентов в режиме реального времени и оповещать медицинский персонал в случае необходимости.</p></li>
+                     </ol>
+                     <p><strong>NB-IoT</strong> (Narrowband IoT) - это низкоскоростной и низкопотребляющий стандарт для передачи данных в сетях интернета вещей (IoT). Он работает в лицензированных диапазонах частот и использует узкие полосы частот для передачи данных на большие расстояния.<br>Протокол NB-IoT (Narrowband IoT) используется в различных проектах связанных с интернетом вещей. Некоторые примеры:</p>
+                     <ol>
+                      <li><p>«Умное» сельское хозяйство: NB-IoT используется для мониторинга почвы, воздуха и погодных условий, а также для оптимизации системы орошения. Такой подход позволяет снизить затраты на использование воды и удобрений, улучшить урожайность и снизить воздействие на окружающую среду.</p></li>
+                      <li><p>Мониторинг состояния грузовиков: NB-IoT используется для сбора и передачи данных об оставшемся запасе топлива, местоположении и других параметрах грузовиков. Это позволяет улучшить эффективность логистики и снизить затраты на топливо.</p></li>
+                      <li><p>Умный город: NB-IoT используется для сбора и передачи данных об уровне шума, качестве воздуха, уровне освещенности и других параметрах городской среды. Эти данные позволяют городским властям принимать решения о снижении загрязнения и повышении комфорта жизни горожан.</p></li>
+                      <li><p>Охранная система: NB-IoT используется в устройствах для домашней и коммерческой охраны, таких как датчики движения и дверные замки. Они могут передавать сигналы тревоги и другую информацию на серверы безопасности в режиме реального времени, что позволяет оперативно реагировать на возможные угрозы.</p></li>
+                      <li><p>Сбор данных о здоровье: NB-IoT используется в медицинских устройствах, таких как датчики сердечного ритма и мониторы сна, для сбора и передачи данных о здоровье пациентов на серверы врачей. Это позволяет врачам получать более точную информацию о состоянии пациентов и принимать более эффективные меры по лечению и профилактике болезней.</p></li>
+                     </ol>
+                     <p><strong>Zigbee</strong> — это стандарт беспроводной связи, который используется в маломасштабных сетях IoT, таких как умный дом. Он обеспечивает надежную передачу данных на короткие расстояния с низким энергопотреблением. Вот несколько примеров проектов, в которых используется Zigbee:</p>
+                     <ol>
+                      <li><p>Philips Hue – это система управления умными лампами, которая использует протокол Zigbee для коммуникации между лампами и контроллером. Эта система позволяет пользователям контролировать цвет и яркость света, а также создавать различные настроения и сценарии освещения.</p></li>
+                      <li><p>Amazon Echo Plus – это умный динамик с встроенным контроллером Zigbee, который может управлять умными устройствами, такими как лампы, розетки, термостаты и другие устройства, использующие протокол Zigbee.</p></li>
+                      <li><p>Samsung SmartThings – это система управления умным домом, которая использует протоколы Zigbee и Z-Wave для коммуникации между устройствами. Система позволяет пользователям управлять освещением, термостатами, замками, камерами и другими устройствами.</p></li>
+                      <li><p>IKEA Trådfri – это система управления умными лампами и другими устройствами, которая также использует протокол Zigbee. Система позволяет пользователям управлять освещением, создавать сценарии освещения и управлять другими устройствами, использующими протокол Zigbee.</p></li>
+                     </ol>
+                     <p><strong>LoRaWAN</strong> (Long Range Wide Area Network) - это стандарт беспроводной связи для передачи данных на большие расстояния, используемый в умных городах и системах мониторинга окружающей среды.<br>Протокол LoRaWAN нашел применение в различных областях, включая городское планирование, сельское хозяйство, промышленность и транспорт. Некоторые из реальных проектов, использующих LoRaWAN, включают в себя:</p>
+                     <ol>
+                      <li><p>«Умный город» в Амстердаме, Нидерланды - городская сеть, использующая LoRaWAN для подключения множества устройств, включая датчики температуры, уровня воды, освещения и т.д. Эти данные используются для оптимизации городских систем и повышения комфорта жизни горожан.</p></li>
+                      <li><p>Система мониторинга уровня воды в реке Северн, Великобритания - используется сеть LoRaWAN для связи датчиков, которые измеряют уровень воды и передают данные в центральную базу данных. Это позволяет уведомлять жителей о возможных наводнениях и предпринимать меры для предотвращения ущерба.</p></li>
+                      <li><p>Сельское хозяйство в Индии - сеть LoRaWAN используется для мониторинга и контроля растительности в рисовых полях, что позволяет сельским хозяйственным производителям оптимизировать использование удобрений и повысить урожайность.</p></li>
+                      <li><p>Система управления энергопотреблением в зданиях во Франции - сеть LoRaWAN используется для связи датчиков, которые измеряют потребление электроэнергии и передают данные в центральную систему управления. Это позволяет снизить расходы на электроэнергию и оптимизировать энергопотребление.</p></li>
+                      <li><p>Система контроля за температурой в холодильниках и морозильниках в Голландии - сеть LoRaWAN используется для связи датчиков, которые мониторят температуру и влажность в холодильниках и морозильниках. Это позволяет операторам магазинов быстро обнаруживать любые неисправности и предотвращать порчу продуктов.</p></li>
+                     </ol>
+                     <p>Кроме того, существуют стандарты, которые определяют архитектуру и протоколы для взаимодействия устройств IoT, такие как стандарты Open Connectivity Foundation (OCF), Thread и AllJoyn.</p>
+                     <p>Архитектура сетей Internet of Things (IoT) определяет структуру и взаимодействие между компонентами сети, включая устройства, сенсоры, актуаторы, сетевые элементы и облака. В общем случае архитектура IoT может быть разделена на три уровня:</p>
+                     <ol>
+                      <li><p>Уровень устройств (Device layer) — это уровень, на котором расположены физические устройства, такие как сенсоры, контроллеры и актуаторы. Они обычно связаны через беспроводные или проводные сети с уровнем сети и передают данные и управляющие команды.</p></li>
+                      <li><p>Уровень сети (Network layer) - на этом уровне происходит передача данных и команд между устройствами. Он включает в себя сетевые протоколы и технологии, такие как Wi-Fi, Bluetooth, Zigbee, LoRaWAN и другие. Этот уровень также может содержать локальные сети, такие как умный дом, и более широкие сети, такие как умный город.</p></li>
+                      <li><p>Уровень приложений (Application layer) - это уровень, на котором приложения и сервисы используют данные, полученные от устройств, для анализа, принятия решений и управления. Этот уровень может включать в себя облачные сервисы, которые обрабатывают данные и выдают результаты обратно в устройства IoT.</p></li>
+                     </ol>
+                     <p>Кроме того, некоторые архитектуры IoT включают дополнительные уровни, такие как уровень безопасности, уровень аналитики и уровень управления. Эти уровни обеспечивают дополнительную функциональность для сетей IoT, такую как защиту данных, анализ данных и управление устройствами и сетями.</p>
+                     <h3>Сравнение сетей</h3>
+                     <p>Средние показатели для рассматриваемых сетей зависят от многих факторов, таких как использование антенн, мощности передачи, частоты и прочих настроек. Однако, в целом можно назвать следующие средние значения:</p>
+                     <div>
+                      <div class="table">
+                       <table>
+                        <tbody>
+                         <tr>
+                          <td><p align="left">Название/показатель</p></td>
+                          <td><p align="left">Пропускная способность</p></td>
+                          <td><p align="left">Дальность</p></td>
+                          <td><p align="left">Энергопотребление</p></td>
+                          <td><p align="left">Стоимость</p></td>
+                         </tr>
+                         <tr>
+                          <td><p align="left">Z-wave</p></td>
+                          <td><p align="left">до 100 кбит/с</p></td>
+                          <td><p align="left">до 100 метров в помещении и до 300 метров на открытой местности.</p></td>
+                          <td><p align="left">от нескольких микроватт до нескольких милливатт</p></td>
+                          <td><p align="left">от нескольких сотен до нескольких тысяч долларов</p></td>
+                         </tr>
+                         <tr>
+                          <td><p align="left">Sigfox</p></td>
+                          <td><p align="left">В среднем 100 бит/с</p></td>
+                          <td><p align="left">до 50 км в открытом пространстве</p></td>
+                          <td><p align="left">25 мкА во время передачи данных и около 1 мкА во время ожидания</p></td>
+                          <td><p align="left">от нескольких тысяч долларов и выше</p></td>
+                         </tr>
+                         <tr>
+                          <td><p align="left">LTE-M</p></td>
+                          <td><p align="left">до 1 Мбит/с в downlink и до 375 кбит/с в uplink</p></td>
+                          <td><p align="left">до 2 км в городской среде и до 10 км в сельской местности</p></td>
+                          <td><p align="left">от 10 до 20 мА в режиме передачи данных, и от 1 до 2 мА в режиме ожидания.</p></td>
+                          <td><p align="left">от нескольких тысяч до десятков тысяч долларов.</p></td>
+                         </tr>
+                         <tr>
+                          <td><p align="left">NB-IoT</p></td>
+                          <td><p align="left">от 50 кбит/с до 250 кбит/с</p></td>
+                          <td><p align="left">до 1-2 км в городских условиях и до 10 км в открытых пространствах</p></td>
+                          <td><p align="left">от нескольких микроватт до нескольких милливатт</p></td>
+                          <td><p align="left">дороже, чем для систем на базе LoRaWAN или Zigbee, так как требуется использование сотовой сети и соответствующих услуг связи</p></td>
+                         </tr>
+                         <tr>
+                          <td><p align="left">Zigbee</p></td>
+                          <td><p align="left">от 20 до 250 кбит/с</p></td>
+                          <td><p align="left">от 10 до 100 метров в помещении и до 400 метров на открытом пространстве</p></td>
+                          <td><p align="left">от нескольких микроватт до нескольких милливатт</p></td>
+                          <td><p align="left">от нескольких десятков долларов до нескольких сотен долларов за устройство.</p></td>
+                         </tr>
+                         <tr>
+                          <td><p align="left">LoRaWAN</p></td>
+                          <td><p align="left">от 0,3 до 50 кбит/с</p></td>
+                          <td><p align="left">до 5-10 км в городских условиях и до 15-20 км в сельской местности</p></td>
+                          <td><p align="left">от 0,1 мкА до 120 мА</p></td>
+                          <td><p align="left">от нескольких тысяч до десятков тысяч долларов</p></td>
+                         </tr>
+                        </tbody>
+                       </table>
+                      </div>
+                     </div>
+                     <h3>Проблемы и вызовы сетей</h3>
+                     <p>Несмотря на множество преимуществ, сети IoT также сталкиваются с рядом проблем и вызовов, которые нужно решать, чтобы обеспечить их более широкое использование. Вот некоторые из них:</p>
+                     <ol>
+                      <li><p>Безопасность: с ростом количества устройств, подключенных к Интернету, возрастает вероятность кибератак и нарушения безопасности данных. Безопасность сетей IoT является критически важным аспектом, и требует разработки соответствующих мер безопасности, таких как шифрование данных и аутентификация устройств.</p></li>
+                      <li><p>Сложность управления: управление сетями IoT может быть сложным из-за большого количества устройств, подключенных к сети, а также из-за необходимости обеспечения надежности и эффективности работы сети. Решение этой проблемы требует разработки более удобных и эффективных методов управления сетью.</p></li>
+                      <li><p>Совместимость: существует множество различных устройств и технологий, используемых в сетях IoT, что может привести к проблеме совместимости между устройствами. Разработка стандартов и протоколов сетевого взаимодействия является важным аспектом решения этой проблемы.</p></li>
+                      <li><p>Проблемы с энергопотреблением: многие устройства в сетях IoT работают на батарейной энергии, что может приводить к проблемам с длительностью работы устройств и потреблением энергии. Необходимо разрабатывать более эффективные способы управления энергопотреблением устройств.</p></li>
+                      <li><p>Надежность: надежность работы сетей IoT является критически важным аспектом, особенно в тех областях, где неисправность устройства или системы может привести к серьезным последствиям. Решение этой проблемы требует разработки надежных методов тестирования и мониторинга работоспособности устройств.</p></li>
+                     </ol>
+                     <h3>Заключение</h3>
+                     <p>В заключение можно сказать, что сети IoT находятся в стадии быстрого развития и экспансии в различных областях промышленности и быта. Они имеют большой потенциал для улучшения эффективности, оптимизации ресурсов и улучшения качества жизни людей.<br>Однако, у сетей IoT есть также и свои вызовы и проблемы, связанные с безопасностью, приватностью, надежностью, стандартизацией и управлением данными. Для эффективного и безопасного использования сетей IoT важно разработать и реализовать соответствующие стандарты и регулирования.<br>С развитием технологий и появлением новых применений, сети IoT будут продолжать расширяться и становиться все более востребованными в различных сферах. Будущее сетей IoT связано с использованием искусственного интеллекта, беспроводных технологий связи, дополненной и виртуальной реальности, автономных систем и многое другое.</p>
+                     <h3>Список информационных источников</h3>
+                     <ol>
+                      <li><p>What is the Internet of Things, or IoT? <a href="https://www.iotforall.com/">https://www.iotforall.com/</a></p></li>
+                      <li><p>Zigbee <a href="https://iot-now.com/2021/02/16/107545-why-zigbee-matters-for-future-proofed-smart-home-innovation/">https://iot-now.com/2021/02/16/107545-why-zigbee-matters-for-future-proofed-smart-home-innovation/</a></p></li>
+                      <li><p>LoRaWAN <a href="https://www.link-labs.com/blog/lora-vs-lorawan-whats-the-difference">https://www.link-labs.com/blog/lora-vs-lorawan-whats-the-difference</a></p></li>
+                      <li><p>LTE-M <a href="https://www.iotforall.com/resources/lte-m-nb-iot">https://www.iotforall.com/resources/lte-m-nb-iot</a></p></li>
+                      <li><p>Z-wave <a href="https://www.silabs.com/wireless/z-wave">https://www.silabs.com/wireless/z-wave</a></p></li>
+                      <li><p>Sigfox <a href="https://www.sigfox.com/en/sigfox-technology">https://www.sigfox.com/en/sigfox-technology</a></p></li>
+                      <li><p>NB-IoT <a href="https://www.gsma.com/iot/deployment-map/">https://www.gsma.com/iot/deployment-map/</a></p></li>
+                      <li><p>Fibaro Home Center <a href="https://www.fibaro.com/ru/products/home-center-3/">https://www.fibaro.com/ru/products/home-center-3/</a></p></li>
+                      <li><p>ADT Pulse <a href="https://adt.systems/adt-pulse/">https://adt.systems/adt-pulse/</a></p></li>
+                      <li><p>Heatit Z-TRM3 <a href="https://heatit.com/produkt/9435/heatit-z-trm3-white">https://heatit.com/produkt/9435/heatit-z-trm3-white</a></p></li>
+                      <li><p>SmartThings <a href="https://support.smartthings.com/hc/en-us/articles/204392790-Z-Wave-General-Info">https://support.smartthings.com/hc/en-us/articles/204392790-Z-Wave-General-Info</a></p></li>
+                      <li><p>Zipato <a href="https://www.zipato.com/wp-content/uploads/2015/09/ph-psr03-Zipato-Z-Wave-Remote-User-Manual-v1.0.pdf">https://www.zipato.com/wp-content/uploads/2015/09/ph-psr03-Zipato-Z-Wave-Remote-User-Manual-v1.0.pdf</a></p></li>
+                      <li><p>Сравнение систем Умного Дома: Larnitech, HDL, Wirenboard, Beckhoff, Z-Wave, EasyHomePLC <a href="https://home-matic.ru/2020/07/sravnenie-sistem-umnogo-doma/">https://home-matic.ru/2020/07/sravnenie-sistem-umnogo-doma/</a></p></li>
+                      <li><p>Birds, применение Sigfox <a href="https://www.birdz.com/en/homepage/">https://www.birdz.com/en/homepage/</a></p></li>
+                      <li><p>Axible, применение Sigfox <a href="https://axible.io/en/home-en/">https://axible.io/en/home-en/</a></p></li>
+                      <li><p>Avidsen, применение Sigfox <a href="https://www.ingenio-web.it/articoli/avidsen-presenta-conceptatmod-la-prima-soluzione-domotica-con-protocolli-intercambiabili/">https://www.ingenio-web.it/articoli/avidsen-presenta-conceptatmod-la-prima-soluzione-domotica-con-protocolli-intercambiabili/</a></p></li>
+                      <li><p>Партнёры Sigfox Russia <a href="https://partners.sigfox.com/companies">https://partners.sigfox.com/companies</a></p></li>
+                      <li><p>Применение LTE-M <a href="https://www.wirelesslogic.com/iot-technology/lte-m/">https://www.wirelesslogic.com/iot-technology/lte-m/</a></p></li>
+                      <li><p>Применение NB-IoT <a href="https://www.topnomer.ru/blog/tekhnologiya-nb-iot-opisanie-primenenie-v-rossii.html">https://www.topnomer.ru/blog/tekhnologiya-nb-iot-opisanie-primenenie-v-rossii.html</a></p></li>
+                      <li><p>Philips-hue, применение Zigbee <a href="https://www.philips-hue.com/ru-ru/p/hue-bridge/8719514342408">https://www.philips-hue.com/ru-ru/p/hue-bridge/8719514342408</a></p></li>
+                      <li><p>Amazon Echo Plus, применение Zigbee <a href="https://developer.amazon.com/en-US/alexa/devices/connected-devices/development-resources/zigbee">https://developer.amazon.com/en-US/alexa/devices/connected-devices/development-resources/zigbee</a></p></li>
+                      <li><p>SmartThings, применение Zigbee <a href="https://www.smartthings.com/partners">https://www.smartthings.com/partners</a> </p></li>
+                      <li><p>IKEA Trådfri, применение Zigbee <a href="https://habr.com/ru/company/lamptest/blog/524362/">https://habr.com/ru/company/lamptest/blog/524362/</a></p></li>
+                      <li><p>Применение LoRaWAN <a href="https://ain.ua/special/smart-cities-experience/">https://ain.ua/special/smart-cities-experience/</a></p></li>
+                     </ol>
+                    </div>
+                   </div>
+                  </div> <!----> <!---->
+                 </div> <!----> <!---->
+                </div> <!----> 
+                <div class="tm-article-presenter__meta">
+                 <div class="tm-separated-list tm-article-presenter__meta-list">
+                  <span class="tm-separated-list__title">Теги:</span> 
+                  <ul class="tm-separated-list__list">
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5B%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%BD%D0%B5%D1%82-%D0%B2%D0%B5%D1%89%D0%B5%D0%B9%5D" class="tm-tags-list__link">интернет-вещей</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Blorawan%5D" class="tm-tags-list__link">lorawan</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bzwave%5D" class="tm-tags-list__link">zwave</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/search/?target_type=posts&amp;order=relevance&amp;q=%5Bzigbee%5D" class="tm-tags-list__link">zigbee</a></li>
+                  </ul>
+                 </div> 
+                 <div class="tm-separated-list tm-article-presenter__meta-list">
+                  <span class="tm-separated-list__title">Хабы:</span> 
+                  <ul class="tm-separated-list__list">
+                   <li class="tm-separated-list__item"><a href="/ru/company/msw/blog/" class="tm-hubs-list__link router-link-active">Блог компании Прогнозирование полигонов ТКО</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/hub/home_automation/" class="tm-hubs-list__link">Умный дом</a></li>
+                   <li class="tm-separated-list__item"><a href="/ru/hub/internet_of_things/" class="tm-hubs-list__link">Интернет вещей</a></li>
+                  </ul>
+                 </div>
+                </div>
+               </article>
+              </div> <!---->
+             </div> 
+             <div class="tm-article-sticky-panel">
+              <div class="tm-data-icons tm-article-sticky-panel__icons">
+               <div class="tm-article-rating tm-data-icons__item">
+                <div class="tm-votes-meter tm-article-rating__votes-switcher">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>Всего голосов 5: ↑4 и ↓1</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-rating"></use>
+                 </svg> <span title="Всего голосов 5: ↑4 и ↓1" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+3</span>
+                </div> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> <!----> <!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                 <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                  <title>Добавить в закладки</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-favorite"></use>
+                 </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 14 </span></button> 
+               <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                <a href="/ru/company/msw/blog/720518/comments/" class="tm-article-comments-counter-link__link">
+                 <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                  <title>Комментарии</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-comments"></use>
+                 </svg> <span class="tm-article-comments-counter-link__value"> 3 </span></a> <!---->
+               </div> 
+               <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                <button type="button" class="tm-sharing__button">
+                 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                  <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                 </svg></button> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> 
+               <div class="v-portal" style="display:none;"></div>
+              </div> 
+             </div>
+            </div> 
+            <div class="v-portal" style="display:none;"></div> 
+            <div class="tm-article-presenter__footer">
+             <div class="tm-article-blocks">
+              <!----> 
+              <div></div> 
+              <section class="tm-block tm-block tm-block_spacing-bottom">
+               <!----> 
+               <div class="tm-block__body tm-block__body tm-block__body_variant-balanced">
+                <div class="tm-article-author">
+                 <div class="tm-article-author__company">
+                  <div class="tm-article-author__company-card">
+                   <div class="tm-company-snippet">
+                    <a href="/ru/company/msw/profile/" class="tm-company-snippet__logo-link">
+                     <div class="tm-entity-image">
+                      <svg height="40" width="40" class="tm-svg-img tm-image-placeholder tm-image-placeholder_green">
+                       <!----> <use xlink:href="/img/megazord-v28.2b11c25e..svg#placeholder-company"></use>
+                      </svg>
+                     </div></a> 
+                    <div class="tm-company-snippet__info">
+                     <a href="/ru/company/msw/profile/" class="tm-company-snippet__title">Прогнозирование полигонов ТКО</a> 
+                     <div class="tm-company-snippet__description">
+                      Компания
+                     </div>
+                    </div>
+                   </div> 
+                   <div class="tm-article-author__buttons">
+                    <!----> <!---->
+                   </div>
+                  </div> 
+                  <div class="tm-article-author__company-contacts">
+                   <a href="https://msw.pw/" rel="noopener" target="_blank" class="tm-article-author__contact"> Сайт </a>
+                  </div> 
+                  <div class="tm-article-author__separator"></div>
+                 </div> 
+                 <div class="tm-user-card tm-article-author__user-card tm-user-card tm-user-card_variant-article">
+                  <div class="tm-user-card__info-container">
+                   <div class="tm-user-card__header">
+                    <div class="tm-user-card__header-data">
+                     <a href="/ru/users/andgenn/" class="tm-user-card__userpic tm-user-card__userpic_size-40">
+                      <div class="tm-entity-image">
+                       <img alt="" src="//habrastorage.org/getpro/habr/avatars/b43/f9e/ccf/b43f9eccff0515f83f2c582f385b3ca9.png" class="tm-entity-image__pic">
+                      </div></a> 
+                     <div class="tm-user-card__meta">
+                      <div title=" 9 голосов " class="tm-counter-container tm-karma tm-karma">
+                       <div class="tm-counter-container__header">
+                        <div class="tm-karma__votes tm-karma__votes_positive">
+                          9 
+                        </div>
+                       </div> 
+                       <div class="tm-counter-container__footer">
+                        <div class="tm-karma__text">
+                          Карма 
+                        </div> 
+                        <div class="v-portal" style="display:none;"></div>
+                       </div>
+                      </div> 
+                      <div title="Рейтинг пользователя" class="tm-counter-container">
+                       <div class="tm-counter-container__header"> 
+                        <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating">
+                         <!----> 
+                         <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating">
+                          <span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating"> 2.5 </span>
+                         </div> <!---->
+                        </div>
+                       </div> 
+                       <div class="tm-counter-container__footer">
+                        <span class="tm-rating__text tm-rating__text"> Рейтинг </span>
+                       </div>
+                      </div>
+                     </div>
+                    </div>
+                   </div> 
+                   <div class="tm-user-card__info tm-user-card__info tm-user-card__info_variant-article">
+                    <div class="tm-user-card__title tm-user-card__title tm-user-card__title_variant-article">
+                     <!----> <a href="/ru/users/andgenn/" class="tm-user-card__nickname tm-user-card__nickname tm-user-card__nickname_variant-article"> @andgenn </a> <!---->
+                    </div> 
+                    <p class="tm-user-card__short-info tm-user-card__short-info tm-user-card__short-info_variant-article">Пользователь</p>
+                   </div>
+                  </div> 
+                  <div class="tm-user-card__buttons tm-user-card__buttons tm-user-card__buttons_variant-article">
+                   <!----> <!----> <!----> <!----> <!---->
+                  </div>
+                 </div> <!---->
+                </div> 
+                <div class="v-portal" style="display:none;"></div>
+               </div> <!---->
+              </section> <!----> 
+              <div class="tm-article-blocks__comments">
+               <div class="tm-article-page-comments">
+                <div class="tm-article-comments-counter-link tm-article-comments-counter-button">
+                 <a href="/ru/company/msw/blog/720518/comments/" class="tm-article-comments-counter-link__link tm-article-comments-counter-link__link_button-style">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon tm-article-comments-counter-link__icon_contrasted">
+                   <title>Комментарии</title> <use xlink:href="/img/megazord-v28.2b11c25e..svg#counter-comments"></use>
+                  </svg> <span class="tm-article-comments-counter-link__value tm-article-comments-counter-link__value_contrasted"> Комментарии 3 </span></a> <!---->
+                </div>
+               </div>
+              </div> 
+              <section class="tm-block tm-block tm-block_spacing-bottom">
+               <header class="tm-block__header tm-block__header tm-block__header_variant-borderless">
+                <div class="tm-block__header-container">
+                 <h2 class="tm-block__title tm-block__title tm-block__title_variant-large">Публикации</h2> 
+                </div> <!---->
+               </header> 
+               <div class="tm-block__body tm-block__body tm-block__body_variant-condensed-slim">
+                <div class="tm-tabs tm-tabs">
+                 <div>
+                  <span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active tm-tabs__tab-link_slim"> Лучшие за сутки </button></span><span class="tm-tabs__tab-item"><button class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_slim"> Похожие </button></span>
+                 </div> <!---->
+                </div> 
+                <div class="similar-and-daily__tab-view">
+                 <div>
+                  <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+                  <div class="tm-placeholder-article-cards">
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                   <div class="tm-placeholder-article-card">
+                    <div class="tm-placeholder__user">
+                     <div class="tm-placeholder__user-pic loads"></div> 
+                     <div class="tm-placeholder__user-date loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__title">
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div> 
+                     <div class="tm-placeholder__line tm-placeholder-article-card__title-line loads"></div>
+                    </div> 
+                    <div class="tm-placeholder-article-card__icons tm-placeholder__counters">
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                     <div class="tm-placeholder-data-icon">
+                      <div class="tm-placeholder__icon tm-placeholder__icon_large loads"></div> 
+                      <div class="tm-placeholder__line tm-placeholder__line_icon-text"></div>
+                     </div>
+                    </div>
+                   </div>
+                  </div> <!----> <!----> <!----> <!---->
+                 </div> <!---->
+                </div>
+               </div> <!---->
+              </section> 
+              <div>
+               <div>
+                <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+                <div class="tm-placeholder-promo">
+                 <div class="tm-placeholder-promo__header">
+                  <div class="tm-placeholder__line tm-placeholder__line_promo-title"></div>
+                 </div> 
+                 <div class="tm-placeholder-promo__body">
+                  <div class="tm-placeholder-promo__posts">
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div> 
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div> 
+                   <div class="tm-placeholder-promo__post">
+                    <div class="tm-placeholder-promo__image"></div> 
+                    <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                   </div>
+                  </div> 
+                  <div class="tm-placeholder-promo__dots">
+                   <div class="tm-placeholder-promo__dot"></div> 
+                   <div class="tm-placeholder-promo__dot"></div> 
+                   <div class="tm-placeholder-promo__dot"></div>
+                  </div>
+                 </div>
+                </div> <!----> <!----> <!----> <!----> <!---->
+               </div>
+              </div> 
+              <div>
+               <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> 
+               <div class="tm-placeholder-inset tm-placeholder-tasks">
+                <div class="tm-placeholder-inset__header">
+                 <div class="tm-placeholder__line tm-placeholder__line_inset-header loads"></div>
+                </div> 
+                <div class="tm-placeholder-inset__body">
+                 <ul class="tm-placeholder-list">
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                  <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                   <div class="tm-placeholder-list__title-container">
+                    <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                   </div> 
+                   <div class="tm-project-block-items__properties">
+                    <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                   </div></li>
+                 </ul>
+                </div> 
+                <div class="tm-placeholder-inset__footer">
+                 <div class="tm-placeholder__line tm-placeholder__line_inset-footer loads"></div>
+                </div>
+               </div> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
+              </div> <!----> 
+             </div>
+            </div>
+           </div>
+          </div>
+         </div> 
+         <div class="tm-page__sidebar">
+          <div class="tm-layout-sidebar">
+           <div class="tm-layout-sidebar__ads tm-layout-sidebar__ads_initial">
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_top">
+             <!----> 
+             <div id="adfox_164725680533065327" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-half-page"></div>
+            </div>
+           </div> 
+           <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;">
+            <!----> 
+            <section class="tm-block tm-block tm-block_spacing-bottom">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Информация</h2> 
+              </div> <!---->
+             </header> 
+             <div class="tm-block__body tm-block__body">
+              <div class="tm-company-basic-info">
+               <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap">
+                <dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">
+                 Сайт
+                </dt> 
+                <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap">
+                 <a href="https://msw.pw/" target="_blank" class="tm-company-basic-info__link"> msw.pw </a>
+                </dd>
+               </dl> 
+               <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap">
+                <dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">
+                 Дата регистрации
+                </dt> 
+                <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap">
+                 <time datetime="2022-10-12T09:11:48.000Z" title="2022-10-12, 12:11">12 октября 2022</time>
+                </dd>
+               </dl> <!----> 
+               <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap">
+                <dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">
+                 Численность
+                </dt> 
+                <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap">
+                  2–10 человек 
+                </dd>
+               </dl> 
+               <dl class="tm-description-list tm-description-list tm-description-list_variant-columns-nowrap">
+                <dt class="tm-description-list__title tm-description-list__title tm-description-list__title_variant-columns-nowrap">
+                 Местоположение
+                </dt> 
+                <dd class="tm-description-list__body tm-description-list__body tm-description-list__body_variant-columns-nowrap">
+                  Россия 
+                </dd>
+               </dl> <!---->
+              </div>
+             </div> <!---->
+            </section> 
+            <div class="tm-company-widgets"></div> <!----> 
+            <section data-navigatable="" tabindex="0" data-async-called="true" class="tm-block tm-stories-block tm-block tm-block_spacing-around">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Истории</h2> 
+              </div> <!---->
+             </header> 
+             <div class="tm-block__body tm-block__body tm-block__body_variant-equal-small">
+              <div class="tm-stories-empty">
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+               <div class="tm-stories-card-empty">
+                <div class="tm-stories-card-empty__image"></div> 
+                <div class="tm-stories-card-empty__title">
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div> 
+                 <div class="tm-stories-card-empty__title-block"></div>
+                </div>
+               </div>
+              </div> <!---->
+             </div> <!---->
+            </section> 
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_bottom">
+             <!----> 
+             <div id="adfox_164725691003361602" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-medium-rectangle"></div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </main> <!---->
+    </div> 
+    <div class="tm-footer-menu">
+     <div class="tm-page-width">
+      <div class="tm-footer-menu__container">
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Ваш аккаунт </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/ru/company/msw/blog/720518/&amp;hl=ru" rel="nofollow" target="_self"> Войти </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/ru/company/msw/blog/720518/&amp;hl=ru" rel="nofollow" target="_self"> Регистрация </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Разделы </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/" class="footer-menu__item-link router-link-active"> Публикации </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/news/" class="footer-menu__item-link"> Новости </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/hubs/" class="footer-menu__item-link"> Хабы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/companies/" class="footer-menu__item-link"> Компании </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/users/" class="footer-menu__item-link"> Авторы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/sandbox/" class="footer-menu__item-link"> Песочница </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Информация </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/help/" class="footer-menu__item-link"> Устройство сайта </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/authors/codex/" class="footer-menu__item-link"> Для авторов </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/companies/corpblogs/" class="footer-menu__item-link"> Для компаний </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/docs/transparency/" class="footer-menu__item-link"> Документы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement" target="_blank"> Соглашение </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/" target="_blank"> Конфиденциальность </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title"> Услуги </p> 
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/corporate-blogs/" target="_blank"> Корпоративный блог </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/advertising/" target="_blank"> Медийная реклама </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/native-special/" target="_blank"> Нативные проекты </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/education-programs/" target="_blank"> Образовательные программы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/hello-startup/" target="_blank"> Стартапам </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/megaprojects/" class="footer-menu__item-link"> Мегапроекты </a></li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div> 
+    <div class="tm-footer">
+     <div class="tm-page-width">
+      <div class="tm-footer__container">
+       <!----> 
+       <div class="tm-footer__social">
+        <a href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Facebook</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-facebook"></use>
+         </svg></a><a href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Twitter</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-twitter"></use>
+         </svg></a><a href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>VK</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-vkontakte"></use>
+         </svg></a><a href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Telegram</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-telegram"></use>
+         </svg></a><a href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Youtube</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-youtube"></use>
+         </svg></a><a href="https://zen.yandex.ru/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+          <title>Яндекс Дзен</title> <use xlink:href="/img/social-icons-sprite.svg#social-logo-zen"></use>
+         </svg></a>
+       </div> 
+       <div class="v-portal" style="display:none;"></div> <button class="tm-footer__link"><!----> Настройка языка </button> <a href="/ru/feedback/" class="tm-footer__link"> Техническая поддержка </a> <a href="/berserk-mode-nope" class="tm-footer__link"> Вернуться на старую версию </a> 
+       <div class="tm-footer-copyright">
+        <span class="tm-copyright"><span class="tm-copyright__years">© 2006–2023, </span> <span class="tm-copyright__name"><a href="https://company.habr.com/" rel="noopener" target="_blank" class="tm-copyright__link">Habr</a></span></span>
+       </div>
+      </div>
+     </div>
+    </div> <!----> <!---->
+   </div> 
+   <div class="vue-portal-target"></div>
+  </div> 
+  <script>window.__INITIAL_STATE__={"adblock":{"hasAcceptableAdsFilter":false,"hasAdblock":false},"articlesList":{"articlesList":{"720518":{"id":"720518","timePublished":"2023-03-05T09:36:16+00:00","isCorporative":true,"lang":"ru","titleHtml":"Сравнительный анализ стандартов связи для сетей IoT","leadData":{"textHtml":"\u003Cp\u003EИнтернет вещей (Internet of Things, IoT) — это одно из самых актуальных направлений современных технологий. Сети IoT позволяют подключать к сети интернет физические устройства, такие как датчики, устройства управления, электронные приборы и другие предметы быта, которые могут обмениваться данными и управляться удаленно. Это открывает безграничные возможности для создания интеллектуальных систем, которые могут автоматизировать процессы и управлять ресурсами на основе данных и аналитики.\u003Cbr\u003EВ настоящее время сети IoT используются во многих областях, включая умный дом, смарт-города, здравоохранение, индустрию 4.0 и транспорт. Однако, вместе с большими преимуществами сетей IoT появляются и сложности, такие как проблемы безопасности, сложность управления и стандартизации. Поэтому, для того чтобы успешно использовать сети IoT, необходимо понимать их основы, архитектуру, протоколы и вызовы.\u003Cbr\u003EРассматриваемые сети имеют множество причин использования, включая возможность автоматизации процессов и оптимизации времени и затрат, улучшение управления ресурсами для экономии денег и ресурсов, обеспечение безопасности людей и имущества с помощью камер видеонаблюдения, датчиков дыма и утечек газа, а также создание новых возможностей для бизнеса путем сбора и анализа данных.\u003C\u002Fp\u003E\u003Cp\u003E\u003C\u002Fp\u003E","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F670\u002Ff9c\u002F07a\u002F670f9c07ae255d8a012aad0200d91252.png","buttonTextHtml":"Читать далее","image":{"url":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F670\u002Ff9c\u002F07a\u002F670f9c07ae255d8a012aad0200d91252.png","fit":"cover","positionY":93,"positionX":29}},"editorVersion":"2.0","postType":"article","postLabels":[],"author":{"id":"2862781","alias":"andgenn","fullname":null,"avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fb43\u002Ff9e\u002Fccf\u002Fb43f9eccff0515f83f2c582f385b3ca9.png","speciality":null,"scoreStats":{"score":9,"votesCount":9},"rating":2.5,"relatedData":null,"contacts":[],"authorContacts":[],"paymentDetails":{"paymentYandexMoney":null,"paymentPayPalMe":null,"paymentWebmoney":null}},"statistics":{"commentsCount":3,"favoritesCount":14,"readingCount":854,"score":3,"votesCount":5,"votesCountPlus":4,"votesCountMinus":1},"hubs":[{"id":"23030","alias":"msw","type":"corporative","title":"Блог компании Прогнозирование полигонов ТКО","titleHtml":"Блог компании Прогнозирование полигонов ТКО","isProfiled":false,"relatedData":null},{"id":"21966","alias":"home_automation","type":"collective","title":"Умный дом","titleHtml":"Умный дом","isProfiled":false,"relatedData":null},{"id":"21970","alias":"internet_of_things","type":"collective","title":"Интернет вещей","titleHtml":"Интернет вещей","isProfiled":false,"relatedData":null}],"flows":[{"id":"7","alias":"popsci","title":"Научпоп","titleHtml":"Научпоп"}],"relatedData":null,"textHtml":"\u003Cdiv xmlns=\"http:\u002F\u002Fwww.w3.org\u002F1999\u002Fxhtml\"\u003E\u003Cfigure class=\"full-width \"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fr\u002Fw1560\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff67\u002Fc90\u002F74c\u002Ff67c9074c1bdd5f84661a1602e8d536b.png\" width=\"1712\" height=\"1100\" data-src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff67\u002Fc90\u002F74c\u002Ff67c9074c1bdd5f84661a1602e8d536b.png\"\u002F\u003E\u003C\u002Ffigure\u003E\u003Cp\u003EИнтернет вещей (Internet of Things, IoT) — это одно из самых актуальных направлений современных технологий. Сети IoT позволяют подключать к сети интернет физические устройства, такие как датчики, устройства управления, электронные приборы и другие предметы быта, которые могут обмениваться данными и управляться удаленно. Это открывает безграничные возможности для создания интеллектуальных систем, которые могут автоматизировать процессы и управлять ресурсами на основе данных и аналитики.\u003Cbr\u002F\u003EВ настоящее время сети IoT используются во многих областях, включая умный дом, смарт-города, здравоохранение, индустрию 4.0 и транспорт. Однако, вместе с большими преимуществами сетей IoT появляются и сложности, такие как проблемы безопасности, сложность управления и стандартизации. Поэтому, для того чтобы успешно использовать сети IoT, необходимо понимать их основы, архитектуру, протоколы и вызовы.\u003Cbr\u002F\u003EРассматриваемые сети имеют множество причин использования, включая возможность автоматизации процессов и оптимизации времени и затрат, улучшение управления ресурсами для экономии денег и ресурсов, обеспечение безопасности людей и имущества с помощью камер видеонаблюдения, датчиков дыма и утечек газа, а также создание новых возможностей для бизнеса путем сбора и анализа данных.\u003C\u002Fp\u003E\u003Ch3\u003EОсновы сетей IoT\u003C\u002Fh3\u003E\u003Cp\u003EСуществует множество протоколов и стандартов для сетей интернет-вещей, которые используются для обеспечения совместимости и синхронизации между устройствами, сетями и приложениями. Рассмотрим некоторые из протоколов, которые можно рассмотреть для построения системы мониторинга окружающей среды полигона твердотельных отходов:\u003C\u002Fp\u003E\u003Cp\u003E\u003Cstrong\u003EZ-Wave\u003C\u002Fstrong\u003E - это проприетарный радиопротокол беспроводной связи, который используется в устройствах для управления умным домом и создания сетей IoT. Этот протокол был разработан компанией Z-Wave Alliance и поддерживает связь между устройствами на расстоянии до 100 метров в помещении и до 400 метров на открытом воздухе. Z-Wave работает на частотах 800-900 МГц в Северной Америке и 868,42 МГц в Европе, что обеспечивает более широкий диапазон покрытия и лучшую проникающую способность стен и других препятствий. Z-Wave также обеспечивает высокую степень безопасности и конфиденциальности данных, используя аппаратное шифрование AES-128.\u003C\u002Fp\u003E\u003Cp\u003EПротокол Z-Wave используется во многих проектах для управления умным домом и умными городами, а также для обеспечения безопасности и комфорта жильцов. Некоторые примеры проектов, где используется Z-Wave:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003E\u003Cp\u003EFibaro Home Center: Fibaro - это система умного дома, которая использует протокол Z-Wave для связи между устройствами. Home Center - это центральный контроллер, который позволяет управлять всеми устройствами Fibaro в доме.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EADT Pulse: ADT Pulse - это система безопасности для дома, которая также использует протокол Z-Wave. Она позволяет жильцам контролировать доступ, освещение и температуру в доме через интернет.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EHeatit Z-TRM3: Heatit Z-TRM3 - это термостат на основе технологии Z-wave, предназначенный для управления теплым полом и отоплением в помещениях. Он позволяет управлять нагревательными системами с помощью смартфона или планшета через приложение и поддерживает функцию программирования температуры на разное время суток.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003ESmartThings: SmartThings - это платформа умного дома, которая также использует протокол Z-Wave. Она позволяет жильцам управлять своим умным домом через мобильное приложение и автоматизировать задачи с помощью «умных» сценариев.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EZipato: Zipato - это еще одна система умного дома, которая использует протокол Z-Wave. Она позволяет жильцам управлять освещением, температурой, системами безопасности и другими устройствами в доме с помощью одного центрального контроллера.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Fol\u003E\u003Cp\u003E\u003Cstrong\u003ESigfox\u003C\u002Fstrong\u003E - это сеть беспроводной связи, предназначенная для подключения устройств IoT, которые передают небольшие объемы данных на большие расстояния. Она использует уникальный протокол связи, работающий на нелицензируемых частотах, что позволяет достичь широкого охвата и низкой стоимости.\u003Cbr\u002F\u003EОсновная идея сети Sigfox заключается в том, что устройства отправляют короткие сообщения (до 12 байт) в облако Sigfox, которое затем передает их на сервер приложений, где они обрабатываются и отображаются в интерфейсе пользователя. Таким образом, сеть позволяет передавать информацию от множества устройств, размещенных на больших расстояниях друг от друга, на центральный сервер приложений для дальнейшей обработки.\u003Cbr\u002F\u003EСеть Sigfox была разработана с учетом требований промышленности, где часто требуется беспроводная связь на большие расстояния с низким энергопотреблением и надежностью. Сеть Sigfox используется в различных отраслях, включая сельское хозяйство, транспорт, логистику, здравоохранение, оборону и безопасность.\u003Cbr\u002F\u003EПримеры использования сети Sigfox включают отслеживание перемещения активов, мониторинг окружающей среды, управление энергопотреблением, контроль качества воздуха, датчики уровня и температуры, мониторинг состояния оборудования и прочее. Благодаря своей простоте и надежности, сеть Sigfox позволяет развивать новые решения IoT и использовать их в различных отраслях.\u003Cbr\u002F\u003EНекоторые из реальных проектов, использующих сеть Sigfox:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003E\u003Cp\u003EАвтоматизация учета потребления воды - компания «Birds» использует сеть Sigfox для передачи данных о потреблении воды от датчиков, установленных на водопроводных счетчиках, на сервера управления потреблением воды.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EМониторинг температуры в промышленности - компания «Axible Technologies» использует сеть Sigfox для передачи данных о температуре и влажности внутри производственных помещений. Эти данные используются для оптимизации условий производства и предотвращения повреждения оборудования.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EСистема безопасности для дома - компания «Avidsen» использует сеть Sigfox для передачи данных от датчиков движения, дверей и окон, установленных в домах пользователей. Эти данные используются для мониторинга безопасности и оповещения владельцев домов в случае обнаружения незаконного проникновения.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EМониторинг состояния грузовиков - компания «OCEASOFT» использует сеть Sigfox для передачи данных о температуре и влажности в грузовиках, перевозящих чувствительные грузы, такие как медицинские препараты или пищевые продукты. Эти данные используются для обеспечения качества груза и предотвращения повреждения товаров.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EСистема Ubigreen одноименной компании - французский редактор облачной платформы, предоставляющий решения для управления энергопотреблением и рабочими местами для повышения производительности коммерческих зданий, промышленного оборудования и общественных зданий.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Fol\u003E\u003Cp\u003E\u003Cstrong\u003ELTE-M\u003C\u002Fstrong\u003E (Long-Term Evolution for Machines) - это стандарт сотовой связи, предназначенный для подключения устройств интернета вещей (IoT). Он работает на основе сетей LTE (Long-Term Evolution), которые используются для мобильной связи.\u003Cbr\u002F\u003EСеть LTE-M (LTE-MTC или LTE Cat-M1) используется во многих проектах IoT, где требуется передача данных с низким энергопотреблением и низкой задержкой. Некоторые примеры проектов, использующих сеть LTE-M:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003E\u003Cp\u003EМониторинг состояния автомобилей: с помощью устройств, работающих на базе сети LTE-M, можно собирать и передавать данные о состоянии автомобилей, такие как расход топлива, уровень масла, давление в шинах, и т.д.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EУмный дом: сеть LTE-M может использоваться для подключения устройств умного дома, таких как датчики движения, дверные замки, термостаты, освещение и т.д. Это позволяет контролировать и управлять устройствами из любой точки мира.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EТрекинг грузов: с помощью устройств на базе LTE-M можно отслеживать перемещение грузов и получать данные о их местонахождении, температуре, влажности и других параметрах. Это позволяет повысить эффективность логистических операций и уменьшить риски потери грузов.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EУмные сельские хозяйства: сеть LTE-M может использоваться для мониторинга погоды, почвы, влажности и других параметров, которые влияют на производство сельскохозяйственных культур. Это позволяет повысить урожайность и оптимизировать использование ресурсов.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EМедицинские устройства: с помощью устройств, работающих на базе сети LTE-M, можно передавать медицинские данные, такие как пульс, кровяное давление, уровень кислорода в крови и т.д. Это позволяет мониторить состояние пациентов в режиме реального времени и оповещать медицинский персонал в случае необходимости.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Fol\u003E\u003Cp\u003E\u003Cstrong\u003ENB-IoT\u003C\u002Fstrong\u003E (Narrowband IoT) - это низкоскоростной и низкопотребляющий стандарт для передачи данных в сетях интернета вещей (IoT). Он работает в лицензированных диапазонах частот и использует узкие полосы частот для передачи данных на большие расстояния.\u003Cbr\u002F\u003EПротокол NB-IoT (Narrowband IoT) используется в различных проектах связанных с интернетом вещей. Некоторые примеры:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003E\u003Cp\u003E«Умное» сельское хозяйство: NB-IoT используется для мониторинга почвы, воздуха и погодных условий, а также для оптимизации системы орошения. Такой подход позволяет снизить затраты на использование воды и удобрений, улучшить урожайность и снизить воздействие на окружающую среду.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EМониторинг состояния грузовиков: NB-IoT используется для сбора и передачи данных об оставшемся запасе топлива, местоположении и других параметрах грузовиков. Это позволяет улучшить эффективность логистики и снизить затраты на топливо.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EУмный город: NB-IoT используется для сбора и передачи данных об уровне шума, качестве воздуха, уровне освещенности и других параметрах городской среды. Эти данные позволяют городским властям принимать решения о снижении загрязнения и повышении комфорта жизни горожан.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EОхранная система: NB-IoT используется в устройствах для домашней и коммерческой охраны, таких как датчики движения и дверные замки. Они могут передавать сигналы тревоги и другую информацию на серверы безопасности в режиме реального времени, что позволяет оперативно реагировать на возможные угрозы.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EСбор данных о здоровье: NB-IoT используется в медицинских устройствах, таких как датчики сердечного ритма и мониторы сна, для сбора и передачи данных о здоровье пациентов на серверы врачей. Это позволяет врачам получать более точную информацию о состоянии пациентов и принимать более эффективные меры по лечению и профилактике болезней.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Fol\u003E\u003Cp\u003E\u003Cstrong\u003EZigbee\u003C\u002Fstrong\u003E — это стандарт беспроводной связи, который используется в маломасштабных сетях IoT, таких как умный дом. Он обеспечивает надежную передачу данных на короткие расстояния с низким энергопотреблением. Вот несколько примеров проектов, в которых используется Zigbee:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003E\u003Cp\u003EPhilips Hue – это система управления умными лампами, которая использует протокол Zigbee для коммуникации между лампами и контроллером. Эта система позволяет пользователям контролировать цвет и яркость света, а также создавать различные настроения и сценарии освещения.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EAmazon Echo Plus – это умный динамик с встроенным контроллером Zigbee, который может управлять умными устройствами, такими как лампы, розетки, термостаты и другие устройства, использующие протокол Zigbee.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003ESamsung SmartThings – это система управления умным домом, которая использует протоколы Zigbee и Z-Wave для коммуникации между устройствами. Система позволяет пользователям управлять освещением, термостатами, замками, камерами и другими устройствами.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EIKEA Trådfri – это система управления умными лампами и другими устройствами, которая также использует протокол Zigbee. Система позволяет пользователям управлять освещением, создавать сценарии освещения и управлять другими устройствами, использующими протокол Zigbee.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Fol\u003E\u003Cp\u003E\u003Cstrong\u003ELoRaWAN\u003C\u002Fstrong\u003E (Long Range Wide Area Network) - это стандарт беспроводной связи для передачи данных на большие расстояния, используемый в умных городах и системах мониторинга окружающей среды.\u003Cbr\u002F\u003EПротокол LoRaWAN нашел применение в различных областях, включая городское планирование, сельское хозяйство, промышленность и транспорт. Некоторые из реальных проектов, использующих LoRaWAN, включают в себя:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003E\u003Cp\u003E«Умный город» в Амстердаме, Нидерланды - городская сеть, использующая LoRaWAN для подключения множества устройств, включая датчики температуры, уровня воды, освещения и т.д. Эти данные используются для оптимизации городских систем и повышения комфорта жизни горожан.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EСистема мониторинга уровня воды в реке Северн, Великобритания - используется сеть LoRaWAN для связи датчиков, которые измеряют уровень воды и передают данные в центральную базу данных. Это позволяет уведомлять жителей о возможных наводнениях и предпринимать меры для предотвращения ущерба.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EСельское хозяйство в Индии - сеть LoRaWAN используется для мониторинга и контроля растительности в рисовых полях, что позволяет сельским хозяйственным производителям оптимизировать использование удобрений и повысить урожайность.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EСистема управления энергопотреблением в зданиях во Франции - сеть LoRaWAN используется для связи датчиков, которые измеряют потребление электроэнергии и передают данные в центральную систему управления. Это позволяет снизить расходы на электроэнергию и оптимизировать энергопотребление.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EСистема контроля за температурой в холодильниках и морозильниках в Голландии - сеть LoRaWAN используется для связи датчиков, которые мониторят температуру и влажность в холодильниках и морозильниках. Это позволяет операторам магазинов быстро обнаруживать любые неисправности и предотвращать порчу продуктов.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Fol\u003E\u003Cp\u003EКроме того, существуют стандарты, которые определяют архитектуру и протоколы для взаимодействия устройств IoT, такие как стандарты Open Connectivity Foundation (OCF), Thread и AllJoyn.\u003C\u002Fp\u003E\u003Cp\u003EАрхитектура сетей Internet of Things (IoT) определяет структуру и взаимодействие между компонентами сети, включая устройства, сенсоры, актуаторы, сетевые элементы и облака. В общем случае архитектура IoT может быть разделена на три уровня:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003E\u003Cp\u003EУровень устройств (Device layer) — это уровень, на котором расположены физические устройства, такие как сенсоры, контроллеры и актуаторы. Они обычно связаны через беспроводные или проводные сети с уровнем сети и передают данные и управляющие команды.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EУровень сети (Network layer) - на этом уровне происходит передача данных и команд между устройствами. Он включает в себя сетевые протоколы и технологии, такие как Wi-Fi, Bluetooth, Zigbee, LoRaWAN и другие. Этот уровень также может содержать локальные сети, такие как умный дом, и более широкие сети, такие как умный город.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EУровень приложений (Application layer) - это уровень, на котором приложения и сервисы используют данные, полученные от устройств, для анализа, принятия решений и управления. Этот уровень может включать в себя облачные сервисы, которые обрабатывают данные и выдают результаты обратно в устройства IoT.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Fol\u003E\u003Cp\u003EКроме того, некоторые архитектуры IoT включают дополнительные уровни, такие как уровень безопасности, уровень аналитики и уровень управления. Эти уровни обеспечивают дополнительную функциональность для сетей IoT, такую как защиту данных, анализ данных и управление устройствами и сетями.\u003C\u002Fp\u003E\u003Ch3\u003EСравнение сетей\u003C\u002Fh3\u003E\u003Cp\u003EСредние показатели для рассматриваемых сетей зависят от многих факторов, таких как использование антенн, мощности передачи, частоты и прочих настроек. Однако, в целом можно назвать следующие средние значения:\u003C\u002Fp\u003E\u003Cdiv\u003E\u003Cdiv class=\"table\"\u003E\u003Ctable\u003E\u003Ctbody\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003EНазвание\u002Fпоказатель\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003EПропускная способность\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003EДальность\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003EЭнергопотребление\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003EСтоимость\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003EZ-wave\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eдо 100 кбит\u002Fс\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eдо 100 метров в помещении и до 300 метров на открытой местности.\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eот нескольких микроватт до нескольких милливатт\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eот нескольких сотен до нескольких тысяч долларов\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003ESigfox\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003EВ среднем 100 бит\u002Fс\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eдо 50 км в открытом пространстве\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003E25 мкА во время передачи данных и около 1 мкА во время ожидания\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eот нескольких тысяч долларов и выше\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003ELTE-M\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eдо 1 Мбит\u002Fс в downlink и до 375 кбит\u002Fс в uplink\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eдо 2 км в городской среде и до 10 км в сельской местности\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eот 10 до 20 мА в режиме передачи данных, и от 1 до 2 мА в режиме ожидания.\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eот нескольких тысяч до десятков тысяч долларов.\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003ENB-IoT\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eот 50 кбит\u002Fс до 250 кбит\u002Fс\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eдо 1-2 км в городских условиях  и до 10 км в открытых пространствах\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eот нескольких микроватт до нескольких милливатт\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eдороже, чем для систем на базе LoRaWAN или Zigbee, так как требуется использование сотовой сети и соответствующих услуг связи\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003EZigbee\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eот 20 до 250 кбит\u002Fс\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eот 10 до 100 метров в помещении и до 400 метров на открытом пространстве\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eот нескольких микроватт до нескольких милливатт\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eот нескольких десятков долларов до нескольких сотен долларов за устройство.\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003Ctr\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003ELoRaWAN\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eот 0,3 до 50 кбит\u002Fс\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eдо 5-10 км в городских условиях и до 15-20 км в сельской местности\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eот 0,1 мкА до 120 мА\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003Ctd\u003E\u003Cp align=\"left\"\u003Eот нескольких тысяч до десятков тысяч долларов\u003C\u002Fp\u003E\u003C\u002Ftd\u003E\u003C\u002Ftr\u003E\u003C\u002Ftbody\u003E\u003C\u002Ftable\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003Ch3\u003EПроблемы и вызовы сетей\u003C\u002Fh3\u003E\u003Cp\u003EНесмотря на множество преимуществ, сети IoT также сталкиваются с рядом проблем и вызовов, которые нужно решать, чтобы обеспечить их более широкое использование. Вот некоторые из них:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003E\u003Cp\u003EБезопасность: с ростом количества устройств, подключенных к Интернету, возрастает вероятность кибератак и нарушения безопасности данных. Безопасность сетей IoT является критически важным аспектом, и требует разработки соответствующих мер безопасности, таких как шифрование данных и аутентификация устройств.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EСложность управления: управление сетями IoT может быть сложным из-за большого количества устройств, подключенных к сети, а также из-за необходимости обеспечения надежности и эффективности работы сети. Решение этой проблемы требует разработки более удобных и эффективных методов управления сетью.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EСовместимость: существует множество различных устройств и технологий, используемых в сетях IoT, что может привести к проблеме совместимости между устройствами. Разработка стандартов и протоколов сетевого взаимодействия является важным аспектом решения этой проблемы.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EПроблемы с энергопотреблением: многие устройства в сетях IoT работают на батарейной энергии, что может приводить к проблемам с длительностью работы устройств и потреблением энергии. Необходимо разрабатывать более эффективные способы управления энергопотреблением устройств.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EНадежность: надежность работы сетей IoT является критически важным аспектом, особенно в тех областях, где неисправность устройства или системы может привести к серьезным последствиям. Решение этой проблемы требует разработки надежных методов тестирования и мониторинга работоспособности устройств.\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Fol\u003E\u003Ch3\u003EЗаключение\u003C\u002Fh3\u003E\u003Cp\u003EВ заключение можно сказать, что сети IoT находятся в стадии быстрого развития и экспансии в различных областях промышленности и быта. Они имеют большой потенциал для улучшения эффективности, оптимизации ресурсов и улучшения качества жизни людей.\u003Cbr\u002F\u003EОднако, у сетей IoT есть также и свои вызовы и проблемы, связанные с безопасностью, приватностью, надежностью, стандартизацией и управлением данными. Для эффективного и безопасного использования сетей IoT важно разработать и реализовать соответствующие стандарты и регулирования.\u003Cbr\u002F\u003EС развитием технологий и появлением новых применений, сети IoT будут продолжать расширяться и становиться все более востребованными в различных сферах. Будущее сетей IoT связано с использованием искусственного интеллекта, беспроводных технологий связи, дополненной и виртуальной реальности, автономных систем и многое другое.\u003C\u002Fp\u003E\u003Ch3\u003EСписок информационных источников\u003C\u002Fh3\u003E\u003Col\u003E\u003Cli\u003E\u003Cp\u003EWhat is the Internet of Things, or IoT? \u003Ca href=\"https:\u002F\u002Fwww.iotforall.com\u002F\"\u003Ehttps:\u002F\u002Fwww.iotforall.com\u002F\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EZigbee \u003Ca href=\"https:\u002F\u002Fiot-now.com\u002F2021\u002F02\u002F16\u002F107545-why-zigbee-matters-for-future-proofed-smart-home-innovation\u002F\"\u003Ehttps:\u002F\u002Fiot-now.com\u002F2021\u002F02\u002F16\u002F107545-why-zigbee-matters-for-future-proofed-smart-home-innovation\u002F\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003ELoRaWAN \u003Ca href=\"https:\u002F\u002Fwww.link-labs.com\u002Fblog\u002Flora-vs-lorawan-whats-the-difference\"\u003Ehttps:\u002F\u002Fwww.link-labs.com\u002Fblog\u002Flora-vs-lorawan-whats-the-difference\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003ELTE-M \u003Ca href=\"https:\u002F\u002Fwww.iotforall.com\u002Fresources\u002Flte-m-nb-iot\"\u003Ehttps:\u002F\u002Fwww.iotforall.com\u002Fresources\u002Flte-m-nb-iot\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EZ-wave \u003Ca href=\"https:\u002F\u002Fwww.silabs.com\u002Fwireless\u002Fz-wave\"\u003Ehttps:\u002F\u002Fwww.silabs.com\u002Fwireless\u002Fz-wave\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003ESigfox \u003Ca href=\"https:\u002F\u002Fwww.sigfox.com\u002Fen\u002Fsigfox-technology\"\u003Ehttps:\u002F\u002Fwww.sigfox.com\u002Fen\u002Fsigfox-technology\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003ENB-IoT \u003Ca href=\"https:\u002F\u002Fwww.gsma.com\u002Fiot\u002Fdeployment-map\u002F\"\u003Ehttps:\u002F\u002Fwww.gsma.com\u002Fiot\u002Fdeployment-map\u002F\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EFibaro Home Center \u003Ca href=\"https:\u002F\u002Fwww.fibaro.com\u002Fru\u002Fproducts\u002Fhome-center-3\u002F\"\u003Ehttps:\u002F\u002Fwww.fibaro.com\u002Fru\u002Fproducts\u002Fhome-center-3\u002F\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EADT Pulse \u003Ca href=\"https:\u002F\u002Fadt.systems\u002Fadt-pulse\u002F\"\u003Ehttps:\u002F\u002Fadt.systems\u002Fadt-pulse\u002F\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EHeatit Z-TRM3 \u003Ca href=\"https:\u002F\u002Fheatit.com\u002Fprodukt\u002F9435\u002Fheatit-z-trm3-white\"\u003Ehttps:\u002F\u002Fheatit.com\u002Fprodukt\u002F9435\u002Fheatit-z-trm3-white\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003ESmartThings \u003Ca href=\"https:\u002F\u002Fsupport.smartthings.com\u002Fhc\u002Fen-us\u002Farticles\u002F204392790-Z-Wave-General-Info\"\u003Ehttps:\u002F\u002Fsupport.smartthings.com\u002Fhc\u002Fen-us\u002Farticles\u002F204392790-Z-Wave-General-Info\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EZipato \u003Ca href=\"https:\u002F\u002Fwww.zipato.com\u002Fwp-content\u002Fuploads\u002F2015\u002F09\u002Fph-psr03-Zipato-Z-Wave-Remote-User-Manual-v1.0.pdf\"\u003Ehttps:\u002F\u002Fwww.zipato.com\u002Fwp-content\u002Fuploads\u002F2015\u002F09\u002Fph-psr03-Zipato-Z-Wave-Remote-User-Manual-v1.0.pdf\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EСравнение систем Умного Дома: Larnitech, HDL, Wirenboard, Beckhoff, Z-Wave, EasyHomePLC \u003Ca href=\"https:\u002F\u002Fhome-matic.ru\u002F2020\u002F07\u002Fsravnenie-sistem-umnogo-doma\u002F\"\u003Ehttps:\u002F\u002Fhome-matic.ru\u002F2020\u002F07\u002Fsravnenie-sistem-umnogo-doma\u002F\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EBirds, применение Sigfox \u003Ca href=\"https:\u002F\u002Fwww.birdz.com\u002Fen\u002Fhomepage\u002F\"\u003Ehttps:\u002F\u002Fwww.birdz.com\u002Fen\u002Fhomepage\u002F\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EAxible, применение Sigfox \u003Ca href=\"https:\u002F\u002Faxible.io\u002Fen\u002Fhome-en\u002F\"\u003Ehttps:\u002F\u002Faxible.io\u002Fen\u002Fhome-en\u002F\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EAvidsen, применение Sigfox \u003Ca href=\"https:\u002F\u002Fwww.ingenio-web.it\u002Farticoli\u002Favidsen-presenta-conceptatmod-la-prima-soluzione-domotica-con-protocolli-intercambiabili\u002F\"\u003Ehttps:\u002F\u002Fwww.ingenio-web.it\u002Farticoli\u002Favidsen-presenta-conceptatmod-la-prima-soluzione-domotica-con-protocolli-intercambiabili\u002F\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EПартнёры Sigfox Russia \u003Ca href=\"https:\u002F\u002Fpartners.sigfox.com\u002Fcompanies\"\u003Ehttps:\u002F\u002Fpartners.sigfox.com\u002Fcompanies\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EПрименение LTE-M \u003Ca href=\"https:\u002F\u002Fwww.wirelesslogic.com\u002Fiot-technology\u002Flte-m\u002F\"\u003Ehttps:\u002F\u002Fwww.wirelesslogic.com\u002Fiot-technology\u002Flte-m\u002F\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EПрименение NB-IoT \u003Ca href=\"https:\u002F\u002Fwww.topnomer.ru\u002Fblog\u002Ftekhnologiya-nb-iot-opisanie-primenenie-v-rossii.html\"\u003Ehttps:\u002F\u002Fwww.topnomer.ru\u002Fblog\u002Ftekhnologiya-nb-iot-opisanie-primenenie-v-rossii.html\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EPhilips-hue, применение Zigbee \u003Ca href=\"https:\u002F\u002Fwww.philips-hue.com\u002Fru-ru\u002Fp\u002Fhue-bridge\u002F8719514342408\"\u003Ehttps:\u002F\u002Fwww.philips-hue.com\u002Fru-ru\u002Fp\u002Fhue-bridge\u002F8719514342408\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EAmazon Echo Plus, применение Zigbee \u003Ca href=\"https:\u002F\u002Fdeveloper.amazon.com\u002Fen-US\u002Falexa\u002Fdevices\u002Fconnected-devices\u002Fdevelopment-resources\u002Fzigbee\"\u003Ehttps:\u002F\u002Fdeveloper.amazon.com\u002Fen-US\u002Falexa\u002Fdevices\u002Fconnected-devices\u002Fdevelopment-resources\u002Fzigbee\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003ESmartThings, применение Zigbee \u003Ca href=\"https:\u002F\u002Fwww.smartthings.com\u002Fpartners\"\u003Ehttps:\u002F\u002Fwww.smartthings.com\u002Fpartners\u003C\u002Fa\u003E \u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EIKEA Trådfri, применение Zigbee \u003Ca href=\"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Flamptest\u002Fblog\u002F524362\u002F\"\u003Ehttps:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Flamptest\u002Fblog\u002F524362\u002F\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003Cli\u003E\u003Cp\u003EПрименение LoRaWAN \u003Ca href=\"https:\u002F\u002Fain.ua\u002Fspecial\u002Fsmart-cities-experience\u002F\"\u003Ehttps:\u002F\u002Fain.ua\u002Fspecial\u002Fsmart-cities-experience\u002F\u003C\u002Fa\u003E\u003C\u002Fp\u003E\u003C\u002Fli\u003E\u003C\u002Fol\u003E\u003C\u002Fdiv\u003E","tags":[{"titleHtml":"интернет-вещей"},{"titleHtml":"lorawan"},{"titleHtml":"zwave"},{"titleHtml":"zigbee"}],"metadata":{"stylesUrls":[],"scriptUrls":[],"shareImageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F670\u002Ff9c\u002F07a\u002F670f9c07ae255d8a012aad0200d91252.png","shareImageWidth":1200,"shareImageHeight":630,"vkShareImageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F670\u002Ff9c\u002F07a\u002F670f9c07ae255d8a012aad0200d91252.png","schemaJsonLd":"{\"@context\":\"http:\\\u002F\\\u002Fschema.org\",\"@type\":\"Article\",\"mainEntityOfPage\":{\"@type\":\"WebPage\",\"@id\":\"https:\\\u002F\\\u002Fhabr.com\\\u002Fru\\\u002Fcompany\\\u002Fmsw\\\u002Fblog\\\u002F720518\\\u002F\"},\"headline\":\"Сравнительный анализ стандартов связи для сетей IoT\",\"datePublished\":\"2023-03-05T12:36:16+03:00\",\"dateModified\":\"2023-03-05T12:36:16+03:00\",\"author\":{\"@type\":\"Person\",\"name\":\"andgenn\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Habr\",\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fwebt\\\u002Fa_\\\u002Flk\\\u002F9m\\\u002Fa_lk9mjkccjox-zccjrpfolmkmq.png\"}},\"description\":\"Интернет вещей (Internet of Things, IoT) &mdash; это одно из самых актуальных направлений современных технологий. Сети IoT позволяют подключать к сети интернет физичес...\",\"url\":\"https:\\\u002F\\\u002Fhabr.com\\\u002Fru\\\u002Fcompany\\\u002Fmsw\\\u002Fblog\\\u002F720518\\\u002F#post-content-body\",\"about\":[\"c_msw\",\"h_home_automation\",\"h_internet_of_things\",\"f_popsci\"],\"image\":[\"https:\\\u002F\\\u002Fhabr.com\\\u002Fshare\\\u002Fpublication\\\u002F720518\\\u002Fe48d08e9803dbf77d5d1779dd474005f\\\u002F\",\"https:\\\u002F\\\u002Fhabrastorage.org\\\u002Fgetpro\\\u002Fhabr\\\u002Fupload_files\\\u002Ff67\\\u002Fc90\\\u002F74c\\\u002Ff67c9074c1bdd5f84661a1602e8d536b.png\"]}","metaDescription":"Интернет вещей (Internet of Things, IoT) — это одно из самых актуальных направлений современных технологий. Сети IoT позволяют подключать к сети интернет физические устройства, такие как датчики,...","mainImageUrl":null,"amp":true,"customTrackerLinks":[]},"polls":[],"commentsEnabled":true,"rulesRemindEnabled":false,"votesEnabled":true,"status":"published","plannedPublishTime":null,"checked":null,"hasPinnedComments":false,"format":null,"readingTime":13,"complexity":null,"isEditorial":false}},"articlesIds":{},"isLoading":false,"pagesCount":{},"route":{},"reasonsList":null,"view":"cards","lastVisitedRoute":{},"ssrCommentsArticleIds":[""],"karma":{"userReasonsList":null}},"authorContribution":{"authors":{}},"betaTest":{"currentAnnouncement":null,"announcements":{},"announcementCards":null,"announcementComments":{},"announcementCommentThreads":{},"announcementCommentingStatuses":{},"archivedList":[]},"authorStatistics":{"articleRefs":{},"articleIds":{},"pagesCount":{},"route":{},"viewsCount":[],"maxStatsCount":{}},"career":{"seoLandings":[],"hubs":""},"comments":{"articleComments":{},"articlePinnedComments":{},"searchCommentsResults":null,"pagesCount":null,"commentAccess":{},"scrollParents":{},"pageArticleComments":{"lastViewedComment":0,"postId":null,"lastCommentTimestamp":"","moderated":[],"moderatedIds":[],"commentRoute":""}},"companies":{"companyRefs":{"msw":{"alias":"msw","imageUrl":null,"titleHtml":"Прогнозирование полигонов ТКО","descriptionHtml":null,"relatedData":null,"statistics":{"subscribersCount":14,"rating":24.32,"invest":null,"postsCount":5,"newsCount":0,"vacanciesCount":0,"employeesCount":1,"careerRating":null},"foundationDate":null,"location":{"city":{"id":"447733","title":"Санкт-Петербург"},"region":{"id":"1948","title":"Санкт-Петербург и область"},"country":{"id":"168","title":"Россия"}},"siteUrl":"https:\u002F\u002Fmsw.pw\u002F","staffNumber":"2–10 человек","registrationDate":"2022-10-12T09:11:48+00:00","representativeUser":null,"contacts":[{"title":"Сайт","url":"https:\u002F\u002Fmsw.pw\u002F","siteTitle":"Экологический мониторинг полигонов ТКО","favicon":"https:\u002F\u002Fstatic.tildacdn.com\u002Ftild6662-6461-4339-b236-336665333730\u002Ffavicon_2.ico"}],"settings":{"analyticsSettings":[],"branding":null,"status":"active","isStartup":true},"metadata":{"titleHtml":"Прогнозирование полигонов ТКО, Санкт-Петербург - ","title":"Прогнозирование полигонов ТКО, Санкт-Петербург - ","keywords":["Беспроводные технологии","Сетевое оборудование","Интернет вещей","Инженерные системы","IT-компании","интернет вещей","газоанализатор"],"descriptionHtml":"5 статей от авторов компании Прогнозирование полигонов ТКО","description":"5 статей от авторов компании Прогнозирование полигонов ТКО"},"aDeskSettings":null,"careerAlias":null}},"companyIds":{},"companyTopIds":{},"pagesCount":{},"companyProfiles":{},"companiesCategories":[],"companiesCategoriesTotalCount":0,"companiesWidgets":{},"companiesWorkers":{},"companiesFans":{},"route":{},"isLoading":false,"companyWorkersLoading":false,"companyFansLoading":false,"vacancies":{},"companiesGalleries":{},"companiesBanners":{},"companiesLandingVacancies":{},"companiesTechnologies":{},"workplaceInfo":null},"companyAdmin":{"companyInfo":null,"companyInfoLoading":false,"faqArticles":null,"brandingPreviewImageUrl":null,"jivoStatus":0,"adminNotifications":null},"companiesContribution":{"hubs":{},"flows":{},"companyRefs":{}},"companyHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"conversation":{"messages":[],"respondent":null,"isLoadMore":false},"conversations":{"conversations":[],"unreadCount":0,"pagesCount":0},"desktopState":{"desktopFl":null,"desktopHl":null,"isChecked":false,"isLoginDemanded":false},"docs":{"menu":{},"articles":{},"mainMenu":[],"loading":{"main":false,"dropdown":false,"article":false}},"feature":{"isProbablyVisible":true},"flows":{"updates":{"countNewPostsBySubscription":null,"countNewPostsAll":30,"countNewNewsAll":10},"flows":[{"alias":"develop","id":"1","route":{"name":"FLOW_PAGE","params":{"flowName":"develop"}}},{"alias":"admin","id":"6","route":{"name":"FLOW_PAGE","params":{"flowName":"admin"}}},{"alias":"design","id":"2","route":{"name":"FLOW_PAGE","params":{"flowName":"design"}}},{"alias":"management","id":"3","route":{"name":"FLOW_PAGE","params":{"flowName":"management"}}},{"alias":"marketing","id":"4","route":{"name":"FLOW_PAGE","params":{"flowName":"marketing"}}},{"alias":"popsci","id":"7","route":{"name":"FLOW_PAGE","params":{"flowName":"popsci"}}}]},"global":{"isPwa":false,"device":"desktop","isHabrCom":true},"hubs":{"hubRefs":{},"hubIds":{},"pagesCount":{},"isLoading":false,"route":{}},"hubsBlock":{"hubRefs":{},"hubIds":{}},"i18n":{"fl":"ru","hl":"ru"},"info":{"infoPage":{},"isLoading":true},"location":{"urlStruct":{"protocol":null,"slashes":null,"auth":null,"host":null,"port":null,"hostname":null,"hash":null,"search":null,"query":{},"pathname":null,"path":null,"href":""}},"me":{"user":null,"uuid":null,"ppgDemanded":false,"karmaResetInfo":{"canReincarnate":null,"wasReincarnated":null,"currentScore":null},"notes":null},"modal":{"modals":[]},"mostReadingList":{"mostReadingListIds":[],"mostReadingListRefs":null,"promoPost":null},"ppa":{"articles":{},"card":null,"transactions":null,"totalTransactions":null,"isAccessible":null},"projectsBlocks":{"activeBlocks":{"tasks":"project-block-company-article"}},"promoData":{"isLoading":false,"hasLoaded":false,"featurer":null,"megaposts":null,"promoLinks":null,"promoPosts":null},"pullRefresh":{"shouldRefresh":false},"sandbox":{"articleIds":[],"articleRefs":{},"pagesCount":null,"route":{},"lastVisitedRoute":{},"isLoading":false},"search":{"searchQueryError":null},"settingsOther":{"inputs":{"uiLang":{"errors":[],"ref":null,"value":""},"articlesLangEnglish":{"errors":[],"ref":null,"value":false},"articlesLangRussian":{"errors":[],"ref":null,"value":false},"agreement":{"errors":[],"ref":null,"value":false},"email":{"errors":[],"ref":null,"value":true},"digest":{"errors":[],"ref":null,"value":true}}},"similarList":{"similarListIds":[],"similarListRefs":null},"ssr":{"error":null,"isDataLoaded":false,"isDataLoading":false,"isHydrationFailed":false,"isServer":false},"stories":{"stories":[{"id":"story-274","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F386\u002F1a0\u002F577\u002F3861a057738e4cf78f3fc173d952c827.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Топ-7 годноты из блогов компаний","lang":"ru","startTime":"2023-03-02T11:00:00+03:00","finishTime":"2023-03-07T10:15:00+03:00","slides":[{"id":"story-274_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F52c\u002F81a\u002Fe91\u002F52c81ae913532c5df7e90245845ce07c.png","button":null},{"id":"story-274_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff9b\u002Fc65\u002Ff9a\u002Ff9bc65f9a46ebd95a3babce143e6770a.jpg","button":{"title":"Клавиатурный зоопарк","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fcloud4y\u002Fblog\u002F716934\u002F","colorType":"light"}},{"id":"story-274_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa77\u002F2d7\u002Fb4e\u002Fa772d7b4e782a580cf72c5c996514a1f.jpg","button":{"title":"Три приёмника","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fruvds\u002Fblog\u002F716988\u002F","colorType":"light"}},{"id":"story-274_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F78c\u002Fb59\u002F01c\u002F78cb5901c06e97ec94f07bfd6ca12a68.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fruvds\u002Fblog\u002F716058\u002F","colorType":"dark"}},{"id":"story-274_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbe2\u002Fa46\u002F500\u002Fbe2a4650077735388744eb7d2e1ef7dd.jpg","button":{"title":"Очумелые ручки","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fselectel\u002Fblog\u002F718134\u002F","colorType":"dark"}},{"id":"story-274_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F7f1\u002F18d\u002F8e3\u002F7f118d8e3f6fc09179c73dde840dd425.jpg","button":{"title":"Узнать причины","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Ftimeweb\u002Fblog\u002F713220\u002F","colorType":"light"}},{"id":"story-274_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F028\u002F038\u002F9f5\u002F0280389f5fb85f9f821fa45ccbaa8803.jpg","button":{"title":"Как это сделать","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fcloud4y\u002Fblog\u002F717342\u002F","colorType":"light"}},{"id":"story-274_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcb0\u002F02d\u002F7c4\u002Fcb002d7c42c03e59d7f124f10cbe4b4d.jpg","button":{"title":"Нырнуть в сеть","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fsouthbridge\u002Fblog\u002F717634\u002F","colorType":"dark"}}]},{"id":"story-272","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F82b\u002Fdd7\u002F7d8\u002F82bdd77d8ef7304d3b1b599191c2bb1c.png","title":"Сезоны Хабра","link":"https:\u002F\u002Fu.habr.com\u002F5P6i7"},"title":"Открыт сезон ML","lang":"ru","startTime":"2023-03-02T09:00:41+03:00","finishTime":"2023-03-31T20:53:00+03:00","slides":[{"id":"story-272_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F27f\u002Fd3a\u002Fddf\u002F27fd3addfe06da09592bdcf61db15795.jpg","button":null},{"id":"story-272_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F935\u002F582\u002F992\u002F935582992e378add33c898451b2a0d9f.jpg","button":null},{"id":"story-272_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe13\u002Feb8\u002Fa24\u002Fe13eb8a24b60622d3da72fd6e7ed3fda.jpg","button":null},{"id":"story-272_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa85\u002F83f\u002F5cc\u002Fa8583f5ccfae747135343f0e68c84112.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002F5P6i7","colorType":"light"}},{"id":"story-272_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F60d\u002F1cb\u002F98c\u002F60d1cb98cdd42d2696ebc0ec54740a23.jpg","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002F5P6i7","colorType":"light"}}]},{"id":"story-118","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fjh\u002F3n\u002Fhy\u002Fjh3nhyovspbtyqndibvbttgsprc.png","title":"Хабр Новости","link":"https:\u002F\u002Fu.habr.com\u002FcvdBy"},"title":"Лучшие фотографии «Джеймса Уэбба» за год","lang":"ru","startTime":"2023-03-01T11:00:00+03:00","finishTime":"2023-03-05T23:59:00+03:00","slides":[{"id":"story-118_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fml\u002Fcn\u002Fqx\u002Fmlcnqxuawiz09l-viwmfzybgesw.png","button":null},{"id":"story-118_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fvn\u002F7g\u002Fqt\u002Fvn7gqtssznilh0-zkjmgyq25vpo.png","button":null},{"id":"story-118_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fzg\u002Fi-\u002F1y\u002Fzgi-1ysesbd_givgtouinc97tby.png","button":null},{"id":"story-118_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fvm\u002Frz\u002F_v\u002Fvmrz_vbuvvaj8gsheuhwscrlt8c.png","button":null},{"id":"story-118_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fmq\u002Fs5\u002Fgk\u002Fmqs5gkpfk-iijv2gnlud3huxgpo.png","button":null},{"id":"story-118_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002F93\u002Fuv\u002Fxb\u002F93uvxboezmintyjwjgb5vrf1zcm.png","button":null},{"id":"story-118_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fu4\u002Fdy\u002Fcd\u002Fu4dycdmg1jiinbfztn3zkpocne0.png","button":null},{"id":"story-118_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Ffy\u002Fqr\u002Flg\u002Ffyqrlgev36v3pa3-zy8maak8ipe.png","button":null},{"id":"story-118_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fx7\u002Fx8\u002Ftf\u002Fx7x8tfe8l1ahi_zmusdmtp0b_sy.png","button":{"title":"Подробности","link":"https:\u002F\u002Fu.habr.com\u002FcvdBy","colorType":"light"}}]},{"id":"story-264","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcbd\u002Fe44\u002F753\u002Fcbde44753048ff6655f9f33752fd816a.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FnTaXn"},"title":"Cколько тратят в IT: сеньор бэкендер","lang":"ru","startTime":"2023-02-28T15:50:00+03:00","finishTime":"2023-03-07T23:59:00+03:00","slides":[{"id":"story-264_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd99\u002Ff45\u002Ff14\u002Fd99f45f14dc03b2394a86f50f76844f4.png","button":null},{"id":"story-264_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F0e3\u002F529\u002F607\u002F0e3529607bca82d7b8214d422f20ab67.png","button":null},{"id":"story-264_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8ae\u002F39e\u002Fa4f\u002F8ae39ea4fd82c27289b24594adf3c0c0.png","button":null},{"id":"story-264_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F971\u002F361\u002Fd57\u002F971361d574204d51ffe35d8c9cfef943.png","button":null},{"id":"story-264_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F342\u002F5c0\u002Fee7\u002F3425c0ee73301cff942e3d9276ce4a79.png","button":{"title":"Подробности","link":"https:\u002F\u002Fu.habr.com\u002FnTaXn","colorType":"dark"}}]},{"id":"story-262","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2fa\u002Fc8a\u002Fba8\u002F2fac8aba82b995297abea595da7990d1.png","title":"Хабр","link":"https:\u002F\u002Fhabr.com\u002Fru\u002Fcompany\u002Fhabr\u002Fblog\u002F"},"title":"Наука сна","lang":"ru","startTime":"2023-02-28T12:15:00+03:00","finishTime":"2023-03-15T23:59:00+03:00","slides":[{"id":"story-262_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa90\u002F725\u002F61c\u002Fa9072561c280c46933ff54fd8702cade.jpg","button":null},{"id":"story-262_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffd7\u002F658\u002F956\u002Ffd7658956ea825b1c317c7f688c48058.jpg","button":{"title":"Читать лекцию","link":"https:\u002F\u002Fu.habr.com\u002Fson01","colorType":"light"}},{"id":"story-262_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F366\u002Fd2e\u002F707\u002F366d2e70725209177fa82a4119139c86.jpg","button":{"title":"При чём же?","link":"https:\u002F\u002Fu.habr.com\u002Fson02","colorType":"light"}},{"id":"story-262_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4bd\u002F40f\u002F731\u002F4bd40f731bfbf571a709dd2f357f06b4.jpg","button":{"title":"Заглянуть в дневник","link":"https:\u002F\u002Fu.habr.com\u002Fson03","colorType":"light"}},{"id":"story-262_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F944\u002F7ad\u002Fe2f\u002F9447ade2f38c3c36790be75bf4462047.jpg","button":{"title":"Последствия","link":"https:\u002F\u002Fu.habr.com\u002Fson04","colorType":"light"}},{"id":"story-262_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F74c\u002Fce1\u002F4dc\u002F74cce14dc903b245dca90df3f2747abb.jpg","button":{"title":"Смотреть список","link":"https:\u002F\u002Fu.habr.com\u002Fson05","colorType":"light"}},{"id":"story-262_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbc9\u002Fa62\u002F9f0\u002Fbc9a629f0c5ef2027cf7796749a06914.jpg","button":{"title":"Следы в истории","link":"https:\u002F\u002Fu.habr.com\u002Fson06","colorType":"light"}},{"id":"story-262_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F085\u002F0ee\u002F868\u002F0850ee868132e1ec4ec3b24caf7e719a.jpg","button":{"title":"Что придумали?","link":"https:\u002F\u002Fu.habr.com\u002Fson07","colorType":"light"}}]},{"id":"story-252","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff19\u002F48d\u002Fd15\u002Ff1948dd155701f88d36e11387c1660ef.png","title":"Geek Travel","link":"https:\u002F\u002Fu.habr.com\u002F9TZjL"},"title":"Где искать северное сияние в России","lang":"ru","startTime":"2023-02-21T11:35:00+03:00","finishTime":"2023-03-12T11:22:00+03:00","slides":[{"id":"story-252_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F506\u002F188\u002F83b\u002F50618883bc97ce517531018d3290d961.jpg","button":{"title":"К посту","link":"https:\u002F\u002Fu.habr.com\u002F9TZjL","colorType":"light"}},{"id":"story-252_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe42\u002Fa71\u002Fe8e\u002Fe42a71e8eb5583814647f5ad55f9e0ae.jpg","button":null},{"id":"story-252_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F685\u002Fdbe\u002F4ff\u002F685dbe4ffe3940eca28ede7406898846.jpg","button":null},{"id":"story-252_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F383\u002F63b\u002F1f4\u002F38363b1f459d5daace0e4502f0780737.jpg","button":null},{"id":"story-252_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F32b\u002F665\u002F0c4\u002F32b6650c448d698b9ca4dba128afb56e.jpg","button":null},{"id":"story-252_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F95e\u002F0b2\u002F5be\u002F95e0b25be55ae919dbebbac6142e670d.jpg","button":null},{"id":"story-252_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F616\u002F1d4\u002Ff84\u002F6161d4f849be8d4e4aeee88ea2e3d572.jpg","button":null}]},{"id":"story-246","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fc41\u002F8cc\u002Fca9\u002Fc418ccca924faf05c11530c5071e627b.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-new"},"title":"Зарплаты в IT во второй половине 2022","lang":"ru","startTime":"2023-02-20T11:05:00+03:00","finishTime":"2023-03-05T23:59:00+03:00","slides":[{"id":"story-246_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbe2\u002F07d\u002F19f\u002Fbe207d19f3cdc4b89e3618025c071ea0.png","button":null},{"id":"story-246_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fcda\u002F93e\u002Fed7\u002Fcda93eed762714814ddfc51c4712f4ed.png","button":null},{"id":"story-246_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fb8a\u002Fde4\u002F87f\u002Fb8ade487fa6556af459e032adebf852d.png","button":null},{"id":"story-246_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8f6\u002Fb32\u002F844\u002F8f6b328448ed968a18a60a0cd745bd34.png","button":{"title":"Подробнее","link":"https:\u002F\u002Fu.habr.com\u002Fitzp2022-new","colorType":"dark"}}]},{"id":"story-152","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa49\u002F0d3\u002F609\u002Fa490d3609f29b6dfc53a7b88ab47ca64.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa"},"title":"Сеньоры — очень странные люди","lang":"ru","startTime":"2023-01-23T11:00:00+03:00","finishTime":"2023-03-31T23:59:00+03:00","slides":[{"id":"story-152_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbbb\u002F901\u002F063\u002Fbbb9010630ae483ed1f41ec4e2572c13.png","button":null},{"id":"story-152_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F4f8\u002F66c\u002F14f\u002F4f866c14f0ca8999334438d7f17c0e3a.png","button":null},{"id":"story-152_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F6b9\u002Fa07\u002Fa61\u002F6b9a07a612df213ac3a1c179301828df.png","button":null},{"id":"story-152_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff6b\u002Fadb\u002Fb99\u002Ff6badbb9969d7e34ef4f7492767c6a77.png","button":null},{"id":"story-152_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd9c\u002F9ac\u002F878\u002Fd9c9ac878bec5b494699e0080dd2e813.png","button":null},{"id":"story-152_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fdb1\u002Faf9\u002Fc3b\u002Fdb1af9c3bb557f6cee698cf67610f977.png","button":null},{"id":"story-152_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5cf\u002Fbed\u002F65b\u002F5cfbed65bd20b7051b1aac2b9d6e807e.png","button":null},{"id":"story-152_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffa8\u002F251\u002F4a9\u002Ffa82514a9471cd455339e97178d8c021.png","button":null},{"id":"story-152_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbd5\u002F901\u002Fe95\u002Fbd5901e952d9cf638355a3cc8b0c0911.png","button":{"title":"Хочу помочь джуну","link":"https:\u002F\u002Fu.habr.com\u002Fstory_HiM-anketa","colorType":"light"}}]}]},"technotext":{"years":[],"technotextDocForNominees":null,"technotextDocForWinners":null,"technotextInfo":{},"technotextInfoLoading":false,"technotextWinners":{},"technotextWinnersLoading":false},"userHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"userInvites":{"availableInvites":0,"usedInvitesIds":[],"usedInvitesRefs":{},"usedInvitesPagesCount":0,"unusedInvitesIds":[],"unusedInvitesRefs":{},"unusedInvitesPagesCount":0},"userVotes":{"karmaVotesList":[],"karmaVotesPagesCount":null,"karmaVotesListLoading":false,"commentsVotesList":[],"commentsVotesPagesCount":null,"commentsVotesListLoading":false,"postsVotesList":[],"postsVotesPagesCount":null,"postsVotesListLoading":false,"userVotesList":[],"userVotesPagesCount":null,"userVotesListLoading":false},"users":{"authorRefs":{},"authorIds":{},"pagesCount":{},"authorProfiles":{},"userHubs":{},"userInvitations":{},"authorFollowers":{},"authorFollowed":{},"userSpecialization":{},"karmaStats":[],"statistics":null,"isLoading":false,"authorFollowersLoading":false,"authorFollowedLoading":false,"userHubsLoading":false,"userInvitationsLoading":false,"route":{}},"viewport":{"prevScrollY":{},"scrollY":0,"width":0},"tracker":{"items":{},"pagesCache":{},"markedViewedSilently":{},"markedRead":{},"unreadCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null},"unviewedCounters":{"applications":null,"system":null,"mentions":null,"subscribers":null,"posts_and_comments":null}}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script> 
+  <script src="https://assets.habr.com/habr-web/js/chunk-vendors.129fcbcb.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/app.8a380906.js" defer></script> 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-726094-1"></script> 
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script> 
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(24049213, "init", {
+      defer:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:false,
+    });
+  </script> 
+  <noscript> 
+   <div> 
+    <img src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;" alt=""> 
+   </div> 
+  </noscript> 
+  <script type="text/javascript">
+      window.addEventListener('load', function () {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = 'https://vk.com/rtrg?p=VK-RTRG-421343-57vKE';
+        }, 0);
+      });
+    </script> 
+  <script src="/js/ads.js" onload="window['zhY4i4nJ9K'] = true"></script>  
+ </body>
+</html>
