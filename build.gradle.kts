@@ -16,6 +16,7 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+    implementation("com.bpodgursky:jbool_expressions:1.23")
     implementation("org.jsoup:jsoup:1.13.1")
     implementation("com.google.code.gson:gson:2.8.6")
     implementation("org.apache.lucene:lucene-core:9.5.0")

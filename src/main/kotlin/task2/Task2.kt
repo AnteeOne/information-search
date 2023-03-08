@@ -134,7 +134,7 @@ data class DocumentTokens(
     fun getFilteredWithStopWordsRussianTokens(): List<String> = russianWordTokensList.filter { !russianStopWords.contains(it) }
 
 }
-private object TaskSecondSettings {
+object TaskSecondSettings {
     const val FOLDER_NAME = "task2"
     const val FOLDER_TOKENS_NAME = "tokens"
     const val FOLDER_LEMMAS_NAME = "lemmas"
