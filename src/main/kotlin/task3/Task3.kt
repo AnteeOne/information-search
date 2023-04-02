@@ -135,7 +135,7 @@ data class Location(
     override fun toString() = "{$fileName, line index $lineIndex}"
 }
 
-private object TaskThirdSettings {
+object TaskThirdSettings {
     const val FOLDER_NAME = "task3"
     const val FILE_INDEXES_NAME = "inverted_index.txt"
 }
