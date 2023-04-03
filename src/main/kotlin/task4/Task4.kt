@@ -34,19 +34,19 @@ fun task4(withFileAppend: Boolean = false): Pair<ObjectWeight, ObjectWeight> {
     }
     val termsWeight = calcWeight(terms, TaskSecondSettings.FOLDER_TOKENS_NAME)
 
-    // Вычисляем tf-idf для лемм
-    val lemmas = with(TaskSecondSettings) {
-        File("${OutputSettings.PATH_NAME}/${FOLDER_NAME}/${FOLDER_LEMMAS_NAME}")
-            .listFiles()
-            .map { it.name to it.readLines() }
-    }
-    // Форматируем леммы
-    val formattedLemmas = lemmas.map { lemma ->
-        Pair(lemma.first, lemma.second.map { line ->  line.split(':')[0] })
-    }
-    val lemmasWeight = calcWeight(formattedLemmas, TaskSecondSettings.FOLDER_LEMMAS_NAME)
+//    // Вычисляем tf-idf для лемм
+//    val lemmas = with(TaskSecondSettings) {
+//        File("${OutputSettings.PATH_NAME}/${FOLDER_NAME}/${FOLDER_LEMMAS_NAME}")
+//            .listFiles()
+//            .map { it.name to it.readLines() }
+//    }
+//    // Форматируем леммы
+//    val formattedLemmas = lemmas.map { lemma ->
+//        Pair(lemma.first, lemma.second.map { line ->  line.split(':')[0] })
+//    }
+//    val lemmasWeight = calcWeight(formattedLemmas, TaskSecondSettings.FOLDER_LEMMAS_NAME)
 
-    return Pair(termsWeight, lemmasWeight)
+    return Pair(termsWeight, termsWeight)
 }
 
 fun calcWeight(objects: List<Pair<String, List<String>>>, outputDir: String): ObjectWeight {
