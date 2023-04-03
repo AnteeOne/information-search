@@ -9,7 +9,7 @@ import settings.OutputSettings
 import task2.TaskSecondSettings
 import task3.InvertedIndex
 import task3.TaskThirdSettings
-import task4.TermsWeight
+import task4.ObjectWeight
 import task4.invertedIndexList
 import java.io.File
 import java.io.FileReader
@@ -23,7 +23,7 @@ val itemStopWordsType = object : TypeToken<List<String>>() {}.type
 val russianStopWords: List<String> =
     gson.fromJson(FileReader("stop_words_russian.json"), itemStopWordsType)
 
-fun task5(termsWeight: TermsWeight, query: String) {
+fun task5(termsWeight: ObjectWeight, query: String) {
     val itemInvertedIndexType = object : TypeToken<List<InvertedIndex>>() {}.type
     val invertedIndexFile =
         File(File("${OutputSettings.PATH_NAME}/${TaskThirdSettings.FOLDER_NAME}"), TaskThirdSettings.FILE_INDEXES_NAME)

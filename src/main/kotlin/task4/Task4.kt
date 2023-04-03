@@ -11,56 +11,76 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import kotlin.math.log2
 
-data class TermsWeight(
+// Объект - термин или его лемматизированная форма
+data class ObjectWeight(
     val idfArray: DoubleArray,
     val tfIdfMatrix: Array<DoubleArray>
 )
 
 var invertedIndexList: List<InvertedIndex> = listOf()
 
-fun task4(withFileAppend: Boolean = false): TermsWeight {
+fun task4(withFileAppend: Boolean = false): Pair<ObjectWeight, ObjectWeight> {
     val gson = Gson()
     val itemType = object : TypeToken<List<InvertedIndex>>() {}.type
     val invertedIndexFile =
         File(File("${OutputSettings.PATH_NAME}/${TaskThirdSettings.FOLDER_NAME}"), TaskThirdSettings.FILE_INDEXES_NAME)
     invertedIndexList = gson.fromJson(invertedIndexFile.readText(), itemType)
-    val documents = with(TaskSecondSettings) {
+
+    // Вычисляем tf-idf для терминов
+    val terms = with(TaskSecondSettings) {
         File("${OutputSettings.PATH_NAME}/${FOLDER_NAME}/${FOLDER_TOKENS_NAME}")
             .listFiles()
             .map { it.name to it.readLines() }
     }
-    val documentsCount = documents.size
+    val termsWeight = calcWeight(terms, TaskSecondSettings.FOLDER_TOKENS_NAME)
+
+    // Вычисляем tf-idf для лемм
+    val lemmas = with(TaskSecondSettings) {
+        File("${OutputSettings.PATH_NAME}/${FOLDER_NAME}/${FOLDER_LEMMAS_NAME}")
+            .listFiles()
+            .map { it.name to it.readLines() }
+    }
+    // Форматируем леммы
+    val formattedLemmas = lemmas.map { lemma ->
+        Pair(lemma.first, lemma.second.map { line ->  line.split(':')[0] })
+    }
+    val lemmasWeight = calcWeight(formattedLemmas, TaskSecondSettings.FOLDER_LEMMAS_NAME)
+
+    return Pair(termsWeight, lemmasWeight)
+}
+
+fun calcWeight(objects: List<Pair<String, List<String>>>, outputDir: String): ObjectWeight {
+    val documentsCount = objects.size
 
     val tfMatrix = Array(invertedIndexList.size) { DoubleArray(documentsCount) }
     val idfArray = DoubleArray(invertedIndexList.size)
     val tfIdfMatrix = Array(invertedIndexList.size) { DoubleArray(documentsCount) }
 
-    invertedIndexList.forEachIndexed { termIndex, invertedIndex ->
-        //Для начала получаем idf для каждого термина
-        idfArray[termIndex] = getIdf(invertedIndex, documentsCount)
-        documents.forEachIndexed { docIndex, it ->
-            val key = it.first to invertedIndex.term
-            //Затем получаем tf для связки термин - документ
-            tfMatrix[termIndex][docIndex] = getTf(invertedIndex, it.first, it.second)
-            //Получаем tf-idf для связки термин - документ как
-            //произведение idf(термин) * tf(термин - документ)
-            tfIdfMatrix[termIndex][docIndex] =
-                tfMatrix[termIndex][docIndex] * idfArray[termIndex]
+    invertedIndexList.forEachIndexed { objectIndex, invertedIndex ->
+        // Для начала получаем idf для каждого объекта
+        idfArray[objectIndex] = getIdf(invertedIndex, documentsCount)
+        objects.forEachIndexed { docIndex, it ->
+            // Затем получаем tf для связки объект - документ
+            tfMatrix[objectIndex][docIndex] = getTf(invertedIndex, it.first, it.second)
+            // Получаем tf-idf для связки объекта - документ как
+            // Произведение idf(объекта) * tf(объект - документ)
+            tfIdfMatrix[objectIndex][docIndex] =
+                tfMatrix[objectIndex][docIndex] * idfArray[objectIndex]
         }
     }
-    if (withFileAppend) {
-        saveResultInFiles(tfMatrix, idfArray, tfIdfMatrix, documents)
-    }
-    return TermsWeight(idfArray, tfIdfMatrix)
+    saveResultInFiles(tfMatrix, idfArray, tfIdfMatrix, objects, outputDir)
+
+    return ObjectWeight(idfArray, tfIdfMatrix)
 }
 
 fun saveResultInFiles(
     tfMatrix: Array<DoubleArray>,
     idfArray: DoubleArray,
     tfIdfMatrix: Array<DoubleArray>,
-    documents: List<Pair<String, List<String>>>
+    documents: List<Pair<String, List<String>>>,
+    outputDir: String
 ) {
-    val outputDirectory = File("${OutputSettings.PATH_NAME}/${TaskFourthSettings.FOLDER_NAME}").apply {
+    val outputDirectory = File("${OutputSettings.PATH_NAME}/${TaskFourthSettings.FOLDER_NAME}/${outputDir}").apply {
         mkdirs()
         listFiles()?.forEach { it.deleteRecursively() }
     }

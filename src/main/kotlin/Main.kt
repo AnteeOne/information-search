@@ -11,5 +11,5 @@ fun main() {
 //   task3()
     val termsWeight = task4()
     val query = "вакансии android разработчик"
-    task5(termsWeight, query)
+    task5(termsWeight.first, query)
 }
