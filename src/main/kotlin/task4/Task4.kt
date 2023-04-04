@@ -46,7 +46,7 @@ fun task4(withFileAppend: Boolean = false): Pair<ObjectWeight, ObjectWeight> {
     }
     val lemmasWeight = calcWeight(formattedLemmas, TaskSecondSettings.FOLDER_LEMMAS_NAME)
 
-    return Pair(termsWeight, lemmasWeightы)
+    return Pair(termsWeight, lemmasWeight)
 }
 
 fun calcWeight(objects: List<Pair<String, List<String>>>, outputDir: String): ObjectWeight {
