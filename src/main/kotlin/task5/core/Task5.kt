@@ -37,7 +37,7 @@ fun task5(termsWeight: ObjectWeight, query: String) {
         lemmas.map { term -> invertedIndexList.indexOfFirst { it.term == term } }
             .filter { it != -1 }
 
-//  v2 - вектор выражение дополняется до размеров документа
+    // v2 - вектор выражение дополняется до размеров документа
     val queryVector = DoubleArray(invertedIndexList.size)
     lemmasIndexes.forEach { termIndex ->
         val term = invertedIndexList[termIndex].term
